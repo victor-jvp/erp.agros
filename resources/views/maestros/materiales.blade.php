@@ -17,7 +17,7 @@
             <div class="card text-left">
 
                 <div class="card-body">
-                    <h4 class="card-title mb-3">Materiales</h4>
+                    <h4 class="card-title mb-3">Productos</h4>
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
