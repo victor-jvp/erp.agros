@@ -219,9 +219,81 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="cubres" role="tabpanel" aria-labelledby="cubres-tab">
-                            Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic
-                            lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork
-                            tattooed craft beer, iphone skateboard locavore.
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary" type="button" id="btnNuevoCubre">Nuevo</button>
+                                </div>
+                            </div>
+
+                            <!-- Modal Cubres-->
+                            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-cubres">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <form action="/maestros/cubres" method="POST" id="cubre_form">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="_method" id="cubre_method" value="PUT">
+                                            <input type="hidden" name="id" id="cubre_id">
+
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modal-cubres-title"></h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-row">
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="validationCustom01">Formato</label>
+                                                        <input type="text" class="form-control" id="cubre_formato"
+                                                               placeholder="Formato" required="" name="formato">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="cubres_table" class="display table table-striped table-bordered" style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th scope="col">Formato</th>
+                                                <th scope="col">Accion</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @if (isset($cubres))
+                                                @foreach ($cubres as $cubre)
+                                                    <tr>
+                                                        <td>{{ $cubre->id }}</td>
+                                                        <td scope="row">{{ $cubre->formato }}</td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="text-success mr-2">
+                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                            </a>
+                                                            <a href="javascript:void(0);" class="text-danger mr-2">
+                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="auxiliares" role="tabpanel" aria-labelledby="auxiliares-tab">
                             Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic
@@ -244,7 +316,8 @@
 @section('bottom-js')
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
-{{--Cajas--}}
+
+    {{--Cajas--}}
     <script>
         var table_cajas
 
@@ -379,6 +452,69 @@
 
         function limpiarCamposPallet() {
             $('#pallet_id, #pallet_formato, #pallet_modelo').val(null);
+        }
+    </script>
+
+    {{--Cubres--}}
+    <script>
+        var table_cubres
+
+        $(document).ready(function () {
+            // Configuracion de Datatable
+            table_cubres = $('#cubres_table').DataTable({
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+                columnDefs: [
+                    { targets: [0], visible: false},
+                ]
+            });
+
+            $('#cubres_table .edit').on( 'click', function () {
+                var tr = $(this).closest('tr');
+                var row = table_cubres.row( tr ).data();
+                limpiarCamposCubre();
+
+                $('#cubre_id').val(row[0]);
+                $('#cubre_formato').val(row[1]);
+                $('#cubre_form').attr('action', '/maestros/cubres/'+row[0]);
+
+                $("#modal-cubres-title").html("Modificar Cubre");
+                $("#cubre_method").val('PUT');
+                $("#modal-cubres").modal('show');
+            });
+
+            $('#cubres_table .delete').on( 'click', function () {
+                var tr = $(this).closest('tr');
+                var row = table_cubres.row( tr ).data();
+
+                swal({
+                    title: 'Confirmar Proceso',
+                    text: "Confirme eliminar el registro seleccionado",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0CC27E',
+                    cancelButtonColor: '#FF586B',
+                    confirmButtonText: 'Confirmar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonClass: 'btn btn-success mr-5',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function () {
+                    window.location.href = "{{ url('maestros/cubres/delete') }}"+"/"+row[0]
+                })
+            });
+
+            $("#btnNuevoCubre").click(function (e) {
+                limpiarCamposCubre();
+                $("#modal-cubres-title").html("Nuevo Cubre");
+                $("#cubre_method").val(null);
+                $("#modal-cubres").modal('show');
+            })
+        });
+
+        function limpiarCamposCubre() {
+            $('#cubre_id, #cubre_formato').val(null);
         }
     </script>
 @endsection
