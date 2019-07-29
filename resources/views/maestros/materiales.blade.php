@@ -332,7 +332,6 @@
                 $('#pallet_id').val(row[0]);
                 $('#pallet_formato').val(row[1]);
                 $('#pallet_modelo').val(row[2]);
-                $('#pallet_kg').val(row[3]);
                 $('#pallet_form').attr('action', '/maestros/pallets/'+row[0]);
 
                 $("#modal-pallets-title").html("Modificar Pallet");

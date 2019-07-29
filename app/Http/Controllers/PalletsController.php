@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use DemeterChain\C;
 use Illuminate\Http\Request;
-use App\Caja;
+use App\Pallet;
 
-class CajasController extends Controller
+class PalletsController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      * @param \Illuminate\Http\Request $request
@@ -17,12 +15,11 @@ class CajasController extends Controller
     public function store(Request $request)
     {
         //
-        $caja = new Caja;
+        $pallet = new Pallet();
 
-        $caja->formato = $request->formato;
-        $caja->modelo  = $request->modelo;
-        $caja->kg      = $request->kg;
-        $caja->save();
+        $pallet->formato = $request->formato;
+        $pallet->modelo  = $request->modelo;
+        $pallet->save();
 
         return redirect()->route('materiales');
     }
@@ -37,11 +34,10 @@ class CajasController extends Controller
     {
         //
 
-        $caja          = Caja::find($request->id);
-        $caja->formato = $request->formato;
-        $caja->modelo  = $request->modelo;
-        $caja->kg      = $request->kg;
-        $caja->save();
+        $pallet          = Pallet::find($request->id);
+        $pallet->formato = $request->formato;
+        $pallet->modelo  = $request->modelo;
+        $pallet->save();
 
         return redirect()->route('materiales');
     }
@@ -49,8 +45,8 @@ class CajasController extends Controller
 
     public function delete($id)
     {
-        $caja = Caja::find($id);
-        $caja->delete();
+        $pallet = Pallet::find($id);
+        $pallet->delete();
 
         return redirect()->route('materiales');
     }

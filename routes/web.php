@@ -24,10 +24,16 @@ Route::get('/dashboard', function(){
 })->name('starter');
 
 Route::get('/maestros/materiales', function() {
-    $cajas = \App\Caja::all();
-    return view('maestros.materiales', ['cajas' => $cajas]);
+    $cajas = App\Caja::all();
+    $pallets = App\Pallet::all();
+    return view('maestros.materiales', [
+        'cajas' => $cajas,
+        'pallets' => $pallets
+    ]);
 })->name('materiales');
 
 Route::resource('/maestros/cajas', 'CajasController');
+Route::resource('/maestros/pallets', 'PalletsController');
 
 Route::get('/maestros/cajas/delete/{caja}', 'CajasController@delete')->name('cajas.delete');
+Route::get('/maestros/pallets/delete/{pallet}', 'PalletsController@delete')->name('pallets.delete');
