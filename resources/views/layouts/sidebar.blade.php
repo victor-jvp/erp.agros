@@ -2,7 +2,7 @@
     <div class="side-content-wrap">
         <div class="sidebar-left open rtl-ps-none" data-perfect-scrollbar data-suppress-scroll-x="true">
             <ul class="navigation-left">
-                <li class="nav-item {{ request()->is('dashboard/*') ? 'active' : '' }}" data-item="prevision">
+                <li class="nav-item {{ request()->is('prevision/*') ? 'active' : '' }}" data-item="prevision">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-Bar-Chart"></i>
                         <span class="nav-text">Previsión</span>
@@ -38,7 +38,7 @@
                     </a>
                     <div class="triangle"></div>
                 </li>
-                <li class="nav-item" data-item="maestros">
+                <li class="nav-item {{ request()->is('maestros/*') ? 'active' : '' }}" data-item="maestros">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-File-Horizontal-Text"></i>
                         <span class="nav-text">Maestros</span>
@@ -189,7 +189,7 @@
             </ul>
             <ul class="childNav" data-parent="maestros">
                 <li class="nav-item">
-                <a href="{{ url('maestros/materiales') }}">
+                <a class="{{ Route::currentRouteName()=='materiales' ? 'open' : '' }}" href="{{ url('maestros/materiales') }}">
                         <i class="nav-icon i-Bell1"></i>
                         <span class="item-name">Materiales</span>
                     </a>
