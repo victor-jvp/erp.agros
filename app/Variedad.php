@@ -10,4 +10,9 @@ class Variedad extends Model
     //
     use SoftDeletes;
     protected $table = "variedades";
+
+    public function cultivo()
+    {
+        return $this->belongsTo(Cultivo::class);
+    }
 }

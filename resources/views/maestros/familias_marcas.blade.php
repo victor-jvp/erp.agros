@@ -21,20 +21,21 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active show" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab"
+                            <a class="nav-link active show" id="cultivos-tab" data-toggle="tab" href="#cultivos"
+                               role="tab"
                                aria-controls="cajas" aria-selected="true">Cultivos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="pallets-tab" data-toggle="tab" href="#pallets" role="tab"
+                            <a class="nav-link" id="variedades-tab" data-toggle="tab" href="#variedades" role="tab"
                                aria-controls="pallets" aria-selected="false">Variedades</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="cubres-tab" data-toggle="tab" href="#cubres" role="tab"
+                            <a class="nav-link" id="marcas-tab" data-toggle="tab" href="#marcas" role="tab"
                                aria-controls="cubres" aria-selected="false">Marcas</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade active show" id="cajas" role="tabpanel"
+                        <div class="tab-pane fade active show" id="cultivos" role="tabpanel"
                              aria-labelledby="cultivos-tab">
 
                             <div class="row">
@@ -122,25 +123,25 @@
                             </div>
 
                         </div>
-                        <div class="tab-pane fade" id="pallets" role="tabpanel" aria-labelledby="pallets-tab">
+                        <div class="tab-pane fade" id="variedades" role="tabpanel" aria-labelledby="variedades-tab">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <button class="btn btn-primary" type="button" id="btnNuevoPallet">Nuevo</button>
+                                    <button class="btn btn-primary" type="button" id="btnNuevaVariedad">Nuevo</button>
                                 </div>
                             </div>
 
                             <!-- Modal Pallets-->
                             <div class="modal fade" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-pallets">
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-variedades">
                                 <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
-                                        <form action="/maestros/pallets" method="POST" id="pallet_form">
+                                        <form action="/maestros/variedades" method="POST" id="variedad_form">
                                             {{ csrf_field() }}
-                                            <input type="hidden" name="_method" id="pallet_method" value="PUT">
-                                            <input type="hidden" name="id" id="pallet_id">
+                                            <input type="hidden" name="_method" id="variedad_method" value="PUT">
+                                            <input type="hidden" name="id" id="variedad_id">
 
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="modal-pallets-title"></h5>
+                                                <h5 class="modal-title" id="modal-variedades-title"></h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -149,14 +150,19 @@
                                             <div class="modal-body">
                                                 <div class="form-row">
                                                     <div class="col-md-12 mb-3">
-                                                        <label for="validationCustom01">Formato</label>
-                                                        <input type="text" class="form-control" id="pallet_formato"
-                                                               placeholder="Formato" required="" name="formato">
+                                                        <label for="variedad">Variedad</label>
+                                                        <input type="text" class="form-control" id="variedad"
+                                                               placeholder="Variedad" required="" name="variedad">
                                                     </div>
                                                     <div class="col-md-12 mb-3">
-                                                        <label for="validationCustom02">Modelo</label>
-                                                        <input type="text" class="form-control" id="pallet_modelo"
-                                                               placeholder="Modelo" required="" name="modelo">
+                                                        <label for="variedad_cultivo_id">Cultivo</label>
+                                                        <select class="form-control" name="cultivo_id"
+                                                                id="variedad_cultivo_id">
+                                                            <option value="" hidden>Cultivo...</option>
+                                                            @foreach ($cultivos as $cultivo)
+                                                                <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -176,23 +182,25 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table id="pallets_table" class="display table table-striped table-bordered"
+                                        <table id="variedades_table" class="display table table-striped table-bordered"
                                                style="width:100%">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th scope="col">Formato</th>
-                                                <th scope="col">Modelo</th>
+                                                <th scope="col">Variedad</th>
+                                                <th>CULTIVO_ID</th>
+                                                <th scope="col">Cultivo</th>
                                                 <th scope="col">Accion</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @if (isset($pallets))
-                                                @foreach ($pallets as $pallet)
+                                            @if (isset($variedades))
+                                                @foreach ($variedades as $variedad)
                                                     <tr>
-                                                        <td>{{ $pallet->id }}</td>
-                                                        <td scope="row">{{ $pallet->formato }}</td>
-                                                        <td>{{ $pallet->modelo }}</td>
+                                                        <td>{{ $variedad->id }}</td>
+                                                        <td scope="row">{{ $variedad->variedad }}</td>
+                                                        <td>{{ $variedad->cultivo_id }}</td>
+                                                        <td>{{ $variedad->cultivo->cultivo }}</td>
                                                         <td>
                                                             <a href="javascript:void(0);" class="text-success mr-2">
                                                                 <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
@@ -211,7 +219,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="cubres" role="tabpanel" aria-labelledby="cubres-tab">
+                        <div class="tab-pane fade" id="marcas" role="tabpanel" aria-labelledby="marcas-tab">
                             <div class="row">
                                 <div class="col-md-3">
                                     <button class="btn btn-primary" type="button" id="btnNuevoCubre">Nuevo</button>
@@ -373,39 +381,41 @@
         }
     </script>
 
-    {{--Pallets--}}
+    {{--Variedades--}}
     <script>
-        var table_pallets
+        var table_variedades
 
         $(document).ready(function () {
             // Configuracion de Datatable
-            table_pallets = $('#pallets_table').DataTable({
+            table_variedades = $('#variedades_table').DataTable({
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 },
                 columnDefs: [
-                    {targets: [0], visible: false},
+                    {targets: [0,2], visible: false},
                 ]
             });
 
-            $('#pallets_table .edit').on('click', function () {
+            $('#variedades_table .edit').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_pallets.row(tr).data();
-                limpiarCamposPallet();
+                var row = table_variedades.row(tr).data();
+                limpiarCamposVariedades();
 
-                $('#pallet_id').val(row[0]);
-                $('#pallet_formato').val(row[1]);
-                $('#pallet_modelo').val(row[2]);
-                $('#pallet_form').attr('action', '/maestros/pallets/' + row[0]);
+                $('#variedad_id').val(row[0]);
+                $('#variedad').val(row[1]);
+                //$('#element option[value="no"]').attr("selected", "selected");
+                console.log(row[2]);
+                $('#variedad_cultivo_id').find('option[value="' + row[2] + '"]').attr("selected", "selected");
+                $('#variedad_form').attr('action', '/maestros/variedades/' + row[0]);
 
-                $("#modal-pallets-title").html("Modificar Pallet");
-                $("#pallet_method").val('PUT');
-                $("#modal-pallets").modal('show');
+                $("#modal-variedades-title").html("Modificar Variedad");
+                $("#variedad_method").val('PUT');
+                $("#modal-variedades").modal('show');
             });
 
-            $('#pallets_table .delete').on('click', function () {
+            $('#variedades_table .delete').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_pallets.row(tr).data();
+                var row = table_variedades.row(tr).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -420,29 +430,20 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('maestros/pallets/delete') }}" + "/" + row[0]
-                }, function (dismiss) {
-                    // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
-                    // if (dismiss === 'cancel') {
-                    //     swal(
-                    //         'Cancelled',
-                    //         'Your imaginary file is safe :)',
-                    //         'error'
-                    //     )
-                    // }
+                    window.location.href = "{{ url('maestros/variedades/delete') }}" + "/" + row[0]
                 })
             });
 
-            $("#btnNuevoPallet").click(function (e) {
-                limpiarCamposPallet();
-                $("#modal-pallets-title").html("Nuevo Pallet");
-                $("#pallet_method").val(null);
-                $("#modal-pallets").modal('show');
+            $("#btnNuevaVariedad").click(function (e) {
+                limpiarCamposVariedades();
+                $("#modal-variedades-title").html("Nueva Variedad");
+                $("#variedad_method").val(null);
+                $("#modal-variedades").modal('show');
             })
         });
 
-        function limpiarCamposPallet() {
-            $('#pallet_id, #pallet_formato, #pallet_modelo').val(null);
+        function limpiarCamposVariedades() {
+            $('#variedad_id, #variedad, #variedad_cultivo_id').val(null);
         }
     </script>
 
