@@ -190,8 +190,20 @@
             <ul class="childNav" data-parent="maestros">
                 <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='materiales' ? 'open' : '' }}" href="{{ url('maestros/materiales') }}">
-                        <i class="nav-icon i-Bell1"></i>
+                        <i class="nav-icon i-Box-Full"></i>
                         <span class="item-name">Materiales</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="{{ Route::currentRouteName()=='familias-marcas' ? 'open' : '' }}" href="{{ url('maestros/familias-marcas') }}">
+                        <i class="nav-icon i-Handshake"></i>
+                        <span class="item-name">Familias y Marcas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="{{ Route::currentRouteName()=='fincas' ? 'open' : '' }}" href="{{ url('maestros/fincas') }}">
+                        <i class="nav-icon i-Post-Office"></i>
+                        <span class="item-name">Fincas</span>
                     </a>
                 </li>
                 <li class="nav-item">

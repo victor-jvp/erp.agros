@@ -5,7 +5,7 @@
         <h1>Maestros</h1>
         <ul>
             {{-- <li><a href="">UI Kits</a></li> --}}
-            <li>Materiales</li>
+            <li>Familias y Marcas</li>
         </ul>
     </div>
 
@@ -17,24 +17,20 @@
             <div class="card text-left">
 
                 <div class="card-body">
-                    <h4 class="card-title mb-3">Materiales</h4>
+                    <h4 class="card-title mb-3">Familias y Marcas</h4>
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active show" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab"
-                               aria-controls="cajas" aria-selected="true">Cajas</a>
+                               aria-controls="cajas" aria-selected="true">Cultivos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="pallets-tab" data-toggle="tab" href="#pallets" role="tab"
-                               aria-controls="pallets" aria-selected="false">Pallets</a>
+                               aria-controls="pallets" aria-selected="false">Variedades</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="cubres-tab" data-toggle="tab" href="#cubres" role="tab"
-                               aria-controls="cubres" aria-selected="false">Cubres</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="auxiliares-tab" data-toggle="tab" href="#auxiliares" role="tab"
-                               aria-controls="auxiliares" aria-selected="false">Auxiliares</a>
+                               aria-controls="cubres" aria-selected="false">Marcas</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -113,9 +109,9 @@
                                                         <td>{{ $caja->modelo }}</td>
                                                         <td>{{ $caja->kg }}</td>
                                                         <td>
-{{--                                                            <a href="javascript:void(0);" onclick="EditCaja('{{ $caja->id }}')" class="text-success mr-2">--}}
-{{--                                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>--}}
-{{--                                                            </a>--}}
+                                                            {{--                                                            <a href="javascript:void(0);" onclick="EditCaja('{{ $caja->id }}')" class="text-success mr-2">--}}
+                                                            {{--                                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>--}}
+                                                            {{--                                                            </a>--}}
                                                             <a href="javascript:void(0);" class="text-success mr-2">
                                                                 <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
                                                             </a>
@@ -295,83 +291,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="auxiliares" role="tabpanel" aria-labelledby="auxiliares-tab">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <button class="btn btn-primary" type="button" id="btnNuevoAuxiliar">Nuevo</button>
-                                </div>
-                            </div>
-
-                            <!-- Modal Cubres-->
-                            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-auxiliar">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content">
-                                        <form action="/maestros/auxiliares" method="POST" id="auxiliar_form">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="_method" id="auxiliar_method" value="PUT">
-                                            <input type="hidden" name="id" id="auxiliar_id">
-
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modal-auxiliar-title"></h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-row">
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for="auxiliar_modelo">Modelo</label>
-                                                        <input type="text" class="form-control" id="auxiliar_modelo"
-                                                               placeholder="Modelo" required="" name="modelo">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table id="auxiliares_table" class="display table table-striped table-bordered" style="width:100%">
-                                            <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th scope="col">Modelo</th>
-                                                <th scope="col">Accion</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @if (isset($auxiliares))
-                                                @foreach ($auxiliares as $auxiliar)
-                                                    <tr>
-                                                        <td>{{ $auxiliar->id }}</td>
-                                                        <td scope="row">{{ $auxiliar->modelo }}</td>
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -448,7 +367,7 @@
                 $("#modal-cajas").modal('show');
             })
         });
-        
+
         function limpiarCamposCaja() {
             $('#caja_id, #caja_formato, #caja_modelo, #caja_kg').val(null);
         }

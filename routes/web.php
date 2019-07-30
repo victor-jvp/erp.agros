@@ -23,7 +23,7 @@ Route::get('/dashboard', function () {
     return view('starter');
 })->name('starter');
 
-#region "Materiales"
+#region Materiales
 
 Route::get('/maestros/materiales', function () {
     $cajas      = App\Caja::all();
@@ -47,5 +47,16 @@ Route::get('/maestros/cajas/delete/{caja}', 'CajasController@delete')->name('caj
 Route::get('/maestros/pallets/delete/{pallet}', 'PalletsController@delete')->name('pallets.delete');
 Route::get('/maestros/cubres/delete/{cubre}', 'CubresController@delete')->name('cubres.delete');
 Route::get('/maestros/auxiliares/delete/{auxiliar}', 'AuxiliaresController@delete')->name('auxiliares.delete');
+
+#endregion
+
+#region Familias y Marcas
+
+Route::get('/maestros/familias-marcas', function () {
+//    $cajas      = App\Caja::all();
+//    $pallets    = App\Pallet::all();
+    return view('maestros.familias_marcas');
+})->name('familias-marcas');
+
 
 #endregion
