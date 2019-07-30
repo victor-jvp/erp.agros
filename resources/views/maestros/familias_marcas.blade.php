@@ -399,12 +399,8 @@
             $('#variedades_table .edit').on('click', function () {
                 var tr = $(this).closest('tr');
                 var row = table_variedades.row(tr).data();
-                limpiarCamposVariedades();
-
                 $('#variedad_id').val(row[0]);
                 $('#variedad').val(row[1]);
-                //$('#element option[value="no"]').attr("selected", "selected");
-                console.log(row[2]);
                 $('#variedad_cultivo_id').find('option[value="' + row[2] + '"]').attr("selected", "selected");
                 $('#variedad_form').attr('action', '/maestros/variedades/' + row[0]);
 
@@ -412,6 +408,10 @@
                 $("#variedad_method").val('PUT');
                 $("#modal-variedades").modal('show');
             });
+
+            $('#modal-variedades').on('hidden.bs.modal',function () {
+                limpiarCamposVariedades();
+            })
 
             $('#variedades_table .delete').on('click', function () {
                 var tr = $(this).closest('tr');
@@ -443,7 +443,8 @@
         });
 
         function limpiarCamposVariedades() {
-            $('#variedad_id, #variedad, #variedad_cultivo_id').val(null);
+            $('#variedad_id, #variedad').val(null);
+            $('#variedad_cultivo_id option[selected="selected"]').removeAttr('selected');
         }
     </script>
 
