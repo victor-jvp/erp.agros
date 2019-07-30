@@ -53,10 +53,14 @@ Route::get('/maestros/auxiliares/delete/{auxiliar}', 'AuxiliaresController@delet
 #region Familias y Marcas
 
 Route::get('/maestros/familias-marcas', function () {
-//    $cajas      = App\Caja::all();
+    $cultivos = App\Cultivo::all();
 //    $pallets    = App\Pallet::all();
-    return view('maestros.familias_marcas');
+    return view('maestros.familias_marcas', array(
+        'cultivos' => $cultivos
+    ));
 })->name('familias-marcas');
 
+Route::resource('/maestros/cultivos', 'CultivosController');
+Route::get('/maestros/cultivos/delete/{cultivo}', 'CultivosController@delete')->name('cultivos.delete');
 
 #endregion
