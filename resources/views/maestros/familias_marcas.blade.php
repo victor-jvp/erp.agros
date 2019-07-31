@@ -222,22 +222,22 @@
                         <div class="tab-pane fade" id="marcas" role="tabpanel" aria-labelledby="marcas-tab">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <button class="btn btn-primary" type="button" id="btnNuevoCubre">Nuevo</button>
+                                    <button class="btn btn-primary" type="button" id="btnNuevaMarca">Nuevo</button>
                                 </div>
                             </div>
 
                             <!-- Modal Cubres-->
                             <div class="modal fade" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-cubres">
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-marcas">
                                 <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
-                                        <form action="/maestros/cubres" method="POST" id="cubre_form">
+                                        <form action="/maestros/marcas" method="POST" id="marca_form">
                                             {{ csrf_field() }}
-                                            <input type="hidden" name="_method" id="cubre_method" value="PUT">
-                                            <input type="hidden" name="id" id="cubre_id">
+                                            <input type="hidden" name="_method" id="marca_method" value="PUT">
+                                            <input type="hidden" name="id" id="marca_id">
 
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="modal-cubres-title"></h5>
+                                                <h5 class="modal-title" id="modal-marcas-title"></h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -246,9 +246,19 @@
                                             <div class="modal-body">
                                                 <div class="form-row">
                                                     <div class="col-md-12 mb-3">
-                                                        <label for="validationCustom01">Formato</label>
-                                                        <input type="text" class="form-control" id="cubre_formato"
-                                                               placeholder="Formato" required="" name="formato">
+                                                            <label for="marca">Marca</label>
+                                                        <input type="text" class="form-control" id="marca"
+                                                               placeholder="Marca" required="" name="marca">
+                                                    </div>
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="marca_cultivo_id">Cultivo</label>
+                                                        <select class="form-control" name="cultivo_id"
+                                                                id="marca_cultivo_id">
+                                                            <option value="" hidden>Cultivo...</option>
+                                                            @foreach ($cultivos as $cultivo)
+                                                                <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -268,21 +278,25 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table id="cubres_table" class="display table table-striped table-bordered"
+                                        <table id="marcas_table" class="display table table-striped table-bordered"
                                                style="width:100%">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th scope="col">Formato</th>
+                                                <th scope="col">Marca</th>
+                                                <th>cultivo_id</th>
+                                                <th scope="col">Cultivo</th>
                                                 <th scope="col">Accion</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @if (isset($cubres))
-                                                @foreach ($cubres as $cubre)
+                                            @if (isset($marcas))
+                                                @foreach ($marcas as $marca)
                                                     <tr>
-                                                        <td>{{ $cubre->id }}</td>
-                                                        <td scope="row">{{ $cubre->formato }}</td>
+                                                        <td>{{ $marca->id }}</td>
+                                                        <td scope="row">{{ $marca->marca }}</td>
+                                                        <td>{{ $marca->cultivo_id }}</td>
+                                                        <td>{{ $marca->cultivo->cultivo }}</td>
                                                         <td>
                                                             <a href="javascript:void(0);" class="text-success mr-2">
                                                                 <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
@@ -294,7 +308,6 @@
                                                     </tr>
                                                 @endforeach
                                             @endif
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -448,38 +461,41 @@
         }
     </script>
 
-    {{--Cubres--}}
+    {{--Marcas--}}
     <script>
-        var table_cubres
+        var table_marcas
 
         $(document).ready(function () {
             // Configuracion de Datatable
-            table_cubres = $('#cubres_table').DataTable({
+            table_marcas = $('#marcas_table').DataTable({
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 },
                 columnDefs: [
-                    {targets: [0], visible: false},
+                    {targets: [0,2], visible: false},
                 ]
             });
 
-            $('#cubres_table .edit').on('click', function () {
+            $('#marcas_table .edit').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_cubres.row(tr).data();
-                limpiarCamposCubre();
+                var row = table_marcas.row(tr).data();
+                $('#marca_id').val(row[0]);
+                $('#marca').val(row[1]);
+                $('#marca_cultivo_id').find('option[value="' + row[2] + '"]').attr("selected", "selected");
+                $('#marca_form').attr('action', '/maestros/marcas/' + row[0]);
 
-                $('#cubre_id').val(row[0]);
-                $('#cubre_formato').val(row[1]);
-                $('#cubre_form').attr('action', '/maestros/cubres/' + row[0]);
-
-                $("#modal-cubres-title").html("Modificar Cubre");
-                $("#cubre_method").val('PUT');
-                $("#modal-cubres").modal('show');
+                $("#modal-marcas-title").html("Modificar Marcas");
+                $("#marca_method").val('PUT');
+                $("#modal-marcas").modal('show');
             });
 
-            $('#cubres_table .delete').on('click', function () {
+            $('#modal-marcas').on('hidden.bs.modal',function () {
+                limpiarCamposMarcas();
+            })
+
+            $('#marcas_table .delete').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_cubres.row(tr).data();
+                var row = table_variedades.row(tr).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -494,83 +510,21 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('maestros/cubres/delete') }}" + "/" + row[0]
+                    window.location.href = "{{ url('maestros/marcas/delete') }}" + "/" + row[0]
                 })
             });
 
-            $("#btnNuevoCubre").click(function (e) {
-                limpiarCamposCubre();
-                $("#modal-cubres-title").html("Nuevo Cubre");
-                $("#cubre_method").val(null);
-                $("#modal-cubres").modal('show');
+            $("#btnNuevaMarca").click(function (e) {
+                limpiarCamposMarcas();
+                $("#modal-marcas-title").html("Nueva Marca");
+                $("#marca_method").val(null);
+                $("#modal-marcas").modal('show');
             })
         });
 
-        function limpiarCamposCubre() {
-            $('#cubre_id, #cubre_formato').val(null);
-        }
-    </script>
-
-    {{--Auxiliares--}}
-    <script>
-        var table_auxiliares
-
-        $(document).ready(function () {
-            // Configuracion de Datatable
-            table_auxiliares = $('#auxiliares_table').DataTable({
-                language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-                },
-                columnDefs: [
-                    {targets: [0], visible: false},
-                ]
-            });
-
-            $('#auxiliares_table .edit').on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = table_auxiliares.row(tr).data();
-                limpiarCamposPallet();
-
-                $('#auxiliar_id').val(row[0]);
-                $('#auxiliar_modelo').val(row[1]);
-                $('#auxiliar_form').attr('action', '/maestros/auxiliares/' + row[0]);
-
-                $("#modal-auxiliar-title").html("Modificar Auxiliar");
-                $("#auxiliar_method").val('PUT');
-                $("#modal-auxiliar").modal('show');
-            });
-
-            $('#auxiliares_table .delete').on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = table_auxiliares.row(tr).data();
-
-                swal({
-                    title: 'Confirmar Proceso',
-                    text: "Confirme eliminar el registro seleccionado",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#0CC27E',
-                    cancelButtonColor: '#FF586B',
-                    confirmButtonText: 'Confirmar',
-                    cancelButtonText: 'Cancelar',
-                    confirmButtonClass: 'btn btn-success mr-5',
-                    cancelButtonClass: 'btn btn-danger',
-                    buttonsStyling: false
-                }).then(function () {
-                    window.location.href = "{{ url('maestros/auxiliares/delete') }}" + "/" + row[0]
-                });
-            });
-
-            $("#btnNuevoAuxiliar").click(function (e) {
-                limpiarCamposPallet();
-                $("#modal-auxiliar-title").html("Nuevo Auxiliar");
-                $("#auxiliar_method").val(null);
-                $("#modal-auxiliar").modal('show');
-            })
-        });
-
-        function limpiarCamposPallet() {
-            $('#auxiliar_id, #auxiliar_modelo').val(null);
+        function limpiarCamposMarcas() {
+            $('#marca_id, #variedad').val(null);
+            $('#marca_cultivo_id option[selected="selected"]').removeAttr('selected');
         }
     </script>
 @endsection
