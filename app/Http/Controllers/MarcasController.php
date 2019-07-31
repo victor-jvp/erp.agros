@@ -7,8 +7,6 @@ use App\Marca;
 
 class MarcasController extends Controller
 {
-    //
-    //
     public function store(Request $request)
     {
         $marca = new Marca();

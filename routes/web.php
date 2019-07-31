@@ -73,3 +73,26 @@ Route::resource('/maestros/marcas', 'MarcasController');
 Route::get('/maestros/marcas/delete/{marca}', 'MarcasController@delete')->name('marcas.delete');
 
 #endregion
+
+#region Fincas
+
+Route::get('/maestros/fincas', function () {
+    $fincas = App\Finca::all();
+    $parcelas = App\Parcela::all();
+    $cultivos   = App\Cultivo::all();
+    return view('maestros.fincas', array(
+        'fincas'   => $fincas,
+        'parcelas' => $parcelas,
+        'cultivos' => $cultivos
+    ));
+})->name('fincas');
+
+Route::post('/maestros/fincas', 'FincasController@store')->name('fincas.create');
+Route::put('/maestros/fincas/{finca}', 'FincasController@update')->name('fincas.update');
+Route::get('/maestros/fincas/delete/{finca}', 'FincasController@delete')->name('fincas.delete');
+
+Route::post('/maestros/parcelas', 'ParcelasController@store')->name('parcelas.create');
+Route::put('/maestros/parcelas/{parcela}', 'ParcelasController@update')->name('parcelas.update');
+Route::get('/maestros/parcelas/delete/{parcela}', 'ParcelasController@delete')->name('parcelas.delete');
+
+#endregion
