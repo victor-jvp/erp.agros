@@ -108,7 +108,10 @@ Route::get('/maestros/productos-compuestos', function () {
 #region Trazabilidad
 
 Route::get('/maestros/trazabilidad', function () {
-    return view('maestros.trazabilidad');
+    $fincas = App\Finca::all();
+    return view('maestros.trazabilidad', array(
+        'fincas' => $fincas
+    ));
 })->name('trazabilidad');
 
 #endregion

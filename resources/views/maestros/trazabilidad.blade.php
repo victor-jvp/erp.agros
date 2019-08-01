@@ -45,10 +45,15 @@
                                     <div class="modal-body">
 
                                         <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="producto">Producto</label>
-                                                <input type="text" class="form-control" id="producto"
-                                                       placeholder="Producto" required="" name="producto">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="parcela_finca_id">Finca</label>
+                                                <select class="form-control" name="finca_id"
+                                                        id="finca_id" data-placeholder="Seleccione...">
+                                                    <option value=""></option>
+                                                    @foreach ($fincas as $finca)
+                                                        <option value="{{ $finca->id }}">{{ $finca->finca }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
@@ -90,10 +95,10 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th scope="col">Producto</th>
+                                        <th scope="col">Parcela</th>
+                                        <th scope="col">Finca</th>
                                         <th scope="col">Cultivo</th>
                                         <th scope="col">Variedad</th>
-                                        <th scope="col">Marca</th>
                                         <th scope="col">Acción</th>
                                     </tr>
                                     </thead>
@@ -112,19 +117,21 @@
 
 @endsection
 
-@section('page-css')
+@section('before-css')
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/datatables.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/sweetalert2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen-bootstrap-4.css')}}">
 @endsection
 
 @section('bottom-js')
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
 
     <script>
         var table_trazabilidad
 
-        $(function () {
+        $(document).ready(function () {
             var table_trazabilidad = $("#trazabilidad_table").DataTable({
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
@@ -134,10 +141,16 @@
                 ]
             });
 
+            $("#finca_id").chosen({
+                width: "100%",
+                no_results_text: "No se encontraron resultados... ",
+                allow_single_deselect: true
+            });
+
             $("#btnNuevaTrazabilidad").click(function (e) {
                 $("#modal-trazabilidad-title").html('Agregar Trazabilidad');
                 $("#modal-trazabilidad").modal("show");
             });
-        })
+        });
     </script>
 @endsection
