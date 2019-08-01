@@ -100,8 +100,15 @@ Route::get('/maestros/parcelas/delete/{parcela}', 'ParcelasController@delete')->
 #region Productos Compuestos
 
 Route::get('/maestros/productos-compuestos', function () {
-    $cajas = App\Caja::all();
     return view('maestros.productos_compuestos');
 })->name('productos-compuestos');
+
+#endregion
+
+#region Trazabilidad
+
+Route::get('/maestros/trazabilidad', function () {
+    return view('maestros.trazabilidad');
+})->name('trazabilidad');
 
 #endregion

@@ -213,7 +213,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('maestros/trazabilidad') }}">
+                    <a class="{{ Route::currentRouteName()=='trazabilidad' ? 'open' : '' }}" href="{{ url('maestros/trazabilidad') }}">
                         <i class="nav-icon i-Medal-2"></i>
                         <span class="item-name">Trazabilidad</span>
                     </a>
