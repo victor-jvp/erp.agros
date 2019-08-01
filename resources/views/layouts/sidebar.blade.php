@@ -207,7 +207,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('maestros/productos-compuestos') }}">
+                    <a class="{{ Route::currentRouteName()=='productos-compuestos' ? 'open' : '' }}" href="{{ url('maestros/productos-compuestos') }}">
                         <i class="nav-icon i-Split-Horizontal-2-Window"></i>
                         <span class="item-name">Productos Compuestos</span>
                     </a>

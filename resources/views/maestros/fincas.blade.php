@@ -233,7 +233,7 @@
     <script>
         var table_fincas
 
-        $(document).ready(function () {
+        $(function () {
             // Configuracion de Datatable
             table_fincas = $('#fincas_table').DataTable({
                 language: {
@@ -296,7 +296,7 @@
     <script>
         var table_parcelas
 
-        $(document).ready(function () {
+        $(function () {
             // Configuracion de Datatable
             table_parcelas = $('#parcelas_table').DataTable({
                 language: {

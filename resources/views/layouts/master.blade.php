@@ -59,7 +59,7 @@
     <script src="{{asset('assets/js/es5/customizer.script.min.js')}}"></script>
 
     {{-- laravel js --}}
-    {{-- <script src="{{mix('assets/js/laravel/app.js')}}"></script> --}}
+     <script src="{{mix('assets/js/laravel/app.js')}}"></script>
 
     @yield('bottom-js')
 </body>

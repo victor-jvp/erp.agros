@@ -96,3 +96,12 @@ Route::put('/maestros/parcelas/{parcela}', 'ParcelasController@update')->name('p
 Route::get('/maestros/parcelas/delete/{parcela}', 'ParcelasController@delete')->name('parcelas.delete');
 
 #endregion
+
+#region Productos Compuestos
+
+Route::get('/maestros/productos-compuestos', function () {
+    $cajas = App\Caja::all();
+    return view('maestros.productos_compuestos');
+})->name('productos-compuestos');
+
+#endregion
