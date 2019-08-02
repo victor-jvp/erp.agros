@@ -5,14 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pallet extends Model
+class PalletModel extends Model
 {
     //
     use SoftDeletes;
-    protected $table = "pallets";
+    protected $table = "pallets_models";
 
-    public function palletModel()
+    public function pallets()
     {
-        return $this->belongsTo(App\PalletModel::class);
+        return $this->hasMany(App\Pallet::class);
     }
 }

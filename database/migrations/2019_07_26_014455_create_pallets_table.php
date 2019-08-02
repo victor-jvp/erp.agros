@@ -14,9 +14,10 @@ class CreatePalletsTable extends Migration
     public function up()
     {
         Schema::create('pallets', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('formato', 35);
-            $table->string('modelo', 35);
+            $table->unsignedInteger('modelo_id');
+            $table->foreign('modelo_id')->references('id')->on('pallets_models');
             $table->softDeletes();
             $table->timestamps();
         });
