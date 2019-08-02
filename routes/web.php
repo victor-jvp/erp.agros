@@ -100,8 +100,25 @@ Route::get('/maestros/parcelas/delete/{parcela}', 'ParcelasController@delete')->
 #region Productos Compuestos
 
 Route::get('/maestros/productos-compuestos', function () {
-    return view('maestros.productos_compuestos');
+    $productos = App\ProductoCompuesto_cab::all();
+    return view('maestros.productos_compuestos', [
+        "productos" => $productos
+    ]);
 })->name('productos-compuestos');
+
+Route::post('maestros/productos-compuestos/create', 'ProductosCompuestosController@create');
+
+Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
+    $producto = App\ProductoCompuesto_cab::find($id);
+    $detalles = App\ProductoCompuesto_det::where('compuesto_id', $id)->get();
+    $cajas = App\Caja::all();
+    return view('maestros.productos_compuestos_show',[
+        'producto' => $producto,
+        'detalles' => $detalles,
+    ]);
+})->name('productos-compuestos-show');
+
+Route::put('/maestros/productos-compuestos/store/{producto}', 'ProductosCompuestosController@store')->name('productos-compuestos.store');
 
 #endregion
 

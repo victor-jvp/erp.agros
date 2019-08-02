@@ -14,7 +14,7 @@ class CreateAuxiliaresTable extends Migration
     public function up()
     {
         Schema::create('auxiliares', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('modelo', 35);
             $table->softDeletes();
             $table->timestamps();

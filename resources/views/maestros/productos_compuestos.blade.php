@@ -28,12 +28,10 @@
                     {{--Modal Producto Compuesto--}}
                     <div class="modal fade" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-producto">
-                        <div class="modal-dialog modal-lg">
+                        <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="/maestros/productos" method="POST" id="producto_form">
+                                <form action="/maestros/productos-compuestos/create" method="POST" id="producto_form">
                                     {{ csrf_field() }}
-                                    <input type="hidden" name="_method" id="producto_method" value="PUT">
-                                    <input type="hidden" name="id" id="producto_id">
 
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="modal-producto-title"></h5>
@@ -45,28 +43,10 @@
                                     <div class="modal-body">
 
                                         <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="producto">Producto</label>
-                                                <input type="text" class="form-control" id="producto"
-                                                       placeholder="Producto" required="" name="producto">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="cultivo">Cultivo</label>
-                                                <input type="text" class="form-control" id="cultivo"
-                                                       placeholder="Cultivo" required="" name="cultivo">
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="variedad">Variedad</label>
-                                                <input type="text" class="form-control" id="variedad"
-                                                       placeholder="Variedad" required="" name="variedad">
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="marca">Marca</label>
-                                                <input type="text" class="form-control" id="marca"
-                                                       placeholder="Marca" required="" name="marca">
+                                            <div class="col-md-12 mb-3">
+                                                <label for="compuesto">Compuesto</label>
+                                                <input type="text" class="form-control" id="compuesto"
+                                                       placeholder="Compuesto" required="" name="compuesto">
                                             </div>
                                         </div>
 
@@ -89,16 +69,28 @@
                                        style="width:100%">
                                     <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th scope="col">Id</th>
                                         <th scope="col">Producto</th>
-                                        <th scope="col">Cultivo</th>
-                                        <th scope="col">Variedad</th>
-                                        <th scope="col">Marca</th>
+                                        <th scope="col">Fecha</th>
                                         <th scope="col">Acción</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-
+                                    @foreach ($productos as $producto)
+                                        <tr>
+                                            <td>{{ $producto->id }}</td>
+                                            <td>{{ $producto->compuesto }}</td>
+                                            <td>{{ date('d/m/Y', strtotime($producto->fecha))}}</td>
+                                            <td>
+                                                <a href="{{ url('maestros/productos-compuestos/show/'.$producto->id) }}" class="text-success mr-2">
+                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                </a>
+{{--                                                <a href="javascript:void(0);" class="text-danger mr-2">--}}
+{{--                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>--}}
+{{--                                                </a>--}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

@@ -14,7 +14,7 @@ class CreateCubresTable extends Migration
     public function up()
     {
         Schema::create('cubres', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('formato', 35);
             $table->softDeletes();
             $table->timestamps();
