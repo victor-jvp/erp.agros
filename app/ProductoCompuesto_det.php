@@ -12,4 +12,9 @@ class ProductoCompuesto_det extends Model
     {
         return $this->belongsTo(App\ProductoCompuesto_cab::class);
     }
+
+//    public function caja()
+//    {
+//        return $this->belongsTo(App\Caja::class);
+//    }
 }

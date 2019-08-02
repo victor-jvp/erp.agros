@@ -115,6 +115,7 @@ Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
     return view('maestros.productos_compuestos_show',[
         'producto' => $producto,
         'detalles' => $detalles,
+        'cajas' => $cajas,
     ]);
 })->name('productos-compuestos-show');
 

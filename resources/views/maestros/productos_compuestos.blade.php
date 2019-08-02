@@ -72,6 +72,7 @@
                                         <th scope="col">Id</th>
                                         <th scope="col">Producto</th>
                                         <th scope="col">Fecha</th>
+                                        <th scope="col">Nº de Composiciones</th>
                                         <th scope="col">Acción</th>
                                     </tr>
                                     </thead>
@@ -81,6 +82,7 @@
                                             <td>{{ $producto->id }}</td>
                                             <td>{{ $producto->compuesto }}</td>
                                             <td>{{ date('d/m/Y', strtotime($producto->fecha))}}</td>
+                                            <td>0</td>
                                             <td>
                                                 <a href="{{ url('maestros/productos-compuestos/show/'.$producto->id) }}" class="text-success mr-2">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>

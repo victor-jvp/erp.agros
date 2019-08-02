@@ -192,17 +192,16 @@
                                     @foreach ($detalles as $detalle)
                                         <tr>
                                             <td>{{ $detalle->variable }}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{ $detalle->caja_id }}</td>
+                                            <td>{{ $detalle->euro_pallet_id }}</td>
+                                            <td>{{ $detalle->euro_cantidad }}</td>
+                                            <td>{{ $detalle->euro_kg }}</td>
+                                            <td>{{ $detalle->grand_pallet_id}}</td>
+                                            <td>{{ $detalle->grand_cantidad }}</td>
+                                            <td>{{ $detalle->grand_kg}}</td>
+                                            <td>{{ $detalle->cestas}}</td>
+                                            <td>{{ $detalle->cantoneras}}</td>
+                                            <td>{{ $detalle->cubre}}</td>
                                             <td>
                                                 <a href="javascript:void(0);" class="text-success mr-2">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
