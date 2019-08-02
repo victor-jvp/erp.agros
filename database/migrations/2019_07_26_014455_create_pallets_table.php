@@ -16,7 +16,7 @@ class CreatePalletsTable extends Migration
         Schema::create('pallets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('formato', 35);
-            $table->unsignedInteger('modelo_id');
+            $table->unsignedInteger('modelo_id')->nullable()->default(null);
             $table->foreign('modelo_id')->references('id')->on('pallets_models');
             $table->softDeletes();
             $table->timestamps();

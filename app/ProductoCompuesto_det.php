@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductoCompuesto_det extends Model
 {
-    protected $table = "productosCompuestos_det";
+    protected $table = "productoscompuestos_det";
 
     public function cab()
     {

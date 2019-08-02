@@ -15,7 +15,7 @@ class CreatePalletsModelsTable extends Migration
     {
         Schema::create('pallets_models', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('modelo');
+            $table->string('modelo', 55);
             $table->softDeletes();
             $table->timestamps();
         });

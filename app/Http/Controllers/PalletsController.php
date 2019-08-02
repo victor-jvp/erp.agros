@@ -18,7 +18,7 @@ class PalletsController extends Controller
         $pallet = new Pallet();
 
         $pallet->formato = $request->formato;
-        $pallet->modelo  = $request->modelo;
+        $pallet->modelo_id = 1;
         $pallet->save();
 
         return redirect()->route('materiales');
@@ -36,7 +36,7 @@ class PalletsController extends Controller
 
         $pallet          = Pallet::find($request->id);
         $pallet->formato = $request->formato;
-        $pallet->modelo  = $request->modelo;
+        $pallet->modelo_id = 1;
         $pallet->save();
 
         return redirect()->route('materiales');
