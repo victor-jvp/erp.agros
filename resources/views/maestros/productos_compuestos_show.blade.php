@@ -39,7 +39,8 @@
                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-producto">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <form action="/maestros/productos-compuestos/store/{{ $producto->id }}" method="POST" id="producto_form">
+                                <form action="/maestros/productos-compuestos/store/{{ $producto->id }}" method="POST"
+                                      id="producto_form">
                                     {{ csrf_field() }}
                                     {{ method_field('PUT') }}
 
@@ -154,6 +155,69 @@
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="tarrina_modelo">Tarrina</label>
+                                                <select name="tarrina_modelo" id="tarrina_modelo"
+                                                        class="form-control chosen"
+                                                        data-placeholder="Seleccione...">
+                                                    <option value=""></option>
+                                                    @if (isset($tarrinas))
+                                                        @foreach ($tarrinas as $tarrina)
+                                                            <option value="{{ $tarrina->id }}">{{ $tarrina->modelo }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="tarrina_cantidad">Cantidad</label>
+                                                <input type="number" class="form-control" id="tarrina_cantidad"
+                                                       placeholder="Cantidad" name="tarrina_cantidad[]" step="0.01">
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label for="">&nbsp;</label>
+                                                <button id="btnAddTarrina" type="button"
+                                                        class="btn btn-success btn-icon">
+                                                    <i class="i-Add"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 mb-3">
+                                                <div class="table-responsive">
+                                                    <table id="tarrinas_table"
+                                                           class="display table table-striped table-bordered"
+                                                           style="width:100%">
+                                                        <thead>
+                                                        <tr>
+                                                            <td>id</td>
+                                                            <th>modelo_id</th>
+                                                            <th scope="col">Tarrina</th>
+                                                            <th scope="col">Cantidad</th>
+                                                            <th scope="col">Acción</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {{--<tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>
+                                                                <a href="javascript:void(0);" class="text-success mr-2">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);" class="text-danger mr-2">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>--}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -238,9 +302,10 @@
 
     <script>
         var table_productos
+        var table_tarrinas
 
         $(function () {
-            var table_productos = $("#productos_table").DataTable({
+            table_productos = $("#productos_table").DataTable({
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 },
@@ -250,12 +315,42 @@
                 searching: false,
             });
 
+            table_tarrinas = $("#tarrinas_table").DataTable({
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+                ordering: false,
+                info: false,
+                paging: false,
+                searching: false,
+                columnDefs: [
+                    {targets: [0,1], visible: false}
+                ]
+            });
+
             $("#btnNuevoDetalle").click(function (e) {
                 $("#modal-producto-title").html('Agregar Producto');
                 $("#modal-producto").modal("show");
             });
 
+            $("#btnAddTarrina").click(function (e) {
+                var modelo_id = $("#tarrina_modelo").val();
+                var modelo = $("#tarrina_modelo option:selected").text();
+                var cantidad = $("#tarrina_cantidad").val();
+                var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
+                    '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
+                    '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
+                    '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                    '</a>';
 
+                table_tarrinas.row.add([
+                    0,
+                    modelo_id,
+                    modelo,
+                    cantidad,
+                    opciones
+                ]).draw(false);
+            });
         })
     </script>
 

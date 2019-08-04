@@ -116,10 +116,12 @@ Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
     $producto = App\ProductoCompuesto_cab::find($id);
     $detalles = App\ProductoCompuesto_det::where('compuesto_id', $id)->get();
     $cajas    = App\Caja::all();
+    $tarrinas = App\Tarrina::all();
     return view('maestros.productos_compuestos_show', [
         'producto' => $producto,
         'detalles' => $detalles,
         'cajas'    => $cajas,
+        'tarrinas' => $tarrinas
     ]);
 })->name('productos-compuestos-show');
 
