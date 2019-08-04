@@ -30,11 +30,13 @@ Route::get('/maestros/materiales', function () {
     $pallets    = App\Pallet::all();
     $cubres     = App\Cubre::all();
     $auxiliares = App\Auxiliar::all();
+    $tarrinas   = App\Tarrina::all();
     return view('maestros.materiales', [
         'cajas'      => $cajas,
         'pallets'    => $pallets,
         'cubres'     => $cubres,
-        'auxiliares' => $auxiliares
+        'auxiliares' => $auxiliares,
+        'tarrinas'   => $tarrinas
     ]);
 })->name('materiales');
 
@@ -42,11 +44,13 @@ Route::resource('/maestros/cajas', 'CajasController');
 Route::resource('/maestros/pallets', 'PalletsController');
 Route::resource('/maestros/cubres', 'CubresController');
 Route::resource('/maestros/auxiliares', 'AuxiliaresController');
+Route::resource('/maestros/tarrinas', 'TarrinasController');
 
 Route::get('/maestros/cajas/delete/{caja}', 'CajasController@delete')->name('cajas.delete');
 Route::get('/maestros/pallets/delete/{pallet}', 'PalletsController@delete')->name('pallets.delete');
 Route::get('/maestros/cubres/delete/{cubre}', 'CubresController@delete')->name('cubres.delete');
 Route::get('/maestros/auxiliares/delete/{auxiliar}', 'AuxiliaresController@delete')->name('auxiliares.delete');
+Route::get('/maestros/tarrinas/delete/{tarrina}', 'TarrinasController@delete')->name('auxiliares.delete');
 
 #endregion
 
@@ -77,9 +81,9 @@ Route::get('/maestros/marcas/delete/{marca}', 'MarcasController@delete')->name('
 #region Fincas
 
 Route::get('/maestros/fincas', function () {
-    $fincas = App\Finca::all();
+    $fincas   = App\Finca::all();
     $parcelas = App\Parcela::all();
-    $cultivos   = App\Cultivo::all();
+    $cultivos = App\Cultivo::all();
     return view('maestros.fincas', array(
         'fincas'   => $fincas,
         'parcelas' => $parcelas,
@@ -111,11 +115,11 @@ Route::post('maestros/productos-compuestos/create', 'ProductosCompuestosControll
 Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
     $producto = App\ProductoCompuesto_cab::find($id);
     $detalles = App\ProductoCompuesto_det::where('compuesto_id', $id)->get();
-    $cajas = App\Caja::all();
-    return view('maestros.productos_compuestos_show',[
+    $cajas    = App\Caja::all();
+    return view('maestros.productos_compuestos_show', [
         'producto' => $producto,
         'detalles' => $detalles,
-        'cajas' => $cajas,
+        'cajas'    => $cajas,
     ]);
 })->name('productos-compuestos-show');
 

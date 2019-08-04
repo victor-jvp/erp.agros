@@ -218,6 +218,12 @@
                         <span class="item-name">Trazabilidad</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="{{ Route::currentRouteName()=='tarrinas' ? 'open' : '' }}" href="{{ url('maestros/tarrinas') }}">
+                        <i class="nav-icon i-Medal-2"></i>
+                        <span class="item-name">Tarrinas</span>
+                    </a>
+                </li>
             </ul>
             <ul class="childNav" data-parent="configuracion">
                 <li class="nav-item">

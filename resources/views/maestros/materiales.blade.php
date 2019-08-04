@@ -36,6 +36,10 @@
                             <a class="nav-link" id="auxiliares-tab" data-toggle="tab" href="#auxiliares" role="tab"
                                aria-controls="auxiliares" aria-selected="false">Auxiliares</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tarrinas-tab" data-toggle="tab" href="#tarrinas" role="tab"
+                               aria-controls="tarrinas" aria-selected="false">Tarrinas</a>
+                        </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="cajas" role="tabpanel" aria-labelledby="cajas-tab">
@@ -372,6 +376,83 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="tarrinas" role="tabpanel" aria-labelledby="tarrinas-tab">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary" type="button" id="btnNuevoTarrina">Nuevo</button>
+                                </div>
+                            </div>
+
+                            <!-- Modal Tarrinas-->
+                            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-tarrina">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <form action="/maestros/tarrinas" method="POST" id="tarrina_form">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="_method" id="tarrina_method" value="PUT">
+                                            <input type="hidden" name="id" id="tarrina_id">
+
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modal-tarrina-title"></h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-row">
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="tarrina_modelo">Modelo</label>
+                                                        <input type="text" class="form-control" id="tarrina_modelo"
+                                                               placeholder="Modelo" required="" name="modelo">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="tarrinas_table" class="display table table-striped table-bordered" style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th scope="col">Modelo</th>
+                                                <th scope="col">Accion</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @if (isset($tarrinas))
+                                                @foreach ($tarrinas as $tarrina)
+                                                    <tr>
+                                                        <td>{{ $tarrina->id }}</td>
+                                                        <td scope="row">{{ $tarrina->modelo }}</td>
+                                                        <td>
+                                                            <a href="javascript:void(0);" class="text-success mr-2">
+                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                            </a>
+                                                            <a href="javascript:void(0);" class="text-danger mr-2">
+                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -608,7 +689,7 @@
             $('#auxiliares_table .edit').on( 'click', function () {
                 var tr = $(this).closest('tr');
                 var row = table_auxiliares.row( tr ).data();
-                limpiarCamposPallet();
+                limpiarCamposAuxiliares();
 
                 $('#auxiliar_id').val(row[0]);
                 $('#auxiliar_modelo').val(row[1]);
@@ -641,15 +722,78 @@
             });
 
             $("#btnNuevoAuxiliar").click(function (e) {
-                limpiarCamposPallet();
+                limpiarCamposAuxiliares();
                 $("#modal-auxiliar-title").html("Nuevo Auxiliar");
                 $("#auxiliar_method").val(null);
                 $("#modal-auxiliar").modal('show');
             })
         });
 
-        function limpiarCamposPallet() {
+        function limpiarCamposAuxiliares() {
             $('#auxiliar_id, #auxiliar_modelo').val(null);
+        }
+    </script>
+
+    {{--tarrinas--}}
+    <script>
+        var table_tarrinas
+
+        $(document).ready(function () {
+            // Configuracion de Datatable
+            table_tarrinas = $('#tarrinas_table').DataTable({
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+                columnDefs: [
+                    { targets: [0], visible: false},
+                ]
+            });
+
+            $('#tarrinas_table .edit').on( 'click', function () {
+                var tr = $(this).closest('tr');
+                var row = table_tarrinas.row( tr ).data();
+                limpiarCamposTarrinas();
+
+                $('#tarrina_id').val(row[0]);
+                $('#tarrina_modelo').val(row[1]);
+                $('#tarrina_form').attr('action', '/maestros/tarrinas/'+row[0]);
+
+                $("#modal-tarrina-title").html("Modificar Tarrina");
+                $("#tarrina_method").val('PUT');
+                $("#modal-tarrina").modal('show');
+            });
+
+            $('#tarrinas_table .delete').on( 'click', function () {
+                var tr = $(this).closest('tr');
+                var row = table_tarrinas.row( tr ).data();
+
+                swal({
+                    title: 'Confirmar Proceso',
+                    text: "Confirme eliminar el registro seleccionado",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0CC27E',
+                    cancelButtonColor: '#FF586B',
+                    confirmButtonText: 'Confirmar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonClass: 'btn btn-success mr-5',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function () {
+                    window.location.href = "{{ url('maestros/tarrinas/delete') }}"+"/"+row[0]
+                });
+            });
+
+            $("#btnNuevoTarrina").click(function (e) {
+                limpiarCamposTarrinas();
+                $("#modal-tarrina-title").html("Nueva Tarrina");
+                $("#tarrina_method").val(null);
+                $("#modal-tarrina").modal('show');
+            })
+        });
+
+        function limpiarCamposTarrinas() {
+            $('#tarrina_id, #tarrina_modelo').val(null);
         }
     </script>
 @endsection
