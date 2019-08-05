@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PalletsModelTableSeeder extends Seeder
 {
@@ -10,10 +11,12 @@ class PalletsModelTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('pallets_table')->insert([
+        DB::table('pallets_models')->insert([
             'modelo' => 'Euro Pallet',
-        ], [
-            'modelo' => 'Grande'
+        ]);
+
+        DB::table('pallets_models')->insert([
+            'modelo' => 'Pallet Grande',
         ]);
     }
 }

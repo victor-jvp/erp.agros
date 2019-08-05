@@ -13,7 +13,7 @@ class CreateProductosCompuestosCabTable extends Migration
      */
     public function up()
     {
-        Schema::create('productosCompuestos_cab', function (Blueprint $table) {
+        Schema::create('productoscompuestos_cab', function (Blueprint $table) {
             $table->increments('id');
             $table->string('compuesto');
             $table->date('fecha');
@@ -28,6 +28,6 @@ class CreateProductosCompuestosCabTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('productosCompuestos_cab');
+        Schema::dropIfExists('productoscompuestos_cab');
     }
 }

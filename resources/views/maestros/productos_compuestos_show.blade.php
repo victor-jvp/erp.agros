@@ -68,7 +68,7 @@
                                                     <option value=""></option>
                                                     @if (isset($cajas))
                                                         @foreach ($cajas as $caja)
-                                                            <option value="{{ $caja->id }}">{{ $caja->caja }}</option>
+                                                            <option value="{{ $caja->id }}">{{ $caja->formato.' | '.$caja->modelo }}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -249,6 +249,7 @@
                                         <th scope="col">Tapas</th>
                                         <th scope="col">Cantoneras</th>
                                         <th scope="col">Cubre</th>
+                                        <th scope="col">Tarrinas</th>
                                         <th scope="col">Acción</th>
                                     </tr>
                                     </thead>
@@ -256,17 +257,30 @@
                                     @foreach ($detalles as $detalle)
                                         <tr>
                                             <td>{{ $detalle->variable }}</td>
-                                            <td>{{ $detalle->caja_id }}</td>
-                                            <td>{{ $detalle->euro_pallet_id }}</td>
+                                            <td>{{ (!is_null($detalle->caja_id)) ? $detalle->caja->formato : "" }}</td>
+                                            <td>{{ (!is_null($detalle->euro_pallet_id)) ? $detalle->euro_pallet->formato : "" }}</td>
                                             <td>{{ $detalle->euro_cantidad }}</td>
                                             <td>{{ $detalle->euro_kg }}</td>
-                                            <td>{{ $detalle->grand_pallet_id}}</td>
+                                            <td>{{ (!is_null($detalle->grand_pallet_id)) ? $detalle->grand_pallet->formato : "" }}</td>
                                             <td>{{ $detalle->grand_cantidad }}</td>
                                             <td>{{ $detalle->grand_kg}}</td>
                                             <td>{{ $detalle->cestas}}</td>
                                             <td>{{ $detalle->tapas}}</td>
                                             <td>{{ $detalle->cantoneras}}</td>
-                                            <td>{{ $detalle->cubre}}</td>
+                                            <td>{{ (!is_null($detalle->cubre_id)) ? $detalle->cubre->formato : "" }}</td>
+                                            <td>
+                                                @if(isset($detalle->tarrinas))
+                                                    <ul class="list-group text-left">
+                                                        @foreach($detalle->tarrinas as $tarrina)
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                {{ $tarrina->tarrina->modelo }}
+                                                                <span class="badge badge-primary badge-pill">{{ $tarrina->cantidad }}</span>
+                                                            </li>
+
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <a href="javascript:void(0);" class="text-success mr-2">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>

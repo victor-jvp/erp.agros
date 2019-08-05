@@ -8,13 +8,23 @@ class ProductoCompuesto_det extends Model
 {
     protected $table = "productoscompuestos_det";
 
-    public function cab()
-    {
-        return $this->belongsTo(App\ProductoCompuesto_cab::class);
-    }
-
     public function tarrinas()
     {
-        return $this->hasMany(App\ProductoCompueso_tarrinas::class);
+        return $this->hasMany(ProductoCompuesto_tarrinas::class);
+    }
+
+    public function caja()
+    {
+        return $this->belongsTo(Caja::class);
+    }
+
+    public function euro_pallet()
+    {
+        return $this->belongsTo(Pallet::class);
+    }
+
+    public function grand_pallet()
+    {
+        return $this->belongsTo(Pallet::class);
     }
 }

@@ -107,6 +107,11 @@ Route::get('/maestros/parcelas/delete/{parcela}', 'ParcelasController@delete')->
 
 Route::get('/maestros/productos-compuestos', function () {
     $productos = App\ProductoCompuesto_cab::all();
+
+    foreach ($productos as $i => $producto)
+    {
+        $productos[$i]->detalles = App\ProductoCompuesto_det::where('compuesto_id', $producto->id)->get();
+    }
     return view('maestros.productos_compuestos', [
         "productos" => $productos
     ]);
@@ -115,15 +120,25 @@ Route::get('/maestros/productos-compuestos', function () {
 Route::post('maestros/productos-compuestos/create', 'ProductosCompuestosController@create');
 
 Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
-    $producto = App\ProductoCompuesto_cab::find($id);
-    $detalles = App\ProductoCompuesto_det::where('compuesto_id', $id)->get();
-    $cajas    = App\Caja::all();
-    $tarrinas = App\Tarrina::all();
+    $producto      = App\ProductoCompuesto_cab::find($id);
+    $detalles      = App\ProductoCompuesto_det::where('compuesto_id', $id)->get();
+
+    foreach ($detalles as $i => $detalle)
+    {
+        $detalles[$i]->tarrinas = App\ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->get();
+    }
+
+    $cajas         = App\Caja::all();
+    $euro_pallets  = App\Pallet::where('modelo_id', '=', '1')->get();
+    $grand_pallets = App\Pallet::where('modelo_id', '=', '2')->get();
+    $tarrinas      = App\Tarrina::all();
     return view('maestros.productos_compuestos_show', [
-        'producto' => $producto,
-        'detalles' => $detalles,
-        'cajas'    => $cajas,
-        'tarrinas' => $tarrinas
+        'producto'      => $producto,
+        'detalles'      => $detalles,
+        'cajas'         => $cajas,
+        'tarrinas'      => $tarrinas,
+        'euro_pallets'  => $euro_pallets,
+        'grand_pallets' => $grand_pallets
     ]);
 })->name('productos-compuestos-show');
 

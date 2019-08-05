@@ -82,7 +82,7 @@
                                             <td>{{ $producto->id }}</td>
                                             <td>{{ $producto->compuesto }}</td>
                                             <td>{{ date('d/m/Y', strtotime($producto->fecha))}}</td>
-                                            <td>0</td>
+                                            <td>{{ (isset($producto->detalles)) ? count($producto->detalles) : 0}}</td>
                                             <td>
                                                 <a href="{{ url('maestros/productos-compuestos/show/'.$producto->id) }}" class="text-success mr-2">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
