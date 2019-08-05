@@ -159,7 +159,7 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label for="tarrina_modelo">Tarrina</label>
-                                                <select name="tarrina_modelo" id="tarrina_modelo"
+                                                <select id="tarrina_modelo"
                                                         class="form-control chosen"
                                                         data-placeholder="Seleccione...">
                                                     <option value=""></option>
@@ -173,10 +173,10 @@
                                             <div class="col-md-4 mb-3">
                                                 <label for="tarrina_cantidad">Cantidad</label>
                                                 <input type="number" class="form-control" id="tarrina_cantidad"
-                                                       placeholder="Cantidad" name="tarrina_cantidad[]" step="0.01">
+                                                       placeholder="Cantidad" step="0.01">
                                             </div>
                                             <div class="col-md-2 mb-3">
-                                                <label for="">&nbsp;</label>
+                                                <br>
                                                 <button id="btnAddTarrina" type="button"
                                                         class="btn btn-success btn-icon">
                                                     <i class="i-Add"></i>
@@ -264,6 +264,7 @@
                                             <td>{{ $detalle->grand_cantidad }}</td>
                                             <td>{{ $detalle->grand_kg}}</td>
                                             <td>{{ $detalle->cestas}}</td>
+                                            <td>{{ $detalle->tapas}}</td>
                                             <td>{{ $detalle->cantoneras}}</td>
                                             <td>{{ $detalle->cubre}}</td>
                                             <td>
@@ -324,7 +325,7 @@
                 paging: false,
                 searching: false,
                 columnDefs: [
-                    {targets: [0,1], visible: false}
+                    {targets: [0, 1], visible: false}
                 ]
             });
 
@@ -346,8 +347,8 @@
                 table_tarrinas.row.add([
                     0,
                     modelo_id,
-                    modelo,
-                    cantidad,
+                    '<input type="hidden" name="tarrinas_id[]" value="' + modelo_id + '">' + modelo,
+                    '<input type="hidden" name="tarrinas_cantidad[]" value="' + cantidad + '"> ' + cantidad,
                     opciones
                 ]).draw(false);
             });

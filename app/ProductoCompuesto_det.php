@@ -13,8 +13,8 @@ class ProductoCompuesto_det extends Model
         return $this->belongsTo(App\ProductoCompuesto_cab::class);
     }
 
-//    public function caja()
-//    {
-//        return $this->belongsTo(App\Caja::class);
-//    }
+    public function tarrinas()
+    {
+        return $this->hasMany(App\ProductoCompueso_tarrinas::class);
+    }
 }
