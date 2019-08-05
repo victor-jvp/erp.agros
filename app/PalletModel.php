@@ -10,9 +10,4 @@ class PalletModel extends Model
     //
     use SoftDeletes;
     protected $table = "pallets_models";
-
-    public function pallets()
-    {
-        return $this->hasMany(App\Pallet::class);
-    }
 }

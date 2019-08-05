@@ -51,7 +51,8 @@
                             </div>
 
                             <!-- Modal Cajas-->
-                            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-cajas">
+                            <div class="modal fade" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-cajas">
                                 <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
                                         <form action="/maestros/cajas" method="POST" id="caja_form">
@@ -61,7 +62,8 @@
 
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="modal-cajas-title"></h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -80,12 +82,15 @@
                                                     <div class="col-md-12 mb-3">
                                                         <label for="validationCustom02">Kilogramos</label>
                                                         <input type="number" class="form-control" id="caja_kg"
-                                                               placeholder="Kilogramos" required="" name="kg" step="0.01">
+                                                               placeholder="Kilogramos" required="" name="kg"
+                                                               step="0.01">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Cerrar
+                                                </button>
                                                 <button type="submit" class="btn btn-primary">Guardar</button>
                                             </div>
                                         </form>
@@ -98,7 +103,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table id="cajas_table" class="display table table-striped table-bordered" style="width:100%">
+                                        <table id="cajas_table" class="display table table-striped table-bordered"
+                                               style="width:100%">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -117,9 +123,9 @@
                                                         <td>{{ $caja->modelo }}</td>
                                                         <td>{{ $caja->kg }}</td>
                                                         <td>
-{{--                                                            <a href="javascript:void(0);" onclick="EditCaja('{{ $caja->id }}')" class="text-success mr-2">--}}
-{{--                                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>--}}
-{{--                                                            </a>--}}
+                                                            {{--                                                            <a href="javascript:void(0);" onclick="EditCaja('{{ $caja->id }}')" class="text-success mr-2">--}}
+                                                            {{--                                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>--}}
+                                                            {{--                                                            </a>--}}
                                                             <a href="javascript:void(0);" class="text-success mr-2">
                                                                 <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
                                                             </a>
@@ -146,7 +152,8 @@
                             </div>
 
                             <!-- Modal Pallets-->
-                            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-pallets">
+                            <div class="modal fade" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-pallets">
                                 <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
                                         <form action="/maestros/pallets" method="POST" id="pallet_form">
@@ -156,7 +163,8 @@
 
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="modal-pallets-title"></h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -168,14 +176,24 @@
                                                                placeholder="Formato" required="" name="formato">
                                                     </div>
                                                     <div class="col-md-12 mb-3">
-                                                        <label for="validationCustom02">Modelo</label>
-                                                        <input type="text" class="form-control" id="pallet_modelo"
-                                                               placeholder="Modelo" required="" name="modelo">
+                                                        <label for="">Modelo</label>
+                                                        <select name="modelo_id" id="pallet_modelo_id"
+                                                                class="form-control chosen" required
+                                                                data-placeholder="Seleccione...">
+                                                            <option value=""></option>
+                                                            @if (isset($palletsModels))
+                                                                @foreach ($palletsModels as $modelo)
+                                                                    <option value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Cerrar
+                                                </button>
                                                 <button type="submit" class="btn btn-primary">Guardar</button>
                                             </div>
                                         </form>
@@ -188,11 +206,13 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table id="pallets_table" class="display table table-striped table-bordered" style="width:100%">
+                                        <table id="pallets_table" class="display table table-striped table-bordered"
+                                               style="width:100%">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
                                                 <th scope="col">Formato</th>
+                                                <th>modelo_id</th>
                                                 <th scope="col">Modelo</th>
                                                 <th scope="col">Accion</th>
                                             </tr>
@@ -203,7 +223,8 @@
                                                     <tr>
                                                         <td>{{ $pallet->id }}</td>
                                                         <td scope="row">{{ $pallet->formato }}</td>
-                                                        <td>{{ $pallet->modelo }}</td>
+                                                        <td>{{ $pallet->modelo_id }}</td>
+                                                        <td>{{ $pallet->modelo->modelo }}</td>
                                                         <td>
                                                             <a href="javascript:void(0);" class="text-success mr-2">
                                                                 <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
@@ -230,7 +251,8 @@
                             </div>
 
                             <!-- Modal Cubres-->
-                            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-cubres">
+                            <div class="modal fade" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-cubres">
                                 <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
                                         <form action="/maestros/cubres" method="POST" id="cubre_form">
@@ -240,7 +262,8 @@
 
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="modal-cubres-title"></h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -254,7 +277,9 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Cerrar
+                                                </button>
                                                 <button type="submit" class="btn btn-primary">Guardar</button>
                                             </div>
                                         </form>
@@ -267,7 +292,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table id="cubres_table" class="display table table-striped table-bordered" style="width:100%">
+                                        <table id="cubres_table" class="display table table-striped table-bordered"
+                                               style="width:100%">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -307,7 +333,8 @@
                             </div>
 
                             <!-- Modal Cubres-->
-                            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-auxiliar">
+                            <div class="modal fade" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-auxiliar">
                                 <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
                                         <form action="/maestros/auxiliares" method="POST" id="auxiliar_form">
@@ -317,7 +344,8 @@
 
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="modal-auxiliar-title"></h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -331,7 +359,9 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Cerrar
+                                                </button>
                                                 <button type="submit" class="btn btn-primary">Guardar</button>
                                             </div>
                                         </form>
@@ -344,7 +374,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table id="auxiliares_table" class="display table table-striped table-bordered" style="width:100%">
+                                        <table id="auxiliares_table" class="display table table-striped table-bordered"
+                                               style="width:100%">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -384,7 +415,8 @@
                             </div>
 
                             <!-- Modal Tarrinas-->
-                            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-tarrina">
+                            <div class="modal fade" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-tarrina">
                                 <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
                                         <form action="/maestros/tarrinas" method="POST" id="tarrina_form">
@@ -394,7 +426,8 @@
 
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="modal-tarrina-title"></h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -408,7 +441,9 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Cerrar
+                                                </button>
                                                 <button type="submit" class="btn btn-primary">Guardar</button>
                                             </div>
                                         </form>
@@ -421,7 +456,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table id="tarrinas_table" class="display table table-striped table-bordered" style="width:100%">
+                                        <table id="tarrinas_table" class="display table table-striped table-bordered"
+                                               style="width:100%">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -463,11 +499,13 @@
 @section('page-css')
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/datatables.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/sweetalert2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen-bootstrap-4.css')}}">
 @endsection
 
 @section('bottom-js')
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
 
     {{--Cajas--}}
     <script>
@@ -480,29 +518,29 @@
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 },
                 columnDefs: [
-                    { targets: [0], visible: false},
+                    {targets: [0], visible: false},
                 ]
             });
 
-            $('#cajas_table .edit').on( 'click', function () {
+            $('#cajas_table .edit').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_cajas.row( tr ).data();
+                var row = table_cajas.row(tr).data();
                 limpiarCamposCaja();
 
                 $('#caja_id').val(row[0]);
                 $('#caja_formato').val(row[1]);
                 $('#caja_modelo').val(row[2]);
                 $('#caja_kg').val(row[3]);
-                $('#caja_form').attr('action', '/maestros/cajas/'+row[0]);
+                $('#caja_form').attr('action', '/maestros/cajas/' + row[0]);
 
                 $("#modal-cajas-title").html("Modificar Caja");
                 $("#caja_method").val('PUT');
                 $("#modal-cajas").modal('show');
             });
 
-            $('#cajas_table .delete').on( 'click', function () {
+            $('#cajas_table .delete').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_cajas.row( tr ).data();
+                var row = table_cajas.row(tr).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -517,7 +555,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('maestros/cajas/delete') }}"+"/"+row[0]
+                    window.location.href = "{{ url('maestros/cajas/delete') }}" + "/" + row[0]
                 })
             });
 
@@ -528,7 +566,7 @@
                 $("#modal-cajas").modal('show');
             })
         });
-        
+
         function limpiarCamposCaja() {
             $('#caja_id, #caja_formato, #caja_modelo, #caja_kg').val(null);
         }
@@ -539,34 +577,40 @@
         var table_pallets
 
         $(document).ready(function () {
+            $(".chosen").chosen({
+                width: "100%",
+                no_results_text: "No se encontraron resultados... ",
+                allow_single_deselect: true
+            });
+
             // Configuracion de Datatable
             table_pallets = $('#pallets_table').DataTable({
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 },
                 columnDefs: [
-                    { targets: [0], visible: false},
+                    {targets: [0, 2], visible: false},
                 ]
             });
 
-            $('#pallets_table .edit').on( 'click', function () {
+            $('#pallets_table .edit').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_pallets.row( tr ).data();
+                var row = table_pallets.row(tr).data();
                 limpiarCamposPallet();
 
                 $('#pallet_id').val(row[0]);
                 $('#pallet_formato').val(row[1]);
-                $('#pallet_modelo').val(row[2]);
-                $('#pallet_form').attr('action', '/maestros/pallets/'+row[0]);
+                $('#pallet_modelo_id').val(row[2]).trigger('chosen:updated');
+                $('#pallet_form').attr('action', '/maestros/pallets/' + row[0]);
 
                 $("#modal-pallets-title").html("Modificar Pallet");
                 $("#pallet_method").val('PUT');
                 $("#modal-pallets").modal('show');
             });
 
-            $('#pallets_table .delete').on( 'click', function () {
+            $('#pallets_table .delete').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_pallets.row( tr ).data();
+                var row = table_pallets.row(tr).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -581,7 +625,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('maestros/pallets/delete') }}"+"/"+row[0]
+                    window.location.href = "{{ url('maestros/pallets/delete') }}" + "/" + row[0]
                 }, function (dismiss) {
                     // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
                     // if (dismiss === 'cancel') {
@@ -603,7 +647,8 @@
         });
 
         function limpiarCamposPallet() {
-            $('#pallet_id, #pallet_formato, #pallet_modelo').val(null);
+            $('#pallet_id, #pallet_formato').val(null);
+            $('#pallet_modelo_id').val(null).trigger('chosen:updated');
         }
     </script>
 
@@ -618,27 +663,27 @@
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 },
                 columnDefs: [
-                    { targets: [0], visible: false},
+                    {targets: [0], visible: false},
                 ]
             });
 
-            $('#cubres_table .edit').on( 'click', function () {
+            $('#cubres_table .edit').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_cubres.row( tr ).data();
+                var row = table_cubres.row(tr).data();
                 limpiarCamposCubre();
 
                 $('#cubre_id').val(row[0]);
                 $('#cubre_formato').val(row[1]);
-                $('#cubre_form').attr('action', '/maestros/cubres/'+row[0]);
+                $('#cubre_form').attr('action', '/maestros/cubres/' + row[0]);
 
                 $("#modal-cubres-title").html("Modificar Cubre");
                 $("#cubre_method").val('PUT');
                 $("#modal-cubres").modal('show');
             });
 
-            $('#cubres_table .delete').on( 'click', function () {
+            $('#cubres_table .delete').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_cubres.row( tr ).data();
+                var row = table_cubres.row(tr).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -653,7 +698,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('maestros/cubres/delete') }}"+"/"+row[0]
+                    window.location.href = "{{ url('maestros/cubres/delete') }}" + "/" + row[0]
                 })
             });
 
@@ -681,27 +726,27 @@
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 },
                 columnDefs: [
-                    { targets: [0], visible: false},
+                    {targets: [0], visible: false},
                 ]
             });
 
-            $('#auxiliares_table .edit').on( 'click', function () {
+            $('#auxiliares_table .edit').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_auxiliares.row( tr ).data();
+                var row = table_auxiliares.row(tr).data();
                 limpiarCamposAuxiliares();
 
                 $('#auxiliar_id').val(row[0]);
                 $('#auxiliar_modelo').val(row[1]);
-                $('#auxiliar_form').attr('action', '/maestros/auxiliares/'+row[0]);
+                $('#auxiliar_form').attr('action', '/maestros/auxiliares/' + row[0]);
 
                 $("#modal-auxiliar-title").html("Modificar Auxiliar");
                 $("#auxiliar_method").val('PUT');
                 $("#modal-auxiliar").modal('show');
             });
 
-            $('#auxiliares_table .delete').on( 'click', function () {
+            $('#auxiliares_table .delete').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_auxiliares.row( tr ).data();
+                var row = table_auxiliares.row(tr).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -716,7 +761,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('maestros/auxiliares/delete') }}"+"/"+row[0]
+                    window.location.href = "{{ url('maestros/auxiliares/delete') }}" + "/" + row[0]
                 });
             });
 
@@ -744,27 +789,27 @@
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 },
                 columnDefs: [
-                    { targets: [0], visible: false},
+                    {targets: [0], visible: false},
                 ]
             });
 
-            $('#tarrinas_table .edit').on( 'click', function () {
+            $('#tarrinas_table .edit').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_tarrinas.row( tr ).data();
+                var row = table_tarrinas.row(tr).data();
                 limpiarCamposTarrinas();
 
                 $('#tarrina_id').val(row[0]);
                 $('#tarrina_modelo').val(row[1]);
-                $('#tarrina_form').attr('action', '/maestros/tarrinas/'+row[0]);
+                $('#tarrina_form').attr('action', '/maestros/tarrinas/' + row[0]);
 
                 $("#modal-tarrina-title").html("Modificar Tarrina");
                 $("#tarrina_method").val('PUT');
                 $("#modal-tarrina").modal('show');
             });
 
-            $('#tarrinas_table .delete').on( 'click', function () {
+            $('#tarrinas_table .delete').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_tarrinas.row( tr ).data();
+                var row = table_tarrinas.row(tr).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -779,7 +824,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('maestros/tarrinas/delete') }}"+"/"+row[0]
+                    window.location.href = "{{ url('maestros/tarrinas/delete') }}" + "/" + row[0]
                 });
             });
 

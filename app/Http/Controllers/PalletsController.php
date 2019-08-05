@@ -15,10 +15,11 @@ class PalletsController extends Controller
     public function store(Request $request)
     {
         //
+//        dd($request);
         $pallet = new Pallet();
 
-        $pallet->formato = $request->formato;
-        $pallet->modelo_id = 1;
+        $pallet->formato   = $request->formato;
+        $pallet->modelo_id = $request->modelo_id;
         $pallet->save();
 
         return redirect()->route('materiales');
@@ -32,11 +33,9 @@ class PalletsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-
-        $pallet          = Pallet::find($request->id);
-        $pallet->formato = $request->formato;
-        $pallet->modelo_id = 1;
+        $pallet            = Pallet::find($request->id);
+        $pallet->formato   = $request->formato;
+        $pallet->modelo_id = $request->modelo_id;
         $pallet->save();
 
         return redirect()->route('materiales');

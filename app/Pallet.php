@@ -11,8 +11,8 @@ class Pallet extends Model
     use SoftDeletes;
     protected $table = "pallets";
 
-    public function palletModel()
+    public function modelo()
     {
-        return $this->belongsTo(App\PalletModel::class);
+        return $this->belongsTo(PalletModel::class);
     }
 }

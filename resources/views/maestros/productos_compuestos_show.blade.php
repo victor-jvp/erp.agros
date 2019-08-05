@@ -68,7 +68,7 @@
                                                     <option value=""></option>
                                                     @if (isset($cajas))
                                                         @foreach ($cajas as $caja)
-                                                            <option value="{{ $caja->id }}">{{ $caja->$caja }}</option>
+                                                            <option value="{{ $caja->id }}">{{ $caja->caja }}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>

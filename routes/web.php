@@ -26,17 +26,19 @@ Route::get('/dashboard', function () {
 #region Materiales
 
 Route::get('/maestros/materiales', function () {
-    $cajas      = App\Caja::all();
-    $pallets    = App\Pallet::all();
-    $cubres     = App\Cubre::all();
-    $auxiliares = App\Auxiliar::all();
-    $tarrinas   = App\Tarrina::all();
+    $cajas         = App\Caja::all();
+    $pallets       = App\Pallet::all();
+    $cubres        = App\Cubre::all();
+    $auxiliares    = App\Auxiliar::all();
+    $tarrinas      = App\Tarrina::all();
+    $palletsModels = App\PalletModel::all();
     return view('maestros.materiales', [
-        'cajas'      => $cajas,
-        'pallets'    => $pallets,
-        'cubres'     => $cubres,
-        'auxiliares' => $auxiliares,
-        'tarrinas'   => $tarrinas
+        'cajas'         => $cajas,
+        'pallets'       => $pallets,
+        'cubres'        => $cubres,
+        'auxiliares'    => $auxiliares,
+        'tarrinas'      => $tarrinas,
+        'palletsModels' => $palletsModels
     ]);
 })->name('materiales');
 
