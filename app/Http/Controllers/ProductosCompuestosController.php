@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ProductoCompuesto_auxiliares;
 use Illuminate\Http\Request;
 use App\ProductoCompuesto_cab;
 use App\ProductoCompuesto_det;
@@ -21,12 +22,16 @@ class ProductosCompuestosController extends Controller
     }
 
     //Agrega los detalles a productos compuestos
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
 //        dd($request);
 
-        $detalle                  = new ProductoCompuesto_det();
-        $detalle->compuesto_id    = $request->id;
+        if ($request->id == "")
+            $detalle = new ProductoCompuesto_det();
+        else
+            $detalle = ProductoCompuesto_det::find($request->id);
+
+        $detalle->compuesto_id    = $request->compuesto_id;
         $detalle->variable        = $request->variable;
         $detalle->caja_id         = $request->caja_id;
         $detalle->euro_cantidad   = $request->euro_cantidad;
@@ -35,8 +40,6 @@ class ProductosCompuestosController extends Controller
         $detalle->grand_cantidad  = $request->grand_cantidad;
         $detalle->grand_kg        = $request->grand_kg;
         $detalle->grand_pallet_id = $request->grand_pallet_id;
-        $detalle->cestas          = $request->cestas;
-        $detalle->tapas           = $request->tapas;
         $detalle->cantoneras      = $request->cantoneras;
         $detalle->cubre_id        = $request->cubre_id;
         $detalle->save();
@@ -54,6 +57,41 @@ class ProductosCompuestosController extends Controller
             }
         }
 
-        return redirect()->route('productos-compuestos-show', $id);
+        ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->delete();
+
+        if (isset($request->auxiliares_id)) {
+            foreach ($request->auxiliares_id as $i => $item) {
+                $auxiliar = new ProductoCompuesto_auxiliares();
+
+                $auxiliar->det_id      = $detalle->id;
+                $auxiliar->auxiliar_id = $request->auxiliares_id[$i];
+                $auxiliar->cantidad    = $request->auxiliares_cantidad[$i];
+                $auxiliar->save();
+            }
+        }
+
+        return redirect()->route('productos-compuestos-show', $request->compuesto_id);
+    }
+
+    //Ajax para obtener detalles de producto
+    public function details($id = null)
+    {
+        if (is_null($id)) return false;
+
+        $detalle = ProductoCompuesto_det::with('tarrinas.tarrina')->with('auxiliares.auxiliar')->find($id);
+
+        return response()->json(['detalle' => $detalle]);
+    }
+
+    public function delete($id){
+        if (is_null($id)) return false;
+
+        $detalle = ProductoCompuesto_det::with('tarrinas')->with('auxiliares')->find($id);
+        $compuesto_id = $detalle->compuesto_id;
+        $detalle->tarrinas()->delete();
+        $detalle->auxiliares()->delete();
+        $detalle->delete();
+
+        return redirect()->route('productos-compuestos-show', $compuesto_id);
     }
 }

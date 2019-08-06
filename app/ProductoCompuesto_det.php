@@ -10,12 +10,22 @@ class ProductoCompuesto_det extends Model
 
     public function tarrinas()
     {
-        return $this->hasMany(ProductoCompuesto_tarrinas::class);
+        return $this->hasMany(ProductoCompuesto_tarrinas::class, 'det_id');
+    }
+
+    public function auxiliares()
+    {
+        return $this->hasMany(ProductoCompuesto_auxiliares::class, 'det_id');
     }
 
     public function caja()
     {
         return $this->belongsTo(Caja::class);
+    }
+
+    public function cubre()
+    {
+        return $this->belongsTo(Cubre::class);
     }
 
     public function euro_pallet()

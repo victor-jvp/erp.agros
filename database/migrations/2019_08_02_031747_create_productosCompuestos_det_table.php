@@ -28,8 +28,6 @@ class CreateProductosCompuestosDetTable extends Migration
             $table->double('grand_kg')->default('0')->nullable();
             $table->unsignedInteger('grand_pallet_id')->nullable();
             $table->foreign('grand_pallet_id')->references('id')->on('pallets');
-            $table->string('cestas')->nullable();
-            $table->string('tapas')->nullable();
             $table->string('cantoneras')->nullable();
             $table->unsignedInteger('cubre_id')->nullable();
             $table->foreign('cubre_id')->references('id')->on('cubres');

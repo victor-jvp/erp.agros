@@ -108,8 +108,7 @@ Route::get('/maestros/parcelas/delete/{parcela}', 'ParcelasController@delete')->
 Route::get('/maestros/productos-compuestos', function () {
     $productos = App\ProductoCompuesto_cab::all();
 
-    foreach ($productos as $i => $producto)
-    {
+    foreach ($productos as $i => $producto) {
         $productos[$i]->detalles = App\ProductoCompuesto_det::where('compuesto_id', $producto->id)->get();
     }
     return view('maestros.productos_compuestos', [
@@ -117,32 +116,42 @@ Route::get('/maestros/productos-compuestos', function () {
     ]);
 })->name('productos-compuestos');
 
-Route::post('maestros/productos-compuestos/create', 'ProductosCompuestosController@create');
+Route::post('maestros/productos-compuestos/create', 'ProductosCompuestosController@create')->name('productos-compuestos.create');
 
 Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
-    $producto      = App\ProductoCompuesto_cab::find($id);
-    $detalles      = App\ProductoCompuesto_det::where('compuesto_id', $id)->get();
+    $producto = App\ProductoCompuesto_cab::find($id);
+    $detalles = App\ProductoCompuesto_det::where('compuesto_id', $id)->get();
 
-    foreach ($detalles as $i => $detalle)
-    {
+    foreach ($detalles as $i => $detalle) {
         $detalles[$i]->tarrinas = App\ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->get();
+    }
+
+    foreach ($detalles as $i => $detalle) {
+        $detalles[$i]->auxiliares = App\ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->get();
     }
 
     $cajas         = App\Caja::all();
     $euro_pallets  = App\Pallet::where('modelo_id', '=', '1')->get();
     $grand_pallets = App\Pallet::where('modelo_id', '=', '2')->get();
     $tarrinas      = App\Tarrina::all();
+    $auxiliares    = App\Auxiliar::all();
+    $cubres        = App\Cubre::all();
+
     return view('maestros.productos_compuestos_show', [
         'producto'      => $producto,
         'detalles'      => $detalles,
         'cajas'         => $cajas,
+        'auxiliares'    => $auxiliares,
         'tarrinas'      => $tarrinas,
         'euro_pallets'  => $euro_pallets,
-        'grand_pallets' => $grand_pallets
+        'grand_pallets' => $grand_pallets,
+        'cubres'        => $cubres
     ]);
 })->name('productos-compuestos-show');
 
-Route::put('/maestros/productos-compuestos/store/{producto}', 'ProductosCompuestosController@store')->name('productos-compuestos.store');
+Route::put('/maestros/productos-compuestos/store', 'ProductosCompuestosController@store')->name('productos-compuestos.store');
+Route::get('maestros/productos-compuestos/details/{producto}', 'ProductosCompuestosController@details')->name('productos-compuestos.details');
+Route::get('/maestros/productos-compuestos/delete/{producto}', 'ProductosCompuestosController@delete')->name('productos-compuestos.delete');
 
 #endregion
 

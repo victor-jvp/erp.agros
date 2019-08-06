@@ -626,16 +626,7 @@
                     buttonsStyling: false
                 }).then(function () {
                     window.location.href = "{{ url('maestros/pallets/delete') }}" + "/" + row[0]
-                }, function (dismiss) {
-                    // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
-                    // if (dismiss === 'cancel') {
-                    //     swal(
-                    //         'Cancelled',
-                    //         'Your imaginary file is safe :)',
-                    //         'error'
-                    //     )
-                    // }
-                })
+                });
             });
 
             $("#btnNuevoPallet").click(function (e) {
