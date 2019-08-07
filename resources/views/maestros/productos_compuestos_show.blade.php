@@ -43,7 +43,8 @@
                                       id="producto_form">
                                     {{ csrf_field() }}
                                     {{ method_field('PUT') }}
-                                    <input type="hidden" name="compuesto_id" id="compuesto_id" value="{{ $producto->id }}">
+                                    <input type="hidden" name="compuesto_id" id="compuesto_id"
+                                           value="{{ $producto->id }}">
                                     <input type="hidden" name="id" id="det_id" value="">
 
                                     <div class="modal-header">
@@ -125,12 +126,12 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-md-4 mb-3">
                                                 <label for="cantoneras">Cantoneras</label>
                                                 <input type="text" class="form-control" id="cantoneras"
                                                        placeholder="Cantoneras" name="cantoneras">
                                             </div>
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-md-4 mb-3">
                                                 <label for="variedad">Cubres</label>
                                                 <select name="cubre_id" id="cubre_id" class="form-control chosen"
                                                         data-placeholder="Seleccione...">
@@ -141,6 +142,11 @@
                                                         @endforeach
                                                     @endif
                                                 </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="cubre_cantidad">Cantidad Cubres</label>
+                                                <input type="number" class="form-control" id="cubre_cantidad"
+                                                       placeholder="Cantidad Cubres" name="cubre_cantidad">
                                             </div>
                                         </div>
 
@@ -199,7 +205,6 @@
                                                                            style="width:100%">
                                                                         <thead>
                                                                         <tr>
-                                                                            <td>id</td>
                                                                             <th>modelo_id</th>
                                                                             <th scope="col">Tarrina</th>
                                                                             <th scope="col">Cantidad</th>
@@ -238,7 +243,7 @@
                                                             </div>
                                                             <div class="col-md-2 mb-3">
                                                                 <br>
-                                                                <button id="btnAddAuxiliar" type="button"
+                                                                <button id="btnAddAuxiliar" type="button" data-index=""
                                                                         class="btn btn-success btn-icon">
                                                                     <i class="i-Add"></i>
                                                                 </button>
@@ -253,7 +258,6 @@
                                                                            style="width:100%">
                                                                         <thead>
                                                                         <tr>
-                                                                            <td>id</td>
                                                                             <th>modelo_id</th>
                                                                             <th scope="col">Auxiliar</th>
                                                                             <th scope="col">Cantidad</th>
@@ -301,6 +305,7 @@
                                         <th scope="col">Pallet Grande<br>Kg</th>
                                         <th scope="col">Cantoneras</th>
                                         <th scope="col">Cubre</th>
+                                        <th scope="col">Cubre<br>Cantidad</th>
                                         <th scope="col">Tarrinas</th>
                                         <th scope="col">Auxiliares</th>
                                         <th scope="col">Acción</th>
@@ -320,6 +325,7 @@
                                             <td>{{ $detalle->grand_kg}}</td>
                                             <td>{{ $detalle->cantoneras}}</td>
                                             <td>{{ (!is_null($detalle->cubre_id)) ? $detalle->cubre->formato : "" }}</td>
+                                            <td>{{ $detalle->cubre_cantidad }}</td>
                                             <td>
                                                 @if(isset($detalle->tarrinas))
                                                     <ul class="list-group text-left">
@@ -379,6 +385,16 @@
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
 
     <script>
+        $.fn.dataTable.Api.register('inTable()', function (value) {
+            return this
+                .data()
+                .toArray()
+                .toString()
+                .toLowerCase()
+                .split(',')
+                .indexOf(value.toString().toLowerCase()) > -1
+        })
+
         var table_productos;
 
         $(function () {
@@ -438,7 +454,7 @@
         })
 
         function LimpiarModalDetalles() {
-            $('#variable, #euro_cantidad, #euro_kg, #grand_cantidad, #grand_kg, #cantoneras').val(null);
+            $('#variable, #euro_cantidad, #euro_kg, #grand_cantidad, #grand_kg, #cantoneras, #cubre_cantidad').val(null);
             $('#cajas, #euro_pallet_id, #grand_pallet_id, #cubre_id').val(null).trigger('chosen:updated');
             table_tarrinas.rows().remove().draw();
             table_auxiliares.rows().remove().draw();
@@ -463,6 +479,7 @@
                     $('#grand_kg').val(row.grand_kg);
                     $('#cantoneras').val(row.cantoneras);
                     $('#cubre_id').val(row.cubre_id).trigger('chosen:updated');
+                    $('#cubre_cantidad').val(row.cubre_cantidad);
 
                     var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
                         '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
@@ -470,26 +487,26 @@
                         '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
                         '</a>';
                     //Tarrinas table
-                    for (i = 0; i < row.tarrinas.length; i ++)
-                    {
+                    for (i = 0; i < row.tarrinas.length; i++) {
                         var tarrina = row.tarrinas[i];
                         table_tarrinas.row.add([
-                            tarrina.id,
                             tarrina.tarrina_id,
-                            '<input type="hidden" name="tarrinas_id[]" value="' + tarrina.tarrina_id + '">' + tarrina.tarrina.modelo,
-                            '<input type="hidden" name="tarrinas_cantidad[]" value="' + tarrina.cantidad + '"> ' + tarrina.cantidad,
+                            tarrina.tarrina.modelo,
+                            tarrina.cantidad,
+                            '<input type="hidden" name="tarrinas_id[]" value="' + tarrina.tarrina_id + '">' +
+                            '<input type="hidden" name="tarrinas_cantidad[]" value="' + tarrina.cantidad + '"> ' +
                             opciones
                         ]).draw(false);
                     }
                     //Auxiliares Table
-                    for (i = 0; i < row.auxiliares.length; i ++)
-                    {
+                    for (i = 0; i < row.auxiliares.length; i++) {
                         var auxiliar = row.auxiliares[i];
                         table_auxiliares.row.add([
-                            0,
                             auxiliar.auxiliar_id,
-                            '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar.auxiliar_id + '">' + auxiliar.auxiliar.modelo,
-                            '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar.cantidad + '"> ' + auxiliar.cantidad,
+                            auxiliar.auxiliar.modelo,
+                            auxiliar.cantidad,
+                            '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar.auxiliar_id + '">' +
+                            '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar.cantidad + '"> ' +
                             opciones
                         ]).draw(false);
                     }
@@ -514,7 +531,7 @@
                 paging: false,
                 searching: false,
                 columnDefs: [
-                    {targets: [0, 1], visible: false}
+                    {targets: [0], visible: false}
                 ]
             });
 
@@ -529,15 +546,35 @@
                     '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
                     '</a>';
 
-                table_tarrinas.row.add([
-                    0,
+                var data = [
                     modelo_id,
-                    '<input type="hidden" name="tarrinas_id[]" value="' + modelo_id + '">' + modelo,
-                    '<input type="hidden" name="tarrinas_cantidad[]" value="' + cantidad + '"> ' + cantidad,
+                    modelo,
+                    cantidad,
+                    '<input type="hidden" name="tarrinas_id[]" value="' + modelo_id + '">' +
+                    '<input type="hidden" name="tarrinas_cantidad[]" value="' + cantidad + '">' +
                     opciones
-                ]).draw(false);
+                ];
+
+                if ($(this).attr('data-index') == null || $(this).attr('data-index') == "") {
+                    table_tarrinas.row.add(data).draw(false);
+                } else {
+                    table_tarrinas.row($(this).attr('data-index')).data(data).draw(false);
+                }
 
                 LimpiarTarrina();
+            });
+
+            $('#tarrinas_table').on('click', '.edit', function () {
+                var tr = $(this).closest('tr');
+                var row = table_tarrinas.row(tr).data();
+                var index = table_tarrinas.row(tr).index();
+
+
+                $('#tarrina_modelo').val(row[0]).trigger('chosen:updated');
+                $('#tarrina_cantidad').val(row[2]);
+                $('#btnAddTarrina').attr('data-index', index);
+                // $('#pallet_modelo_id').val(row[2]).trigger('chosen:updated');
+                // $('#pallet_form').attr('action', '/maestros/pallets/' + row[0]);
             });
 
             $('#tarrinas_table').on('click', '.delete', function () {
@@ -558,11 +595,17 @@
                     return false;
                 }
 
+                if (table_tarrinas.inTable(modelo_id)) {
+                    swal("Atención", "Tarrina cargada en la tabla.", "warning");
+                    return false;
+                }
+
                 return true;
             }
 
             function LimpiarTarrina() {
                 $('#tarrina_cantidad').val(null);
+                $('#btnAddTarrina').attr('data-index', null);
                 $('#tarrina_modelo').val(null).trigger('chosen:updated');
             }
         });
@@ -582,7 +625,7 @@
                 paging: false,
                 searching: false,
                 columnDefs: [
-                    {targets: [0, 1], visible: false}
+                    {targets: [0], visible: false}
                 ]
             });
 
@@ -598,10 +641,11 @@
                     '</a>';
 
                 table_auxiliares.row.add([
-                    0,
                     modelo_id,
-                    '<input type="hidden" name="auxiliares_id[]" value="' + modelo_id + '">' + modelo,
-                    '<input type="hidden" name="auxiliares_cantidad[]" value="' + cantidad + '"> ' + cantidad,
+                    modelo,
+                    cantidad,
+                    '<input type="hidden" name="auxiliares_id[]" value="' + modelo_id + '">' +
+                    '<input type="hidden" name="auxiliares_cantidad[]" value="' + cantidad + '"> ' +
                     opciones
                 ]).draw(false);
 
@@ -623,6 +667,11 @@
                 var cantidad = $("#auxiliar_cantidad").val();
                 if (cantidad == null || cantidad == "") {
                     swal("Atención", "El campo Cantidad es requerido.", "warning");
+                    return false;
+                }
+
+                if (table_auxiliares.inTable(modelo_id)) {
+                    swal("Atención", "Auxiliar cargada en la tabla.", "warning");
                     return false;
                 }
 

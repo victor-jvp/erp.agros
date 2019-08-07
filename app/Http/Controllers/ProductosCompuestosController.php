@@ -26,9 +26,7 @@ class ProductosCompuestosController extends Controller
     {
 //        dd($request);
 
-        if ($request->id == "")
-            $detalle = new ProductoCompuesto_det();
-        else
+        if ($request->id == "") $detalle = new ProductoCompuesto_det(); else
             $detalle = ProductoCompuesto_det::find($request->id);
 
         $detalle->compuesto_id    = $request->compuesto_id;
@@ -42,6 +40,7 @@ class ProductosCompuestosController extends Controller
         $detalle->grand_pallet_id = $request->grand_pallet_id;
         $detalle->cantoneras      = $request->cantoneras;
         $detalle->cubre_id        = $request->cubre_id;
+        $detalle->cubre_cantidad  = $request->cubre_cantidad;
         $detalle->save();
 
         ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->delete();
@@ -83,10 +82,11 @@ class ProductosCompuestosController extends Controller
         return response()->json(['detalle' => $detalle]);
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         if (is_null($id)) return false;
 
-        $detalle = ProductoCompuesto_det::with('tarrinas')->with('auxiliares')->find($id);
+        $detalle      = ProductoCompuesto_det::with('tarrinas')->with('auxiliares')->find($id);
         $compuesto_id = $detalle->compuesto_id;
         $detalle->tarrinas()->delete();
         $detalle->auxiliares()->delete();

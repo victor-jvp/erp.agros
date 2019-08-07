@@ -31,6 +31,7 @@ class CreateProductosCompuestosDetTable extends Migration
             $table->string('cantoneras')->nullable();
             $table->unsignedInteger('cubre_id')->nullable();
             $table->foreign('cubre_id')->references('id')->on('cubres');
+            $table->double('cubre_cantidad')->default('0')->nullable();
             $table->timestamps();
         });
     }
