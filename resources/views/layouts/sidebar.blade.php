@@ -155,20 +155,20 @@
             </ul>
             <ul class="childNav" data-parent="almacen">
                 <li class="nav-item">
-                    <a href="#invoice">
-                        <i class="nav-icon i-Add-File"></i>
+                    <a class="{{ Route::currentRouteName()=='almacen' ? 'open' : '' }}" href="{{ url('almacen/listado-productos') }}">
+                        <i class="nav-icon i-Receipt-4"></i>
                         <span class="item-name">Listado de Inventario</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#inbox">
-                        <i class="nav-icon i-Email"></i>
+                    <a class="{{ Route::currentRouteName()=='almacen' ? 'open' : '' }}" href="{{ url('almacen/entrada-productos') }}">
+                        <i class="nav-icon i-Arrow-Inside"></i>
                         <span class="item-name">Entrada de Productos</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#chat">
-                        <i class="nav-icon i-Speach-Bubble-3"></i>
+                    <a class="{{ Route::currentRouteName()=='almacen' ? 'open' : '' }}" href="{{ url('almacen/salida-productos') }}">
+                        <i class="nav-icon i-Arrow-Outside"></i>
                         <span class="item-name">Salida de Productos</span>
                     </a>
                 </li>

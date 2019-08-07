@@ -237,7 +237,7 @@
             // Configuracion de Datatable
             table_fincas = $('#fincas_table').DataTable({
                 language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
                     {targets: [0], visible: false},
@@ -300,7 +300,7 @@
             // Configuracion de Datatable
             table_parcelas = $('#parcelas_table').DataTable({
                 language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
                     {targets: [0,2], visible: false},

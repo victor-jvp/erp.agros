@@ -400,7 +400,7 @@
         $(function () {
             table_productos = $("#productos_table").DataTable({
                 language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    url: "{{ asset('assets/Spanish.json')}}"
                 },
                 ordering: false,
                 info: false,
@@ -524,7 +524,7 @@
         $(function () {
             table_tarrinas = $("#tarrinas_table").DataTable({
                 language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    url: "{{ asset('assets/Spanish.json')}}"
                 },
                 ordering: false,
                 info: false,
@@ -618,7 +618,7 @@
 
             table_auxiliares = $("#auxiliares_table").DataTable({
                 language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    url: "{{ asset('assets/Spanish.json')}}"
                 },
                 ordering: false,
                 info: false,

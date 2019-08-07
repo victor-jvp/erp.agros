@@ -515,7 +515,7 @@
             // Configuracion de Datatable
             table_cajas = $('#cajas_table').DataTable({
                 language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
                     {targets: [0], visible: false},
@@ -586,7 +586,7 @@
             // Configuracion de Datatable
             table_pallets = $('#pallets_table').DataTable({
                 language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
                     {targets: [0, 2], visible: false},
@@ -651,7 +651,7 @@
             // Configuracion de Datatable
             table_cubres = $('#cubres_table').DataTable({
                 language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
                     {targets: [0], visible: false},
@@ -714,7 +714,7 @@
             // Configuracion de Datatable
             table_auxiliares = $('#auxiliares_table').DataTable({
                 language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
                     {targets: [0], visible: false},
@@ -777,7 +777,7 @@
             // Configuracion de Datatable
             table_tarrinas = $('#tarrinas_table').DataTable({
                 language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
                     {targets: [0], visible: false},

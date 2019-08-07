@@ -23,6 +23,22 @@ Route::get('/dashboard', function () {
     return view('starter');
 })->name('starter');
 
+#region Almacen
+
+#region Listado de Inventario
+    
+#endregion
+
+#region Entrada de Productos
+Route::resource('almacen/entrada-productos', 'EntradaProductosController');
+#endregion
+
+#region Salida de Productos
+Route::resource('almacen/salida-productos', 'SalidaProductosController');
+#endregion
+
+#endregion
+
 #region Materiales
 
 Route::get('/maestros/materiales', function () {
