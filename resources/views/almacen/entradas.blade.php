@@ -73,64 +73,62 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table id="entradas_table" class="display table table-striped table-bordered"
-                                        style="width:100%">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th scope="col">N° Lote</th>
-                                        <th scope="col">Fecha Entrada</th>
-                                        <th scope="col">Categoria</th>
-                                        <th scope="col">Material</th>
-                                        <th scope="col">Formato</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">Nº Albaran</th>
-                                        <th scope="col">Fecha Albaran</th>
-                                        <th scope="col">Transporte Adecuado</th>
-                                        <th scope="col">Control de Plagas</th>
-                                        <th scope="col">Estado Pallets</th>
-                                        <th scope="col">Ficha Técnica</th>
-                                        <th scope="col">Material Dañado</th>
-                                        <th scope="col">Material Limpio</th>
-                                        <th scope="col">Proveedor</th>
-                                        <th scope="col">Accion</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if (isset($parcelas))
-                                        @foreach ($parcelas as $parcela)
-                                            <tr>
-                                                <td>189</td>
-                                                <td>28/07/2019</td>
-                                                <td>Pallet</td>
-                                                <td>Plastico</td>
-                                                <td>Grande</td>
-                                                <td>1520</td>
-                                                <td>15795</td>
-                                                <td>01/07/2019</td>
-                                                <td>True</td>
-                                                <td>True</td>
-                                                <td>True</td>
-                                                <td>True</td>
-                                                <td>True</td>
-                                                <td>True</td>
-                                                <td>Europalets S.L.</td>
-                                                <td>
-                                                    <a href="javascript:void(0);" class="text-success mr-2">
-                                                        <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                    </a>
-                                                    <a href="javascript:void(0);" class="text-danger mr-2">
-                                                        <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
+                            <table id="entradas_table" class="display table table-striped table-bordered"
+                                   style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th scope="col">N° Lote</th>
+                                    <th scope="col">Fecha Entrada</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Material</th>
+                                    <th scope="col">Formato</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Nº Albaran</th>
+                                    <th scope="col">Fecha Albaran</th>
+                                    <th scope="col">Transporte Adecuado</th>
+                                    <th scope="col">Control de Plagas</th>
+                                    <th scope="col">Estado Pallets</th>
+                                    <th scope="col">Ficha Técnica</th>
+                                    <th scope="col">Material Dañado</th>
+                                    <th scope="col">Material Limpio</th>
+                                    <th scope="col">Proveedor</th>
+                                    <th scope="col">Accion</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if (isset($parcelas))
+                                    @foreach ($parcelas as $parcela)
+                                        <tr>
+                                            <td>189</td>
+                                            <td>28/07/2019</td>
+                                            <td>Pallet</td>
+                                            <td>Plastico</td>
+                                            <td>Grande</td>
+                                            <td>1520</td>
+                                            <td>15795</td>
+                                            <td>01/07/2019</td>
+                                            <td>True</td>
+                                            <td>True</td>
+                                            <td>True</td>
+                                            <td>True</td>
+                                            <td>True</td>
+                                            <td>True</td>
+                                            <td>Europalets S.L.</td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="text-success mr-2">
+                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                </a>
+                                                <a href="javascript:void(0);" class="text-danger mr-2">
+                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
 
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -161,7 +159,8 @@
                 },
                 columnDefs: [
                     {targets: [0], visible: false},
-                ]
+                ],
+                responsive: true
             });
 
             $('#entradas_table .edit').on('click', function () {

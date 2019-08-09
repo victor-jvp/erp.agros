@@ -73,46 +73,44 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table id="salidas_table" class="display table table-striped table-bordered"
-                                        style="width:100%">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th scope="col">N° Salida</th>
-                                        <th scope="col">Fecha Salida</th>
-                                        <th scope="col">Categoria</th>
-                                        <th scope="col">Material</th>
-                                        <th scope="col">Formato</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">Accion</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if (isset($parcelas))
-                                        @foreach ($parcelas as $parcela)
-                                            <tr>
-                                                <td>189</td>
-                                                <td>28/07/2019</td>
-                                                <td>Pallet</td>
-                                                <td>Plastico</td>
-                                                <td>Grande</td>
-                                                <td>1520</td>
-                                                <td>
-                                                    <a href="javascript:void(0);" class="text-success mr-2">
-                                                        <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                    </a>
-                                                    <a href="javascript:void(0);" class="text-danger mr-2">
-                                                        <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
+                            <table id="salidas_table" class="display table table-striped table-bordered"
+                                   style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th scope="col">N° Salida</th>
+                                    <th scope="col">Fecha Salida</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Material</th>
+                                    <th scope="col">Formato</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Accion</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if (isset($parcelas))
+                                    @foreach ($parcelas as $parcela)
+                                        <tr>
+                                            <td>189</td>
+                                            <td>28/07/2019</td>
+                                            <td>Pallet</td>
+                                            <td>Plastico</td>
+                                            <td>Grande</td>
+                                            <td>1520</td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="text-success mr-2">
+                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                </a>
+                                                <a href="javascript:void(0);" class="text-danger mr-2">
+                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
 
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
