@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entrada;
 use Illuminate\Http\Request;
 
 class EntradaProductosController extends Controller
@@ -13,8 +14,13 @@ class EntradaProductosController extends Controller
      */
     public function index()
     {
-        //
-        return view('almacen.entradas');
+        $entradas = Entrada::with('proveedor')->with('pallet.modelo')->get();
+
+        $data = array(
+            'entradas' => $entradas
+        );
+
+        return view('almacen.entradas', $data);
     }
 
     /**

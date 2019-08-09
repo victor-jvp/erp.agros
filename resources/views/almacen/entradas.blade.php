@@ -27,16 +27,16 @@
 
                     <!-- Modal Parcelas-->
                     <div class="modal fade" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-parcelas">
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-entradas">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
-                                <form action="/maestros/parcelas" method="POST" id="parcela_form">
+                                <form action="/maestros/entradas" method="POST" id="entrada_form">
                                     {{ csrf_field() }}
-                                    <input type="hidden" name="_method" id="parcela_method" value="PUT">
-                                    <input type="hidden" name="id" id="parcela_id">
+                                    <input type="hidden" name="_method" id="entrada_method" value="PUT">
+                                    <input type="hidden" name="id" id="entrada_id">
 
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-parcelas-title"></h5>
+                                        <h5 class="modal-title" id="modal-entradas-title"></h5>
                                         <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -50,9 +50,9 @@
                                                         placeholder="Parcela" required="" name="parcela">
                                             </div>
                                             <div class="col-md-12 mb-3">
-                                                <label for="parcela_finca_id">Finca</label>
+                                                <label for="entrada_finca_id">Finca</label>
                                                 <select class="form-control" name="finca_id"
-                                                        id="parcela_finca_id">
+                                                        id="entrada_finca_id">
                                                     <option value="" hidden>Finca...</option>
                                                 </select>
                                             </div>
@@ -97,23 +97,27 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if (isset($parcelas))
-                                    @foreach ($parcelas as $parcela)
+                                @if (isset($entradas))
+                                    @foreach ($entradas as $entrada)
                                         <tr>
-                                            <td>189</td>
-                                            <td>28/07/2019</td>
-                                            <td>Pallet</td>
-                                            <td>Plastico</td>
-                                            <td>Grande</td>
-                                            <td>1520</td>
-                                            <td>15795</td>
-                                            <td>01/07/2019</td>
-                                            <td>True</td>
-                                            <td>True</td>
-                                            <td>True</td>
-                                            <td>True</td>
-                                            <td>True</td>
-                                            <td>True</td>
+                                            <td>{{ $entrada->id }}</td>
+                                            <td>{{ $entrada->nro_lote }}</td>
+                                            <td>{{ date('d/m/Y',strtotime($entrada->fecha)) }}</td>
+                                            <td>{{ $entrada->pallet->formato }}</td>
+                                            <td></td>
+                                            <td>{{ $entrada->pallet->modelo->formato }}</td>
+                                            <td>{{ $entrada->cantidad }}</td>
+                                            <td>{{ $entrada->nro_albaran }}</td>
+                                            <td>{{ date('d/m/Y',strtotime($entrada->fecha_albaran)) }}</td>
+                                            <td>{{ $entrada->transporte_adecuado }}</td>
+                                            <td>{{ $entrada->transporte_control_plagas }}</td>
+                                            <td>{{ $entrada->estado_pallet  }}</td>
+                                            <td>{{ $entrada->ficha_tenica }}</td>
+                                            <td>{{ $entrada->material_daniado }}</td>
+                                            <td>{{ $entrada->material_limpio }}</td>
+                                            <td>{{ $entrada->proveedor }}</td>
+                                            <td>{{ $entradas->created_by }}</td>
+
                                             <td>Europalets S.L.</td>
                                             <td>
                                                 <a href="javascript:void(0);" class="text-success mr-2">
