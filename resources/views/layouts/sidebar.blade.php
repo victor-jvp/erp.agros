@@ -16,7 +16,7 @@
                     </a>
                     <div class="triangle"></div>
                 </li>
-                <li class="nav-item" data-item="almacen">
+                <li class="nav-item {{ request()->is('almacen/*') ? 'active' : '' }}" data-item="almacen">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-Suitcase"></i>
                         <span class="nav-text">Almacén</span>
@@ -155,19 +155,19 @@
             </ul>
             <ul class="childNav" data-parent="almacen">
                 <li class="nav-item">
-                    <a class="{{ Route::currentRouteName()=='almacen' ? 'open' : '' }}" href="{{ url('almacen/listado-productos') }}">
+                    <a class="{{ Route::currentRouteName()=='listado-productos.index' ? 'open' : '' }}" href="{{ url('almacen/listado-productos') }}">
                         <i class="nav-icon i-Receipt-4"></i>
                         <span class="item-name">Listado de Inventario</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Route::currentRouteName()=='almacen' ? 'open' : '' }}" href="{{ url('almacen/entrada-productos') }}">
+                    <a class="{{ Route::currentRouteName()=='entrada-productos.index' ? 'open' : '' }}" href="{{ url('almacen/entrada-productos') }}">
                         <i class="nav-icon i-Arrow-Inside"></i>
                         <span class="item-name">Entrada de Productos</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Route::currentRouteName()=='almacen' ? 'open' : '' }}" href="{{ url('almacen/salida-productos') }}">
+                    <a class="{{ Route::currentRouteName()=='salida-productos.index' ? 'open' : '' }}" href="{{ url('almacen/salida-productos') }}">
                         <i class="nav-icon i-Arrow-Outside"></i>
                         <span class="item-name">Salida de Productos</span>
                     </a>

@@ -25,36 +25,154 @@
                         </div>
                     </div>
 
-                    <!-- Modal Parcelas-->
-                    <div class="modal fade" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-entradas">
-                        <div class="modal-dialog modal-sm">
+                    <!-- Modal entradas-->
+                    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                         aria-hidden="true" id="modal-entradas">
+                        <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <form action="/maestros/entradas" method="POST" id="entrada_form">
+                                <form action="/almacen/entrada-productos" method="POST" id="entrada_form">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" id="entrada_method" value="PUT">
                                     <input type="hidden" name="id" id="entrada_id">
 
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="modal-entradas-title"></h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="form-row">
-                                            <div class="col-md-12 mb-3">
-                                                <label for="parcela">Parcela</label>
-                                                <input type="text" class="form-control" id="parcela"
-                                                        placeholder="Parcela" required="" name="parcela">
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="nro_lote">Nro. Lote</label>
+                                                <input type="text" class="form-control" id="nro_lote"
+                                                       placeholder="Nro. Lote" required="" name="nro_lote">
                                             </div>
-                                            <div class="col-md-12 mb-3">
-                                                <label for="entrada_finca_id">Finca</label>
-                                                <select class="form-control" name="finca_id"
-                                                        id="entrada_finca_id">
-                                                    <option value="" hidden>Finca...</option>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="fecha">Fecha Entrada</label>
+                                                <input type="date" class="form-control" id="fecha"
+                                                       value="{{ date('Y-m-d') }}" placeholder="Fecha Entrada"
+                                                       required=""
+                                                       name="fecha">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="cantidad">Cantidad</label>
+                                                <input type="number" class="form-control" id="cantidad" step="0.01"
+                                                       placeholder="Cantidad" required="" name="cantidad">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="categoria">Categoria</label>
+                                                <select class="form-control chosen" name="categoria" id="categoria"
+                                                        data-placeholder="Seleccione...">
+                                                    <option value=""></option>
+                                                    @if (isset($cultivos))
+                                                        @foreach ($cultivos as $cultivo)
+                                                            <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                        @endforeach
+                                                    @endif
                                                 </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="material">Material</label>
+                                                <select class="form-control chosen" name="material" id="material"
+                                                        data-placeholder="Seleccione...">
+                                                    <option value=""></option>
+                                                    @if (isset($cultivos))
+                                                        @foreach ($cultivos as $cultivo)
+                                                            <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="formato">Formato</label>
+                                                <select class="form-control chosen" name="formato" id="formato"
+                                                        data-placeholder="Seleccione...">
+                                                    <option value=""></option>
+                                                    @if (isset($cultivos))
+                                                        @foreach ($cultivos as $cultivo)
+                                                            <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="nro_albaran">Nro. Albarán</label>
+                                                <input type="text" class="form-control" id="nro_albaran"
+                                                       placeholder="Nro. Albarán" required="" name="nro_albaran">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="fecha_albaran">Fecha Albarán</label>
+                                                <input type="date" class="form-control" id="fecha_albaran"
+                                                       value="{{ date('Y-m-d') }}" placeholder="Fecha Albarán"
+                                                       required=""
+                                                       name="fecha_albaran">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="formato">Proveedor</label>
+                                                <select class="form-control chosen" name="formato" id="formato"
+                                                        data-placeholder="Seleccione...">
+                                                    <option value=""></option>
+                                                    @if (isset($cultivos))
+                                                        @foreach ($cultivos as $cultivo)
+                                                            <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="transporte_adecuado" checked>
+                                                    <span>Transporte Adecuado</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="control_plagas" checked>
+                                                    <span>Control de Plagas</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="estado_pallets" checked>
+                                                    <span>Estado Pallets</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="ficha_tecnica" checked>
+                                                    <span>Ficha Técnica</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="material_daniado" checked>
+                                                    <span>Material Dañado</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="material_limpio" checked>
+                                                    <span>Material Limpio</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -145,12 +263,13 @@
 @section('page-css')
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/datatables.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/sweetalert2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen-bootstrap-4.css')}}">
 @endsection
 
 @section('bottom-js')
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
-
+    <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
     {{--Entradas--}}
     <script>
         var entradas_table
@@ -161,9 +280,10 @@
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
-                columnDefs: [
-                    {targets: [0], visible: false},
-                ],
+                columnDefs: [{
+                    targets: [0],
+                    visible: false
+                },],
                 responsive: true
             });
 
@@ -174,7 +294,7 @@
 
                 $('#finca_id').val(row[0]);
                 $('#finca').val(row[1]);
-                $('#finca_form').attr('action', '/maestros/fincas/' + row[0]);
+                $('#finca_form').attr('action', '/almacen/entrada-productos' + row[0]);
 
                 $("#modal-fincas-title").html("Modificar Finca");
                 $("#finca_method").val('PUT');
@@ -198,20 +318,30 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('maestros/fincas/delete') }}" + "/" + row[0]
+                    window.location.href = "{{ url('almacen/entrada-productos/delete') }}" + "/" + row[0]
                 })
             });
 
             $("#btnNuevo").click(function (e) {
-                limpiarCamposFinca();
-                $("#modal-fincas-title").html("Nueva Finca");
-                $("#finca_method").val(null);
-                $("#modal-fincas").modal('show');
+                limpiarCamposEntrada();
+                $("#modal-entradas-title").html("Nueva Entrada");
+                $("#entrada_method").val(null);
+                $("#modal-entradas").modal('show');
             })
         });
 
-        function limpiarCamposFinca() {
+        function limpiarCamposEntrada() {
             $('#finca_id, #finca').val(null);
         }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $(".chosen").chosen({
+                width: "100%",
+                no_results_text: "No se encontraron resultados... ",
+                allow_single_deselect: true
+            });
+        })
     </script>
 @endsection

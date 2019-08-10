@@ -9,7 +9,6 @@ class EntradaProductosController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -24,30 +23,39 @@ class EntradaProductosController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
+        dd($request);
+
+        $entrada                      = new Entrada();
+        $entrada->nro_lote            = $request->nro_lote;
+        $entrada->fecha               = $request->fecha;
+        $entrada->cantidad            = $request->cantidad;
+        $entrada->categoria           = $request->categoria;
+        $entrada->material            = $request->material;
+        $entrada->formato             = $request->formato;
+        $entrada->nro_albaran         = $request->nro_albaran;
+        $entrada->fecha_albaran       = $request->fecha_albaran;
+        $entrada->transporte_adecuado = (isset($request->transporte_adecuado)) ? true : false;
+        $entrada->control_plagas      = (isset($request->control_plagas)) ? true : false;
+        $entrada->estado_pallets      = (isset($request->estado_pallets)) ? true : false;
+        $entrada->ficha_tecnica       = (isset($request->ficha_tecnica)) ? true : false;
+        $entrada->material_daniado    = (isset($request->material_daniado)) ? true : false;
+        $entrada->material_limpio     = (isset($request->material_limpio)) ? true : false;
+
+        $entrada->save();
+
+        return redirect()->route('entrada-productos.index');
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -57,8 +65,7 @@ class EntradaProductosController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -68,9 +75,8 @@ class EntradaProductosController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -80,8 +86,7 @@ class EntradaProductosController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
