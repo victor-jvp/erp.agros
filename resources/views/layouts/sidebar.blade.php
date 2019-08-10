@@ -9,7 +9,7 @@
                     </a>
                     <div class="triangle"></div>
                 </li>
-                <li class="nav-item" data-item="comercial">
+                <li class="nav-item {{ request()->is('comercial/*') ? 'active' : '' }}" data-item="comercial">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-Library"></i>
                         <span class="nav-text">Comercial</span>
@@ -79,14 +79,14 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown-sidemenu">
-                    <a>
+                    <a href="#">
                         <i class="nav-icon i-Receipt"></i>
                         <span class="item-name">Clientes</span>
                         <i class="dd-arrow i-Arrow-Down"></i>
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a class="" href="#">
+                            <a class="{{ request()->is('comercial/clientes#datos-fiscales') ? 'open' : '' }}" href="{{ url('comercial/clientes#datos-fiscales') }}">
                                 <i class="nav-icon i-Receipt"></i>
                                 <span class="item-name">Datos Fiscales</span>
                             </a>

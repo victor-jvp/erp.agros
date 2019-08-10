@@ -23,6 +23,14 @@ Route::get('/dashboard', function () {
     return view('starter');
 })->name('starter');
 
+#region Comercial
+
+Route::get('/comercial/clientes', function (){
+    return view('comercial.clientes');
+})->name('clientes');
+
+#endregion
+
 #region Almacen
 
 #region Listado de Inventario

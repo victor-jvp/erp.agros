@@ -270,6 +270,7 @@
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
+
     {{--Entradas--}}
     <script>
         var entradas_table
@@ -290,13 +291,13 @@
             $('#entradas_table .edit').on('click', function () {
                 var tr = $(this).closest('tr');
                 var row = entradas_table.row(tr).data();
-                limpiarCamposFinca();
+                limpiarCamposEntrada();
 
                 $('#finca_id').val(row[0]);
                 $('#finca').val(row[1]);
                 $('#finca_form').attr('action', '/almacen/entrada-productos' + row[0]);
 
-                $("#modal-fincas-title").html("Modificar Finca");
+                $("#modal-fincas-title").html("Modificar Entrada");
                 $("#finca_method").val('PUT');
                 $("#modal-fincas").modal('show');
             });
