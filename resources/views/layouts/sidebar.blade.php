@@ -125,6 +125,52 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown-sidemenu">
+                    <a href="#">
+                        <i class="nav-icon i-Receipt"></i>
+                        <span class="item-name">Proveedores</span>
+                        <i class="dd-arrow i-Arrow-Down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a class="{{ request()->is('comercial/proveedores#datos-fiscales') ? 'open' : '' }}" href="{{ url('comercial/proveedores#datos-fiscales') }}">
+                                <i class="nav-icon i-Receipt"></i>
+                                <span class="item-name">Datos Fiscales</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="#">
+                                <i class="nav-icon i-Receipt-4"></i>
+                                <span class="item-name">Datos Comerciales</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="#">
+                                <i class="nav-icon i-Receipt-4"></i>
+                                <span class="item-name">Datos Contactos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="#">
+                                <i class="nav-icon i-Receipt-4"></i>
+                                <span class="item-name">Histórico de Entregas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="#">
+                                <i class="nav-icon i-Receipt-4"></i>
+                                <span class="item-name">Contactar por Email</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="#">
+                                <i class="nav-icon i-Receipt-4"></i>
+                                <span class="item-name">Documentación</span>
+                            </a>
+                        </li>
+                        <li></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown-sidemenu">
                     <a>
                         <i class="nav-icon i-Receipt"></i>
                         <span class="item-name">Transporte</span>
