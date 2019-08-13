@@ -46,6 +46,10 @@ Route::post('almacen/entrada-productos/selectMaterial', 'EntradaProductosControl
 Route::resource('almacen/salida-productos', 'SalidaProductosController');
 #endregion
 
+#region Proveedores
+Route::resource('almacen/proveedores', 'ProveedoresController');
+#endregion
+
 #endregion
 
 #region Materiales

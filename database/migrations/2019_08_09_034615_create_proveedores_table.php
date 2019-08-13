@@ -15,10 +15,16 @@ class CreateProveedoresTable extends Migration
     {
         Schema::create('proveedores', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('cif', 15);
             $table->string('razon_social');
-            $table->string('rut', 15);
-            $table->string('direccion');
-            $table->string('telefono', 15);
+            $table->string('nombre_comercial')->nullable();
+            $table->string('pais')->nullable();
+            $table->string('localidad')->nullable();
+            $table->string('provincia')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('telefono', 15)->nullable();
+            $table->string('email',55)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

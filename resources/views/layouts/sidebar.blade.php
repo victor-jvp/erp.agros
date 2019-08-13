@@ -132,8 +132,8 @@
                         <span class="item-name">Salida de Productos</span>
                     </a>
                 </li>
-                <li class="nav-item dropdown-sidemenu">
-                    <a class="{{ Route::currentRouteName()=='proveedores.index' ? 'open' : '' }}" href="{{ url('almacen/proveedores') }}">
+                <li class="nav-item">
+                    <a class="{{ Route::currentRouteName()=='proveedores.index' ? 'open' : '' }}" href="{{ route('proveedores.index') }}">
                         <i class="nav-icon i-Receipt"></i>
                         <span class="item-name">Proveedores</span>
                     </a>
