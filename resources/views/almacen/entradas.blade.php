@@ -104,13 +104,13 @@
                                                        name="fecha_albaran">
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="formato">Proveedor</label>
-                                                <select class="form-control chosen" name="formato" id="formato"
+                                                <label for="proveedor">Proveedor</label>
+                                                <select class="form-control chosen" name="proveedor" id="proveedor"
                                                         data-placeholder="Seleccione...">
                                                     <option value=""></option>
-                                                    @if (isset($cultivos))
-                                                        @foreach ($cultivos as $cultivo)
-                                                            <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                    @if (isset($proveedores))
+                                                        @foreach ($proveedores as $proveedor)
+                                                            <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -199,21 +199,22 @@
                                    style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th scope="col">Id</th>
                                     <th scope="col">N° Lote</th>
                                     <th scope="col">Fecha Entrada</th>
                                     <th scope="col">Categoria</th>
                                     <th scope="col">Material</th>
-                                    <th scope="col">Formato</th>
                                     <th scope="col">Cantidad</th>
                                     <th scope="col">Nº Albaran</th>
                                     <th scope="col">Fecha Albaran</th>
                                     <th scope="col">Transporte Adecuado</th>
-                                    <th scope="col">Control de Plagas</th>
+                                    <th scope="col">Control Plagas</th>
                                     <th scope="col">Estado Pallets</th>
                                     <th scope="col">Ficha Técnica</th>
                                     <th scope="col">Material Dañado</th>
                                     <th scope="col">Material Limpio</th>
+                                    <th scope="col">Control Grapas</th>
+                                    <th scope="col">Cantidad Conforme</th>
                                     <th scope="col">Proveedor</th>
                                     <th scope="col">Accion</th>
                                 </tr>
@@ -225,22 +226,65 @@
                                             <td>{{ $entrada->id }}</td>
                                             <td>{{ $entrada->nro_lote }}</td>
                                             <td>{{ date('d/m/Y',strtotime($entrada->fecha)) }}</td>
-                                            <td>{{ $entrada->pallet->formato }}</td>
-                                            <td></td>
-                                            <td>{{ $entrada->pallet->modelo->formato }}</td>
+                                            @if($entrada->caja_id != null)
+                                                <td>Caja</td>
+                                                <td>{{ $entrada->caja->formato }}</td>
+                                            @else
+                                                <td>Pallet</td>
+                                                <td>{{ $entrada->pallet->formato }}</td>
+                                            @endif
                                             <td>{{ $entrada->cantidad }}</td>
                                             <td>{{ $entrada->nro_albaran }}</td>
                                             <td>{{ date('d/m/Y',strtotime($entrada->fecha_albaran)) }}</td>
-                                            <td>{{ $entrada->transporte_adecuado }}</td>
-                                            <td>{{ $entrada->transporte_control_plagas }}</td>
-                                            <td>{{ $entrada->estado_pallet  }}</td>
-                                            <td>{{ $entrada->ficha_tenica }}</td>
-                                            <td>{{ $entrada->material_daniado }}</td>
-                                            <td>{{ $entrada->material_limpio }}</td>
-                                            <td>{{ $entrada->proveedor }}</td>
-                                            <td>{{ $entradas->created_by }}</td>
-
-                                            <td>Europalets S.L.</td>
+                                            <td class="text-center">
+                                                <label class="checkbox checkbox-success" style="display: inline-block">
+                                                    <input disabled type="checkbox" {{ ($entrada->transporte_adecuado) ? 'checked' : '' }}>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="checkbox checkbox-success" style="display: inline-block">
+                                                    <input disabled type="checkbox" {{ ($entrada->control_plagas) ? 'checked' : '' }}>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="checkbox checkbox-success" style="display: inline-block">
+                                                    <input disabled type="checkbox" {{ ($entrada->estado_pallets) ? 'checked' : '' }}>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="checkbox checkbox-success" style="display: inline-block">
+                                                    <input disabled type="checkbox" {{ ($entrada->ficha_tecnica) ? 'checked' : '' }}>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="checkbox checkbox-success" style="display: inline-block">
+                                                    <input disabled type="checkbox" {{ ($entrada->material_daniado) ? 'checked' : '' }}>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="checkbox checkbox-success" style="display: inline-block">
+                                                    <input disabled type="checkbox" {{ ($entrada->material_limpio) ? 'checked' : '' }}>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="checkbox checkbox-success" style="display: inline-block">
+                                                    <input disabled type="checkbox" {{ ($entrada->control_grapas) ? 'checked' : '' }}>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="checkbox checkbox-success" style="display: inline-block">
+                                                    <input disabled type="checkbox" {{ ($entrada->cantidad_conforme) ? 'checked' : '' }}>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td>{{ $entrada->proveedor->razon_social }}</td>
                                             <td>
                                                 <a href="javascript:void(0);" class="text-success mr-2">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
@@ -285,10 +329,10 @@
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
-                columnDefs: [{
-                    targets: [0],
-                    visible: false
-                },],
+                // columnDefs: [{
+                //     targets: [0],
+                //     visible: false
+                // },],
                 responsive: true
             });
 

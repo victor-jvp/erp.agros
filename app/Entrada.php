@@ -19,4 +19,9 @@ class Entrada extends Model
     {
         return $this->belongsTo(Pallet::class, 'pallet_id');
     }
+
+    public function caja()
+    {
+        return $this->belongsTo(Caja::class, 'caja_id');
+    }
 }

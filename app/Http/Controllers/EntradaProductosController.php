@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Caja;
 use App\Entrada;
 use App\Pallet;
+use App\Proveedor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EntradaProductosController extends Controller
@@ -26,8 +28,9 @@ class EntradaProductosController extends Controller
         );
 
         $data = array(
-            'entradas'   => $entradas,
-            "categorias" => $categorias,
+            'entradas'    => $entradas,
+            "categorias"  => $categorias,
+            "proveedores" => Proveedor::all('id', 'razon_social'),
         );
 
         return view('almacen.entradas', $data);
@@ -40,24 +43,27 @@ class EntradaProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        dd($request);
+        //dd($request);
 
-        $entrada                      = new Entrada();
-        $entrada->nro_lote            = $request->nro_lote;
-        $entrada->fecha               = $request->fecha;
-        $entrada->cantidad            = $request->cantidad;
-        $entrada->categoria           = $request->categoria;
-        $entrada->material            = $request->material;
-        $entrada->formato             = $request->formato;
+        $entrada           = new Entrada();
+        $entrada->nro_lote = $request->nro_lote;
+        $entrada->fecha    = $request->fecha;
+        $entrada->cantidad = $request->cantidad;
+
+        if ($request->categoria == "cajas") $entrada->caja_id = $request->material; else
+            $entrada->pallet_id = $request->material;
+
         $entrada->nro_albaran         = $request->nro_albaran;
-        $entrada->fecha_albaran       = $request->fecha_albaran;
+        $entrada->fecha_albaran       = Carbon::parse($request->fecha_albaran)->toDateTimeString();
+        $entrada->proveedor_id        = $request->proveedor;
         $entrada->transporte_adecuado = (isset($request->transporte_adecuado)) ? true : false;
         $entrada->control_plagas      = (isset($request->control_plagas)) ? true : false;
         $entrada->estado_pallets      = (isset($request->estado_pallets)) ? true : false;
         $entrada->ficha_tecnica       = (isset($request->ficha_tecnica)) ? true : false;
         $entrada->material_daniado    = (isset($request->material_daniado)) ? true : false;
         $entrada->material_limpio     = (isset($request->material_limpio)) ? true : false;
+        $entrada->control_grapas      = (isset($request->control_grapas)) ? true : false;
+        $entrada->cantidad_conforme   = (isset($request->cantidad_conforme)) ? true : false;
 
         $entrada->save();
 
@@ -109,13 +115,13 @@ class EntradaProductosController extends Controller
     {
         $categoria = $request->input('categoria');
 
-        if(is_null($categoria)) return response()->json(null);
+        if (is_null($categoria)) return response()->json(null);
 
         $data = array();
-        if($categoria == "cajas"){
+        if ($categoria == "cajas") {
             $data = Caja::all('id', 'formato');
         }
-        if($categoria == "pallets"){
+        if ($categoria == "pallets") {
             $data = Pallet::all('id', 'formato');
         }
 

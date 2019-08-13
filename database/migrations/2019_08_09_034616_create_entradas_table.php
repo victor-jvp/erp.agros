@@ -17,7 +17,8 @@ class CreateEntradasTable extends Migration
             $table->increments('id');
             $table->string('nro_lote', 10);
             $table->dateTime('fecha');
-            $table->unsignedInteger('pallet_id');
+            $table->unsignedInteger('pallet_id')->nullable();
+            $table->unsignedInteger('caja_id')->nullable();
             $table->double('cantidad');
             $table->string('nro_albaran', 35);
             $table->dateTime('fecha_albaran');
@@ -27,8 +28,11 @@ class CreateEntradasTable extends Migration
             $table->boolean('ficha_tecnica')->default(false);
             $table->boolean('material_daniado')->default(false);
             $table->boolean('material_limpio')->default(false);
+            $table->boolean('control_grapas')->default(false);
+            $table->boolean('cantidad_conforme')->default(false);
             $table->unsignedInteger('proveedor_id');
             $table->foreign('pallet_id')->references('id')->on('pallets');
+            $table->foreign('caja_id')->references('id')->on('cajas');
             $table->foreign('proveedor_id')->references('id')->on('proveedores');
 
             $table->timestamps();
