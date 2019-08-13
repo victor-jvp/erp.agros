@@ -79,96 +79,10 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown-sidemenu">
-                    <a href="#">
+                    <a class="{{ request()->is('comercial/clientes') ? 'open' : '' }}" href="{{ url('comercial/clientes') }}">
                         <i class="nav-icon i-Receipt"></i>
                         <span class="item-name">Clientes</span>
-                        <i class="dd-arrow i-Arrow-Down"></i>
                     </a>
-                    <ul class="submenu">
-                        <li>
-                            <a class="{{ request()->is('comercial/clientes#datos-fiscales') ? 'open' : '' }}" href="{{ url('comercial/clientes#datos-fiscales') }}">
-                                <i class="nav-icon i-Receipt"></i>
-                                <span class="item-name">Datos Fiscales</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <i class="nav-icon i-Receipt-4"></i>
-                                <span class="item-name">Datos Comerciales</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <i class="nav-icon i-Receipt-4"></i>
-                                <span class="item-name">Datos Contactos</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <i class="nav-icon i-Receipt-4"></i>
-                                <span class="item-name">Histórico de Pedidos</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <i class="nav-icon i-Receipt-4"></i>
-                                <span class="item-name">Contactar por Email</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <i class="nav-icon i-Receipt-4"></i>
-                                <span class="item-name">Documentación</span>
-                            </a>
-                        </li>
-                        <li></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown-sidemenu">
-                    <a href="#">
-                        <i class="nav-icon i-Receipt"></i>
-                        <span class="item-name">Proveedores</span>
-                        <i class="dd-arrow i-Arrow-Down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li>
-                            <a class="{{ request()->is('comercial/proveedores#datos-fiscales') ? 'open' : '' }}" href="{{ url('comercial/proveedores#datos-fiscales') }}">
-                                <i class="nav-icon i-Receipt"></i>
-                                <span class="item-name">Datos Fiscales</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <i class="nav-icon i-Receipt-4"></i>
-                                <span class="item-name">Datos Comerciales</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <i class="nav-icon i-Receipt-4"></i>
-                                <span class="item-name">Datos Contactos</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <i class="nav-icon i-Receipt-4"></i>
-                                <span class="item-name">Histórico de Entregas</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <i class="nav-icon i-Receipt-4"></i>
-                                <span class="item-name">Contactar por Email</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <i class="nav-icon i-Receipt-4"></i>
-                                <span class="item-name">Documentación</span>
-                            </a>
-                        </li>
-                        <li></li>
-                    </ul>
                 </li>
                 <li class="nav-item dropdown-sidemenu">
                     <a>
@@ -216,6 +130,12 @@
                     <a class="{{ Route::currentRouteName()=='salida-productos.index' ? 'open' : '' }}" href="{{ url('almacen/salida-productos') }}">
                         <i class="nav-icon i-Arrow-Outside"></i>
                         <span class="item-name">Salida de Productos</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown-sidemenu">
+                    <a class="{{ Route::currentRouteName()=='proveedores.index' ? 'open' : '' }}" href="{{ url('almacen/proveedores') }}">
+                        <i class="nav-icon i-Receipt"></i>
+                        <span class="item-name">Proveedores</span>
                     </a>
                 </li>
             </ul>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Caja;
 use App\Entrada;
+use App\Pallet;
 use Illuminate\Http\Request;
 
 class EntradaProductosController extends Controller
@@ -13,10 +15,19 @@ class EntradaProductosController extends Controller
      */
     public function index()
     {
-        $entradas = Entrada::with('proveedor')->with('pallet.modelo')->get();
+        $entradas     = Entrada::with('proveedor')->with('pallet.modelo')->get();
+        $categorias[] = array(
+            "value" => "cajas",
+            "text"  => "Cajas"
+        );
+        $categorias[] = array(
+            "value" => "pallets",
+            "text"  => "Pallets"
+        );
 
         $data = array(
-            'entradas' => $entradas
+            'entradas'   => $entradas,
+            "categorias" => $categorias,
         );
 
         return view('almacen.entradas', $data);
@@ -92,5 +103,22 @@ class EntradaProductosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function selectMaterial(Request $request)
+    {
+        $categoria = $request->input('categoria');
+
+        if(is_null($categoria)) return response()->json(null);
+
+        $data = array();
+        if($categoria == "cajas"){
+            $data = Caja::all('id', 'formato');
+        }
+        if($categoria == "pallets"){
+            $data = Pallet::all('id', 'formato');
+        }
+
+        return response()->json($data); // How do I return in json? in case of an error message?
     }
 }

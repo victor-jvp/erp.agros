@@ -55,12 +55,6 @@
                                                        required=""
                                                        name="fecha">
                                             </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="cantidad">Cantidad</label>
-                                                <input type="number" class="form-control" id="cantidad" step="0.01"
-                                                       placeholder="Cantidad" required="" name="cantidad">
-                                            </div>
-
                                         </div>
 
                                         <div class="row">
@@ -69,9 +63,10 @@
                                                 <select class="form-control chosen" name="categoria" id="categoria"
                                                         data-placeholder="Seleccione...">
                                                     <option value=""></option>
-                                                    @if (isset($cultivos))
-                                                        @foreach ($cultivos as $cultivo)
-                                                            <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                    @if (isset($categorias))
+                                                        @foreach ($categorias as $categoria)
+                                                            <option value="{{ $categoria['value'] }}">{{ $categoria['text'] }}
+                                                            </option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -89,16 +84,9 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="formato">Formato</label>
-                                                <select class="form-control chosen" name="formato" id="formato"
-                                                        data-placeholder="Seleccione...">
-                                                    <option value=""></option>
-                                                    @if (isset($cultivos))
-                                                        @foreach ($cultivos as $cultivo)
-                                                            <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
+                                                <label for="cantidad">Cantidad</label>
+                                                <input type="number" class="form-control" id="cantidad" step="0.01"
+                                                       placeholder="Cantidad" required="" name="cantidad">
                                             </div>
                                         </div>
 
@@ -162,7 +150,7 @@
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label class="checkbox checkbox-success">
-                                                    <input type="checkbox" name="material_daniado" checked>
+                                                    <input type="checkbox" name="material_daniado">
                                                     <span>Material Dañado</span>
                                                     <span class="checkmark"></span>
                                                 </label>
@@ -171,6 +159,22 @@
                                                 <label class="checkbox checkbox-success">
                                                     <input type="checkbox" name="material_limpio" checked>
                                                     <span>Material Limpio</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="control_grapas" checked>
+                                                    <span>Control de Grapas</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="cantidad_conforme" checked>
+                                                    <span>Cantidad Conforme</span>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -319,7 +323,8 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('almacen/entrada-productos/delete') }}" + "/" + row[0]
+                    window.location.href = "{{ url('almacen/entrada-productos/delete') }}" + "/" +
+                        row[0]
                 })
             });
 
@@ -344,5 +349,50 @@
                 allow_single_deselect: true
             });
         })
+    </script>
+
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function () {
+            $('#categoria').on('change', function (evt, params) {
+                var value = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('entrada-productos.selectMaterial') }}",
+                    dataType: 'JSON',
+                    data: {
+                        "categoria": value
+                    },
+                    success: function (data) {
+                        ClearMaterial();
+                        if (data == null) return;
+
+                        for (i = 0; i < data.length; i++) {
+                            var value = data[i].id;
+                            var text = data[i].formato;
+
+                            var option = "<option value='" + value + "'>" + text + "</option>";
+                            $("#material").append(option);
+                        }
+
+                        $("#material").trigger('chosen:updated');
+                    },
+                    error: function (error) {
+                        console.log(error)
+                        alert('Error. Check Console Log');
+                    },
+                });
+            });
+        });
+
+        function ClearMaterial() {
+            $("#material").html(null).append('<option value=""></option>');
+        }
+
     </script>
 @endsection
