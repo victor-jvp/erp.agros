@@ -20,7 +20,7 @@ class AuxiliaresController extends Controller
         $auxiliar->modelo  = $request->modelo;
         $auxiliar->save();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'auxiliares');
     }
 
     /**
@@ -33,7 +33,7 @@ class AuxiliaresController extends Controller
     {
         //
 
-        $auxiliar          = Auxiliar::find($request->id);
+        $auxiliar          = Auxiliar::find($request->id)->with('activeNav', 'auxiliares');
         $auxiliar->modelo  = $request->modelo;
         $auxiliar->save();
 
@@ -46,6 +46,6 @@ class AuxiliaresController extends Controller
         $auxiliar = Auxiliar::find($id);
         $auxiliar->delete();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'auxiliares');
     }
 }

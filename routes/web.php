@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
 
 #region Comercial
 
-Route::get('/comercial/clientes', function (){
+Route::get('/comercial/clientes', function () {
     return view('comercial.clientes');
 })->name('clientes');
 
@@ -34,7 +34,7 @@ Route::get('/comercial/clientes', function (){
 #region Almacen
 
 #region Listado de Inventario
-    
+
 #endregion
 
 #region Entrada de Productos

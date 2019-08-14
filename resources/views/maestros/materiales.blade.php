@@ -21,7 +21,7 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active show" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab"
+                            <a class="nav-link" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab"
                                aria-controls="cajas" aria-selected="true">Cajas</a>
                         </li>
                         <li class="nav-item">
@@ -42,7 +42,7 @@
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade active show" id="cajas" role="tabpanel" aria-labelledby="cajas-tab">
+                        <div class="tab-pane fade" id="cajas" role="tabpanel" aria-labelledby="cajas-tab">
 
                             <div class="row">
                                 <div class="col-md-3">
@@ -506,6 +506,17 @@
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
+
+    <script>
+        $(function(){
+            var activeNav = "{{ session('activeNav') }}";
+            if(activeNav == undefined || activeNav == ""){
+                activeNav = "cajas";
+            }
+            $("#"+activeNav+"-tab").attr('aria-selected', true).addClass('active show');
+            $("#"+activeNav).addClass('active show');
+        });
+    </script>
 
     {{--Cajas--}}
     <script>

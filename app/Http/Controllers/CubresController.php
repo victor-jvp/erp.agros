@@ -20,7 +20,7 @@ class CubresController extends Controller
         $cubre->formato = $request->formato;
         $cubre->save();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'cubres');
     }
 
     /**
@@ -37,7 +37,7 @@ class CubresController extends Controller
         $cubre->formato = $request->formato;
         $cubre->save();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'cubres');
     }
 
 
@@ -46,6 +46,6 @@ class CubresController extends Controller
         $cubre = Cubre::find($id);
         $cubre->delete();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'cubres');
     }
 }

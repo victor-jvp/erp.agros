@@ -13,7 +13,7 @@ class TarrinasController extends Controller
         $tarrina->modelo = $request->modelo;
         $tarrina->save();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'tarrinas');
     }
 
     public function update(Request $request, $id)
@@ -22,7 +22,7 @@ class TarrinasController extends Controller
         $tarrina->modelo = $request->modelo;
         $tarrina->save();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'tarrinas');
     }
 
     public function delete($id)
@@ -30,6 +30,6 @@ class TarrinasController extends Controller
         $tarrina = Tarrina::find($id);
         $tarrina->delete();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'tarrinas');
     }
 }

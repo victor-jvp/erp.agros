@@ -8,7 +8,6 @@ use App\Caja;
 
 class CajasController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      * @param \Illuminate\Http\Request $request
@@ -24,7 +23,7 @@ class CajasController extends Controller
         $caja->kg      = $request->kg;
         $caja->save();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'cajas');
     }
 
     /**
@@ -43,7 +42,7 @@ class CajasController extends Controller
         $caja->kg      = $request->kg;
         $caja->save();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'cajas');
     }
 
 
@@ -52,6 +51,6 @@ class CajasController extends Controller
         $caja = Caja::find($id);
         $caja->delete();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'cajas');
     }
 }

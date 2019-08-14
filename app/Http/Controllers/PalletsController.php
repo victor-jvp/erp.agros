@@ -22,7 +22,7 @@ class PalletsController extends Controller
         $pallet->modelo_id = $request->modelo_id;
         $pallet->save();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'pallets');
     }
 
     /**
@@ -38,7 +38,7 @@ class PalletsController extends Controller
         $pallet->modelo_id = $request->modelo_id;
         $pallet->save();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'pallets');
     }
 
 
@@ -47,6 +47,6 @@ class PalletsController extends Controller
         $pallet = Pallet::find($id);
         $pallet->delete();
 
-        return redirect()->route('materiales');
+        return redirect()->route('materiales')->with('activeNav', 'pallets');
     }
 }
