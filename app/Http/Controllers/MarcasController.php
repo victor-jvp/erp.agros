@@ -14,7 +14,7 @@ class MarcasController extends Controller
         $marca->cultivo_id = $request->cultivo_id;
         $marca->save();
 
-        return redirect()->route('familias-marcas');
+        return redirect()->route('familias-marcas')->with('activeNav', 'marcas');
     }
 
     public function update(Request $request, $id)
@@ -24,7 +24,7 @@ class MarcasController extends Controller
         $marca->cultivo_id = $request->cultivo_id;
         $marca->save();
 
-        return redirect()->route('familias-marcas');
+        return redirect()->route('familias-marcas')->with('activeNav', 'marcas');
     }
 
     public function delete($id)
@@ -32,6 +32,6 @@ class MarcasController extends Controller
         $marca = Marca::find($id);
         $marca->delete();
 
-        return redirect()->route('familias-marcas');
+        return redirect()->route('familias-marcas')->with('activeNav', 'marcas');
     }
 }

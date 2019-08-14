@@ -15,7 +15,7 @@ class VariedadesController extends Controller
         $variedad->cultivo_id = $request->cultivo_id;
         $variedad->save();
 
-        return redirect()->route('familias-marcas');
+        return redirect()->route('familias-marcas')->with('activeNav', 'variedades');
     }
 
     public function update(Request $request, $id)
@@ -25,7 +25,7 @@ class VariedadesController extends Controller
         $variedad->cultivo_id = $request->cultivo_id;
         $variedad->save();
 
-        return redirect()->route('familias-marcas');
+        return redirect()->route('familias-marcas')->with('activeNav', 'variedades');
     }
 
     public function delete($id)
@@ -33,6 +33,6 @@ class VariedadesController extends Controller
         $variedad = Variedad::find($id);
         $variedad->delete();
 
-        return redirect()->route('familias-marcas');
+        return redirect()->route('familias-marcas')->with('activeNav', 'variedades');
     }
 }

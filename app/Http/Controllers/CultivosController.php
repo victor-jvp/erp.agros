@@ -15,7 +15,7 @@ class CultivosController extends Controller
     	$cultivo->cultivo = $request->cultivo;
         $cultivo->save();
 
-        return redirect()->route('familias-marcas');
+        return redirect()->route('familias-marcas')->with('activeNav', 'cultivos');
     }
 
     public function update(Request $request, $id)
@@ -26,7 +26,7 @@ class CultivosController extends Controller
         $cultivo->cultivo = $request->cultivo;
         $cultivo->save();
 
-        return redirect()->route('familias-marcas');
+        return redirect()->route('familias-marcas')->with('activeNav', 'cultivos');
     }
 
 
@@ -35,6 +35,6 @@ class CultivosController extends Controller
         $cultivo = Cultivo::find($id);
         $cultivo->delete();
 
-        return redirect()->route('familias-marcas');
+        return redirect()->route('familias-marcas')->with('activeNav', 'cultivos');
     }
 }
