@@ -13,7 +13,7 @@ class FincasController extends Controller
         $finca->finca = $request->finca;
         $finca->save();
 
-        return redirect()->route('fincas');
+        return redirect()->route('fincas')->with('activeNav', 'fincas');
     }
 
     public function update(Request $request, $id)
@@ -24,7 +24,7 @@ class FincasController extends Controller
         $finca->finca = $request->finca;
         $finca->save();
 
-        return redirect()->route('fincas');
+        return redirect()->route('fincas')->with('activeNav', 'fincas');
     }
 
 
@@ -33,6 +33,6 @@ class FincasController extends Controller
         $finca = Finca::find($id);
         $finca->delete();
 
-        return redirect()->route('fincas');
+        return redirect()->route('fincas')->with('activeNav', 'fincas');
     }
 }

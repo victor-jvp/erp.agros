@@ -14,7 +14,7 @@ class ParcelasController extends Controller
         $parcela->finca_id = $request->finca_id;
         $parcela->save();
 
-        return redirect()->route('fincas');
+        return redirect()->route('fincas')->with('activeNav', 'parcelas');
     }
 
     public function update(Request $request, $id)
@@ -24,7 +24,7 @@ class ParcelasController extends Controller
         $parcela->finca_id = $request->finca_id;
         $parcela->save();
 
-        return redirect()->route('fincas');
+        return redirect()->route('fincas')->with('activeNav', 'parcelas');
     }
 
     public function delete($id)
@@ -32,6 +32,6 @@ class ParcelasController extends Controller
         $parcela = Parcela::find($id);
         $parcela->delete();
 
-        return redirect()->route('fincas');
+        return redirect()->route('fincas')->with('activeNav', 'parcelas');
     }
 }

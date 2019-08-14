@@ -21,9 +21,9 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active show" id="fincas-tab" data-toggle="tab" href="#fincas"
+                            <a class="nav-link" id="fincas-tab" data-toggle="tab" href="#fincas"
                                role="tab"
-                               aria-controls="cajas" aria-selected="true">Fincas</a>
+                               aria-controls="cajas" aria-selected="false">Fincas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="parcelas-tab" data-toggle="tab" href="#parcelas" role="tab"
@@ -31,7 +31,7 @@
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade active show" id="fincas" role="tabpanel"
+                        <div class="tab-pane fade" id="fincas" role="tabpanel"
                              aria-labelledby="fincas-tab">
 
                             <div class="row">
@@ -228,6 +228,17 @@
 @section('bottom-js')
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
+
+    <script>
+        $(function () {
+            var activeNav = "{{ session('activeNav') }}";
+            if (activeNav == undefined || activeNav == "") {
+                activeNav = "fincas";
+            }
+            $("#" + activeNav + "-tab").attr('aria-selected', true).addClass('active show');
+            $("#" + activeNav).addClass('active show');
+        });
+    </script>
 
     {{--Fincas--}}
     <script>
