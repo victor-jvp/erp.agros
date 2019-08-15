@@ -46,19 +46,6 @@
 
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
-                                                <label for="parcela_finca_id">Finca</label>
-                                                <select class="form-control" name="finca_id"
-                                                        id="finca_id" data-placeholder="Seleccione...">
-                                                    <option value=""></option>
-                                                    @foreach ($fincas as $finca)
-                                                        <option value="{{ $finca->id }}">{{ $finca->finca }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
                                                 <label for="cultivo">Cultivo</label>
                                                 <input type="text" class="form-control" id="cultivo"
                                                        placeholder="Cultivo" required="" name="cultivo">
@@ -72,6 +59,19 @@
                                                 <label for="marca">Marca</label>
                                                 <input type="text" class="form-control" id="marca"
                                                        placeholder="Marca" required="" name="marca">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="parcela_finca_id">Finca</label>
+                                                <select class="form-control" name="finca_id"
+                                                        id="finca_id" data-placeholder="Seleccione...">
+                                                    <option value=""></option>
+                                                    @foreach ($fincas as $finca)
+                                                        <option value="{{ $finca->id }}">{{ $finca->finca }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
@@ -95,8 +95,8 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th scope="col">Parcela</th>
                                         <th scope="col">Finca</th>
+                                        <th scope="col">Parcela</th>
                                         <th scope="col">Cultivo</th>
                                         <th scope="col">Variedad</th>
                                         <th scope="col">Acción</th>
