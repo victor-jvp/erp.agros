@@ -8,21 +8,18 @@ class CreateTrazabilidadTable extends Migration
 {
     /**
      * Run the migrations.
-     *
      * @return void
      */
     public function up()
     {
         Schema::create('trazabilidad', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('finca_id');
             $table->unsignedInteger('parcela_id');
-            $table->unsignedInteger('cultivo_id');
             $table->unsignedInteger('variedad_id');
-            $table->foreign('finca_id')->references('id')->on('fincas');
+            $table->unsignedInteger('marca_id');
             $table->foreign('parcela_id')->references('id')->on('parcelas');
-            $table->foreign('cultivo_id')->references('id')->on('cultivos');
             $table->foreign('variedad_id')->references('id')->on('variedades');
+            $table->foreign('marca_id')->references('id')->on('marcas');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,7 +27,6 @@ class CreateTrazabilidadTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()

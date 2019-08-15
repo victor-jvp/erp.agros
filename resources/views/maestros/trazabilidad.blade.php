@@ -46,31 +46,44 @@
 
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
-                                                <label for="cultivo">Cultivo</label>
-                                                <input type="text" class="form-control" id="cultivo"
-                                                       placeholder="Cultivo" required="" name="cultivo">
+                                                <label for="cultivo_id">Cultivo</label>
+                                                <select class="form-control chosen" name="cultivo_id"
+                                                        id="cultivo_id" data-placeholder="Seleccione...">
+                                                    <option value=""></option>
+                                                    @foreach ($cultivos as $cultivo)
+                                                        <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="variedad">Variedad</label>
-                                                <input type="text" class="form-control" id="variedad"
-                                                       placeholder="Variedad" required="" name="variedad">
+                                                <select class="form-control chosen" name="variedad_id"
+                                                        id="variedad_id" data-placeholder="Seleccione...">
+                                                </select>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="marca">Marca</label>
-                                                <input type="text" class="form-control" id="marca"
-                                                       placeholder="Marca" required="" name="marca">
+                                                <select class="form-control chosen" name="marca_id"
+                                                        id="marca_id" data-placeholder="Seleccione...">
+                                                </select>
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
-                                                <label for="parcela_finca_id">Finca</label>
-                                                <select class="form-control" name="finca_id"
+                                                <label for="finca_id">Finca</label>
+                                                <select class="form-control chosen" name="finca_id"
                                                         id="finca_id" data-placeholder="Seleccione...">
                                                     <option value=""></option>
                                                     @foreach ($fincas as $finca)
                                                         <option value="{{ $finca->id }}">{{ $finca->finca }}</option>
                                                     @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="parcela_id">Parcela</label>
+                                                <select class="form-control chosen" name="parcela_id"
+                                                        id="parcela_id" data-placeholder="Seleccione...">
                                                 </select>
                                             </div>
                                         </div>
@@ -99,6 +112,7 @@
                                         <th scope="col">Parcela</th>
                                         <th scope="col">Cultivo</th>
                                         <th scope="col">Variedad</th>
+                                        <th scope="col">Marca</th>
                                         <th scope="col">Acción</th>
                                     </tr>
                                     </thead>
@@ -141,7 +155,7 @@
                 ]
             });
 
-            $("#finca_id").chosen({
+            $(".chosen").chosen({
                 width: "100%",
                 no_results_text: "No se encontraron resultados... ",
                 allow_single_deselect: true
@@ -152,5 +166,95 @@
                 $("#modal-trazabilidad").modal("show");
             });
         });
+    </script>
+
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function () {
+            $('#finca_id').on('change', function (evt, params) {
+                var valor = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('trazabilidad.ajaxSelectParcela') }}",
+                    dataType: 'JSON',
+                    data: {
+                        id: valor
+                    },
+                    success: function (data) {
+                        ClearParcela();
+                        if (data == null) return;
+
+                        for (i = 0; i < data.length; i++) {
+                            var value = data[i].id;
+                            var text = data[i].parcela;
+
+                            var option = "<option value='" + value + "'>" + text + "</option>";
+                            $("#parcela_id").append(option);
+                        }
+
+                        $("#parcela_id").trigger('chosen:updated');
+                    },
+                    error: function (error) {
+                        console.log(error)
+                        alert('Error. Check Console Log');
+                    },
+                });
+            })
+
+            $('#cultivo_id').on('change', function (evt, params) {
+                var valor = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('trazabilidad.ajaxSelectByCultivo') }}",
+                    dataType: 'JSON',
+                    data: {
+                        id: valor
+                    },
+                    success: function (data) {
+                        ClearByCultivos();
+                        if (data == null) return;
+
+                        for (i = 0; i < data.variedades.length; i++) {
+                            var variedad_id = data.variedades[i].id;
+                            var variedad = data.variedades[i].variedad;
+
+                            var option_variedad = "<option value='" + variedad_id + "'>" + variedad + "</option>";
+                            $("#variedad_id").append(option_variedad);
+                        }
+
+                        $("#variedad_id").trigger('chosen:updated');
+
+                        for (i = 0; i < data.marcas.length; i++) {
+                            var marca_id = data.marcas[i].id;
+                            var marca = data.marcas[i].marca;
+
+                            var option_marca = "<option value='" + marca_id + "'>" + marca + "</option>";
+                            $("#marca_id").append(option_marca);
+                        }
+
+                        $("#marca_id").trigger('chosen:updated');
+                    },
+                    error: function (error) {
+                        console.log(error)
+                        alert('Error. Check Console Log');
+                    },
+                });
+            });
+        });
+
+        function ClearParcela() {
+            $("#parcela_id").html(null).append('<option value=""></option>');
+        }
+
+        function ClearByCultivos() {
+            $("#variedad_id").html(null).append('<option value=""></option>');
+            $("#marca_id").html(null).append('<option value=""></option>');
+        }
+
     </script>
 @endsection

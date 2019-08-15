@@ -186,11 +186,8 @@ Route::get('/maestros/productos-compuestos/delete/{producto}', 'ProductosCompues
 
 #region Trazabilidad
 
-Route::get('/maestros/trazabilidad', function () {
-    $fincas = App\Finca::all();
-    return view('maestros.trazabilidad', array(
-        'fincas' => $fincas
-    ));
-})->name('trazabilidad');
+Route::resource('/maestros/trazabilidad', 'TrazabilidadController');
+Route::post('maestros/trazabilidad/ajaxSelectParcela', 'TrazabilidadController@ajaxSelectParcela')->name('trazabilidad.ajaxSelectParcela');
+Route::post('maestros/trazabilidad/ajaxSelectByCultivo', 'TrazabilidadController@ajaxSelectByCultivo')->name('trazabilidad.ajaxSelectByCultivo');
 
 #endregion
