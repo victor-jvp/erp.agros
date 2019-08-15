@@ -77,203 +77,420 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label>Europalet</label>
-                                                <div class="form-group">
-                                                    <select name="euro_pallet_id" id="euro_pallet_id"
-                                                            class="form-control chosen"
-                                                            data-placeholder="Seleccione...">
-                                                        <option value=""></option>
-                                                        @if (isset($euro_pallets))
-                                                            @foreach ($euro_pallets as $euro)
-                                                                <option value="{{ $euro->id }}">{{ $euro->formato }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="euro_cantidad"
-                                                           placeholder="Cantidad" name="euro_cantidad">
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="euro_kg"
-                                                           placeholder="Kg" name="euro_kg">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label>Pallet Grande</label>
-                                                <div class="form-group">
-                                                    <select name="grand_pallet_id" id="grand_pallet_id"
-                                                            class="form-control chosen"
-                                                            data-placeholder="Seleccione...">
-                                                        <option value=""></option>
-                                                        @if (isset($grand_pallets))
-                                                            @foreach ($grand_pallets as $grand)
-                                                                <option value="{{ $grand->id }}">{{ $grand->formato }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="grand_cantidad"
-                                                           placeholder="Cantidad" name="grand_cantidad">
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="grand_kg"
-                                                           placeholder="Kg" name="grand_kg">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="cantoneras">Cantoneras</label>
-                                                <input type="text" class="form-control" id="cantoneras"
-                                                       placeholder="Cantoneras" name="cantoneras">
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="variedad">Cubres</label>
-                                                <select name="cubre_id" id="cubre_id" class="form-control chosen"
-                                                        data-placeholder="Seleccione...">
-                                                    <option value=""></option>
-                                                    @if (isset($cubres))
-                                                        @foreach ($cubres as $cubre)
-                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="cubre_cantidad">Cantidad Cubres</label>
-                                                <input type="number" class="form-control" id="cubre_cantidad"
-                                                       placeholder="Cantidad Cubres" name="cubre_cantidad">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
                                             <div class="col-md-12 mb-3">
                                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                     <li class="nav-item">
-                                                        <a class="nav-link active show" id="tarrinas-tab"
-                                                           data-toggle="tab" href="#tarrinas" role="tab"
-                                                           aria-controls="tarrinas" aria-selected="true">Tarrinas</a>
+                                                        <a class="nav-link active show" id="EuroPallet-tab"
+                                                           data-toggle="tab" href="#EuroPallet" role="tab"
+                                                           aria-controls="EuroPallet" aria-selected="true">Euro
+                                                            Pallet</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link" id="auxiliares-tab" data-toggle="tab"
-                                                           href="#auxiliares" role="tab" aria-controls="auxiliares"
-                                                           aria-selected="false">Auxiliares</a>
+                                                        <a class="nav-link" id="PalletGrande-tab" data-toggle="tab"
+                                                           href="#PalletGrande" role="tab" aria-controls="PalletGrande"
+                                                           aria-selected="false">Pallet Grande</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content" id="myTabContent">
-                                                    <div class="tab-pane fade active show" id="tarrinas" role="tabpanel"
-                                                         aria-labelledby="tarrinas-tab">
-
+                                                    <div class="tab-pane fade active show" id="EuroPallet"
+                                                         role="tabpanel"
+                                                         aria-labelledby="EuroPallet-tab">
                                                         <div class="row">
-                                                            <div class="col-md-6 mb-3">
-                                                                <label for="tarrina_modelo">Tarrina</label>
-                                                                <select id="tarrina_modelo"
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="euro_pallet_id">Europalet</label>
+                                                                <select name="euro_pallet_id" id="euro_pallet_id"
                                                                         class="form-control chosen"
                                                                         data-placeholder="Seleccione...">
                                                                     <option value=""></option>
-                                                                    @if (isset($tarrinas))
-                                                                        @foreach ($tarrinas as $tarrina)
-                                                                            <option value="{{ $tarrina->id }}">{{ $tarrina->modelo }}</option>
+                                                                    @if (isset($euro_pallets))
+                                                                        @foreach ($euro_pallets as $euro)
+                                                                            <option value="{{ $euro->id }}">{{ $euro->formato }}</option>
                                                                         @endforeach
                                                                     @endif
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="tarrina_cantidad">Cantidad</label>
+                                                                <label for="euro_pallet_id">Cantidad</label>
                                                                 <input type="number" class="form-control"
-                                                                       id="tarrina_cantidad"
-                                                                       placeholder="Cantidad" step="0.01">
+                                                                       id="euro_cantidad"
+                                                                       placeholder="Cantidad" name="euro_cantidad">
                                                             </div>
-                                                            <div class="col-md-2 mb-3">
-                                                                <br>
-                                                                <button id="btnAddTarrina" type="button"
-                                                                        class="btn btn-success btn-icon">
-                                                                    <i class="i-Add"></i>
-                                                                </button>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="euro_pallet_id">Kilogramos</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="euro_kg"
+                                                                       placeholder="Kg" name="euro_kg">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="cantoneras">Cantoneras</label>
+                                                                <input type="text" class="form-control" id="cantoneras"
+                                                                       placeholder="Cantoneras" name="cantoneras">
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="variedad">Cubres</label>
+                                                                <select name="cubre_id" id="cubre_id"
+                                                                        class="form-control chosen"
+                                                                        data-placeholder="Seleccione...">
+                                                                    <option value=""></option>
+                                                                    @if (isset($cubres))
+                                                                        @foreach ($cubres as $cubre)
+                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="cubre_cantidad">Cantidad Cubres</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="cubre_cantidad"
+                                                                       placeholder="Cantidad Cubres"
+                                                                       name="cubre_cantidad">
                                                             </div>
                                                         </div>
 
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3">
-                                                                <div class="table-responsive">
-                                                                    <table id="tarrinas_table"
-                                                                           class="display table table-striped table-bordered"
-                                                                           style="width:100%">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th>modelo_id</th>
-                                                                            <th scope="col">Tarrina</th>
-                                                                            <th scope="col">Cantidad</th>
-                                                                            <th scope="col">Acción</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody></tbody>
-                                                                    </table>
+                                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link active show"
+                                                                           id="tarrinas-tab"
+                                                                           data-toggle="tab" href="#tarrinas" role="tab"
+                                                                           aria-controls="tarrinas"
+                                                                           aria-selected="true">Tarrinas</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link" id="auxiliares-tab"
+                                                                           data-toggle="tab"
+                                                                           href="#auxiliares" role="tab"
+                                                                           aria-controls="auxiliares"
+                                                                           aria-selected="false">Auxiliares</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content" id="myTabContent">
+                                                                    <div class="tab-pane fade active show" id="tarrinas"
+                                                                         role="tabpanel"
+                                                                         aria-labelledby="tarrinas-tab">
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 mb-3">
+                                                                                <label for="tarrina_modelo">Tarrina</label>
+                                                                                <select id="tarrina_modelo"
+                                                                                        class="form-control chosen"
+                                                                                        data-placeholder="Seleccione...">
+                                                                                    <option value=""></option>
+                                                                                    @if (isset($tarrinas))
+                                                                                        @foreach ($tarrinas as $tarrina)
+                                                                                            <option value="{{ $tarrina->id }}">{{ $tarrina->modelo }}</option>
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <label for="tarrina_cantidad">Cantidad</label>
+                                                                                <input type="number"
+                                                                                       class="form-control"
+                                                                                       id="tarrina_cantidad"
+                                                                                       placeholder="Cantidad"
+                                                                                       step="0.01">
+                                                                            </div>
+                                                                            <div class="col-md-2 mb-3">
+                                                                                <br>
+                                                                                <button id="btnAddTarrina" type="button"
+                                                                                        class="btn btn-success btn-icon">
+                                                                                    <i class="i-Add"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 mb-3">
+                                                                                <div class="table-responsive">
+                                                                                    <table id="tarrinas_table"
+                                                                                           class="display table table-striped table-bordered"
+                                                                                           style="width:100%">
+                                                                                        <thead>
+                                                                                        <tr>
+                                                                                            <th>modelo_id</th>
+                                                                                            <th scope="col">Tarrina</th>
+                                                                                            <th scope="col">Cantidad
+                                                                                            </th>
+                                                                                            <th scope="col">Acción</th>
+                                                                                        </tr>
+                                                                                        </thead>
+                                                                                        <tbody></tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="tab-pane fade" id="auxiliares"
+                                                                         role="tabpanel"
+                                                                         aria-labelledby="auxiliares-tab">
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 mb-3">
+                                                                                <label for="auxiliar_modelo">Auxiliar</label>
+                                                                                <select id="auxiliar_modelo"
+                                                                                        class="form-control chosen"
+                                                                                        data-placeholder="Seleccione...">
+                                                                                    <option value=""></option>
+                                                                                    @if (isset($auxiliares))
+                                                                                        @foreach ($auxiliares as $auxiliar)
+                                                                                            <option value="{{ $auxiliar->id }}">{{ $auxiliar->modelo }}</option>
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <label for="auxiliar_cantidad">Cantidad</label>
+                                                                                <input type="number"
+                                                                                       class="form-control"
+                                                                                       id="auxiliar_cantidad"
+                                                                                       placeholder="Cantidad"
+                                                                                       step="0.01">
+                                                                            </div>
+                                                                            <div class="col-md-2 mb-3">
+                                                                                <br>
+                                                                                <button id="btnAddAuxiliar"
+                                                                                        type="button" data-index=""
+                                                                                        class="btn btn-success btn-icon">
+                                                                                    <i class="i-Add"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 mb-3">
+                                                                                <div class="table-responsive">
+                                                                                    <table id="auxiliares_table"
+                                                                                           class="display table table-striped table-bordered"
+                                                                                           style="width:100%">
+                                                                                        <thead>
+                                                                                        <tr>
+                                                                                            <th>modelo_id</th>
+                                                                                            <th scope="col">Auxiliar
+                                                                                            </th>
+                                                                                            <th scope="col">Cantidad
+                                                                                            </th>
+                                                                                            <th scope="col">Acción</th>
+                                                                                        </tr>
+                                                                                        </thead>
+                                                                                        <tbody></tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
-                                                    <div class="tab-pane fade" id="auxiliares" role="tabpanel"
-                                                         aria-labelledby="auxiliares-tab">
-
+                                                    <div class="tab-pane fade" id="PalletGrande" role="tabpanel"
+                                                         aria-labelledby="PalletGrande-tab">
                                                         <div class="row">
-                                                            <div class="col-md-6 mb-3">
-                                                                <label for="auxiliar_modelo">Auxiliar</label>
-                                                                <select id="auxiliar_modelo"
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="grand_pallet_id">Pallet Grande</label>
+                                                                <select name="grand_pallet_id" id="grand_pallet_id"
                                                                         class="form-control chosen"
                                                                         data-placeholder="Seleccione...">
                                                                     <option value=""></option>
-                                                                    @if (isset($auxiliares))
-                                                                        @foreach ($auxiliares as $auxiliar)
-                                                                            <option value="{{ $auxiliar->id }}">{{ $auxiliar->modelo }}</option>
+                                                                    @if (isset($grand_pallets))
+                                                                        @foreach ($grand_pallets as $grand)
+                                                                            <option value="{{ $grand->id }}">{{ $grand->formato }}</option>
                                                                         @endforeach
                                                                     @endif
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="auxiliar_cantidad">Cantidad</label>
+                                                                <label for="grand_cantidad">Cantidad</label>
                                                                 <input type="number" class="form-control"
-                                                                       id="auxiliar_cantidad"
-                                                                       placeholder="Cantidad" step="0.01">
+                                                                       id="grand_cantidad"
+                                                                       placeholder="Cantidad" name="grand_cantidad">
                                                             </div>
-                                                            <div class="col-md-2 mb-3">
-                                                                <br>
-                                                                <button id="btnAddAuxiliar" type="button" data-index=""
-                                                                        class="btn btn-success btn-icon">
-                                                                    <i class="i-Add"></i>
-                                                                </button>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="grand_kg">Kilogramos</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="grand_kg"
+                                                                       placeholder="Kg" name="grand_kg">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="cantoneras">Cantoneras</label>
+                                                                <input type="text" class="form-control" id="cantoneras"
+                                                                       placeholder="Cantoneras" name="cantoneras">
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="variedad">Cubres</label>
+                                                                <select name="cubre_id" id="cubre_id"
+                                                                        class="form-control chosen"
+                                                                        data-placeholder="Seleccione...">
+                                                                    <option value=""></option>
+                                                                    @if (isset($cubres))
+                                                                        @foreach ($cubres as $cubre)
+                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="cubre_cantidad">Cantidad Cubres</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="cubre_cantidad"
+                                                                       placeholder="Cantidad Cubres"
+                                                                       name="cubre_cantidad">
                                                             </div>
                                                         </div>
 
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3">
-                                                                <div class="table-responsive">
-                                                                    <table id="auxiliares_table"
-                                                                           class="display table table-striped table-bordered"
-                                                                           style="width:100%">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th>modelo_id</th>
-                                                                            <th scope="col">Auxiliar</th>
-                                                                            <th scope="col">Cantidad</th>
-                                                                            <th scope="col">Acción</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody></tbody>
-                                                                    </table>
+                                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link active show"
+                                                                           id="tarrinas-tab"
+                                                                           data-toggle="tab" href="#tarrinas" role="tab"
+                                                                           aria-controls="tarrinas"
+                                                                           aria-selected="true">Tarrinas</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link" id="auxiliares-tab"
+                                                                           data-toggle="tab"
+                                                                           href="#auxiliares" role="tab"
+                                                                           aria-controls="auxiliares"
+                                                                           aria-selected="false">Auxiliares</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content" id="myTabContent">
+                                                                    <div class="tab-pane fade active show" id="tarrinas"
+                                                                         role="tabpanel"
+                                                                         aria-labelledby="tarrinas-tab">
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 mb-3">
+                                                                                <label for="tarrina_modelo">Tarrina</label>
+                                                                                <select id="tarrina_modelo"
+                                                                                        class="form-control chosen"
+                                                                                        data-placeholder="Seleccione...">
+                                                                                    <option value=""></option>
+                                                                                    @if (isset($tarrinas))
+                                                                                        @foreach ($tarrinas as $tarrina)
+                                                                                            <option value="{{ $tarrina->id }}">{{ $tarrina->modelo }}</option>
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <label for="tarrina_cantidad">Cantidad</label>
+                                                                                <input type="number"
+                                                                                       class="form-control"
+                                                                                       id="tarrina_cantidad"
+                                                                                       placeholder="Cantidad"
+                                                                                       step="0.01">
+                                                                            </div>
+                                                                            <div class="col-md-2 mb-3">
+                                                                                <br>
+                                                                                <button id="btnAddTarrina" type="button"
+                                                                                        class="btn btn-success btn-icon">
+                                                                                    <i class="i-Add"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 mb-3">
+                                                                                <div class="table-responsive">
+                                                                                    <table id="tarrinas_table"
+                                                                                           class="display table table-striped table-bordered"
+                                                                                           style="width:100%">
+                                                                                        <thead>
+                                                                                        <tr>
+                                                                                            <th>modelo_id</th>
+                                                                                            <th scope="col">Tarrina</th>
+                                                                                            <th scope="col">Cantidad
+                                                                                            </th>
+                                                                                            <th scope="col">Acción</th>
+                                                                                        </tr>
+                                                                                        </thead>
+                                                                                        <tbody></tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="tab-pane fade" id="auxiliares"
+                                                                         role="tabpanel"
+                                                                         aria-labelledby="auxiliares-tab">
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 mb-3">
+                                                                                <label for="auxiliar_modelo">Auxiliar</label>
+                                                                                <select id="auxiliar_modelo"
+                                                                                        class="form-control chosen"
+                                                                                        data-placeholder="Seleccione...">
+                                                                                    <option value=""></option>
+                                                                                    @if (isset($auxiliares))
+                                                                                        @foreach ($auxiliares as $auxiliar)
+                                                                                            <option value="{{ $auxiliar->id }}">{{ $auxiliar->modelo }}</option>
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <label for="auxiliar_cantidad">Cantidad</label>
+                                                                                <input type="number"
+                                                                                       class="form-control"
+                                                                                       id="auxiliar_cantidad"
+                                                                                       placeholder="Cantidad"
+                                                                                       step="0.01">
+                                                                            </div>
+                                                                            <div class="col-md-2 mb-3">
+                                                                                <br>
+                                                                                <button id="btnAddAuxiliar"
+                                                                                        type="button" data-index=""
+                                                                                        class="btn btn-success btn-icon">
+                                                                                    <i class="i-Add"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 mb-3">
+                                                                                <div class="table-responsive">
+                                                                                    <table id="auxiliares_table"
+                                                                                           class="display table table-striped table-bordered"
+                                                                                           style="width:100%">
+                                                                                        <thead>
+                                                                                        <tr>
+                                                                                            <th>modelo_id</th>
+                                                                                            <th scope="col">Auxiliar
+                                                                                            </th>
+                                                                                            <th scope="col">Cantidad
+                                                                                            </th>
+                                                                                            <th scope="col">Acción</th>
+                                                                                        </tr>
+                                                                                        </thead>
+                                                                                        <tbody></tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
 
                                     </div>
                                     <div class="modal-footer">
