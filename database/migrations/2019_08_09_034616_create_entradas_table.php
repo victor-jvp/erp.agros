@@ -30,7 +30,7 @@ class CreateEntradasTable extends Migration
             $table->boolean('material_limpio')->default(false);
             $table->boolean('control_grapas')->default(false);
             $table->boolean('cantidad_conforme')->default(false);
-            $table->unsignedInteger('proveedor_id');
+            $table->unsignedInteger('proveedor_id')->nullable();
             $table->foreign('pallet_id')->references('id')->on('pallets');
             $table->foreign('caja_id')->references('id')->on('cajas');
             $table->foreign('proveedor_id')->references('id')->on('proveedores');

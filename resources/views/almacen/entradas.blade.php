@@ -284,7 +284,7 @@
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
-                                            <td>{{ $entrada->proveedor->razon_social }}</td>
+                                            <td>{{ (!is_null($entrada->proveedor)) ? $entrada->proveedor->razon_social : "" }}</td>
                                             <td>
                                                 <a href="javascript:void(0);" class="text-success mr-2">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
