@@ -290,7 +290,7 @@
                 },
                 success: function (data) {
                     ClearParcela();
-                    if (data == null) return;
+                    if (data == null || data.length <= 0) return;
 
                     for (i = 0; i < data.length; i++) {
                         var value = data[i].id;
@@ -312,8 +312,7 @@
             });
         }
 
-        function ajaxSelectByCultivo(id, selected_variedad_id, selected_marca_id)
-        {
+        function ajaxSelectByCultivo(id, selected_variedad_id, selected_marca_id) {
             $.ajax({
                 type: 'POST',
                 url: "{{ route('trazabilidad.ajaxSelectByCultivo') }}",
@@ -323,33 +322,34 @@
                 },
                 success: function (data) {
                     ClearByCultivos();
-                    if (data == null) return;
 
-                    for (i = 0; i < data.variedades.length; i++) {
-                        var variedad_id = data.variedades[i].id;
-                        var variedad = data.variedades[i].variedad;
+                    if (data.variedades != null && data.variedades.length > 0) {
+                        for (i = 0; i < data.variedades.length; i++) {
+                            var variedad_id = data.variedades[i].id;
+                            var variedad = data.variedades[i].variedad;
 
-                        var isSelected = "";
-                        if (selected_variedad_id != null && selected_variedad_id == variedad_id) isSelected = "selected";
+                            var isSelected = "";
+                            if (selected_variedad_id != null && selected_variedad_id == variedad_id) isSelected = "selected";
 
-                        var option_variedad = "<option "+isSelected+" value='" + variedad_id + "'>" + variedad + "</option>";
-                        $("#variedad_id").append(option_variedad);
+                            var option_variedad = "<option " + isSelected + " value='" + variedad_id + "'>" + variedad + "</option>";
+                            $("#variedad_id").append(option_variedad);
+                        }
+                        $("#variedad_id").trigger('chosen:updated');
                     }
 
-                    $("#variedad_id").trigger('chosen:updated');
+                    if (data.variedades != null && data.variedades.length > 0) {
+                        for (i = 0; i < data.marcas.length; i++) {
+                            var marca_id = data.marcas[i].id;
+                            var marca = data.marcas[i].marca;
 
-                    for (i = 0; i < data.marcas.length; i++) {
-                        var marca_id = data.marcas[i].id;
-                        var marca = data.marcas[i].marca;
+                            var isSelected = "";
+                            if (selected_marca_id != null && selected_marca_id == marca_id) isSelected = "selected";
 
-                        var isSelected = "";
-                        if (selected_marca_id != null && selected_marca_id == marca_id) isSelected = "selected";
-
-                        var option_marca = "<option "+isSelected+" value='" + marca_id + "'>" + marca + "</option>";
-                        $("#marca_id").append(option_marca);
+                            var option_marca = "<option " + isSelected + " value='" + marca_id + "'>" + marca + "</option>";
+                            $("#marca_id").append(option_marca);
+                        }
+                        $("#marca_id").trigger('chosen:updated');
                     }
-
-                    $("#marca_id").trigger('chosen:updated');
                 },
                 error: function (error) {
                     console.log(error)
@@ -363,8 +363,8 @@
         }
 
         function ClearByCultivos() {
-            $("#variedad_id").html(null).append('<option value=""></option>');
-            $("#marca_id").html(null).append('<option value=""></option>');
+            $("#variedad_id").html(null).append('<option value=""></option>').trigger('chosen:updated');
+            $("#marca_id").html(null).append('<option value=""></option>').trigger('chosen:updated');
         }
 
     </script>
