@@ -14,6 +14,7 @@ class CreateTrazabilidadTable extends Migration
     {
         Schema::create('trazabilidad', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('fecha');
             $table->unsignedInteger('parcela_id');
             $table->unsignedInteger('variedad_id');
             $table->unsignedInteger('marca_id');

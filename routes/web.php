@@ -179,7 +179,7 @@ Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
 })->name('productos-compuestos-show');
 
 Route::put('/maestros/productos-compuestos/store', 'ProductosCompuestosController@store')->name('productos-compuestos.store');
-Route::get('maestros/productos-compuestos/details/{producto}', 'ProductosCompuestosController@details')->name('productos-compuestos.details');
+Route::get('/maestros/productos-compuestos/details/{producto}', 'ProductosCompuestosController@details')->name('productos-compuestos.details');
 Route::get('/maestros/productos-compuestos/delete/{producto}', 'ProductosCompuestosController@delete')->name('productos-compuestos.delete');
 
 #endregion
@@ -187,7 +187,8 @@ Route::get('/maestros/productos-compuestos/delete/{producto}', 'ProductosCompues
 #region Trazabilidad
 
 Route::resource('/maestros/trazabilidad', 'TrazabilidadController');
-Route::post('maestros/trazabilidad/ajaxSelectParcela', 'TrazabilidadController@ajaxSelectParcela')->name('trazabilidad.ajaxSelectParcela');
-Route::post('maestros/trazabilidad/ajaxSelectByCultivo', 'TrazabilidadController@ajaxSelectByCultivo')->name('trazabilidad.ajaxSelectByCultivo');
+Route::post('/maestros/trazabilidad/ajaxSelectParcela', 'TrazabilidadController@ajaxSelectParcela')->name('trazabilidad.ajaxSelectParcela');
+Route::post('/maestros/trazabilidad/ajaxSelectByCultivo', 'TrazabilidadController@ajaxSelectByCultivo')->name('trazabilidad.ajaxSelectByCultivo');
+Route::get('/maestros/trazabilidad/delete/{trazabilidad}', 'TrazabilidadController@delete')->name('trazabilidad.delete');
 
 #endregion

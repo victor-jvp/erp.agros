@@ -6,6 +6,7 @@ use App\Cultivo;
 use App\Finca;
 use App\Marca;
 use App\Parcela;
+use App\Trazabilidad;
 use App\Variedad;
 use Illuminate\Http\Request;
 
@@ -20,49 +21,35 @@ class TrazabilidadController extends Controller
         //
         $data = array(
             'fincas'   => Finca::all(),
-            'cultivos' => Cultivo::all()
+            'cultivos' => Cultivo::all(),
+            'trazabilidades' => Trazabilidad::all(),
         );
 
         return view('maestros.trazabilidad', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+
+        $trazabilidad = new Trazabilidad();
+
+        $trazabilidad->fecha       = $request->fecha;
+        $trazabilidad->parcela_id  = $request->parcela_id;
+        $trazabilidad->variedad_id = $request->variedad_id;
+        $trazabilidad->marca_id    = $request->marca_id;
+
+        $trazabilidad->save();
+
+        return redirect()->route('trazabilidad.index');
     }
 
-    /**
-     * Display the specified resource.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function delete($id)
     {
-        //
-    }
+        $trazabilidad = Trazabilidad::find($id);
+        $trazabilidad->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return redirect()->route('trazabilidad.index');
     }
 
     /**
@@ -73,17 +60,16 @@ class TrazabilidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $trazabilidad = Trazabilidad::find($request->id);
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $trazabilidad->fecha       = $request->fecha;
+        $trazabilidad->parcela_id  = $request->parcela_id;
+        $trazabilidad->variedad_id = $request->variedad_id;
+        $trazabilidad->marca_id    = $request->marca_id;
+
+        $trazabilidad->save();
+
+        return redirect()->route('trazabilidad.index');
     }
 
     public function ajaxSelectParcela(Request $request)

@@ -30,9 +30,9 @@
                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-trazabilidad">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <form action="/maestros/trazabilidad" method="POST" id="producto_form">
+                                <form action="/maestros/trazabilidad" method="POST" id="trazabilidad_form">
                                     {{ csrf_field() }}
-                                    <input type="hidden" name="_method" id="trazabilidad_method" value="PUT">
+                                    <input type="hidden" name="_method" id="trazabilidad_method" value="">
                                     <input type="hidden" name="id" id="trazabilidad_id">
 
                                     <div class="modal-header">
@@ -86,6 +86,11 @@
                                                         id="parcela_id" data-placeholder="Seleccione...">
                                                 </select>
                                             </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="fecha">Fecha</label>
+                                                <input type="date" class="form-control" name="fecha" id="fecha" required
+                                                       value="{{ date('Y-m-d') }}">
+                                            </div>
                                         </div>
 
                                     </div>
@@ -108,16 +113,49 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th scope="col">Traza</th>
+                                        <th scope="col">Fecha</th>
                                         <th scope="col">Finca</th>
                                         <th scope="col">Parcela</th>
                                         <th scope="col">Cultivo</th>
                                         <th scope="col">Variedad</th>
                                         <th scope="col">Marca</th>
                                         <th scope="col">Acción</th>
+                                        <th>finca_id</th>
+                                        <th>parcela_id</th>
+                                        <th>cultivo_id</th>
+                                        <th>variedad_id</th>
+                                        <th>marca_id</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-
+                                    @if(isset($trazabilidades))
+                                        @foreach($trazabilidades as $trazabilidad)
+                                            <tr>
+                                                <td>{{ $trazabilidad->id }}</td>
+                                                <td>{{ $trazabilidad->traza }}</td>
+                                                <td>{{ date('d/m/Y', strtotime($trazabilidad->fecha)) }}</td>
+                                                <td>{{ $trazabilidad->parcela->finca->finca }}</td>
+                                                <td>{{ $trazabilidad->parcela->parcela }}</td>
+                                                <td>{{ $trazabilidad->variedad->cultivo->cultivo }}</td>
+                                                <td>{{ $trazabilidad->variedad->variedad }}</td>
+                                                <td>{{ $trazabilidad->marca->marca }}</td>
+                                                <td>
+                                                    <a href="javascript:void(0);" class="text-success mr-2">
+                                                        <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="text-danger mr-2">
+                                                        <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                    </a>
+                                                </td>
+                                                <td>{{ $trazabilidad->parcela->finca->id }}</td>
+                                                <td>{{ $trazabilidad->parcela->id }}</td>
+                                                <td>{{ $trazabilidad->variedad->cultivo->id }}</td>
+                                                <td>{{ $trazabilidad->variedad->id }}</td>
+                                                <td>{{ $trazabilidad->marca->id }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -141,6 +179,7 @@
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>
 
     <script>
         var table_trazabilidad
@@ -151,7 +190,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    {targets: [0], visible: false},
+                    {targets: [0, 9, 10, 11, 12, 13], visible: false},
                 ]
             });
 
@@ -162,10 +201,64 @@
             });
 
             $("#btnNuevaTrazabilidad").click(function (e) {
+                limpiarCamposTrazabilidad();
                 $("#modal-trazabilidad-title").html('Agregar Trazabilidad');
                 $("#modal-trazabilidad").modal("show");
             });
+
+            $('#trazabilidad_table .edit').on('click', function () {
+                var tr = $(this).closest('tr');
+                var row = table_trazabilidad.row(tr).data();
+                limpiarCamposTrazabilidad();
+
+                $("#trazabilidad_id").val(row[0]);
+
+                var fecha = moment(row[2], "DD/MM/YYYY");
+                $('#fecha').val(fecha.format("YYYY-MM-DD"));
+
+                $('#finca_id').val(row[9]);
+                $('#cultivo_id').val(row[11]);
+
+                $("#finca_id, #cultivo_id").trigger('chosen:updated');
+
+                ajaxSelectParcela(row[9], row[10]);
+                ajaxSelectByCultivo(row[11], row[12], row[13]);
+
+                $('#trazabilidad_form').attr('action', '/maestros/trazabilidad/' + row[0]);
+
+                $("#modal-trazabilidad-title").html("Modificar Trazabilidad");
+                $("#trazabilidad_method").val('PUT');
+                $("#modal-trazabilidad").modal('show');
+            });
+
+            $('#trazabilidad_table .delete').on('click', function () {
+                var tr = $(this).closest('tr');
+                var row = table_trazabilidad.row(tr).data();
+
+                swal({
+                    title: 'Confirmar Proceso',
+                    text: "Confirme eliminar el registro seleccionado",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0CC27E',
+                    cancelButtonColor: '#FF586B',
+                    confirmButtonText: 'Confirmar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonClass: 'btn btn-success mr-5',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function () {
+                    window.location.href = "{{ url('maestros/trazabilidad/delete') }}" + "/" + row[0]
+                })
+            });
         });
+
+        function limpiarCamposTrazabilidad() {
+            $("#finca_id, #cultivo_id").val(null).trigger('chosen:updated');
+            $("#variedad_id, #marca_id, #parcela_id").html(null).append('<option value=""></option>');
+            $("#variedad_id, #marca_id, #parcela_id").trigger('chosen:updated');
+            $("#fecha").val("{{ date('Y-m-d') }}");
+        }
     </script>
 
     <script>
@@ -178,74 +271,92 @@
         $(document).ready(function () {
             $('#finca_id').on('change', function (evt, params) {
                 var valor = $(this).val();
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('trazabilidad.ajaxSelectParcela') }}",
-                    dataType: 'JSON',
-                    data: {
-                        id: valor
-                    },
-                    success: function (data) {
-                        ClearParcela();
-                        if (data == null) return;
-
-                        for (i = 0; i < data.length; i++) {
-                            var value = data[i].id;
-                            var text = data[i].parcela;
-
-                            var option = "<option value='" + value + "'>" + text + "</option>";
-                            $("#parcela_id").append(option);
-                        }
-
-                        $("#parcela_id").trigger('chosen:updated');
-                    },
-                    error: function (error) {
-                        console.log(error)
-                        alert('Error. Check Console Log');
-                    },
-                });
-            })
+                ajaxSelectParcela(valor);
+            });
 
             $('#cultivo_id').on('change', function (evt, params) {
                 var valor = $(this).val();
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('trazabilidad.ajaxSelectByCultivo') }}",
-                    dataType: 'JSON',
-                    data: {
-                        id: valor
-                    },
-                    success: function (data) {
-                        ClearByCultivos();
-                        if (data == null) return;
-
-                        for (i = 0; i < data.variedades.length; i++) {
-                            var variedad_id = data.variedades[i].id;
-                            var variedad = data.variedades[i].variedad;
-
-                            var option_variedad = "<option value='" + variedad_id + "'>" + variedad + "</option>";
-                            $("#variedad_id").append(option_variedad);
-                        }
-
-                        $("#variedad_id").trigger('chosen:updated');
-
-                        for (i = 0; i < data.marcas.length; i++) {
-                            var marca_id = data.marcas[i].id;
-                            var marca = data.marcas[i].marca;
-
-                            var option_marca = "<option value='" + marca_id + "'>" + marca + "</option>";
-                            $("#marca_id").append(option_marca);
-                        }
-
-                        $("#marca_id").trigger('chosen:updated');
-                    },
-                    error: function (error) {
-                        console.log(error)
-                        alert('Error. Check Console Log');
-                    },
-                });
+                ajaxSelectByCultivo(valor);
             });
         });
+
+        function ajaxSelectParcela(id, selected) {
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('trazabilidad.ajaxSelectParcela') }}",
+                dataType: 'JSON',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    ClearParcela();
+                    if (data == null) return;
+
+                    for (i = 0; i < data.length; i++) {
+                        var value = data[i].id;
+                        var text = data[i].parcela;
+
+                        var isSelected = "";
+                        if (selected != null && value == selected) isSelected = "selected";
+
+                        var option = "<option " + isSelected + " value='" + value + "'>" + text + "</option>";
+                        $("#parcela_id").append(option);
+                    }
+
+                    $("#parcela_id").trigger('chosen:updated');
+                },
+                error: function (error) {
+                    console.log(error)
+                    alert('Error. Check Console Log');
+                },
+            });
+        }
+
+        function ajaxSelectByCultivo(id, selected_variedad_id, selected_marca_id)
+        {
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('trazabilidad.ajaxSelectByCultivo') }}",
+                dataType: 'JSON',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    ClearByCultivos();
+                    if (data == null) return;
+
+                    for (i = 0; i < data.variedades.length; i++) {
+                        var variedad_id = data.variedades[i].id;
+                        var variedad = data.variedades[i].variedad;
+
+                        var isSelected = "";
+                        if (selected_variedad_id != null && selected_variedad_id == variedad_id) isSelected = "selected";
+
+                        var option_variedad = "<option "+isSelected+" value='" + variedad_id + "'>" + variedad + "</option>";
+                        $("#variedad_id").append(option_variedad);
+                    }
+
+                    $("#variedad_id").trigger('chosen:updated');
+
+                    for (i = 0; i < data.marcas.length; i++) {
+                        var marca_id = data.marcas[i].id;
+                        var marca = data.marcas[i].marca;
+
+                        var isSelected = "";
+                        if (selected_marca_id != null && selected_marca_id == marca_id) isSelected = "selected";
+
+                        var option_marca = "<option "+isSelected+" value='" + marca_id + "'>" + marca + "</option>";
+                        $("#marca_id").append(option_marca);
+                    }
+
+                    $("#marca_id").trigger('chosen:updated');
+                },
+                error: function (error) {
+                    console.log(error)
+                    alert('Error. Check Console Log');
+                },
+            });
+        }
 
         function ClearParcela() {
             $("#parcela_id").html(null).append('<option value=""></option>');
