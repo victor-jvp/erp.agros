@@ -24,11 +24,7 @@ Route::get('/dashboard', function () {
 })->name('starter');
 
 #region Comercial
-
-Route::get('/comercial/clientes', function () {
-    return view('comercial.clientes');
-})->name('clientes');
-
+Route::resource('/comercial/clientes', 'ClientesController');
 #endregion
 
 #region Almacen

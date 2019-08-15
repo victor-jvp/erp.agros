@@ -17,16 +17,17 @@
             <div class="card text-left">
 
                 <div class="card-body">
-                    <h4 class="card-title mb-3">Clientes</h4>
+                    <h4 class="card-title mb-3">Cliente: <b>{{ $proveedor->razon_social }}</b></h4>
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active show" id="datos-fiscales-tab" data-toggle="tab" href="#datos-fiscales"
-                               role="tab"
-                               aria-controls="cajas" aria-selected="true">Datos Fiscales</a>
+                            <a class="nav-link active show" id="datos-fiscales-tab" data-toggle="tab"
+                               href="#datos-fiscales" role="tab" aria-controls="cajas" aria-selected="true">Datos
+                                Fiscales</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="datos-comerciales-tab" data-toggle="tab" href="#datos-comerciales" role="tab"
+                            <a class="nav-link" id="datos-comerciales-tab" data-toggle="tab" href="#datos-comerciales"
+                               role="tab"
                                aria-controls="pallets" aria-selected="false">Datos Comerciales</a>
                         </li>
                         <li class="nav-item">
@@ -34,105 +35,111 @@
                                aria-controls="pallets" aria-selected="false">Contactos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="historico-pedidos-tab" data-toggle="tab" href="#historico-pedidos" role="tab"
+                            <a class="nav-link" id="historico-pedidos-tab" data-toggle="tab" href="#historico-pedidos"
+                               role="tab"
                                aria-controls="pallets" aria-selected="false">Histórico de Pedidos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="contactar-email-tab" data-toggle="tab" href="#contactar-email" role="tab"
+                            <a class="nav-link" id="contactar-email-tab" data-toggle="tab" href="#contactar-email"
+                               role="tab"
                                aria-controls="pallets" aria-selected="false">Contactar via Email</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="documentacion-tab" data-toggle="tab" href="#documentacion" role="tab"
+                            <a class="nav-link" id="documentacion-tab" data-toggle="tab" href="#documentacion"
+                               role="tab"
                                aria-controls="pallets" aria-selected="false">Documentación</a>
                         </li>
                     </ul>
 
+
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade active show" id="fincas" role="tabpanel"
-                             aria-labelledby="fincas-tab">
+                        <form action="{{ route('proveedores.update', $proveedor->id) }}" method="POST" id="finca_form">
+                            {{ csrf_field() }}
+                            {{ method_field('PUT') }}
+                            <input type="hidden" name="id" id="id" value="{{ $proveedor->id }}">
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <button class="btn btn-primary" type="button" id="btnNuevaFinca">Nuevo</button>
-                                </div>
-                            </div>
+                            <div class="tab-pane fade active show" id="datos-fiscales" role="tabpanel"
+                                 aria-labelledby="datos-fiscales-tab">
 
-                            <!-- Modal Fincas-->
-                            <div class="modal fade" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-fincas">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content">
-                                        <form action="/maestros/fincas" method="POST" id="finca_form">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="_method" id="finca_method" value="PUT">
-                                            <input type="hidden" name="id" id="finca_id">
-
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modal-fincas-title"></h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-row">
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for="finca">Finca</label>
-                                                        <input type="text" class="form-control" id="finca"
-                                                               placeholder="Finca" required="" name="finca">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Cerrar
-                                                </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                            </div>
-                                        </form>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cif">CIF</label>
+                                        <input type="text" class="form-control" id="cif" value="{{ $proveedor->cif }}"
+                                               placeholder="CIF" required="" name="cif">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="razon_social">Razón Social</label>
+                                        <input type="text" class="form-control" id="razon_social"
+                                               value="{{ $proveedor->razon_social }}"
+                                               placeholder="Razón Social" required="" name="razon_social">
                                     </div>
                                 </div>
-                            </div>
 
-                            <hr>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table id="fincas_table" class="display table table-striped table-bordered"
-                                               style="width:100%">
-                                            <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th scope="col">Finca</th>
-                                                <th scope="col">Accion</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @if (isset($fincas))
-                                                @foreach ($fincas as $finca)
-                                                    <tr>
-                                                        <td>{{ $finca->id }}</td>
-                                                        <td scope="row">{{ $finca->finca }}</td>
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-
-                                            </tbody>
-                                        </table>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="nombre_comercial">Nombre Comercial</label>
+                                        <input type="text" class="form-control" id="nombre_comercial"
+                                               value="{{ $proveedor->nombre_comercial }}"
+                                               placeholder="Nombre Comercial" name="nombre_comercial">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="pais">País</label>
+                                        <input type="text" class="form-control" id="pais" value="{{ $proveedor->pais }}"
+                                               placeholder="País" name="pais">
                                     </div>
                                 </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="localidad">Localidad</label>
+                                        <input type="text" class="form-control" id="localidad"
+                                               value="{{ $proveedor->localidad }}"
+                                               placeholder="Localidad" name="localidad">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="provincia">Provincia</label>
+                                        <input type="text" class="form-control" id="provincia"
+                                               value="{{ $proveedor->provincia }}"
+                                               placeholder="País" name="provincia">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="direccion">Direccion</label>
+                                        <input type="text" class="form-control" id="direccion"
+                                               value="{{ $proveedor->direccion }}"
+                                               placeholder="Direccion" name="direccion">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="telefono">Teléfono</label>
+                                        <input type="text" class="form-control" id="telefono"
+                                               value="{{ $proveedor->telefono }}"
+                                               placeholder="Teléfono" name="telefono">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email">Email</label>
+                                        <input type="text" class="form-control" id="email"
+                                               value="{{ $proveedor->email }}"
+                                               placeholder="Email" name="email">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button class="btn btn-primary" type="submit">Guardar
+                                        </button>
+                                    </div>
+                                </div>
+
                             </div>
 
-                        </div>
+                        </form>
                         <div class="tab-pane fade" id="parcelas" role="tabpanel" aria-labelledby="parcelas-tab">
                             <div class="row">
                                 <div class="col-md-3">
@@ -322,7 +329,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    {targets: [0,2], visible: false},
+                    {targets: [0, 2], visible: false},
                 ]
             });
 
@@ -339,7 +346,7 @@
                 $("#modal-parcelas").modal('show');
             });
 
-            $('#modal-parcelas').on('hidden.bs.modal',function () {
+            $('#modal-parcelas').on('hidden.bs.modal', function () {
                 limpiarCamposParcelas();
             })
 
