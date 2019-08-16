@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Cultivo;
 use App\Finca;
-use App\Marca;
 use App\Parcela;
 use App\Trazabilidad;
 use App\Variedad;
@@ -20,8 +19,8 @@ class TrazabilidadController extends Controller
     {
         //
         $data = array(
-            'fincas'   => Finca::all(),
-            'cultivos' => Cultivo::all(),
+            'fincas'         => Finca::all(),
+            'cultivos'       => Cultivo::all(),
             'trazabilidades' => Trazabilidad::all(),
         );
 
@@ -34,10 +33,8 @@ class TrazabilidadController extends Controller
 
         $trazabilidad = new Trazabilidad();
 
-        $trazabilidad->fecha       = $request->fecha;
         $trazabilidad->parcela_id  = $request->parcela_id;
         $trazabilidad->variedad_id = $request->variedad_id;
-        $trazabilidad->marca_id    = $request->marca_id;
 
         $trazabilidad->save();
 
@@ -62,10 +59,8 @@ class TrazabilidadController extends Controller
     {
         $trazabilidad = Trazabilidad::find($request->id);
 
-        $trazabilidad->fecha       = $request->fecha;
         $trazabilidad->parcela_id  = $request->parcela_id;
         $trazabilidad->variedad_id = $request->variedad_id;
-        $trazabilidad->marca_id    = $request->marca_id;
 
         $trazabilidad->save();
 
@@ -95,11 +90,6 @@ class TrazabilidadController extends Controller
         $data['variedades'] = Variedad::where('cultivo_id', "=", $id)->get([
             'id',
             'variedad'
-        ]);
-
-        $data['marcas'] = Marca::where('cultivo_id', "=", $id)->get([
-            'id',
-            'marca'
         ]);
 
         return response()->json($data);

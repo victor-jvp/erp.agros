@@ -28,7 +28,7 @@
                     {{--Modal Producto Compuesto--}}
                     <div class="modal fade" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-trazabilidad">
-                        <div class="modal-dialog modal-lg">
+                        <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <form action="/maestros/trazabilidad" method="POST" id="trazabilidad_form">
                                     {{ csrf_field() }}
@@ -44,53 +44,38 @@
                                     </div>
                                     <div class="modal-body">
 
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="cultivo_id">Cultivo</label>
-                                                <select class="form-control chosen" name="cultivo_id"
-                                                        id="cultivo_id" data-placeholder="Seleccione...">
-                                                    <option value=""></option>
-                                                    @foreach ($cultivos as $cultivo)
-                                                        <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="variedad">Variedad</label>
-                                                <select class="form-control chosen" name="variedad_id"
-                                                        id="variedad_id" data-placeholder="Seleccione...">
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="marca">Marca</label>
-                                                <select class="form-control chosen" name="marca_id"
-                                                        id="marca_id" data-placeholder="Seleccione...">
-                                                </select>
-                                            </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label for="finca_id">Finca</label>
+                                            <select class="form-control chosen" name="finca_id"
+                                                    id="finca_id" data-placeholder="Seleccione...">
+                                                <option value=""></option>
+                                                @foreach ($fincas as $finca)
+                                                    <option value="{{ $finca->id }}">{{ $finca->finca }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label for="parcela_id">Parcela</label>
+                                            <select class="form-control chosen" name="parcela_id"
+                                                    id="parcela_id" data-placeholder="Seleccione...">
+                                            </select>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="finca_id">Finca</label>
-                                                <select class="form-control chosen" name="finca_id"
-                                                        id="finca_id" data-placeholder="Seleccione...">
-                                                    <option value=""></option>
-                                                    @foreach ($fincas as $finca)
-                                                        <option value="{{ $finca->id }}">{{ $finca->finca }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="parcela_id">Parcela</label>
-                                                <select class="form-control chosen" name="parcela_id"
-                                                        id="parcela_id" data-placeholder="Seleccione...">
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="fecha">Fecha</label>
-                                                <input type="date" class="form-control" name="fecha" id="fecha" required
-                                                       value="{{ date('Y-m-d') }}">
-                                            </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label for="cultivo_id">Cultivo</label>
+                                            <select class="form-control chosen" name="cultivo_id"
+                                                    id="cultivo_id" data-placeholder="Seleccione...">
+                                                <option value=""></option>
+                                                @foreach ($cultivos as $cultivo)
+                                                    <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label for="variedad">Variedad</label>
+                                            <select class="form-control chosen" name="variedad_id"
+                                                    id="variedad_id" data-placeholder="Seleccione...">
+                                            </select>
                                         </div>
 
                                     </div>
@@ -114,18 +99,15 @@
                                     <tr>
                                         <th>ID</th>
                                         <th scope="col">Traza</th>
-                                        <th scope="col">Fecha</th>
                                         <th scope="col">Finca</th>
                                         <th scope="col">Parcela</th>
                                         <th scope="col">Cultivo</th>
                                         <th scope="col">Variedad</th>
-                                        <th scope="col">Marca</th>
                                         <th scope="col">Acción</th>
                                         <th>finca_id</th>
                                         <th>parcela_id</th>
                                         <th>cultivo_id</th>
                                         <th>variedad_id</th>
-                                        <th>marca_id</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -134,12 +116,10 @@
                                             <tr>
                                                 <td>{{ $trazabilidad->id }}</td>
                                                 <td>{{ $trazabilidad->traza }}</td>
-                                                <td>{{ date('d/m/Y', strtotime($trazabilidad->fecha)) }}</td>
                                                 <td>{{ $trazabilidad->parcela->finca->finca }}</td>
                                                 <td>{{ $trazabilidad->parcela->parcela }}</td>
                                                 <td>{{ $trazabilidad->variedad->cultivo->cultivo }}</td>
                                                 <td>{{ $trazabilidad->variedad->variedad }}</td>
-                                                <td>{{ $trazabilidad->marca->marca }}</td>
                                                 <td>
                                                     <a href="javascript:void(0);" class="text-success mr-2">
                                                         <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
@@ -152,7 +132,6 @@
                                                 <td>{{ $trazabilidad->parcela->id }}</td>
                                                 <td>{{ $trazabilidad->variedad->cultivo->id }}</td>
                                                 <td>{{ $trazabilidad->variedad->id }}</td>
-                                                <td>{{ $trazabilidad->marca->id }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -190,7 +169,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    {targets: [0, 9, 10, 11, 12, 13], visible: false},
+                    {targets: [0, 7, 8, 9, 10], visible: false},
                 ]
             });
 
@@ -216,13 +195,13 @@
                 var fecha = moment(row[2], "DD/MM/YYYY");
                 $('#fecha').val(fecha.format("YYYY-MM-DD"));
 
-                $('#finca_id').val(row[9]);
-                $('#cultivo_id').val(row[11]);
+                $('#finca_id').val(row[7]);
+                $('#cultivo_id').val(row[9]);
 
                 $("#finca_id, #cultivo_id").trigger('chosen:updated');
 
-                ajaxSelectParcela(row[9], row[10]);
-                ajaxSelectByCultivo(row[11], row[12], row[13]);
+                ajaxSelectParcela(row[7], row[8]);
+                ajaxSelectByCultivo(row[9], row[10]);
 
                 $('#trazabilidad_form').attr('action', '/maestros/trazabilidad/' + row[0]);
 
@@ -255,8 +234,8 @@
 
         function limpiarCamposTrazabilidad() {
             $("#finca_id, #cultivo_id").val(null).trigger('chosen:updated');
-            $("#variedad_id, #marca_id, #parcela_id").html(null).append('<option value=""></option>');
-            $("#variedad_id, #marca_id, #parcela_id").trigger('chosen:updated');
+            $("#variedad_id, #parcela_id").html(null).append('<option value=""></option>');
+            $("#variedad_id, #parcela_id").trigger('chosen:updated');
             $("#fecha").val("{{ date('Y-m-d') }}");
         }
     </script>
@@ -312,7 +291,7 @@
             });
         }
 
-        function ajaxSelectByCultivo(id, selected_variedad_id, selected_marca_id) {
+        function ajaxSelectByCultivo(id, selected_variedad_id) {
             $.ajax({
                 type: 'POST',
                 url: "{{ route('trazabilidad.ajaxSelectByCultivo') }}",
@@ -336,20 +315,6 @@
                         }
                         $("#variedad_id").trigger('chosen:updated');
                     }
-
-                    if (data.variedades != null && data.variedades.length > 0) {
-                        for (i = 0; i < data.marcas.length; i++) {
-                            var marca_id = data.marcas[i].id;
-                            var marca = data.marcas[i].marca;
-
-                            var isSelected = "";
-                            if (selected_marca_id != null && selected_marca_id == marca_id) isSelected = "selected";
-
-                            var option_marca = "<option " + isSelected + " value='" + marca_id + "'>" + marca + "</option>";
-                            $("#marca_id").append(option_marca);
-                        }
-                        $("#marca_id").trigger('chosen:updated');
-                    }
                 },
                 error: function (error) {
                     console.log(error)
@@ -364,7 +329,6 @@
 
         function ClearByCultivos() {
             $("#variedad_id").html(null).append('<option value=""></option>').trigger('chosen:updated');
-            $("#marca_id").html(null).append('<option value=""></option>').trigger('chosen:updated');
         }
 
     </script>

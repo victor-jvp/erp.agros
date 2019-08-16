@@ -14,13 +14,10 @@ class CreateTrazabilidadTable extends Migration
     {
         Schema::create('trazabilidad', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha');
             $table->unsignedInteger('parcela_id');
             $table->unsignedInteger('variedad_id');
-            $table->unsignedInteger('marca_id');
             $table->foreign('parcela_id')->references('id')->on('parcelas');
             $table->foreign('variedad_id')->references('id')->on('variedades');
-            $table->foreign('marca_id')->references('id')->on('marcas');
             $table->softDeletes();
             $table->timestamps();
         });
