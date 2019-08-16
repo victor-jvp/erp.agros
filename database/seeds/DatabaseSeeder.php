@@ -23,6 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(VariedadesTableSeeder::class);
         $this->call(TarrinasTableSeeder::class);
         $this->call(ProductosCompuestos_cabTableSeeder::class);
-//        $this->call(ProductosCompuestos_detTableSeeder::class);
+        $this->call(ContadoresTableSeeder::class);
     }
 }

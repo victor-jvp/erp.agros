@@ -45,8 +45,8 @@
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="nro_lote">Nro. Lote</label>
-                                                <input type="text" class="form-control" id="nro_lote"
-                                                       placeholder="Nro. Lote" required="" name="nro_lote">
+                                                <input type="hidden" value="{{ $nro_lote }}" id="nextNroLote">
+                                                <input type="text" class="form-control" id="nro_lote" readonly>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="fecha">Fecha Entrada</label>
@@ -238,49 +238,57 @@
                                             <td>{{ date('d/m/Y',strtotime($entrada->fecha_albaran)) }}</td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                                    <input disabled type="checkbox" {{ ($entrada->transporte_adecuado) ? 'checked' : '' }}>
+                                                    <input disabled
+                                                           type="checkbox" {{ ($entrada->transporte_adecuado) ? 'checked' : '' }}>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                                    <input disabled type="checkbox" {{ ($entrada->control_plagas) ? 'checked' : '' }}>
+                                                    <input disabled
+                                                           type="checkbox" {{ ($entrada->control_plagas) ? 'checked' : '' }}>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                                    <input disabled type="checkbox" {{ ($entrada->estado_pallets) ? 'checked' : '' }}>
+                                                    <input disabled
+                                                           type="checkbox" {{ ($entrada->estado_pallets) ? 'checked' : '' }}>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                                    <input disabled type="checkbox" {{ ($entrada->ficha_tecnica) ? 'checked' : '' }}>
+                                                    <input disabled
+                                                           type="checkbox" {{ ($entrada->ficha_tecnica) ? 'checked' : '' }}>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                                    <input disabled type="checkbox" {{ ($entrada->material_daniado) ? 'checked' : '' }}>
+                                                    <input disabled
+                                                           type="checkbox" {{ ($entrada->material_daniado) ? 'checked' : '' }}>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                                    <input disabled type="checkbox" {{ ($entrada->material_limpio) ? 'checked' : '' }}>
+                                                    <input disabled
+                                                           type="checkbox" {{ ($entrada->material_limpio) ? 'checked' : '' }}>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                                    <input disabled type="checkbox" {{ ($entrada->control_grapas) ? 'checked' : '' }}>
+                                                    <input disabled
+                                                           type="checkbox" {{ ($entrada->control_grapas) ? 'checked' : '' }}>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                                    <input disabled type="checkbox" {{ ($entrada->cantidad_conforme) ? 'checked' : '' }}>
+                                                    <input disabled
+                                                           type="checkbox" {{ ($entrada->cantidad_conforme) ? 'checked' : '' }}>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
@@ -375,6 +383,8 @@
             $("#btnNuevo").click(function (e) {
                 limpiarCamposEntrada();
                 $("#modal-entradas-title").html("Nueva Entrada");
+                var nextNroLote = $("#nextNroLote").val();
+                $("#nro_lote").val(nextNroLote);
                 $("#entrada_method").val(null);
                 $("#modal-entradas").modal('show');
             })

@@ -158,7 +158,7 @@
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
-    <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>
+{{--    <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>--}}
 
     <script>
         var table_trazabilidad
@@ -191,9 +191,6 @@
                 limpiarCamposTrazabilidad();
 
                 $("#trazabilidad_id").val(row[0]);
-
-                var fecha = moment(row[2], "DD/MM/YYYY");
-                $('#fecha').val(fecha.format("YYYY-MM-DD"));
 
                 $('#finca_id').val(row[7]);
                 $('#cultivo_id').val(row[9]);
@@ -236,7 +233,6 @@
             $("#finca_id, #cultivo_id").val(null).trigger('chosen:updated');
             $("#variedad_id, #parcela_id").html(null).append('<option value=""></option>');
             $("#variedad_id, #parcela_id").trigger('chosen:updated');
-            $("#fecha").val("{{ date('Y-m-d') }}");
         }
     </script>
 

@@ -6,6 +6,7 @@ use App\Caja;
 use App\Entrada;
 use App\Pallet;
 use App\Proveedor;
+use App\Contador;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,7 @@ class EntradaProductosController extends Controller
             'entradas'    => $entradas,
             "categorias"  => $categorias,
             "proveedores" => Proveedor::all('id', 'razon_social'),
+            "nro_lote"    => Contador::next_nro_lote(),
         );
 
         return view('almacen.entradas', $data);
@@ -46,7 +48,7 @@ class EntradaProductosController extends Controller
         //dd($request);
 
         $entrada           = new Entrada();
-        $entrada->nro_lote = $request->nro_lote;
+        $entrada->nro_lote = Contador::save_nro_lote();
         $entrada->fecha    = $request->fecha;
         $entrada->cantidad = $request->cantidad;
 
