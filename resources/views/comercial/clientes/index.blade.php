@@ -31,7 +31,7 @@
                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-cliente">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
-                                <form action="/almacen/clientes" method="POST" id="cliente_form">
+                                <form action="/comercial/clientes/create" method="GET" id="cliente_form">
                                     {{ csrf_field() }}
 
                                     <div class="modal-header">
@@ -165,8 +165,8 @@
 
             $("#btnNuevo").click(function (e) {
                 limpiarCamposProveedor();
-                $("#modal-clientes-title").html("Nuevo Cliente");
-                $("#modal-clientes").modal('show');
+                $("#modal-cliente-title").html("Nuevo Cliente");
+                $("#modal-cliente").modal('show');
             })
         });
 

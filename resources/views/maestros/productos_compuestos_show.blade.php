@@ -95,61 +95,6 @@
                                                     <div class="tab-pane fade active show" id="EuroPallet"
                                                          role="tabpanel"
                                                          aria-labelledby="EuroPallet-tab">
-                                                        <div class="row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_pallet_id">Europalet</label>
-                                                                <select name="euro_pallet_id" id="euro_pallet_id"
-                                                                        class="form-control chosen"
-                                                                        data-placeholder="Seleccione...">
-                                                                    <option value=""></option>
-                                                                    @if (isset($euro_pallets))
-                                                                        @foreach ($euro_pallets as $euro)
-                                                                            <option value="{{ $euro->id }}">{{ $euro->formato }}</option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_pallet_id">Cantidad</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="euro_cantidad"
-                                                                       placeholder="Cantidad" name="euro_cantidad">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_pallet_id">Kilogramos</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="euro_kg"
-                                                                       placeholder="Kg" name="euro_kg">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="cantoneras">Cantoneras</label>
-                                                                <input type="text" class="form-control" id="cantoneras"
-                                                                       placeholder="Cantoneras" name="cantoneras">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="variedad">Cubres</label>
-                                                                <select name="cubre_id" id="cubre_id"
-                                                                        class="form-control chosen"
-                                                                        data-placeholder="Seleccione...">
-                                                                    <option value=""></option>
-                                                                    @if (isset($cubres))
-                                                                        @foreach ($cubres as $cubre)
-                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="cubre_cantidad">Cantidad Cubres</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="cubre_cantidad"
-                                                                       placeholder="Cantidad Cubres"
-                                                                       name="cubre_cantidad">
-                                                            </div>
-                                                        </div>
 
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3">
@@ -292,61 +237,6 @@
                                                     </div>
                                                     <div class="tab-pane fade" id="PalletGrande" role="tabpanel"
                                                          aria-labelledby="PalletGrande-tab">
-                                                        <div class="row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_pallet_id">Pallet Grande</label>
-                                                                <select name="grand_pallet_id" id="grand_pallet_id"
-                                                                        class="form-control chosen"
-                                                                        data-placeholder="Seleccione...">
-                                                                    <option value=""></option>
-                                                                    @if (isset($grand_pallets))
-                                                                        @foreach ($grand_pallets as $grand)
-                                                                            <option value="{{ $grand->id }}">{{ $grand->formato }}</option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_cantidad">Cantidad</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="grand_cantidad"
-                                                                       placeholder="Cantidad" name="grand_cantidad">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_kg">Kilogramos</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="grand_kg"
-                                                                       placeholder="Kg" name="grand_kg">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="cantoneras">Cantoneras</label>
-                                                                <input type="text" class="form-control" id="cantoneras"
-                                                                       placeholder="Cantoneras" name="cantoneras">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="variedad">Cubres</label>
-                                                                <select name="cubre_id" id="cubre_id"
-                                                                        class="form-control chosen"
-                                                                        data-placeholder="Seleccione...">
-                                                                    <option value=""></option>
-                                                                    @if (isset($cubres))
-                                                                        @foreach ($cubres as $cubre)
-                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="cubre_cantidad">Cantidad Cubres</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="cubre_cantidad"
-                                                                       placeholder="Cantidad Cubres"
-                                                                       name="cubre_cantidad">
-                                                            </div>
-                                                        </div>
 
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3">

@@ -25,6 +25,7 @@ Route::get('/dashboard', function () {
 
 #region Comercial
 Route::resource('/comercial/clientes', 'ClientesController');
+Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
 #endregion
 
 #region Almacen

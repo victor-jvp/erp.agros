@@ -17,7 +17,7 @@
             <div class="card text-left">
 
                 <div class="card-body">
-                    <h4 class="card-title mb-3">Cliente: <b>{{ $proveedor->razon_social }}</b></h4>
+                    <h4 class="card-title mb-3">Cliente: <b>{{ $cliente->razon_social }}</b></h4>
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
@@ -53,10 +53,10 @@
 
 
                     <div class="tab-content" id="myTabContent">
-                        <form action="{{ route('proveedores.update', $proveedor->id) }}" method="POST" id="finca_form">
+                        <form action="{{ route('clientes.update', $cliente->id) }}" method="POST" id="finca_form">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
-                            <input type="hidden" name="id" id="id" value="{{ $proveedor->id }}">
+                            <input type="hidden" name="id" id="id" value="{{ $cliente->id }}">
 
                             <div class="tab-pane fade active show" id="datos-fiscales" role="tabpanel"
                                  aria-labelledby="datos-fiscales-tab">
@@ -64,13 +64,13 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="cif">CIF</label>
-                                        <input type="text" class="form-control" id="cif" value="{{ $proveedor->cif }}"
+                                        <input type="text" class="form-control" id="cif" value="{{ $cliente->cif }}"
                                                placeholder="CIF" required="" name="cif">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="razon_social">Razón Social</label>
                                         <input type="text" class="form-control" id="razon_social"
-                                               value="{{ $proveedor->razon_social }}"
+                                               value="{{ $cliente->razon_social }}"
                                                placeholder="Razón Social" required="" name="razon_social">
                                     </div>
                                 </div>
@@ -79,12 +79,12 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="nombre_comercial">Nombre Comercial</label>
                                         <input type="text" class="form-control" id="nombre_comercial"
-                                               value="{{ $proveedor->nombre_comercial }}"
+                                               value="{{ $cliente->nombre_comercial }}"
                                                placeholder="Nombre Comercial" name="nombre_comercial">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="pais">País</label>
-                                        <input type="text" class="form-control" id="pais" value="{{ $proveedor->pais }}"
+                                        <input type="text" class="form-control" id="pais" value="{{ $cliente->pais }}"
                                                placeholder="País" name="pais">
                                     </div>
                                 </div>
@@ -94,13 +94,13 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="localidad">Localidad</label>
                                         <input type="text" class="form-control" id="localidad"
-                                               value="{{ $proveedor->localidad }}"
+                                               value="{{ $cliente->localidad }}"
                                                placeholder="Localidad" name="localidad">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="provincia">Provincia</label>
                                         <input type="text" class="form-control" id="provincia"
-                                               value="{{ $proveedor->provincia }}"
+                                               value="{{ $cliente->provincia }}"
                                                placeholder="País" name="provincia">
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                                     <div class="col-md-12 mb-3">
                                         <label for="direccion">Direccion</label>
                                         <input type="text" class="form-control" id="direccion"
-                                               value="{{ $proveedor->direccion }}"
+                                               value="{{ $cliente->direccion }}"
                                                placeholder="Direccion" name="direccion">
                                     </div>
                                 </div>
@@ -119,13 +119,13 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="telefono">Teléfono</label>
                                         <input type="text" class="form-control" id="telefono"
-                                               value="{{ $proveedor->telefono }}"
+                                               value="{{ $cliente->telefono }}"
                                                placeholder="Teléfono" name="telefono">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="email">Email</label>
                                         <input type="text" class="form-control" id="email"
-                                               value="{{ $proveedor->email }}"
+                                               value="{{ $cliente->email }}"
                                                placeholder="Email" name="email">
                                     </div>
                                 </div>
@@ -138,61 +138,12 @@
                                 </div>
 
                             </div>
-
                         </form>
-                        <div class="tab-pane fade" id="parcelas" role="tabpanel" aria-labelledby="parcelas-tab">
+
+                        <div class="tab-pane fade" id="clientes" role="tabpanel" aria-labelledby="clientes-tab">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <button class="btn btn-primary" type="button" id="btnNuevaParcela">Nuevo</button>
-                                </div>
-                            </div>
-
-                            <!-- Modal Parcelas-->
-                            <div class="modal fade" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-parcelas">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content">
-                                        <form action="/maestros/parcelas" method="POST" id="parcela_form">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="_method" id="parcela_method" value="PUT">
-                                            <input type="hidden" name="id" id="parcela_id">
-
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modal-parcelas-title"></h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-row">
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for="parcela">Parcela</label>
-                                                        <input type="text" class="form-control" id="parcela"
-                                                               placeholder="Parcela" required="" name="parcela">
-                                                    </div>
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for="parcela_finca_id">Finca</label>
-                                                        <select class="form-control" name="finca_id"
-                                                                id="parcela_finca_id">
-                                                            <option value="" hidden>Finca...</option>
-                                                            @if(isset($fincas))
-                                                                @foreach ($fincas as $finca)
-                                                                    <option value="{{ $finca->id }}">{{ $finca->finca }}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Cerrar
-                                                </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                    <button class="btn btn-primary" type="button" id="btnNuevoCliente">Nuevo</button>
                                 </div>
                             </div>
 
@@ -201,7 +152,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table id="parcelas_table" class="display table table-striped table-bordered"
+                                        <table id="clientes_table" class="display table table-striped table-bordered"
                                                style="width:100%">
                                             <thead>
                                             <tr>
@@ -213,13 +164,13 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @if (isset($parcelas))
-                                                @foreach ($parcelas as $parcela)
+                                            @if (isset($clientes))
+                                                @foreach ($clientes as $cliente)
                                                     <tr>
-                                                        <td>{{ $parcela->id }}</td>
-                                                        <td scope="row">{{ $parcela->parcela }}</td>
-                                                        <td>{{ $parcela->finca_id }}</td>
-                                                        <td>{{ $parcela->finca->finca }}</td>
+                                                        <td>{{ $cliente->id }}</td>
+                                                        <td scope="row">{{ $cliente->cliente }}</td>
+                                                        <td>{{ $cliente->finca_id }}</td>
+                                                        <td>{{ $cliente->finca->finca }}</td>
                                                         <td>
                                                             <a href="javascript:void(0);" class="text-success mr-2">
                                                                 <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
@@ -320,11 +271,11 @@
 
     {{--Parcelas--}}
     <script>
-        var table_parcelas
+        var table_clientes
 
         $(function () {
             // Configuracion de Datatable
-            table_parcelas = $('#parcelas_table').DataTable({
+            table_clientes = $('#clientes_table').DataTable({
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
@@ -333,26 +284,26 @@
                 ]
             });
 
-            $('#parcelas_table .edit').on('click', function () {
+            $('#clientes_table .edit').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_parcelas.row(tr).data();
-                $('#parcela_id').val(row[0]);
-                $('#parcela').val(row[1]);
-                $('#parcela_finca_id').find('option[value="' + row[2] + '"]').attr("selected", "selected");
-                $('#parcela_form').attr('action', '/maestros/parcelas/' + row[0]);
+                var row = table_clientes.row(tr).data();
+                $('#cliente_id').val(row[0]);
+                $('#cliente').val(row[1]);
+                $('#cliente_finca_id').find('option[value="' + row[2] + '"]').attr("selected", "selected");
+                $('#cliente_form').attr('action', '/maestros/clientes/' + row[0]);
 
-                $("#modal-parcelas-title").html("Modificar Parcela");
-                $("#parcela_method").val('PUT');
-                $("#modal-parcelas").modal('show');
+                $("#modal-clientes-title").html("Modificar Parcela");
+                $("#cliente_method").val('PUT');
+                $("#modal-clientes").modal( 'show');
             });
 
-            $('#modal-parcelas').on('hidden.bs.modal', function () {
+            $('#modal-clientes').on('hidden.bs.modal', function () {
                 limpiarCamposParcelas();
             })
 
-            $('#parcelas_table .delete').on('click', function () {
+            $('#clientes_table .delete').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_parcelas.row(tr).data();
+                var row = table_clientes.row(tr).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -367,21 +318,21 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('maestros/parcelas/delete') }}" + "/" + row[0]
+                    window.location.href = "{{ url('maestros/clientes/delete') }}" + "/" + row[0]
                 })
             });
 
             $("#btnNuevaParcela").click(function (e) {
                 limpiarCamposParcelas();
-                $("#modal-parcelas-title").html("Nueva Parcela");
-                $("#parcela_method").val(null);
-                $("#modal-parcelas").modal('show');
+                $("#modal-clientes-title").html("Nueva Parcela");
+                $("#cliente_method").val(null);
+                $("#modal-clientes").modal('show');
             })
         });
 
         function limpiarCamposParcelas() {
-            $('#parcela_id, #parcela').val(null);
-            $('#parcela_finca_id option[selected="selected"]').removeAttr('selected');
+            $('#cliente_id, #cliente').val(null);
+            $('#cliente_finca_id option[selected="selected"]').removeAttr('selected');
         }
     </script>
 @endsection
