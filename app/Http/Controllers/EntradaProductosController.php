@@ -129,4 +129,15 @@ class EntradaProductosController extends Controller
 
         return response()->json($data); // How do I return in json? in case of an error message?
     }
+
+    public function GetEntrada(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (is_null($id)) return response()->json(null);
+
+        $data = Entrada::find($id);
+
+        return response()->json($data); // How do I return in json? in case of an error message?
+    }
 }

@@ -181,8 +181,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Cerrar
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
                                         </button>
                                         <button type="submit" class="btn btn-primary">Guardar</button>
                                     </div>
@@ -294,17 +293,17 @@
                                             </td>
                                             <td>{{ (!is_null($entrada->proveedor)) ? $entrada->proveedor->razon_social : "" }}</td>
                                             <td>
-                                                <a href="javascript:void(0);" class="text-success mr-2">
-                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                <a href="javascript:void(0);" onclick="LoadEntrada({{ $entrada->id }})"
+                                                   class="text-success mr-2">
+                                                    <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                 </a>
-                                                <a href="javascript:void(0);" class="text-danger mr-2">
-                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                <a href="javascript:void(0);" class="text-danger mr-2 delete">
+                                                    <i class="nav-icon i-Close-Window font-weight-bold "></i>
                                                 </a>
                                             </td>
                                         </tr>
                                     @endforeach
                                 @endif
-
                                 </tbody>
                             </table>
                         </div>
@@ -326,42 +325,36 @@
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>
 
     {{--Entradas--}}
     <script>
-        var entradas_table
+        var entradas_table;
 
-        $(function () {
+        $(document).ready(function () {
             // Configuracion de Datatable
             entradas_table = $('#entradas_table').DataTable({
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
-                // columnDefs: [{
-                //     targets: [0],
-                //     visible: false
-                // },],
+                columnDefs: [
+                    {targets: [0, 3], visible: false},
+                ],
                 responsive: true
             });
 
-            $('#entradas_table .edit').on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = entradas_table.row(tr).data();
+            $("#btnNuevo").click(function (e) {
                 limpiarCamposEntrada();
-
-                $('#finca_id').val(row[0]);
-                $('#finca').val(row[1]);
-                $('#finca_form').attr('action', '/almacen/entrada-productos' + row[0]);
-
-                $("#modal-fincas-title").html("Modificar Entrada");
-                $("#finca_method").val('PUT');
-                $("#modal-fincas").modal('show');
+                $("#modal-entradas-title").html("Nueva Entrada");
+                var nextNroLote = $("#nextNroLote").val();
+                $("#nro_lote").val(nextNroLote);
+                $("#entrada_method").val(null);
+                $("#modal-entradas").modal('show');
             });
 
-            $('#entradas_table .delete').on('click', function () {
+            $('#entradas_table').on('click', '.delete', function () {
                 var tr = $(this).closest('tr');
                 var row = entradas_table.row(tr).data();
-
                 swal({
                     title: 'Confirmar Proceso',
                     text: "Confirme eliminar el registro seleccionado",
@@ -375,23 +368,72 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('almacen/entrada-productos/delete') }}" + "/" +
-                        row[0]
+                    window.location.href = "{{ url('almacen/entrada-productos/delete') }}" + "/" + row[0];
                 })
             });
-
-            $("#btnNuevo").click(function (e) {
-                limpiarCamposEntrada();
-                $("#modal-entradas-title").html("Nueva Entrada");
-                var nextNroLote = $("#nextNroLote").val();
-                $("#nro_lote").val(nextNroLote);
-                $("#entrada_method").val(null);
-                $("#modal-entradas").modal('show');
-            })
         });
 
+        function LoadEntrada(id) {
+            limpiarCamposEntrada();
+            // var current_row = $(this).parents('tr');//Get the current row
+            // if (current_row.hasClass('child')) {//Check if the current row is a child row
+            //     current_row = current_row.prev();//If it is, then point to the row before it (its 'parent')
+            // }
+            // var row = entradas_table.row(current_row).data();//At this point, current_row refers to a valid row in the table, whether is a child row (collapsed by the DataTable's responsiveness) or a 'normal' row
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('entrada-productos.GetEntrada') }}",
+                dataType: 'JSON',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data == null) return;
+
+                    $("#nro_lote").val(data.nro_lote);
+                    $("#fecha").val(moment(data.fecha).format("YYYY-MM-DD"));
+                    var material = null;
+                    if (data.pallet_id != null) {
+                        $('#categoria').val("pallets").trigger('chosen:updated');
+                        material = data.pallet_id;
+                        loadMaterial("pallets", material)
+                    } else {
+                        $('#categoria').val("cajas").trigger('chosen:updated');
+                        material = data.caja_id;
+                        loadMaterial("cajas", material)
+                    }
+                    $("#cantidad").val(data.cantidad);
+                    $("#nro_albaran").val(data.nro_albaran);
+                    $("#fecha_albaran").val(moment(data.fecha_albaran).format("YYYY-MM-DD"));
+                    $("input[name='transporte_adecuado']").prop('checked', (data.transporte_adecuado == 1));
+                    $("input[name='control_plagas']").prop('checked', (data.control_plagas == 1));
+                    $("input[name='estado_pallets']").prop('checked', (data.estado_pallets == 1));
+                    $("input[name='ficha_tecnica']").prop('checked', (data.ficha_tecnica == 1));
+                    $("input[name='material_daniado']").prop('checked', (data.material_daniado == 1));
+                    $("input[name='material_limpio']").prop('checked', (data.material_limpio == 1));
+                    $("input[name='control_grapas']").prop('checked', (data.control_grapas == 1));
+                    $("input[name='cantidad_conforme']").prop('checked', (data.cantidad_conforme == 1));
+                    $('#proveedor').val(data.proveedor_id).trigger('chosen:updated');
+
+                    $('#entrada_form').attr('action', '/almacen/entrada-productos/' + data.id);
+
+                    $("#modal-entradas-title").html("Modificar Entrada");
+                    $("#entrada_method").val('PUT');
+                    $("#modal-entradas").modal('show');
+                },
+                error: function (error) {
+                    console.log(error)
+                    alert('Error. Check Console Log');
+                },
+            });
+        }
+
         function limpiarCamposEntrada() {
-            $('#finca_id, #finca').val(null);
+            $('#nro_lote, #fecha, #cantidad, #nro_albaran, #fecha_albaran').val(null);
+            $(".chosen").val(null).trigger('chosen:updated');
+            $("input[type=checkbox]").prop('checked', true);
+            $("input[name='material_daniado']").prop("checked", false);
         }
     </script>
 
@@ -415,34 +457,41 @@
         $(document).ready(function () {
             $('#categoria').on('change', function (evt, params) {
                 var value = $(this).val();
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('entrada-productos.selectMaterial') }}",
-                    dataType: 'JSON',
-                    data: {
-                        "categoria": value
-                    },
-                    success: function (data) {
-                        ClearMaterial();
-                        if (data == null) return;
-
-                        for (i = 0; i < data.length; i++) {
-                            var value = data[i].id;
-                            var text = data[i].formato;
-
-                            var option = "<option value='" + value + "'>" + text + "</option>";
-                            $("#material").append(option);
-                        }
-
-                        $("#material").trigger('chosen:updated');
-                    },
-                    error: function (error) {
-                        console.log(error)
-                        alert('Error. Check Console Log');
-                    },
-                });
+                loadMaterial(value);
             });
         });
+
+        function loadMaterial(valor, selected) {
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('entrada-productos.selectMaterial') }}",
+                dataType: 'JSON',
+                data: {
+                    "categoria": valor
+                },
+                success: function (data) {
+                    ClearMaterial();
+                    if (data == null) return;
+
+                    for (i = 0; i < data.length; i++) {
+                        var value = data[i].id;
+                        var text = data[i].formato;
+                        var option = "<option value='" + value + "'>" + text + "</option>";
+                        $("#material").append(option);
+                    }
+
+                    if (selected != null) {
+                        $("#material").val(selected).trigger('chosen:updated');
+                    } else {
+                        $("#material").trigger('chosen:updated');
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                    alert('Error. Check Console Log');
+                },
+            });
+        }
 
         function ClearMaterial() {
             $("#material").html(null).append('<option value=""></option>');

@@ -121,11 +121,11 @@
                                                 <td>{{ $trazabilidad->variedad->cultivo->cultivo }}</td>
                                                 <td>{{ $trazabilidad->variedad->variedad }}</td>
                                                 <td>
-                                                    <a href="javascript:void(0);" class="text-success mr-2">
-                                                        <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                    <a href="javascript:void(0);" class="text-success mr-2 edit">
+                                                        <i class="nav-icon i-Pen-2 font-weight-bold "></i>
                                                     </a>
-                                                    <a href="javascript:void(0);" class="text-danger mr-2">
-                                                        <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                    <a href="javascript:void(0);" class="text-danger mr-2 delete">
+                                                        <i class="nav-icon i-Close-Window font-weight-bold "></i>
                                                     </a>
                                                 </td>
                                                 <td>{{ $trazabilidad->parcela->finca->id }}</td>
@@ -161,10 +161,10 @@
 {{--    <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>--}}
 
     <script>
-        var table_trazabilidad
+        var table_trazabilidad;
 
         $(document).ready(function () {
-            var table_trazabilidad = $("#trazabilidad_table").DataTable({
+            table_trazabilidad = $("#trazabilidad_table").DataTable({
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },

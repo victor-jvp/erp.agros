@@ -126,11 +126,11 @@
                                                             {{--                                                            <a href="javascript:void(0);" onclick="EditCaja('{{ $caja->id }}')" class="text-success mr-2">--}}
                                                             {{--                                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>--}}
                                                             {{--                                                            </a>--}}
-                                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                            <a href="javascript:void(0);" class="text-success mr-2 edit">
+                                                                <i class="nav-icon i-Pen-2 font-weight-bold "></i>
                                                             </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                            <a href="javascript:void(0);" class="text-danger mr-2 delete">
+                                                                <i class="nav-icon i-Close-Window font-weight-bold "></i>
                                                             </a>
                                                         </td>
                                                     </tr>
