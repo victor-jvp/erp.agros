@@ -431,8 +431,8 @@
         function limpiarCamposEntrada() {
             $('#nro_lote, #fecha, #cantidad, #nro_albaran, #fecha_albaran').val(null);
             $(".chosen").val(null).trigger('chosen:updated');
-            $("input[type=checkbox]").prop('checked', true);
-            $("input[name='material_daniado']").prop("checked", false);
+            $("#modal-entradas input[type=checkbox]").prop('checked', true);
+            $("#modal-entradas input[name='material_daniado']").prop("checked", false);
         }
     </script>
 

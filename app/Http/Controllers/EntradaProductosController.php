@@ -9,6 +9,7 @@ use App\Proveedor;
 use App\Contador;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Array_;
 
 class EntradaProductosController extends Controller
 {
@@ -73,26 +74,6 @@ class EntradaProductosController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      * @param \Illuminate\Http\Request $request
      * @param int $id
@@ -100,7 +81,28 @@ class EntradaProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $entrada           = Entrada::find($id);
+        $entrada->fecha    = $request->fecha;
+        $entrada->cantidad = $request->cantidad;
+
+        if ($request->categoria == "cajas") $entrada->caja_id = $request->material; else
+            $entrada->pallet_id = $request->material;
+
+        $entrada->nro_albaran         = $request->nro_albaran;
+        $entrada->fecha_albaran       = Carbon::parse($request->fecha_albaran)->toDateTimeString();
+        $entrada->proveedor_id        = $request->proveedor;
+        $entrada->transporte_adecuado = (isset($request->transporte_adecuado)) ? true : false;
+        $entrada->control_plagas      = (isset($request->control_plagas)) ? true : false;
+        $entrada->estado_pallets      = (isset($request->estado_pallets)) ? true : false;
+        $entrada->ficha_tecnica       = (isset($request->ficha_tecnica)) ? true : false;
+        $entrada->material_daniado    = (isset($request->material_daniado)) ? true : false;
+        $entrada->material_limpio     = (isset($request->material_limpio)) ? true : false;
+        $entrada->control_grapas      = (isset($request->control_grapas)) ? true : false;
+        $entrada->cantidad_conforme   = (isset($request->cantidad_conforme)) ? true : false;
+
+        $entrada->save();
+
+        return redirect()->route('entrada-productos.index');
     }
 
     /**
