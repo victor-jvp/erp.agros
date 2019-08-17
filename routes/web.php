@@ -149,29 +149,27 @@ Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
     $detalles = App\ProductoCompuesto_det::where('compuesto_id', $id)->get();
 
     foreach ($detalles as $i => $detalle) {
-        $detalles[$i]->tarrinas = App\ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->get();
+        $detalles[$i]->euro_tarrinas  = App\ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->where('model_id', '=', 1)->get();
+        $detalles[$i]->grand_tarrinas = App\ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->where('model_id', '=', 2)->get();
     }
 
     foreach ($detalles as $i => $detalle) {
-        $detalles[$i]->auxiliares = App\ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->get();
+        $detalles[$i]->euro_auxiliares  = App\ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->where('model_id', '=', 1)->get();
+        $detalles[$i]->grand_auxiliares = App\ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->where('model_id', '=', 2)->get();
     }
 
-    $cajas         = App\Caja::all();
-    $euro_pallets  = App\Pallet::where('modelo_id', '=', '1')->get();
-    $grand_pallets = App\Pallet::where('modelo_id', '=', '2')->get();
-    $tarrinas      = App\Tarrina::all();
-    $auxiliares    = App\Auxiliar::all();
-    $cubres        = App\Cubre::all();
+    $cajas      = App\Caja::all();
+    $tarrinas   = App\Tarrina::all();
+    $auxiliares = App\Auxiliar::all();
+    $cubres     = App\Cubre::all();
 
     return view('maestros.productos_compuestos_show', [
-        'producto'      => $producto,
-        'detalles'      => $detalles,
-        'cajas'         => $cajas,
-        'auxiliares'    => $auxiliares,
-        'tarrinas'      => $tarrinas,
-        'euro_pallets'  => $euro_pallets,
-        'grand_pallets' => $grand_pallets,
-        'cubres'        => $cubres
+        'producto'   => $producto,
+        'detalles'   => $detalles,
+        'cajas'      => $cajas,
+        'auxiliares' => $auxiliares,
+        'tarrinas'   => $tarrinas,
+        'cubres'     => $cubres
     ]);
 })->name('productos-compuestos-show');
 

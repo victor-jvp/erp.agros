@@ -375,7 +375,8 @@
                                                                             </div>
                                                                             <div class="col-md-2 mb-3">
                                                                                 <br>
-                                                                                <button id="btnAddGrandTarrina" type="button"
+                                                                                <button id="btnAddGrandTarrina"
+                                                                                        type="button"
                                                                                         class="btn btn-success btn-icon">
                                                                                     <i class="i-Add"></i>
                                                                                 </button>
@@ -496,13 +497,18 @@
                                         <th scope="col">Caja</th>
                                         <th scope="col">EuroPallet<br>Cantidad</th>
                                         <th scope="col">EuroPallet<br>Kg</th>
+                                        <th scope="col">EuroPallet<br>Cantoneras</th>
+                                        <th scope="col">EuroPallet<br>Cubre</th>
+                                        <th scope="col">EuroPallet<br>Cubre Cantidad</th>
+                                        <th scope="col">EuroPallet Tarrinas</th>
+                                        <th scope="col">EuroPallet Auxiliares</th>
                                         <th scope="col">Pallet Grande<br>Cantidad</th>
                                         <th scope="col">Pallet Grande<br>Kg</th>
-                                        <th scope="col">Cantoneras</th>
-                                        <th scope="col">Cubre</th>
-                                        <th scope="col">Cubre<br>Cantidad</th>
-                                        <th scope="col">Tarrinas</th>
-                                        <th scope="col">Auxiliares</th>
+                                        <th scope="col">Pallet Grande<br>Cantoneras</th>
+                                        <th scope="col">Pallet Grande<br>Cubre</th>
+                                        <th scope="col">Pallet Grande<br>Cubre Cantidad</th>
+                                        <th scope="col">Pallet Grande Tarrinas</th>
+                                        <th scope="col">Pallet Grande Auxiliares</th>
                                         <th scope="col">Acción</th>
                                     </tr>
                                     </thead>
@@ -514,15 +520,13 @@
                                             <td>{{ (!is_null($detalle->caja_id)) ? $detalle->caja->formato : "" }}</td>
                                             <td>{{ $detalle->euro_cantidad }}</td>
                                             <td>{{ $detalle->euro_kg }}</td>
-                                            <td>{{ $detalle->grand_cantidad }}</td>
-                                            <td>{{ $detalle->grand_kg}}</td>
-                                            <td>{{ $detalle->cantoneras}}</td>
-                                            <td>{{ (!is_null($detalle->cubre_id)) ? $detalle->cubre->formato : "" }}</td>
-                                            <td>{{ $detalle->cubre_cantidad }}</td>
+                                            <td>{{ $detalle->euro_cantoneras }}</td>
+                                            <td>{{ (!is_null($detalle->euro_cubre_id)) ? $detalle->euro_cubre->formato : "" }}</td>
+                                            <td>{{ $detalle->euro_cubre_cantidad }}</td>
                                             <td>
-                                                @if(isset($detalle->tarrinas))
+                                                @if(isset($detalle->euro_tarrinas))
                                                     <ul class="list-group text-left">
-                                                        @foreach($detalle->tarrinas as $tarrina)
+                                                        @foreach($detalle->euro_tarrinas as $tarrina)
                                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                 {{ $tarrina->tarrina->modelo }}
                                                                 <span class="badge badge-primary badge-pill">{{ $tarrina->cantidad }}</span>
@@ -532,9 +536,9 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @if(isset($detalle->auxiliares))
+                                                @if(isset($detalle->euro_auxiliares))
                                                     <ul class="list-group text-left">
-                                                        @foreach($detalle->auxiliares as $auxiliar)
+                                                        @foreach($detalle->euro_auxiliares as $auxiliar)
                                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                 {{ $auxiliar->auxiliar->modelo }}
                                                                 <span class="badge badge-primary badge-pill">{{ $auxiliar->cantidad }}</span>
@@ -543,6 +547,37 @@
                                                     </ul>
                                                 @endif
                                             </td>
+
+                                            <td>{{ $detalle->grand_cantidad }}</td>
+                                            <td>{{ $detalle->grand_kg}}</td>
+                                            <td>{{ $detalle->grand_cantoneras}}</td>
+                                            <td>{{ (!is_null($detalle->grand_cubre_id)) ? $detalle->grand_cubre->formato : "" }}</td>
+                                            <td>{{ $detalle->grand_cubre_cantidad }}</td>
+                                            <td>
+                                                @if(isset($detalle->grand_tarrinas))
+                                                    <ul class="list-group text-left">
+                                                        @foreach($detalle->grand_tarrinas as $tarrina)
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                {{ $tarrina->tarrina->modelo }}
+                                                                <span class="badge badge-primary badge-pill">{{ $tarrina->cantidad }}</span>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if(isset($detalle->grand_auxiliares))
+                                                    <ul class="list-group text-left">
+                                                        @foreach($detalle->grand_auxiliares as $auxiliar)
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                {{ $auxiliar->auxiliar->modelo }}
+                                                                <span class="badge badge-primary badge-pill">{{ $auxiliar->cantidad }}</span>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            </td>
+
                                             <td>
                                                 <a href="javascript:void(0);" class="text-success mr-2">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
@@ -577,6 +612,7 @@
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
 
+    {{--Tabla Principal Productos--}}
     <script>
         $.fn.dataTable.Api.register('inTable()', function (value) {
             return this

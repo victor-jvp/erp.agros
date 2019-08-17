@@ -80,7 +80,7 @@ class ProductosCompuestosController extends Controller
                 $auxiliar = new ProductoCompuesto_auxiliares();
 
                 $auxiliar->det_id      = $detalle->id;
-                $tarrinas->model_id    = 1;
+                $auxiliar->model_id    = 1;
                 $auxiliar->auxiliar_id = $request->euro_auxiliares_id[$i];
                 $auxiliar->cantidad    = $request->euro_auxiliares_cantidad[$i];
                 $auxiliar->save();
@@ -92,7 +92,7 @@ class ProductosCompuestosController extends Controller
                 $auxiliar = new ProductoCompuesto_auxiliares();
 
                 $auxiliar->det_id      = $detalle->id;
-                $tarrinas->model_id    = 2;
+                $auxiliar->model_id    = 2;
                 $auxiliar->auxiliar_id = $request->grand_auxiliares_id[$i];
                 $auxiliar->cantidad    = $request->grand_auxiliares_cantidad[$i];
                 $auxiliar->save();
@@ -117,10 +117,16 @@ class ProductosCompuestosController extends Controller
     {
         if (is_null($id)) return false;
 
-        $detalle      = ProductoCompuesto_det::with('tarrinas')->with('auxiliares')->find($id);
+        $detalle      = ProductoCompuesto_det::with('euro_tarrinas')
+                                             ->with('euro_auxiliares')
+                                             ->with('grand_tarrinas')
+                                             ->with('grand_auxiliares')
+                                             ->find($id);
         $compuesto_id = $detalle->compuesto_id;
-        $detalle->tarrinas()->delete();
-        $detalle->auxiliares()->delete();
+        $detalle->euro_tarrinas()->delete();
+        $detalle->euro_auxiliares()->delete();
+        $detalle->grand_tarrinas()->delete();
+        $detalle->grand_auxiliares()->delete();
         $detalle->delete();
 
         return redirect()->route('productos-compuestos-show', $compuesto_id);
