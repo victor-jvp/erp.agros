@@ -36,6 +36,7 @@ Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')-
 
 #region Entrada de Productos
 Route::resource('almacen/entrada-productos', 'EntradaProductosController');
+Route::get('almacen/entrada-productos/delete/{entrada}', 'EntradaProductosController@delete')->name('entrada-productos.delete');
 Route::post('almacen/entrada-productos/selectMaterial', 'EntradaProductosController@selectMaterial')->name('entrada-productos.selectMaterial');
 Route::post('almacen/entrada-productos/GetEntrada', 'EntradaProductosController@GetEntrada')->name('entrada-productos.GetEntrada');
 #endregion

@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Entrada extends Model
 {
     //
-
+    use SoftDeletes;
     protected $table = "entradas";
 
     public function proveedor()

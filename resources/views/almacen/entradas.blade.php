@@ -353,8 +353,11 @@
             });
 
             $('#entradas_table').on('click', '.delete', function () {
-                var tr = $(this).closest('tr');
-                var row = entradas_table.row(tr).data();
+                var current_row = $(this).parents('tr');//Get the current row
+                if (current_row.hasClass('child')) {//Check if the current row is a child row
+                    current_row = current_row.prev();//If it is, then point to the row before it (its 'parent')
+                }
+                var row = entradas_table.row(current_row).data();//At this point, current_row refers to a valid row in the table, whether is a child row (collapsed by the DataTable's responsiveness) or a 'normal' row
                 swal({
                     title: 'Confirmar Proceso',
                     text: "Confirme eliminar el registro seleccionado",
@@ -375,11 +378,7 @@
 
         function LoadEntrada(id) {
             limpiarCamposEntrada();
-            // var current_row = $(this).parents('tr');//Get the current row
-            // if (current_row.hasClass('child')) {//Check if the current row is a child row
-            //     current_row = current_row.prev();//If it is, then point to the row before it (its 'parent')
-            // }
-            // var row = entradas_table.row(current_row).data();//At this point, current_row refers to a valid row in the table, whether is a child row (collapsed by the DataTable's responsiveness) or a 'normal' row
+
 
             $.ajax({
                 type: 'POST',

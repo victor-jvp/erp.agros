@@ -34,7 +34,7 @@ class CreateEntradasTable extends Migration
             $table->foreign('pallet_id')->references('id')->on('pallets');
             $table->foreign('caja_id')->references('id')->on('cajas');
             $table->foreign('proveedor_id')->references('id')->on('proveedores');
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

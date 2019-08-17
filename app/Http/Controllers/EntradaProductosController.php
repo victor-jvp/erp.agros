@@ -108,9 +108,12 @@ class EntradaProductosController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $entrada = Entrada::find($id);
+        $entrada->delete();
+
+        return redirect()->route('entrada-productos.index');
     }
 
     public function selectMaterial(Request $request)
