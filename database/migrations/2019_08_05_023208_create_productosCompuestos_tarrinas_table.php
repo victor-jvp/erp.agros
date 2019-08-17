@@ -16,7 +16,7 @@ class CreateProductosCompuestosTarrinasTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('det_id');
             $table->unsignedInteger('tarrina_id');
-            $table->unsignedInteger('model_id');
+            $table->unsignedInteger('model_id')->nullable()->default(null);
             $table->double('cantidad');
             $table->foreign('det_id')->references('id')->on('productosCompuestos_det');
             $table->foreign('tarrina_id')->references('id')->on('tarrinas');

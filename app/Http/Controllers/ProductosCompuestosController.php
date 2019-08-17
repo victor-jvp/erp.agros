@@ -29,42 +29,75 @@ class ProductosCompuestosController extends Controller
         if ($request->id == "") $detalle = new ProductoCompuesto_det(); else
             $detalle = ProductoCompuesto_det::find($request->id);
 
-        $detalle->compuesto_id    = $request->compuesto_id;
-        $detalle->variable        = $request->variable;
-        $detalle->caja_id         = $request->caja_id;
-        $detalle->euro_cantidad   = $request->euro_cantidad;
-        $detalle->euro_kg         = $request->euro_kg;
-        $detalle->grand_cantidad  = $request->grand_cantidad;
-        $detalle->grand_kg        = $request->grand_kg;
-        $detalle->cantoneras      = $request->cantoneras;
-        $detalle->cubre_id        = $request->cubre_id;
-        $detalle->cubre_cantidad  = $request->cubre_cantidad;
+        $detalle->compuesto_id = $request->compuesto_id;
+        $detalle->variable     = $request->variable;
+        $detalle->caja_id      = $request->caja_id;
+        //euro Pallet
+        $detalle->euro_cantidad       = $request->euro_cantidad;
+        $detalle->euro_kg             = $request->euro_kg;
+        $detalle->euro_cantoneras     = $request->euro_cantoneras;
+        $detalle->euro_cubre_id       = $request->euro_cubre_id;
+        $detalle->euro_cubre_cantidad = $request->euro_cubre_cantidad;
+        //Grand Pallet
+        $detalle->grand_cantidad       = $request->grand_cantidad;
+        $detalle->grand_kg             = $request->grand_kg;
+        $detalle->grand_cantoneras     = $request->grand_cantoneras;
+        $detalle->grand_cubre_id       = $request->grand_cubre_id;
+        $detalle->grand_cubre_cantidad = $request->grand_cubre_cantidad;
+
         $detalle->save();
 
         ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->delete();
 
-        if (isset($request->tarrinas_id)) {
-            foreach ($request->tarrinas_id as $i => $item) {
+        if (isset($request->euro_tarrinas_id)) {
+            foreach ($request->euro_tarrinas_id as $i => $item) {
                 $tarrinas = new ProductoCompuesto_tarrinas();
 
                 $tarrinas->det_id     = $detalle->id;
-                $tarrinas->tarrina_id = $request->tarrinas_id[$i];
-                $tarrinas->cantidad   = $request->tarrinas_cantidad[$i];
+                $tarrinas->model_id   = 1;
+                $tarrinas->tarrina_id = $request->euro_tarrinas_id[$i];
+                $tarrinas->cantidad   = $request->euro_tarrinas_cantidad[$i];
+                $tarrinas->save();
+            }
+        }
+
+        if (isset($request->grand_tarrinas_id)) {
+            foreach ($request->grand_tarrinas_id as $i => $item) {
+                $tarrinas = new ProductoCompuesto_tarrinas();
+
+                $tarrinas->det_id     = $detalle->id;
+                $tarrinas->model_id   = 2;
+                $tarrinas->tarrina_id = $request->grand_tarrinas_id[$i];
+                $tarrinas->cantidad   = $request->grand_tarrinas_cantidad[$i];
                 $tarrinas->save();
             }
         }
 
         ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->delete();
 
-        if (isset($request->auxiliares_id)) {
-            foreach ($request->auxiliares_id as $i => $item) {
+        if (isset($request->euro_auxiliares_id)) {
+            foreach ($request->euro_auxiliares_id as $i => $item) {
                 $auxiliar = new ProductoCompuesto_auxiliares();
 
                 $auxiliar->det_id      = $detalle->id;
-                $auxiliar->auxiliar_id = $request->auxiliares_id[$i];
-                $auxiliar->cantidad    = $request->auxiliares_cantidad[$i];
+                $tarrinas->model_id    = 1;
+                $auxiliar->auxiliar_id = $request->euro_auxiliares_id[$i];
+                $auxiliar->cantidad    = $request->euro_auxiliares_cantidad[$i];
                 $auxiliar->save();
             }
+        }
+
+        if (isset($request->grand_auxiliares_id)) {
+            foreach ($request->grand_auxiliares_id as $i => $item) {
+                $auxiliar = new ProductoCompuesto_auxiliares();
+
+                $auxiliar->det_id      = $detalle->id;
+                $tarrinas->model_id    = 2;
+                $auxiliar->auxiliar_id = $request->grand_auxiliares_id[$i];
+                $auxiliar->cantidad    = $request->grand_auxiliares_cantidad[$i];
+                $auxiliar->save();
+            }
+
         }
 
         return redirect()->route('productos-compuestos-show', $request->compuesto_id);
