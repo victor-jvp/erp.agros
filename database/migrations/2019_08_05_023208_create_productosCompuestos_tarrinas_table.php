@@ -8,7 +8,6 @@ class CreateProductosCompuestosTarrinasTable extends Migration
 {
     /**
      * Run the migrations.
-     *
      * @return void
      */
     public function up()
@@ -17,16 +16,17 @@ class CreateProductosCompuestosTarrinasTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('det_id');
             $table->unsignedInteger('tarrina_id');
+            $table->unsignedInteger('model_id');
             $table->double('cantidad');
             $table->foreign('det_id')->references('id')->on('productosCompuestos_det');
             $table->foreign('tarrina_id')->references('id')->on('tarrinas');
+            $table->foreign('model_id')->references('id')->on('pallets_models');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()

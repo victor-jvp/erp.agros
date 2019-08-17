@@ -13,4 +13,9 @@ class ProductoCompuesto_auxiliares extends Model
     {
         return $this->belongsTo(Auxiliar::class);
     }
+
+    public function pallet_model()
+    {
+        return $this->belongsTo(PalletModel::class, 'model_id');
+    }
 }

@@ -34,10 +34,8 @@ class ProductosCompuestosController extends Controller
         $detalle->caja_id         = $request->caja_id;
         $detalle->euro_cantidad   = $request->euro_cantidad;
         $detalle->euro_kg         = $request->euro_kg;
-        $detalle->euro_pallet_id  = $request->euro_pallet_id;
         $detalle->grand_cantidad  = $request->grand_cantidad;
         $detalle->grand_kg        = $request->grand_kg;
-        $detalle->grand_pallet_id = $request->grand_pallet_id;
         $detalle->cantoneras      = $request->cantoneras;
         $detalle->cubre_id        = $request->cubre_id;
         $detalle->cubre_cantidad  = $request->cubre_cantidad;

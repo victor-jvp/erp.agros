@@ -95,6 +95,49 @@
                                                     <div class="tab-pane fade active show" id="EuroPallet"
                                                          role="tabpanel"
                                                          aria-labelledby="EuroPallet-tab">
+                                                        <div class="row">
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="euro_pallet_id">Cantidad</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="euro_cantidad"
+                                                                       placeholder="Cantidad" name="euro_cantidad">
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="euro_pallet_id">Kilogramos</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="euro_kg"
+                                                                       placeholder="Kg" name="euro_kg">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="euro_cantoneras">Cantoneras</label>
+                                                                <input type="text" class="form-control"
+                                                                       id="euro_cantoneras"
+                                                                       placeholder="Cantoneras" name="euro_cantoneras">
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="euro_cubre_id">Cubres</label>
+                                                                <select name="euro_cubre_id" id="euro_cubre_id"
+                                                                        class="form-control chosen"
+                                                                        data-placeholder="Seleccione...">
+                                                                    <option value=""></option>
+                                                                    @if (isset($cubres))
+                                                                        @foreach ($cubres as $cubre)
+                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="euro_cubre_cantidad">Cantidad Cubres</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="euro_cubre_cantidad"
+                                                                       placeholder="Cantidad Cubres"
+                                                                       name="euro_cubre_cantidad">
+                                                            </div>
+                                                        </div>
 
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3">
@@ -121,8 +164,8 @@
 
                                                                         <div class="row">
                                                                             <div class="col-md-6 mb-3">
-                                                                                <label for="tarrina_modelo">Tarrina</label>
-                                                                                <select id="tarrina_modelo"
+                                                                                <label for="euro_tarrina_modelo">Tarrina</label>
+                                                                                <select id="euro_tarrina_modelo"
                                                                                         class="form-control chosen"
                                                                                         data-placeholder="Seleccione...">
                                                                                     <option value=""></option>
@@ -134,16 +177,17 @@
                                                                                 </select>
                                                                             </div>
                                                                             <div class="col-md-4 mb-3">
-                                                                                <label for="tarrina_cantidad">Cantidad</label>
+                                                                                <label for="euro_tarrina_cantidad">Cantidad</label>
                                                                                 <input type="number"
                                                                                        class="form-control"
-                                                                                       id="tarrina_cantidad"
+                                                                                       id="euro_tarrina_cantidad"
                                                                                        placeholder="Cantidad"
                                                                                        step="0.01">
                                                                             </div>
                                                                             <div class="col-md-2 mb-3">
                                                                                 <br>
-                                                                                <button id="btnAddTarrina" type="button"
+                                                                                <button id="btnAddEuroTarrina"
+                                                                                        type="button"
                                                                                         class="btn btn-success btn-icon">
                                                                                     <i class="i-Add"></i>
                                                                                 </button>
@@ -153,15 +197,14 @@
                                                                         <div class="row">
                                                                             <div class="col-md-12 mb-3">
                                                                                 <div class="table-responsive">
-                                                                                    <table id="tarrinas_table"
+                                                                                    <table id="euro_tarrinas_table"
                                                                                            class="display table table-striped table-bordered"
                                                                                            style="width:100%">
                                                                                         <thead>
                                                                                         <tr>
                                                                                             <th>modelo_id</th>
                                                                                             <th scope="col">Tarrina</th>
-                                                                                            <th scope="col">Cantidad
-                                                                                            </th>
+                                                                                            <th scope="col">Cantidad</th>
                                                                                             <th scope="col">Acción</th>
                                                                                         </tr>
                                                                                         </thead>
@@ -178,8 +221,8 @@
 
                                                                         <div class="row">
                                                                             <div class="col-md-6 mb-3">
-                                                                                <label for="auxiliar_modelo">Auxiliar</label>
-                                                                                <select id="auxiliar_modelo"
+                                                                                <label for="euro_auxiliar_modelo">Auxiliar</label>
+                                                                                <select id="euro_auxiliar_modelo"
                                                                                         class="form-control chosen"
                                                                                         data-placeholder="Seleccione...">
                                                                                     <option value=""></option>
@@ -191,16 +234,16 @@
                                                                                 </select>
                                                                             </div>
                                                                             <div class="col-md-4 mb-3">
-                                                                                <label for="auxiliar_cantidad">Cantidad</label>
+                                                                                <label for="euro_auxiliar_cantidad">Cantidad</label>
                                                                                 <input type="number"
                                                                                        class="form-control"
-                                                                                       id="auxiliar_cantidad"
+                                                                                       id="euro_auxiliar_cantidad"
                                                                                        placeholder="Cantidad"
                                                                                        step="0.01">
                                                                             </div>
                                                                             <div class="col-md-2 mb-3">
                                                                                 <br>
-                                                                                <button id="btnAddAuxiliar"
+                                                                                <button id="btnAddEuroAuxiliar"
                                                                                         type="button" data-index=""
                                                                                         class="btn btn-success btn-icon">
                                                                                     <i class="i-Add"></i>
@@ -211,7 +254,7 @@
                                                                         <div class="row">
                                                                             <div class="col-md-12 mb-3">
                                                                                 <div class="table-responsive">
-                                                                                    <table id="auxiliares_table"
+                                                                                    <table id="euro_auxiliares_table"
                                                                                            class="display table table-striped table-bordered"
                                                                                            style="width:100%">
                                                                                         <thead>
@@ -237,6 +280,48 @@
                                                     </div>
                                                     <div class="tab-pane fade" id="PalletGrande" role="tabpanel"
                                                          aria-labelledby="PalletGrande-tab">
+                                                        <div class="row">
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="grand_cantidad">Cantidad</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="grand_cantidad"
+                                                                       placeholder="Cantidad" name="grand_cantidad">
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="grand_kg">Kilogramos</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="grand_kg"
+                                                                       placeholder="Kg" name="grand_kg">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="cantoneras">Cantoneras</label>
+                                                                <input type="text" class="form-control" id="cantoneras"
+                                                                       placeholder="Cantoneras" name="cantoneras">
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="variedad">Cubres</label>
+                                                                <select name="cubre_id" id="cubre_id"
+                                                                        class="form-control chosen"
+                                                                        data-placeholder="Seleccione...">
+                                                                    <option value=""></option>
+                                                                    @if (isset($cubres))
+                                                                        @foreach ($cubres as $cubre)
+                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="cubre_cantidad">Cantidad Cubres</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="cubre_cantidad"
+                                                                       placeholder="Cantidad Cubres"
+                                                                       name="cubre_cantidad">
+                                                            </div>
+                                                        </div>
 
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3">
@@ -404,10 +489,8 @@
                                         <th>ID</th>
                                         <th scope="col">Variable</th>
                                         <th scope="col">Caja</th>
-                                        <th scope="col">EuroPallet<br>Formato</th>
                                         <th scope="col">EuroPallet<br>Cantidad</th>
                                         <th scope="col">EuroPallet<br>Kg</th>
-                                        <th scope="col">Pallet Grande<br>Formato</th>
                                         <th scope="col">Pallet Grande<br>Cantidad</th>
                                         <th scope="col">Pallet Grande<br>Kg</th>
                                         <th scope="col">Cantoneras</th>
@@ -424,10 +507,8 @@
                                             <td>{{ $detalle->id }}</td>
                                             <td>{{ $detalle->variable }}</td>
                                             <td>{{ (!is_null($detalle->caja_id)) ? $detalle->caja->formato : "" }}</td>
-                                            <td>{{ (!is_null($detalle->euro_pallet_id)) ? $detalle->euro_pallet->formato : "" }}</td>
                                             <td>{{ $detalle->euro_cantidad }}</td>
                                             <td>{{ $detalle->euro_kg }}</td>
-                                            <td>{{ (!is_null($detalle->grand_pallet_id)) ? $detalle->grand_pallet->formato : "" }}</td>
                                             <td>{{ $detalle->grand_cantidad }}</td>
                                             <td>{{ $detalle->grand_kg}}</td>
                                             <td>{{ $detalle->cantoneras}}</td>
@@ -561,10 +642,10 @@
         })
 
         function LimpiarModalDetalles() {
-            $('#variable, #euro_cantidad, #euro_kg, #grand_cantidad, #grand_kg, #cantoneras, #cubre_cantidad').val(null);
-            $('#cajas, #euro_pallet_id, #grand_pallet_id, #cubre_id').val(null).trigger('chosen:updated');
-            table_tarrinas.rows().remove().draw();
-            table_auxiliares.rows().remove().draw();
+            $('#variable, #euro_cantidad, #euro_kg, #grand_cantidad, #grand_kg, #euro_cantoneras, #euro_cubre_cantidad').val(null);
+            $('#cajas, #euro_cubre_id').val(null).trigger('chosen:updated');
+            euro_table_tarrinas.rows().remove().draw();
+            euro_table_auxiliares.rows().remove().draw();
         }
 
         function GetDataModalDetalle(id) {
@@ -578,15 +659,13 @@
 
                     $('#variable').val(row.variable);
                     $('#caja_id').val(row.caja_id).trigger('chosen:updated');
-                    $('#euro_pallet_id').val(row.euro_pallet_id).trigger('chosen:updated');
-                    $('#grand_pallet_id').val(row.grand_pallet_id).trigger('chosen:updated');
                     $('#euro_cantidad').val(row.euro_cantidad);
                     $('#grand_cantidad').val(row.grand_cantidad);
                     $('#euro_kg').val(row.euro_kg);
                     $('#grand_kg').val(row.grand_kg);
-                    $('#cantoneras').val(row.cantoneras);
-                    $('#cubre_id').val(row.cubre_id).trigger('chosen:updated');
-                    $('#cubre_cantidad').val(row.cubre_cantidad);
+                    $('#euro_cantoneras').val(row.cantoneras);
+                    $('#euro_cubre_id').val(row.cubre_id).trigger('chosen:updated');
+                    $('#euro_cubre_cantidad').val(row.cubre_cantidad);
 
                     var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
                         '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
@@ -596,7 +675,7 @@
                     //Tarrinas table
                     for (i = 0; i < row.tarrinas.length; i++) {
                         var tarrina = row.tarrinas[i];
-                        table_tarrinas.row.add([
+                        euro_table_tarrinas.row.add([
                             tarrina.tarrina_id,
                             tarrina.tarrina.modelo,
                             tarrina.cantidad,
@@ -608,7 +687,7 @@
                     //Auxiliares Table
                     for (i = 0; i < row.auxiliares.length; i++) {
                         var auxiliar = row.auxiliares[i];
-                        table_auxiliares.row.add([
+                        euro_table_auxiliares.row.add([
                             auxiliar.auxiliar_id,
                             auxiliar.auxiliar.modelo,
                             auxiliar.cantidad,
@@ -626,12 +705,12 @@
     </script>
 
     <script>
-        var table_tarrinas;
+        var euro_table_tarrinas;
 
         $(function () {
-            table_tarrinas = $("#tarrinas_table").DataTable({
+            euro_table_tarrinas = $("#euro_tarrinas_table").DataTable({
                 language: {
-                    url: "{{ asset('assets/Spanish.json')}}"
+                    url: "{{ asset('assets/Spanish.json') }}"
                 },
                 ordering: false,
                 info: false,
@@ -642,11 +721,12 @@
                 ]
             });
 
-            $("#btnAddTarrina").click(function (e) {
-                if (!ValidarTarrina()) return;
-                var modelo_id = $("#tarrina_modelo").val();
-                var modelo = $("#tarrina_modelo option:selected").text();
-                var cantidad = $("#tarrina_cantidad").val();
+            $("#btnAddEuroTarrina").click(function (e) {
+                var index = $(this).attr('data-index');
+                if (!ValidarEuroTarrina(index)) return;
+                var modelo_id = $("#euro_tarrina_modelo").val();
+                var modelo = $("#euro_tarrina_modelo option:selected").text();
+                var cantidad = $("#euro_tarrina_cantidad").val();
                 var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
                     '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
                     '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
@@ -657,52 +737,49 @@
                     modelo_id,
                     modelo,
                     cantidad,
-                    '<input type="hidden" name="tarrinas_id[]" value="' + modelo_id + '">' +
-                    '<input type="hidden" name="tarrinas_cantidad[]" value="' + cantidad + '">' +
+                    '<input type="hidden" name="euro_tarrinas_id[]" value="' + modelo_id + '">' +
+                    '<input type="hidden" name="euro_tarrinas_cantidad[]" value="' + cantidad + '">' +
                     opciones
                 ];
 
-                if ($(this).attr('data-index') == null || $(this).attr('data-index') == "") {
-                    table_tarrinas.row.add(data).draw(false);
+                if (index == null || index == "") {
+                    euro_table_tarrinas.row.add(data).draw(false);
                 } else {
-                    table_tarrinas.row($(this).attr('data-index')).data(data).draw(false);
+                    euro_table_tarrinas.row(index).data(data).draw(false);
                 }
 
-                LimpiarTarrina();
+                LimpiarEuroTarrina();
             });
 
-            $('#tarrinas_table').on('click', '.edit', function () {
+            $('#euro_tarrinas_table').on('click', '.edit', function () {
                 var tr = $(this).closest('tr');
-                var row = table_tarrinas.row(tr).data();
-                var index = table_tarrinas.row(tr).index();
+                var row = euro_table_tarrinas.row(tr).data();
+                var index = euro_table_tarrinas.row(tr).index();
 
-
-                $('#tarrina_modelo').val(row[0]).trigger('chosen:updated');
-                $('#tarrina_cantidad').val(row[2]);
-                $('#btnAddTarrina').attr('data-index', index);
-                // $('#pallet_modelo_id').val(row[2]).trigger('chosen:updated');
-                // $('#pallet_form').attr('action', '/maestros/pallets/' + row[0]);
+                $('#euro_tarrina_modelo').val(row[0]).trigger('chosen:updated');
+                $('#euro_tarrina_cantidad').val(row[2]);
+                $('#btnAddEuroTarrina').attr('data-index', index);
             });
 
-            $('#tarrinas_table').on('click', '.delete', function () {
+            $('#euro_tarrinas_table').on('click', '.delete', function () {
                 var tr = $(this).closest('tr');
-                table_tarrinas.row(tr).remove().draw(false);
+                euro_table_tarrinas.row(tr).remove().draw(false);
             });
 
-            function ValidarTarrina() {
-                var modelo_id = $("#tarrina_modelo").val();
+            function ValidarEuroTarrina(index) {
+                var modelo_id = $("#euro_tarrina_modelo").val();
                 if (modelo_id == null || modelo_id == "") {
                     swal("Atención", "El campo Tarrina es requerido.", "warning");
                     return false;
                 }
 
-                var cantidad = $("#tarrina_cantidad").val();
+                var cantidad = $("#euro_tarrina_cantidad").val();
                 if (cantidad == null || cantidad == "") {
                     swal("Atención", "El campo Cantidad es requerido.", "warning");
                     return false;
                 }
 
-                if (table_tarrinas.inTable(modelo_id)) {
+                if (euro_table_tarrinas.inTable(modelo_id) && index == null) {
                     swal("Atención", "Tarrina cargada en la tabla.", "warning");
                     return false;
                 }
@@ -710,20 +787,20 @@
                 return true;
             }
 
-            function LimpiarTarrina() {
-                $('#tarrina_cantidad').val(null);
-                $('#btnAddTarrina').attr('data-index', null);
-                $('#tarrina_modelo').val(null).trigger('chosen:updated');
+            function LimpiarEuroTarrina() {
+                $('#euro_tarrina_cantidad').val(null);
+                $('#btnAddEuroTarrina').attr('data-index', null);
+                $('#euro_tarrina_modelo').val(null).trigger('chosen:updated');
             }
         });
     </script>
 
     <script>
-        var table_auxiliares;
+        var euro_table_auxiliares;
 
         $(function () {
 
-            table_auxiliares = $("#auxiliares_table").DataTable({
+            euro_table_auxiliares = $("#euro_auxiliares_table").DataTable({
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
@@ -736,48 +813,65 @@
                 ]
             });
 
-            $("#btnAddAuxiliar").click(function (e) {
-                if (!ValidarAuxiliar()) return;
-                var modelo_id = $("#auxiliar_modelo").val();
-                var modelo = $("#auxiliar_modelo option:selected").text();
-                var cantidad = $("#auxiliar_cantidad").val();
+            $("#btnAddEuroAuxiliar").click(function (e) {
+                var index = $(this).attr('data-index');
+                if (!ValidarEuroAuxiliar(index)) return;
+                var modelo_id = $("#euro_auxiliar_modelo").val();
+                var modelo = $("#euro_auxiliar_modelo option:selected").text();
+                var cantidad = $("#euro_auxiliar_cantidad").val();
                 var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
                     '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
                     '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
                     '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
                     '</a>';
 
-                table_auxiliares.row.add([
+                var data = [
                     modelo_id,
                     modelo,
                     cantidad,
-                    '<input type="hidden" name="auxiliares_id[]" value="' + modelo_id + '">' +
-                    '<input type="hidden" name="auxiliares_cantidad[]" value="' + cantidad + '"> ' +
+                    '<input type="hidden" name="euro_auxiliares_id[]" value="' + modelo_id + '">' +
+                    '<input type="hidden" name="euro_auxiliares_cantidad[]" value="' + cantidad + '"> ' +
                     opciones
-                ]).draw(false);
+                ];
 
-                LimpiarAuxiliar();
+                if (index == null || index == "") {
+                    euro_table_auxiliares.row.add(data).draw(false);
+                } else {
+                    euro_table_auxiliares.row(index).data(data).draw(false);
+                }
+
+                LimpiarEuroAuxiliar();
             });
 
-            $('#auxiliares_table').on('click', '.delete', function () {
+            $('#euro_auxiliares_table').on('click', '.edit', function () {
                 var tr = $(this).closest('tr');
-                table_auxiliares.row(tr).remove().draw(false);
+                var row = euro_table_auxiliares.row(tr).data();
+                var index = euro_table_auxiliares.row(tr).index();
+
+                $('#euro_auxiliar_modelo').val(row[0]).trigger('chosen:updated');
+                $('#euro_auxiliar_cantidad').val(row[2]);
+                $('#btnAddEuroAuxiliar').attr('data-index', index);
             });
 
-            function ValidarAuxiliar() {
-                var modelo_id = $("#auxiliar_modelo").val();
+            $('#euro_auxiliares_table').on('click', '.delete', function () {
+                var tr = $(this).closest('tr');
+                euro_table_auxiliares.row(tr).remove().draw(false);
+            });
+
+            function ValidarEuroAuxiliar(index) {
+                var modelo_id = $("#euro_auxiliar_modelo").val();
                 if (modelo_id == null || modelo_id == "") {
                     swal("Atención", "El campo Auxiliar es requerido.", "warning");
                     return false;
                 }
 
-                var cantidad = $("#auxiliar_cantidad").val();
+                var cantidad = $("#euro_auxiliar_cantidad").val();
                 if (cantidad == null || cantidad == "") {
                     swal("Atención", "El campo Cantidad es requerido.", "warning");
                     return false;
                 }
 
-                if (table_auxiliares.inTable(modelo_id)) {
+                if (euro_table_auxiliares.inTable(modelo_id) && index == null) {
                     swal("Atención", "Auxiliar cargada en la tabla.", "warning");
                     return false;
                 }
@@ -785,9 +879,10 @@
                 return true;
             }
 
-            function LimpiarAuxiliar() {
-                $('#auxiliar_cantidad').val(null);
-                $('#auxiliar_modelo').val(null).trigger('chosen:updated');
+            function LimpiarEuroAuxiliar() {
+                $('#euro_auxiliar_cantidad').val(null);
+                $('#btnAddEuroAuxiliar').attr('data-index', null);
+                $('#euro_auxiliar_modelo').val(null).trigger('chosen:updated');
             }
         });
     </script>

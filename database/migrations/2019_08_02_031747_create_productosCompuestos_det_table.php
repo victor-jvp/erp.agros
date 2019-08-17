@@ -8,7 +8,6 @@ class CreateProductosCompuestosDetTable extends Migration
 {
     /**
      * Run the migrations.
-     *
      * @return void
      */
     public function up()
@@ -22,12 +21,8 @@ class CreateProductosCompuestosDetTable extends Migration
             $table->foreign('caja_id')->references('id')->on('cajas');
             $table->double('euro_cantidad')->default('0')->nullable();
             $table->double('euro_kg')->default('0')->nullable();
-            $table->unsignedInteger('euro_pallet_id')->nullable()->nullable();
-            $table->foreign('euro_pallet_id')->references('id')->on('pallets');
             $table->double('grand_cantidad')->default('0')->nullable();
             $table->double('grand_kg')->default('0')->nullable();
-            $table->unsignedInteger('grand_pallet_id')->nullable();
-            $table->foreign('grand_pallet_id')->references('id')->on('pallets');
             $table->string('cantoneras')->nullable();
             $table->unsignedInteger('cubre_id')->nullable();
             $table->foreign('cubre_id')->references('id')->on('cubres');
@@ -38,7 +33,6 @@ class CreateProductosCompuestosDetTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()

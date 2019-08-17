@@ -27,14 +27,4 @@ class ProductoCompuesto_det extends Model
     {
         return $this->belongsTo(Cubre::class);
     }
-
-    public function euro_pallet()
-    {
-        return $this->belongsTo(Pallet::class);
-    }
-
-    public function grand_pallet()
-    {
-        return $this->belongsTo(Pallet::class);
-    }
 }
