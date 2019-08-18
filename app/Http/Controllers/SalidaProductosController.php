@@ -33,8 +33,13 @@ class SalidaProductosController extends Controller
         $salida->nro_salida = Contador::save_nro_salida();
         $salida->fecha      = $request->fecha;
 
-        if ($request->categoria == "Cajas") $salida->caja_id = $request->material; else
+        if ($request->categoria == "Cajas") {
+            $salida->caja_id   = $request->material;
+            $salida->pallet_id = null;
+        } else {
             $salida->pallet_id = $request->material;
+            $salida->caja_id   = null;
+        }
 
         $salida->cantidad = $request->cantidad;
         $salida->save();
@@ -77,8 +82,13 @@ class SalidaProductosController extends Controller
         $salida->nro_salida = $request->nro_salida;
         $salida->fecha      = $request->fecha;
 
-        if ($request->categoria == "Cajas") $salida->caja_id = $request->material; else
+        if ($request->categoria == "Cajas") {
+            $salida->caja_id   = $request->material;
+            $salida->pallet_id = null;
+        } else {
             $salida->pallet_id = $request->material;
+            $salida->caja_id   = null;
+        }
 
         $salida->cantidad = $request->cantidad;
         $salida->save();

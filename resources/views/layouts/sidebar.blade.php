@@ -114,8 +114,8 @@
         </ul>
         <ul class="childNav" data-parent="almacen">
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='listado-productos.index' ? 'open' : '' }}"
-                    href="{{ url('almacen/listado-productos') }}">
+                <a class="{{ Route::currentRouteName()=='listado-inventario.index' ? 'open' : '' }}"
+                    href="{{ url('almacen/listado-inventario') }}">
                     <i class="nav-icon i-Receipt-4"></i>
                     <span class="item-name">Listado de Inventario</span>
                 </a>

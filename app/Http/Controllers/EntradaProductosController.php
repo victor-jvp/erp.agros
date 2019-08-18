@@ -52,8 +52,14 @@ class EntradaProductosController extends Controller
         $entrada->fecha    = $request->fecha;
         $entrada->cantidad = $request->cantidad;
 
-        if ($request->categoria == "cajas") $entrada->caja_id = $request->material; else
+        if ($request->categoria == "cajas") {
+            $entrada->caja_id   = $request->material;
+            $entrada->pallet_id = null;
+        } else {
             $entrada->pallet_id = $request->material;
+            $entrada->caja_id   = null;
+        }
+
 
         $entrada->nro_albaran         = $request->nro_albaran;
         $entrada->fecha_albaran       = Carbon::parse($request->fecha_albaran)->toDateTimeString();
@@ -84,8 +90,13 @@ class EntradaProductosController extends Controller
         $entrada->fecha    = $request->fecha;
         $entrada->cantidad = $request->cantidad;
 
-        if ($request->categoria == "cajas") $entrada->caja_id = $request->material; else
+        if ($request->categoria == "cajas") {
+            $entrada->caja_id   = $request->material;
+            $entrada->pallet_id = null;
+        } else {
             $entrada->pallet_id = $request->material;
+            $entrada->caja_id   = null;
+        }
 
         $entrada->nro_albaran         = $request->nro_albaran;
         $entrada->fecha_albaran       = Carbon::parse($request->fecha_albaran)->toDateTimeString();

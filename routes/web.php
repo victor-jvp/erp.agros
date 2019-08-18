@@ -31,7 +31,7 @@ Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')-
 #region Almacen
 
 #region Listado de Inventario
-
+Route::resource('almacen/listado-inventario', 'ListadoInventarioController');
 #endregion
 
 #region Entrada de Productos
