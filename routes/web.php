@@ -43,6 +43,8 @@ Route::post('almacen/entrada-productos/GetEntrada', 'EntradaProductosController@
 
 #region Salida de Productos
 Route::resource('almacen/salida-productos', 'SalidaProductosController');
+Route::get('almacen/salida-productos/delete/{salida}', 'SalidaProductosController@delete')->name('salida-productos.delete');
+Route::post('almacen/salida-productos/selectMaterial', 'SalidaProductosController@selectMaterial')->name('salida-productos.selectMaterial');
 #endregion
 
 #region Proveedores

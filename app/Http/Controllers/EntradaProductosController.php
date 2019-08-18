@@ -9,7 +9,6 @@ use App\Proveedor;
 use App\Contador;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Array_;
 
 class EntradaProductosController extends Controller
 {

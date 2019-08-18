@@ -340,7 +340,8 @@
                 columnDefs: [
                     {targets: [0, 3], visible: false},
                 ],
-                responsive: true
+                responsive: true,
+                order:[ [1, 'desc']]
             });
 
             $("#btnNuevo").click(function (e) {

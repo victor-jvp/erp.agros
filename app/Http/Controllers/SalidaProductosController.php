@@ -2,46 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Caja;
+use App\Pallet;
+use App\Salida;
+use App\Contador;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SalidaProductosController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
-        return view('almacen.salidas');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $data['salidas']    = Salida::all();
+        $data['nro_salida'] = Contador::next_nro_salida();
+        return view('almacen.salidas', $data);
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $salida             = new Salida();
+        $salida->nro_salida = Contador::save_nro_salida();
+        $salida->fecha      = $request->fecha;
+
+        if ($request->categoria == "Cajas") $salida->caja_id = $request->material; else
+            $salida->pallet_id = $request->material;
+
+        $salida->cantidad = $request->cantidad;
+        $salida->save();
+
+        return redirect()->route("salida-productos.index");
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -51,35 +54,52 @@ class SalidaProductosController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function delete($id)
     {
-        //
+        $salida = Salida::find($id);
+        $salida->delete();
+
+        return redirect()->route('salida-productos.index');
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $salida             = Salida::find($id);
+        $salida->nro_salida = $request->nro_salida;
+        $salida->fecha      = $request->fecha;
+
+        if ($request->categoria == "Cajas") $salida->caja_id = $request->material; else
+            $salida->pallet_id = $request->material;
+
+        $salida->cantidad = $request->cantidad;
+        $salida->save();
+
+        return redirect()->route("salida-productos.index");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function selectMaterial(Request $request)
     {
-        //
+        $categoria = $request->input('categoria');
+
+        if (is_null($categoria)) return response()->json(null);
+
+        $data = array();
+        if ($categoria == "Cajas") {
+            $data = Caja::all('id', 'formato');
+        }
+        if ($categoria == "Pallets") {
+            $data = Pallet::all('id', 'formato');
+        }
+
+        return response()->json($data); // How do I return in json? in case of an error message?
     }
 }
