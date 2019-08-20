@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\DatosComerciales;
 use Illuminate\Http\Request;
 
 class ClientesController extends Controller
@@ -14,7 +15,7 @@ class ClientesController extends Controller
     public function index()
     {
         $data = array(
-            "clientes" => Cliente::all()
+            "clientes" => Cliente::with('datosComerciales')->get()
         );
         return view('comercial.clientes.index', $data);
     }
@@ -41,10 +42,13 @@ class ClientesController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+
+//        dd($request->session()->get('tab'));
         $data = array(
-            "cliente" => Cliente::find($id)
+            "cliente" => Cliente::find($id),
+            "tab"     => ($request->session()->get('tab')) ? $request->session()->get('tab') : "datos-fiscales",
         );
 
         return view('comercial.clientes.show', $data);
@@ -70,19 +74,43 @@ class ClientesController extends Controller
     {
         $cliente = Cliente::find($id);
 
-        $cliente->razon_social     = $request->razon_social;
-        $cliente->cif              = $request->cif;
-        $cliente->nombre_comercial = $request->nombre_comercial;
-        $cliente->pais             = $request->pais;
-        $cliente->localidad        = $request->localidad;
-        $cliente->provincia        = $request->provincia;
-        $cliente->direccion        = $request->direccion;
-        $cliente->telefono         = $request->telefono;
-        $cliente->email            = $request->email;
+        //Tab Datos Fiscales
+        if ($request->_tab == "datos-fiscales") {
+            $cliente->razon_social     = $request->razon_social;
+            $cliente->cif              = $request->cif;
+            $cliente->nombre_comercial = $request->nombre_comercial;
+            $cliente->pais             = $request->pais;
+            $cliente->localidad        = $request->localidad;
+            $cliente->provincia        = $request->provincia;
+            $cliente->direccion        = $request->direccion;
+            $cliente->telefono         = $request->telefono;
+            $cliente->email            = $request->email;
+            $cliente->save();
+        }
+        //Tab Datos Comerciales
+        if ($request->_tab == "datos-comerciales") {
 
-        $cliente->save();
+            if (!isset($request->datos_comerciales_id)) {
+                $datosComerciales = new DatosComerciales();
+            } else {
+                $datosComerciales = DatosComerciales::find($request->datos_comerciales_id);
+            }
 
-        return redirect()->route('clientes.show', $cliente->id);
+            $datosComerciales->nombre    = $request->nombre;
+            $datosComerciales->direccion = $request->direccion;
+            $datosComerciales->telefono  = $request->telefono;
+            $datosComerciales->email     = $request->email;
+            $cliente->datosComerciales()->save($datosComerciales);
+        }
+
+        $data = array(
+            'id'  => $cliente->id,
+        );
+
+        $request->session()->flash('tab', $request->_tab);
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('clientes.show', $data);
     }
 
     /**
