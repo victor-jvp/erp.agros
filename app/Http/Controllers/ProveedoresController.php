@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proveedor;
+use App\ProveedorDatosComerciales;
+use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 use Symfony\Component\Finder\Finder;
 
 class ProveedoresController extends Controller
@@ -50,25 +52,16 @@ class ProveedoresController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $proveedor = Proveedor::find($id);
 
         $data = array(
-            'proveedor' => $proveedor
+            'proveedor' => $proveedor,
+            "tab"     => ($request->session()->get('tab')) ? $request->session()->get('tab') : "datos-fiscales",
         );
 
-        return view('almacen.proveedores.edit', $data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('almacen.proveedores.show', $data);
     }
 
     /**
@@ -83,32 +76,64 @@ class ProveedoresController extends Controller
 
         $proveedor = Proveedor::find($request->id);
 
-        $proveedor->cif              = $request->cif;
-        $proveedor->razon_social     = $request->razon_social;
-        $proveedor->nombre_comercial = $request->nombre_comercial;
-        $proveedor->pais             = $request->pais;
-        $proveedor->localidad        = $request->localidad;
-        $proveedor->provincia        = $request->provincia;
-        $proveedor->direccion        = $request->direccion;
-        $proveedor->telefono         = $request->telefono;
-        $proveedor->email            = $request->email;
+        //Datos Fiscales
+        if ($request->_tab == "datos-fiscales") {
+            $proveedor->cif              = $request->cif;
+            $proveedor->razon_social     = $request->razon_social;
+            $proveedor->nombre_comercial = $request->nombre_comercial;
+            $proveedor->pais             = $request->pais;
+            $proveedor->localidad        = $request->localidad;
+            $proveedor->provincia        = $request->provincia;
+            $proveedor->direccion        = $request->direccion;
+            $proveedor->telefono         = $request->telefono;
+            $proveedor->email            = $request->email;
 
-        $proveedor->save();
+            $proveedor->save();
+        }
+
+        //Tab Datos Comerciales
+        if ($request->_tab == "datos-comerciales") {
+            if (!isset($request->datos_comerciales_id)) {
+                $datosComerciales = new ProveedorDatosComerciales();
+            } else {
+                $datosComerciales = ProveedorDatosComerciales::find($request->datos_comerciales_id);
+            }
+
+            $datosComerciales->nombre    = $request->nombre;
+            $datosComerciales->direccion = $request->direccion;
+            $datosComerciales->telefono  = $request->telefono;
+            $datosComerciales->email     = $request->email;
+            $proveedor->datosComerciales()->save($datosComerciales);
+        }
+
 
         $data = array(
-            'proveedor' => $proveedor
+            'id'  => $proveedor->id,
         );
 
-        return view('almacen.proveedores.edit', $data);
+        $request->session()->flash('tab', $request->_tab);
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('proveedores.show', $data);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $proveedor = Proveedor::find($id);
+        $proveedor->delete();
+
+        return redirect()->route('proveedores.index');
+    }
+
+    public function deleteDatoComercial(Request $request, $id)
+    {
+        $dato = ProveedorDatosComerciales::find($id);
+        $proveedor_id = $dato->proveedor_id;
+        $dato->delete();
+
+        $request->session()->flash('tab', 'datos-comerciales');
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('proveedores.show', $proveedor_id);
     }
 }

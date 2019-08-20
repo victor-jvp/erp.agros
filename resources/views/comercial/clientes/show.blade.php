@@ -324,7 +324,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('maestros/fincas/delete') }}" + "/" + row[0]
+                    window.location.href = "{{ url('comercial/clientes/delete-dato-comercial') }}" + "/" + row[0]
                 })
             });
 

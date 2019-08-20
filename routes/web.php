@@ -26,6 +26,7 @@ Route::get('/dashboard', function () {
 #region Comercial
 Route::resource('/comercial/clientes', 'ClientesController');
 Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
+Route::get('/comercial/clientes/delete-dato-comercial/{datoComercial}', 'ClientesController@deleteDatoComercial');
 #endregion
 
 #region Almacen
@@ -49,6 +50,8 @@ Route::post('almacen/salida-productos/selectMaterial', 'SalidaProductosControlle
 
 #region Proveedores
 Route::resource('almacen/proveedores', 'ProveedoresController');
+Route::get('/almacen/proveedores/delete/{proveedor}', 'ProveedoresController@delete')->name('proveedores.delete');
+Route::get('/almacen/proveedores/delete-dato-comercial/{datoComercial}', 'ProveedoresController@deleteDatoComercial');
 #endregion
 
 #endregion

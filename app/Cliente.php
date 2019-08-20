@@ -13,6 +13,6 @@ class Cliente extends Model
     
     public function datosComerciales()
     {
-        return $this->hasMany(DatosComerciales::class, 'cliente_id');
+        return $this->hasMany(ClienteDatosComerciales::class, 'cliente_id');
     }
 }

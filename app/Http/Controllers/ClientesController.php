@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
-use App\DatosComerciales;
+use App\ClienteDatosComerciales;
 use Illuminate\Http\Request;
 
 class ClientesController extends Controller
@@ -44,8 +44,6 @@ class ClientesController extends Controller
      */
     public function show(Request $request, $id)
     {
-
-//        dd($request->session()->get('tab'));
         $data = array(
             "cliente" => Cliente::find($id),
             "tab"     => ($request->session()->get('tab')) ? $request->session()->get('tab') : "datos-fiscales",
@@ -91,9 +89,9 @@ class ClientesController extends Controller
         if ($request->_tab == "datos-comerciales") {
 
             if (!isset($request->datos_comerciales_id)) {
-                $datosComerciales = new DatosComerciales();
+                $datosComerciales = new ClienteDatosComerciales();
             } else {
-                $datosComerciales = DatosComerciales::find($request->datos_comerciales_id);
+                $datosComerciales = ClienteDatosComerciales::find($request->datos_comerciales_id);
             }
 
             $datosComerciales->nombre    = $request->nombre;
@@ -103,14 +101,10 @@ class ClientesController extends Controller
             $cliente->datosComerciales()->save($datosComerciales);
         }
 
-        $data = array(
-            'id'  => $cliente->id,
-        );
-
         $request->session()->flash('tab', $request->_tab);
         $request->session()->keep(['tab']);
 
-        return redirect()->route('clientes.show', $data);
+        return redirect()->route('clientes.show', $cliente->id);
     }
 
     /**
@@ -124,5 +118,17 @@ class ClientesController extends Controller
         $cliente->delete();
 
         return redirect()->route('clientes.index');
+    }
+
+    public function deleteDatoComercial(Request $request, $id)
+    {
+        $dato = ClienteDatosComerciales::find($id);
+        $cliente_id = $dato->cliente_id;
+        $dato->delete();
+
+        $request->session()->flash('tab', 'datos-comerciales');
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('clientes.show', $cliente_id);
     }
 }
