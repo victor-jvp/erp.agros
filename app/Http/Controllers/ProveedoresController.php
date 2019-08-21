@@ -54,7 +54,7 @@ class ProveedoresController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $proveedor = Proveedor::find($id);
+        $proveedor = Proveedor::with('entradas')->find($id);
 
         $data = array(
             'proveedor' => $proveedor,
