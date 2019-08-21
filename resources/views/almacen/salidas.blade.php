@@ -67,8 +67,11 @@
                                                 <select class="form-control chosen" name="categoria" id="categoria"
                                                         data-placeholder="Seleccione...">
                                                     <option value=""></option>
-                                                    <option value="Cajas">Cajas</option>
-                                                    <option value="Pallets">Palets</option>
+                                                    <option value="caja">Cajas</option>
+                                                    <option value="pallet">Palets</option>
+                                                    <option value="cubre">Cubres</option>
+                                                    <option value="auxiliar">Auxiliares</option>
+                                                    <option value="tarrina">Tarrinas</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-12 mb-3">
@@ -223,7 +226,7 @@
 
             $("#btnNuevo").click(function (e) {
                 LimpiarCamposSalidas();
-                $("#modal-salidas-title").html("Nueva Finca");
+                $("#modal-salidas-title").html("Nueva Salida");
                 $("#salida_method").val(null);
                 $("#modal-salidas").modal('show');
             })

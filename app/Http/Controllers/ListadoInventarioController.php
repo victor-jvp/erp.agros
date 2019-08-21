@@ -53,7 +53,7 @@ WHERE
     entradas.deleted_at IS NULL 
     AND salidas.deleted_at IS NULL 
 GROUP BY
-    pallets.formato;");
+    pallets.formato");
 
         return view('almacen.inventario', $data);
     }

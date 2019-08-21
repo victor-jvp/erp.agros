@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Auxiliar;
 use App\Caja;
+use App\Cubre;
 use App\Pallet;
 use App\Salida;
 use App\Contador;
+use App\Tarrina;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -103,11 +106,20 @@ class SalidaProductosController extends Controller
         if (is_null($categoria)) return response()->json(null);
 
         $data = array();
-        if ($categoria == "Cajas") {
+        if ($categoria == "caja") {
             $data = Caja::all('id', 'formato');
         }
-        if ($categoria == "Pallets") {
+        if ($categoria == "pallet") {
             $data = Pallet::all('id', 'formato');
+        }
+        if ($categoria == "cubre") {
+            $data = Cubre::all('id', 'formato');
+        }
+        if ($categoria == "auxiliar") {
+            $data = Auxiliar::all('id', 'modelo as formato');
+        }
+        if ($categoria == "tarrina") {
+            $data = Tarrina::all('id', 'modelo as formato');
         }
 
         return response()->json($data); // How do I return in json? in case of an error message?
