@@ -78,7 +78,6 @@
                                         <th>ID</th>
                                         <th scope="col">CIF</th>
                                         <th scope="col">Razón Social</th>
-                                        <th scope="col">Nombre Comercial</th>
                                         <th scope="col">Teléfono</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Acciones</th>
@@ -90,7 +89,6 @@
                                             <tr>
                                                 <td>{{ $cliente->id }}</td>
                                                 <td>{{ $cliente->cif }}</td>
-                                                <td scope="row">{{ $cliente->razon_social }}</td>
                                                 <td>{{ $cliente->nombre_comercial }}</td>
                                                 <td>{{ $cliente->telefono }}</td>
                                                 <td>{{ $cliente->email }}</td>

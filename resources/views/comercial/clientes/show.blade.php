@@ -21,14 +21,10 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" id="datos-fiscales-tab" data-toggle="tab"
-                               href="#datos-fiscales"
-                               role="tab" aria-controls="datos-fiscales" aria-selected="false">Datos
+                            <a class="nav-link" id="datos-fiscales-tab" data-toggle="tab" href="#datos-fiscales"
+                               role="tab"
+                               aria-controls="datos-fiscales" aria-selected="false">Datos
                                 Fiscales</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="datos-comerciales-tab" data-toggle="tab" href="#datos-comerciales"
-                               role="tab" aria-controls="datos-comerciales" aria-selected="false">Datos Comerciales</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="contactos-tab" data-toggle="tab" href="#contactos" role="tab"
@@ -134,61 +130,100 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="datos-comerciales" role="tabpanel"
-                             aria-labelledby="datos-comerciales-tab">
+
+                        <div class="tab-pane fade" id="contactos" role="tabpanel" aria-labelledby="contactos-tab"></div>
+
+                        <div class="tab-pane fade" id="historico-pedidos" role="tabpanel"
+                             aria-labelledby="historico-pedidos-tab">
+
+                        </div>
+
+                        <div class="tab-pane fade" id="contactar-email" role="tabpanel"
+                             aria-labelledby="contactar-email-tab">
+
                             <div class="row">
-                                <div class="col-md-3">
-                                    <button class="btn btn-primary" type="button" id="btnAddDatosComerciales">Nuevo
-                                    </button>
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="exampleInputEmail2">Email</label>
+                                    <input type="email" class="form-control form-control-rounded" readonly
+                                           id="exampleInputEmail2" placeholder="No se ha registrado Email"
+                                           value="{{ $cliente->email }}">
                                 </div>
                             </div>
 
-                            {{-- Modal Datos Comerciales --}}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="inputForm">
+                                        <div class="form-group">
+                                            <textarea class="form-control" placeholder="Ingrese su mensaje" required
+                                                      name="message" id="message" cols="30" rows="3"></textarea>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="flex-grow-1"></div>
+                                            <button title="Enviar Email" data-toggle="tooltip" data-placement="top"
+                                                    title="" data-original-title="Enviar Email"
+                                                    class="btn btn-icon btn-rounded btn-primary mr-2" {{ (empty($cliente->email)) ? "disabled" : "" }}>
+                                                <i class="i-Paper-Plane"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
 
+                        </div>
+
+                        <div class="tab-pane fade" id="documentacion" role="tabpanel"
+                             aria-labelledby="documentacion-tab">
+
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn btn-primary" type="button" id="btnNuevoAdjunto">Nuevo</button>
+                                </div>
+                            </div>
+
+                            <!-- Modal entradas-->
                             <div class="modal fade" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalCenterTitle"
-                                 aria-hidden="true" id="modal-datos-comerciales">
-                                <div class="modal-dialog modal-sm">
+                                 aria-hidden="true" id="modal-adjunto">
+                                <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
-                                        <form action="{{ route('clientes.update', $cliente->id) }}" method="POST"
-                                              id="datos_comerciales_form">
+                                        <form action="/almacen/proveedores/{{$cliente->id}}/adjuntos" method="POST"
+                                              id="adjunto_form" enctype="multipart/form-data">
                                             {{ csrf_field() }}
-                                            {{ method_field('PUT') }}
-                                            <input type="hidden" name="_tab" value="datos-comerciales">
-                                            <input type="hidden" name="id" id="id" value="{{ $cliente->id }}">
-                                            <input type="hidden" name="datos_comerciales_id" id="datos_comerciales_id">
 
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="modal-datos-comerciales-title"></h5>
+                                                <h5 class="modal-title" id="modal-adjunto-title"></h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="form-row">
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for="datos_comerciales_nombre">Nombre</label>
-                                                        <input type="text" class="form-control" placeholder="Nombre"
-                                                               id="datos_comerciales_nombre"
-                                                               required="" name="nombre">
+                                                <div class="row">
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="adjunto_fecha">Fecha</label>
+                                                        <input type="date" class="form-control" id="adjunto_fecha"
+                                                               value="{{ date('Y-m-d') }}" placeholder="Fecha"
+                                                               required="" name="adjunto_fecha">
                                                     </div>
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for="datos_comerciales_direccion">Dirección</label>
-                                                        <textarea class="form-control" id="datos_comerciales_direccion"
-                                                                  placeholder="Dirección" name="direccion"></textarea>
+
+                                                    <div class="col-md-8 mb-3">
+                                                        <label for="adjunto_descripcion">Descripcion</label>
+                                                        <input type="text" class="form-control" id="adjunto_descripcion"
+                                                               name="descripcion">
                                                     </div>
+                                                </div>
+
+                                                <div class="row">
                                                     <div class="col-md-12 mb-3">
-                                                        <label for="datos_comerciales_telefono">Teléfono</label>
-                                                        <input type="text" class="form-control"
-                                                               id="datos_comerciales_telefono"
-                                                               placeholder="Teléfono" name="telefono">
-                                                    </div>
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for="datos_comerciales_email">Email</label>
-                                                        <input type="text" class="form-control"
-                                                               id="datos_comerciales_email"
-                                                               placeholder="Email" required name="email">
+                                                        <div class="card text-left">
+                                                            <div class="card-body">
+                                                                <h4 class="card-title">Adjuntar</h4>
+                                                                <form action="" method="post"
+                                                                      enctype="multipart/form-data">
+                                                                    <input type="file" name="file"/>
+                                                                </form>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -203,50 +238,42 @@
                                 </div>
                             </div>
 
-                            <hr>
-
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table id="datos_comerciales_table"
-                                               class="display table table-striped table-bordered"
-                                               style="width:100%">
-                                            <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th scope="col">Nombre</th>
-                                                <th scope="col">Dirección</th>
-                                                <th scope="col">Teléfono</th>
-                                                <th scope="col">Correo Electrónico</th>
-                                                <th scope="col">Accion</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @if (isset($cliente->datosComerciales))
-                                                @foreach ($cliente->datosComerciales as $cliente)
-                                                    <tr>
-                                                        <td>{{ $cliente->id }}</td>
-                                                        <td scope="row">{{ $cliente->nombre }}</td>
-                                                        <td>{{ $cliente->direccion }}</td>
-                                                        <td>{{ $cliente->telefono }}</td>
-                                                        <td>{{ $cliente->email }}</td>
-                                                        <td>
-                                                            <a href="javascript:void(0);"
-                                                               class="text-success mr-2 edit">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold "></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);"
-                                                               class="text-danger mr-2 delete">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold "></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <table id="adjuntos_table" class="display table table-striped table-bordered"
+                                           style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Descripcion</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Accion</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @if (isset($cliente->adjuntos))
+                                            @foreach ($cliente->adjuntos as $adjunto)
+                                                <tr>
+                                                    <td>{{ $entrada->id }}</td>
+                                                    <td>{{ $adjunto->fecha }}</td>
+                                                    <td>
+                                                        <a href="{{ $adjunto->url }}">{{ $adjunto->descripcion }}</a>
+                                                    </td>
+                                                    <td>{{ $adjunto->tipo }}</td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="text-success mr-2 edit">
+                                                            <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="text-danger mr-2 delete">
+                                                            <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -261,82 +288,59 @@
 @section('page-css')
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/datatables.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/sweetalert2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen-bootstrap-4.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/styles/vendor/dropzone.min.css') }}">
 @endsection
 
 @section('bottom-js')
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>
+    <script src="{{asset('assets/js/tooltip.script.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/dropzone.min.js')}}"></script>
 
     <script>
         $(document).ready(function () {
             var tab = '{{ $tab }}';
-            $("#"+tab+"").addClass('active show');
-            $("#"+tab+"-tab").addClass('active show').attr('aria-selected', true);
+            $("#" + tab + "").addClass('active show');
+            $("#" + tab + "-tab").addClass('active show').attr('aria-selected', true);
         });
     </script>
 
-    {{--Datos Comerciales--}}
+    {{--Documentos adjuntos--}}
     <script>
-        var table_datos_comerciales
+        var adjuntos_table;
 
-        $(function () {
+        $(document).ready(function () {
             // Configuracion de Datatable
-            table_datos_comerciales = $('#datos_comerciales_table').DataTable({
+            adjuntos_table = $('#adjuntos_table').DataTable({
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
-                columnDefs: [{
-                    targets: [0],
-                    visible: false
-                },]
+                columnDefs: [
+                    {targets: [0], visible: false},
+                ],
+                responsive: true,
+                order: [[1, 'desc']]
             });
 
-            $('#datos_comerciales_table .edit').on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = table_datos_comerciales.row(tr).data();
-                limpiarCamposDatosComerciales();
-
-                $('#datos_comerciales_id').val(row[0]);
-                $('#datos_comerciales_nombre').val(row[1]);
-                $('#datos_comerciales_direccion').val(row[2]);
-                $('#datos_comerciales_telefono').val(row[3]);
-                $('#datos_comerciales_email').val(row[4]);
-                $('#datos_comerciales_form').attr('action', '/comercial/clientes/' + row[0]);
-
-                $("#modal-datos-comerciales-title").html("Modificar Datos Comerciales");
-                $("#modal-datos-comerciales").modal('show');
+            $("#btnNuevoAdjunto").click(function (e) {
+                $("#modal-adjunto-title").html("Nuevo Adjunto");
+                $("#modal-adjunto").modal('show');
             });
 
-            $('#datos_comerciales_table .delete').on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = table_datos_comerciales.row(tr).data();
-
-                swal({
-                    title: 'Confirmar Proceso',
-                    text: "Confirme eliminar el registro seleccionado",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#0CC27E',
-                    cancelButtonColor: '#FF586B',
-                    confirmButtonText: 'Confirmar',
-                    cancelButtonText: 'Cancelar',
-                    confirmButtonClass: 'btn btn-success mr-5',
-                    cancelButtonClass: 'btn btn-danger',
-                    buttonsStyling: false
-                }).then(function () {
-                    window.location.href = "{{ url('comercial/clientes/delete-dato-comercial') }}" + "/" + row[0]
-                })
-            });
-
-            $("#btnAddDatosComerciales").click(function (e) {
-                limpiarCamposDatosComerciales();
-                $("#modal-datos-comerciales-title").html("Nuevos Datos Comerciales");
-                $("#modal-datos-comerciales").modal('show');
-            })
+            // "myAwesomeDropzone" is the camelized version of the HTML element's ID
+            Dropzone.options.myAwesomeDropzone = {
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 2, // MB
+                accept: function(file, done) {
+                    if (file.name == "justinbieber.jpg") {
+                        done("Naha, you don't.");
+                    }
+                    else { done(); }
+                }
+            };
         });
-
-        function limpiarCamposDatosComerciales() {
-            $('#datos_comerciales_id, #datos_comerciales_nombre, #datos_comerciales_direccion, #datos_comerciales_telefono, #datos_comerciales_email').val(null);
-        }
     </script>
 @endsection

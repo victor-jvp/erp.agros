@@ -625,7 +625,6 @@
             });
 
             $("#btnNuevoAdjunto").click(function (e) {
-                limpiarCamposEntrada();
                 $("#modal-adjunto-title").html("Nuevo Adjunto");
                 $("#modal-adjunto").modal('show');
             });
