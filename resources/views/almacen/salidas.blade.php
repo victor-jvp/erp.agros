@@ -68,7 +68,7 @@
                                                         data-placeholder="Seleccione...">
                                                     <option value=""></option>
                                                     <option value="Cajas">Cajas</option>
-                                                    <option value="Pallets">Pallets</option>
+                                                    <option value="Pallets">Palets</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-12 mb-3">
@@ -122,7 +122,7 @@
                                             <td>{{ $salida->nro_salida }}</td>
                                             <td>{{ date('d/m/Y', strtotime($salida->fecha)) }}</td>
                                             @if (!is_null($salida->pallet_id))
-                                                <td>Pallets</td>
+                                                <td>Palets</td>
                                                 <td>{{ $salida->pallet_id }}</td>
                                                 <td>{{ $salida->pallet->formato }}</td>
                                             @else

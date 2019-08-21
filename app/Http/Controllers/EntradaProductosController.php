@@ -25,7 +25,7 @@ class EntradaProductosController extends Controller
         );
         $categorias[] = array(
             "value" => "pallets",
-            "text"  => "Pallets"
+            "text"  => "Palets"
         );
 
         $data = array(

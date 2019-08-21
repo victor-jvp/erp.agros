@@ -135,7 +135,7 @@
                                             <div class="col-md-4 mb-3">
                                                 <label class="checkbox checkbox-success">
                                                     <input type="checkbox" name="estado_pallets" checked>
-                                                    <span>Estado Pallets</span>
+                                                    <span>Estado Palets</span>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -208,7 +208,7 @@
                                     <th scope="col">Fecha Albaran</th>
                                     <th scope="col">Transporte Adecuado</th>
                                     <th scope="col">Control Plagas</th>
-                                    <th scope="col">Estado Pallets</th>
+                                    <th scope="col">Estado Palets</th>
                                     <th scope="col">Ficha Técnica</th>
                                     <th scope="col">Material Dañado</th>
                                     <th scope="col">Material Limpio</th>
@@ -229,7 +229,7 @@
                                                 <td>Caja</td>
                                                 <td>{{ $entrada->caja->formato }}</td>
                                             @else
-                                                <td>Pallet</td>
+                                                <td>Palet</td>
                                                 <td>{{ $entrada->pallet->formato }}</td>
                                             @endif
                                             <td>{{ $entrada->cantidad }}</td>

@@ -26,7 +26,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="pallets-tab" data-toggle="tab" href="#pallets" role="tab"
-                               aria-controls="pallets" aria-selected="false">Pallets</a>
+                               aria-controls="pallets" aria-selected="false">Palets</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="cubres-tab" data-toggle="tab" href="#cubres" role="tab"
@@ -614,7 +614,7 @@
                 $('#pallet_modelo_id').val(row[2]).trigger('chosen:updated');
                 $('#pallet_form').attr('action', '/maestros/pallets/' + row[0]);
 
-                $("#modal-pallets-title").html("Modificar Pallet");
+                $("#modal-pallets-title").html("Modificar Palet");
                 $("#pallet_method").val('PUT');
                 $("#modal-pallets").modal('show');
             });
@@ -642,7 +642,7 @@
 
             $("#btnNuevoPallet").click(function (e) {
                 limpiarCamposPallet();
-                $("#modal-pallets-title").html("Nuevo Pallet");
+                $("#modal-pallets-title").html("Nuevo Palet");
                 $("#pallet_method").val(null);
                 $("#modal-pallets").modal('show');
             })

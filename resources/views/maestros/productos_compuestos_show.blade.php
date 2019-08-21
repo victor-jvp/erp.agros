@@ -83,12 +83,12 @@
                                                         <a class="nav-link active show" id="EuroPallet-tab"
                                                            data-toggle="tab" href="#EuroPallet" role="tab"
                                                            aria-controls="EuroPallet" aria-selected="true">Euro
-                                                            Pallet</a>
+                                                            Palet</a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link" id="PalletGrande-tab" data-toggle="tab"
                                                            href="#PalletGrande" role="tab" aria-controls="PalletGrande"
-                                                           aria-selected="false">Pallet Grande</a>
+                                                           aria-selected="false">Palet Grande</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content" id="myTabContent">

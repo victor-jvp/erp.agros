@@ -40,7 +40,7 @@ WHERE
 GROUP BY
     cajas.formato UNION
 SELECT
-    'Pallet' as categoria,
+    'Palet' as categoria,
     pallets.formato,
     SUM( entradas.cantidad ) AS entradas,
     SUM( salidas.cantidad ) AS salidas,
