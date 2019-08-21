@@ -91,22 +91,6 @@ class ProveedoresController extends Controller
             $proveedor->save();
         }
 
-        //Tab Datos Comerciales
-        if ($request->_tab == "datos-comerciales") {
-            if (!isset($request->datos_comerciales_id)) {
-                $datosComerciales = new ProveedorDatosComerciales();
-            } else {
-                $datosComerciales = ProveedorDatosComerciales::find($request->datos_comerciales_id);
-            }
-
-            $datosComerciales->nombre    = $request->nombre;
-            $datosComerciales->direccion = $request->direccion;
-            $datosComerciales->telefono  = $request->telefono;
-            $datosComerciales->email     = $request->email;
-            $proveedor->datosComerciales()->save($datosComerciales);
-        }
-
-
         $data = array(
             'id'  => $proveedor->id,
         );

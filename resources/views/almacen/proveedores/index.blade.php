@@ -78,10 +78,9 @@
                                         <th>ID</th>
                                         <th scope="col">CIF</th>
                                         <th scope="col">Razón Social</th>
-                                        <th scope="col">Nombre Comercial</th>
                                         <th scope="col">Teléfono</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Acciones</th>
+                                        <th scope="col">Acción</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -91,7 +90,6 @@
                                                 <td>{{ $proveedor->id }}</td>
                                                 <td>{{ $proveedor->cif }}</td>
                                                 <td scope="row">{{ $proveedor->razon_social }}</td>
-                                                <td>{{ $proveedor->nombre_comercial }}</td>
                                                 <td>{{ $proveedor->telefono }}</td>
                                                 <td>{{ $proveedor->email }}</td>
                                                 <td>
