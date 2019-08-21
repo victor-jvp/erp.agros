@@ -52,6 +52,7 @@ Route::post('almacen/salida-productos/selectMaterial', 'SalidaProductosControlle
 Route::resource('almacen/proveedores', 'ProveedoresController');
 Route::get('/almacen/proveedores/delete/{proveedor}', 'ProveedoresController@delete')->name('proveedores.delete');
 Route::get('/almacen/proveedores/delete-dato-comercial/{datoComercial}', 'ProveedoresController@deleteDatoComercial');
+Route::post('/almacen/proveedores/{id}/adjuntos', 'ProveedoresController@adjuntos')->name('proveedores.adjuntos');
 #endregion
 
 #endregion

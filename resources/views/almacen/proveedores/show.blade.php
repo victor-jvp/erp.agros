@@ -45,7 +45,6 @@
                         </li>
                     </ul>
 
-
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade" id="datos-fiscales" role="tabpanel"
                              aria-labelledby="datos-fiscales-tab">
@@ -162,7 +161,7 @@
                                             <th scope="col">Material Limpio</th>
                                             <th scope="col">Control Grapas</th>
                                             <th scope="col">Cantidad Conforme</th>
-{{--                                            <th scope="col">Accion</th>--}}
+                                            {{--                                            <th scope="col">Accion</th>--}}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -246,16 +245,16 @@
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </td>
-{{--                                                    <td>--}}
-{{--                                                        <a href="javascript:void(0);"--}}
-{{--                                                           onclick="LoadEntrada({{ $entrada->id }})"--}}
-{{--                                                           class="text-success mr-2">--}}
-{{--                                                            <i class="nav-icon i-Pen-2 font-weight-bold"></i>--}}
-{{--                                                        </a>--}}
-{{--                                                        <a href="javascript:void(0);" class="text-danger mr-2 delete">--}}
-{{--                                                            <i class="nav-icon i-Close-Window font-weight-bold "></i>--}}
-{{--                                                        </a>--}}
-{{--                                                    </td>--}}
+                                                    {{--                                                    <td>--}}
+                                                    {{--                                                        <a href="javascript:void(0);"--}}
+                                                    {{--                                                           onclick="LoadEntrada({{ $entrada->id }})"--}}
+                                                    {{--                                                           class="text-success mr-2">--}}
+                                                    {{--                                                            <i class="nav-icon i-Pen-2 font-weight-bold"></i>--}}
+                                                    {{--                                                        </a>--}}
+                                                    {{--                                                        <a href="javascript:void(0);" class="text-danger mr-2 delete">--}}
+                                                    {{--                                                            <i class="nav-icon i-Close-Window font-weight-bold "></i>--}}
+                                                    {{--                                                        </a>--}}
+                                                    {{--                                                    </td>--}}
                                                 </tr>
                                             @endforeach
                                         @endif
@@ -268,10 +267,141 @@
 
                         <div class="tab-pane fade" id="contactar-email" role="tabpanel"
                              aria-labelledby="contactar-email-tab">
+
+                            <div class="row">
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="exampleInputEmail2">Email</label>
+                                    <input type="email" class="form-control form-control-rounded" readonly
+                                           id="exampleInputEmail2" placeholder="No se ha registrado Email"
+                                           value="{{ $proveedor->email }}">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="inputForm">
+                                        <div class="form-group">
+                                            <textarea class="form-control" placeholder="Ingrese su mensaje" required
+                                                      name="message" id="message" cols="30" rows="3"></textarea>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="flex-grow-1"></div>
+                                            <button title="Enviar Email" data-toggle="tooltip" data-placement="top"
+                                                    title="" data-original-title="Enviar Email"
+                                                    class="btn btn-icon btn-rounded btn-primary mr-2" {{ (empty($proveedor->email)) ? "disabled" : "" }}>
+                                                <i class="i-Paper-Plane"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="tab-pane fade" id="documentacion" role="tabpanel"
                              aria-labelledby="documentacion-tab">
+
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn btn-primary" type="button" id="btnNuevoAdjunto">Nuevo</button>
+                                </div>
+                            </div>
+
+                            <!-- Modal entradas-->
+                            <div class="modal fade" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle"
+                                 aria-hidden="true" id="modal-adjunto">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <form action="/almacen/proveedores/{{$proveedor->id}}/adjuntos" method="POST"
+                                              id="adjunto_form" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modal-adjunto-title"></h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="adjunto_fecha">Fecha</label>
+                                                        <input type="date" class="form-control" id="adjunto_fecha"
+                                                               value="{{ date('Y-m-d') }}" placeholder="Fecha"
+                                                               required="" name="adjunto_fecha">
+                                                    </div>
+
+                                                    <div class="col-md-8 mb-3">
+                                                        <label for="adjunto_descripcion">Descripcion</label>
+                                                        <input type="text" class="form-control" id="adjunto_descripcion"
+                                                               name="descripcion">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-3">
+                                                        <div class="card text-left">
+                                                            <div class="card-body">
+                                                                <h4 class="card-title">Adjuntar</h4>
+                                                                <form action="" method="post" enctype="multipart/form-data">
+                                                                    <input type="file" name="file" />
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Cerrar
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="adjuntos_table" class="display table table-striped table-bordered"
+                                           style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Descripcion</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Accion</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @if (isset($proveedor->adjuntos))
+                                            @foreach ($proveedor->adjuntos as $adjunto)
+                                                <tr>
+                                                    <td>{{ $entrada->id }}</td>
+                                                    <td>{{ $adjunto->fecha }}</td>
+                                                    <td>
+                                                        <a href="{{ $adjunto->url }}">{{ $adjunto->descripcion }}</a>
+                                                    </td>
+                                                    <td>{{ $adjunto->tipo }}</td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="text-success mr-2 edit">
+                                                            <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="text-danger mr-2 delete">
+                                                            <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -285,6 +415,7 @@
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/datatables.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/sweetalert2.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen-bootstrap-4.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/styles/vendor/dropzone.min.css') }}">
 @endsection
 
 @section('bottom-js')
@@ -292,6 +423,8 @@
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
     <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>
+    <script src="{{asset('assets/js/tooltip.script.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/dropzone.min.js')}}"></script>
 
     <script>
         $(document).ready(function () {
@@ -315,7 +448,7 @@
                     {targets: [0, 3], visible: false},
                 ],
                 responsive: true,
-                order:[ [1, 'desc']]
+                order: [[1, 'desc']]
             });
 
             $("#btnNuevo").click(function (e) {
@@ -471,5 +604,43 @@
             $("#material").html(null).append('<option value=""></option>');
         }
 
+    </script>
+    {{--Fin Entradas--}}
+
+    {{--Documentos adjuntos--}}
+    <script>
+        var adjuntos_table;
+
+        $(document).ready(function () {
+            // Configuracion de Datatable
+            adjuntos_table = $('#adjuntos_table').DataTable({
+                language: {
+                    url: "{{ asset('assets/Spanish.json')}}"
+                },
+                columnDefs: [
+                    {targets: [0], visible: false},
+                ],
+                responsive: true,
+                order: [[1, 'desc']]
+            });
+
+            $("#btnNuevoAdjunto").click(function (e) {
+                limpiarCamposEntrada();
+                $("#modal-adjunto-title").html("Nuevo Adjunto");
+                $("#modal-adjunto").modal('show');
+            });
+
+            // "myAwesomeDropzone" is the camelized version of the HTML element's ID
+            Dropzone.options.myAwesomeDropzone = {
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 2, // MB
+                accept: function(file, done) {
+                    if (file.name == "justinbieber.jpg") {
+                        done("Naha, you don't.");
+                    }
+                    else { done(); }
+                }
+            };
+        });
     </script>
 @endsection
