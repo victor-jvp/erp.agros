@@ -54,12 +54,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-12 mb-3">
-                                            <label for="parcela_id">Parcela</label>
-                                            <select class="form-control chosen" name="parcela_id"
-                                                    id="parcela_id" data-placeholder="Seleccione...">
-                                            </select>
-                                        </div>
 
                                         <div class="col-md-12 mb-3">
                                             <label for="cultivo_id">Cultivo</label>
@@ -71,10 +65,18 @@
                                                 @endforeach
                                             </select>
                                         </div>
+
                                         <div class="col-md-12 mb-3">
                                             <label for="variedad">Variedad</label>
                                             <select class="form-control chosen" name="variedad_id"
                                                     id="variedad_id" data-placeholder="Seleccione...">
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <label for="parcela_id">Parcela</label>
+                                            <select class="form-control chosen" name="parcela_id"
+                                                    id="parcela_id" data-placeholder="Seleccione...">
                                             </select>
                                         </div>
 
@@ -100,14 +102,14 @@
                                         <th>ID</th>
                                         <th scope="col">Traza</th>
                                         <th scope="col">Finca</th>
-                                        <th scope="col">Parcela</th>
                                         <th scope="col">Cultivo</th>
                                         <th scope="col">Variedad</th>
+                                        <th scope="col">Parcela</th>                                        
                                         <th scope="col">Acción</th>
                                         <th>finca_id</th>
-                                        <th>parcela_id</th>
                                         <th>cultivo_id</th>
                                         <th>variedad_id</th>
+                                        <th>parcela_id</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -117,9 +119,9 @@
                                                 <td>{{ $trazabilidad->id }}</td>
                                                 <td>{{ $trazabilidad->traza }}</td>
                                                 <td>{{ $trazabilidad->parcela->finca->finca }}</td>
-                                                <td>{{ $trazabilidad->parcela->parcela }}</td>
                                                 <td>{{ $trazabilidad->variedad->cultivo->cultivo }}</td>
                                                 <td>{{ $trazabilidad->variedad->variedad }}</td>
+                                                <td>{{ $trazabilidad->parcela->parcela }}</td>
                                                 <td>
                                                     <a href="javascript:void(0);" class="text-success mr-2 edit">
                                                         <i class="nav-icon i-Pen-2 font-weight-bold "></i>
@@ -129,9 +131,9 @@
                                                     </a>
                                                 </td>
                                                 <td>{{ $trazabilidad->parcela->finca->id }}</td>
-                                                <td>{{ $trazabilidad->parcela->id }}</td>
                                                 <td>{{ $trazabilidad->variedad->cultivo->id }}</td>
                                                 <td>{{ $trazabilidad->variedad->id }}</td>
+                                                <td>{{ $trazabilidad->parcela->id }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -193,12 +195,12 @@
                 $("#trazabilidad_id").val(row[0]);
 
                 $('#finca_id').val(row[7]);
-                $('#cultivo_id').val(row[9]);
+                $('#cultivo_id').val(row[8]);
 
                 $("#finca_id, #cultivo_id").trigger('chosen:updated');
 
-                ajaxSelectParcela(row[7], row[8]);
-                ajaxSelectByCultivo(row[9], row[10]);
+                ajaxSelectParcela(row[7], row[10]);
+                ajaxSelectByCultivo(row[8], row[9]);
 
                 $('#trazabilidad_form').attr('action', '/maestros/trazabilidad/' + row[0]);
 
