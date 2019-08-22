@@ -27,31 +27,31 @@ class ListadoInventarioController extends Controller
 SELECT
     'Caja' as categoria,
     cajas.formato,
-    SUM( entradas.cantidad ) AS entradas,
-    SUM( salidas.cantidad ) AS salidas,
-    SUM( entradas.cantidad ) - SUM( salidas.cantidad ) AS total 
+    IFNULL(SUM( entradas.cantidad ), 0) AS entradas,
+    IFNULL(SUM( salidas.cantidad ), 0) AS salidas,
+    IFNULL(SUM( entradas.cantidad ), 0) - IFNULL(SUM( salidas.cantidad ), 0) AS total 
 FROM
     cajas
-    INNER JOIN entradas ON entradas.caja_id = cajas.id
-    INNER JOIN salidas ON salidas.caja_id = cajas.id 
+    LEFT JOIN entradas ON entradas.caja_id = cajas.id
+    LEFT JOIN salidas ON salidas.caja_id = cajas.id 
 WHERE
     entradas.deleted_at IS NULL 
     AND salidas.deleted_at IS NULL 
 GROUP BY
-    cajas.formato UNION
+    cajas.formato
+UNION
 SELECT
     'Palet' as categoria,
     pallets.formato,
-    SUM( entradas.cantidad ) AS entradas,
-    SUM( salidas.cantidad ) AS salidas,
-    SUM( entradas.cantidad ) - SUM( salidas.cantidad ) AS total 
+    IFNULL(SUM( entradas.cantidad ), 0) AS entradas,
+    IFNULL(SUM( salidas.cantidad ), 0) AS salidas,
+    IFNULL(SUM( entradas.cantidad ), 0) - IFNULL(SUM( salidas.cantidad ), 0) AS total 
 FROM
     pallets
-    INNER JOIN entradas ON entradas.caja_id = pallets.id
-    INNER JOIN salidas ON salidas.caja_id = pallets.id 
+    LEFT JOIN entradas ON entradas.pallet_id = pallets.id
+    LEFT JOIN salidas ON salidas.pallet_id = pallets.id 
 WHERE
-    entradas.deleted_at IS NULL 
-    AND salidas.deleted_at IS NULL 
+    entradas.deleted_at IS NULL AND salidas.deleted_at IS NULL 
 GROUP BY
     pallets.formato");
 

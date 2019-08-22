@@ -32,7 +32,7 @@
                                     <th scope="col">Entradas</th>
                                     <th scope="col">Salidas</th>
                                     <th scope="col">Total</th>
-                                    <th scope="col">Accion</th>
+{{--                                    <th scope="col">Accion</th>--}}
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -44,14 +44,14 @@
                                             <td>{{ $row->entradas }}</td>
                                             <td>{{ $row->salidas }}</td>
                                             <td>{{ $row->total }}</td>
-                                            <td>
+                                            {{--<td>
                                                 <a href="javascript:void(0);" class="text-success mr-2 edit">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold "></i>
                                                 </a>
                                                 <a href="javascript:void(0);" class="text-danger mr-2 delete">
                                                     <i class="nav-icon i-Close-Window font-weight-bold "></i>
                                                 </a>
-                                            </td>
+                                            </td>--}}
                                         </tr>
                                     @endforeach
                                 @endif
