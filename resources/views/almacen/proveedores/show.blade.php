@@ -134,6 +134,102 @@
                         </div>
 
                         <div class="tab-pane fade" id="contactos" role="tabpanel" aria-labelledby="contactos-tab">
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn btn-primary" type="button" id="btnNuevoContacto">Nuevo</button>
+                                </div>
+                            </div>
+
+                            <!-- Modal Contactos-->
+                            <div class="modal fade" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle"
+                                 aria-hidden="true" id="modal-contacto">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <form action="/almacen/proveedores/{{$proveedor->id}}/contactos" method="POST"
+                                              id="contacto_form">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="_tab" value="contactos">
+                                            <input type="hidden" name="contacto_id" value="" id="contacto_id">
+
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modal-contacto-title"></h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="contacto_descripcion">Descripcion</label>
+                                                        <input type="text" class="form-control"
+                                                               id="contacto_descripcion"
+                                                               name="descripcion" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="contacto_telefono">Teléfono</label>
+                                                        <input type="text" class="form-control" id="contacto_telefono"
+                                                               name="telefono">
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="contacto_telefono">Email</label>
+                                                        <input type="email" class="form-control" id="contacto_email"
+                                                               name="email" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Cerrar
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="contactos_table" class="display table table-striped table-bordered"
+                                           style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Descripcion</th>
+                                            <th scope="col">Teléfono</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @if (isset($proveedor->contactos))
+                                            @foreach ($proveedor->contactos as $contacto)
+                                                <tr>
+                                                    <td>{{ $contacto->id }}</td>
+                                                    <td>{{ $contacto->descripcion }}</td>
+                                                    <td>{{ $contacto->telefono }}</td>
+                                                    <td>{{ $contacto->email }}</td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="text-success mr-2 edit">
+                                                            <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="text-danger mr-2 delete">
+                                                            <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="historico-pedidos" role="tabpanel"
@@ -606,6 +702,71 @@
 
     </script>
     {{--Fin Entradas--}}
+
+    {{--Contacto--}}
+    <script>
+        var contactos_table;
+
+        $(document).ready(function () {
+            // Configuracion de Datatable
+            contactos_table = $('#contactos_table').DataTable({
+                language: {
+                    url: "{{ asset('assets/Spanish.json')}}"
+                },
+                columnDefs: [
+                    {targets: [0], visible: false},
+                ],
+                responsive: true,
+                order: [[1, 'desc']]
+            });
+
+            $("#btnNuevoContacto").click(function (e) {
+                LimpiarCamposContactos();
+                $("#modal-contacto-title").html("Nuevo Contacto");
+                $("#modal-contacto").modal('show');
+            });
+
+            $('#contactos_table .edit').on('click', function () {
+                LimpiarCamposContactos();
+                var tr = $(this).closest('tr');
+                var row = contactos_table.row(tr).data();
+                console.log(row);
+
+                $("#contacto_id").val(row[0]);
+                $("#contacto_descripcion").val(row[1]);
+                $("#contacto_telefono").val(row[2]);
+                $("#contacto_email").val(row[3]);
+
+                $("#modal-contacto-title").html("Modificar Contacto");
+                $("#modal-contacto").modal('show');
+            });
+
+            $('#contactos_table .delete').on('click', function () {
+                var tr = $(this).closest('tr');
+                var row = contactos_table.row(tr).data();
+
+                swal({
+                    title: 'Confirmar Proceso',
+                    text: "Confirme eliminar el registro seleccionado",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0CC27E',
+                    cancelButtonColor: '#FF586B',
+                    confirmButtonText: 'Confirmar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonClass: 'btn btn-success mr-5',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function () {
+                    window.location.href = "{{ url('almacen/proveedores/delete-contacto') }}" + "/" + row[0]
+                });
+            });
+        });
+
+        function LimpiarCamposContactos() {
+            $("#contacto_id, #contacto_descripcion, #contacto_telefono, #contacto_email, #contacto_method").val(null);
+        }
+    </script>
 
     {{--Documentos adjuntos--}}
     <script>

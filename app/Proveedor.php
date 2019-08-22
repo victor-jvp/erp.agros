@@ -16,8 +16,8 @@ class Proveedor extends Model
         return $this->hasMany(Entrada::class);
     }
 
-    public function datosComerciales()
+    public function contactos()
     {
-        return $this->hasMany(ProveedorDatosComerciales::class, 'proveedor_id');
+        return $this->hasMany(ProveedorContactos::class);
     }
 }

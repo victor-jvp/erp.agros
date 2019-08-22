@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\ProveedorContactos;
 use Illuminate\Http\Request;
 use App\Proveedor;
-use App\ProveedorDatosComerciales;
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 use Symfony\Component\Finder\Finder;
 
@@ -32,7 +32,39 @@ class ProveedoresController extends Controller
 
     public function contactos(Request $request, $id)
     {
-        dd($request);
+        $proveedor = Proveedor::find($id);
+
+        if (is_null($request->contacto_id)) {
+            $contacto = new ProveedorContactos(array(
+                'descripcion' => $request->descripcion,
+                'telefono'    => $request->telefono,
+                'email'       => $request->email
+            ));
+            $proveedor->contactos()->save($contacto);
+        } else {
+            $contacto              = ProveedorContactos::find($request->contacto_id);
+            $contacto->descripcion = $request->descripcion;
+            $contacto->telefono    = $request->telefono;
+            $contacto->email       = $request->email;
+            $contacto->save();
+        }
+
+        $request->session()->flash('tab', $request->_tab);
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('proveedores.show', $proveedor->id);
+    }
+
+    public function delete_contacto(Request $request, $id)
+    {
+        $dato       = ProveedorContactos::find($id);
+        $proveedor_id = $dato->proveedor_id;
+        $dato->delete();
+
+        $request->session()->flash('tab', 'contactos');
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('proveedores.show', $proveedor_id);
     }
 
     /**
