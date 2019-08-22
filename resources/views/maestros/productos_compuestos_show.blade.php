@@ -108,36 +108,15 @@
                                                                        id="euro_kg"
                                                                        placeholder="Kg" name="euro_kg">
                                                             </div>
-                                                        </div>
-
-                                                        <div class="row">
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="euro_cantoneras">Cantoneras</label>
                                                                 <input type="text" class="form-control"
                                                                        id="euro_cantoneras"
                                                                        placeholder="Cantoneras" name="euro_cantoneras">
                                                             </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_cubre_id">Cubres</label>
-                                                                <select name="euro_cubre_id" id="euro_cubre_id"
-                                                                        class="form-control chosen"
-                                                                        data-placeholder="Seleccione...">
-                                                                    <option value=""></option>
-                                                                    @if (isset($cubres))
-                                                                        @foreach ($cubres as $cubre)
-                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_cubre_cantidad">Cantidad Cubres</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="euro_cubre_cantidad"
-                                                                       placeholder="Cantidad Cubres"
-                                                                       name="euro_cubre_cantidad">
-                                                            </div>
                                                         </div>
+
+
 
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3">
@@ -224,6 +203,29 @@
 
                                                                         <div class="row">
                                                                             <div class="col-md-6 mb-3">
+                                                                                <label for="euro_cubre_id">Cubres</label>
+                                                                                <select name="euro_cubre_id" id="euro_cubre_id"
+                                                                                        class="form-control chosen"
+                                                                                        data-placeholder="Seleccione...">
+                                                                                    <option value=""></option>
+                                                                                    @if (isset($cubres))
+                                                                                        @foreach ($cubres as $cubre)
+                                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <label for="euro_cubre_cantidad">Cantidad Cubres</label>
+                                                                                <input type="number" class="form-control"
+                                                                                       id="euro_cubre_cantidad"
+                                                                                       placeholder="Cantidad Cubres"
+                                                                                       name="euro_cubre_cantidad">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 mb-3">
                                                                                 <label for="euro_auxiliar_modelo">Auxiliar</label>
                                                                                 <select id="euro_auxiliar_modelo"
                                                                                         class="form-control chosen"
@@ -296,37 +298,15 @@
                                                                        id="grand_kg"
                                                                        placeholder="Kg" name="grand_kg">
                                                             </div>
-                                                        </div>
-
-                                                        <div class="row">
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="grand_cantoneras">Cantoneras</label>
                                                                 <input type="text" class="form-control"
                                                                        id="grand_cantoneras"
                                                                        placeholder="Cantoneras" name="grand_cantoneras">
                                                             </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_cubre_id">Cubres</label>
-                                                                <select name="grand_cubre_id" id="grand_cubre_id"
-                                                                        class="form-control chosen"
-                                                                        data-placeholder="Seleccione...">
-                                                                    <option value=""></option>
-                                                                    @if (isset($cubres))
-                                                                        @foreach ($cubres as $cubre)
-                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_cubre_cantidad">Cantidad
-                                                                    Cubres</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="grand_cubre_cantidad"
-                                                                       placeholder="Cantidad Cubres"
-                                                                       name="grand_cubre_cantidad">
-                                                            </div>
                                                         </div>
+
+
 
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3">
@@ -350,6 +330,7 @@
                                                                     <div class="tab-pane fade active show" id="tarrinas"
                                                                          role="tabpanel"
                                                                          aria-labelledby="tarrinas-tab">
+
 
                                                                         <div class="row">
                                                                             <div class="col-md-6 mb-3">
@@ -408,6 +389,30 @@
                                                                     <div class="tab-pane fade" id="auxiliares"
                                                                          role="tabpanel"
                                                                          aria-labelledby="auxiliares-tab">
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 mb-3">
+                                                                                <label for="grand_cubre_id">Cubres</label>
+                                                                                <select name="grand_cubre_id" id="grand_cubre_id"
+                                                                                        class="form-control chosen"
+                                                                                        data-placeholder="Seleccione...">
+                                                                                    <option value=""></option>
+                                                                                    @if (isset($cubres))
+                                                                                        @foreach ($cubres as $cubre)
+                                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <label for="grand_cubre_cantidad">Cantidad
+                                                                                    Cubres</label>
+                                                                                <input type="number" class="form-control"
+                                                                                       id="grand_cubre_cantidad"
+                                                                                       placeholder="Cantidad Cubres"
+                                                                                       name="grand_cubre_cantidad">
+                                                                            </div>
+                                                                        </div>
 
                                                                         <div class="row">
                                                                             <div class="col-md-6 mb-3">
@@ -495,20 +500,20 @@
                                         <th>ID</th>
                                         <th scope="col">Variable</th>
                                         <th scope="col">Caja</th>
-                                        <th scope="col">EuroPallet<br>Cantidad</th>
-                                        <th scope="col">EuroPallet<br>Kg</th>
-                                        <th scope="col">EuroPallet<br>Cantoneras</th>
-                                        <th scope="col">EuroPallet<br>Cubre</th>
-                                        <th scope="col">EuroPallet<br>Cubre Cantidad</th>
-                                        <th scope="col">EuroPallet Tarrinas</th>
-                                        <th scope="col">EuroPallet Auxiliares</th>
-                                        <th scope="col">Pallet Grande<br>Cantidad</th>
-                                        <th scope="col">Pallet Grande<br>Kg</th>
-                                        <th scope="col">Pallet Grande<br>Cantoneras</th>
-                                        <th scope="col">Pallet Grande<br>Cubre</th>
-                                        <th scope="col">Pallet Grande<br>Cubre Cantidad</th>
-                                        <th scope="col">Pallet Grande Tarrinas</th>
-                                        <th scope="col">Pallet Grande Auxiliares</th>
+                                        <th scope="col">EuroPalet<br>Cantidad</th>
+                                        <th scope="col">EuroPalet<br>Kg</th>
+                                        <th scope="col">EuroPalet<br>Cantoneras</th>
+                                        <th scope="col">EuroPalet<br>Cubre</th>
+                                        <th scope="col">EuroPalet<br>Cubre Cantidad</th>
+                                        <th scope="col">EuroPalet Tarrinas</th>
+                                        <th scope="col">EuroPalet Auxiliares</th>
+                                        <th scope="col">Palet Grande<br>Cantidad</th>
+                                        <th scope="col">Palet Grande<br>Kg</th>
+                                        <th scope="col">Palet Grande<br>Cantoneras</th>
+                                        <th scope="col">Palet Grande<br>Cubre</th>
+                                        <th scope="col">Palet Grande<br>Cubre Cantidad</th>
+                                        <th scope="col">Palet Grande Tarrinas</th>
+                                        <th scope="col">Palet Grande Auxiliares</th>
                                         <th scope="col">Acción</th>
                                     </tr>
                                     </thead>
