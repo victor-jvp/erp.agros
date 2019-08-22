@@ -104,7 +104,7 @@
                                         <th scope="col">Finca</th>
                                         <th scope="col">Cultivo</th>
                                         <th scope="col">Variedad</th>
-                                        <th scope="col">Parcela</th>                                        
+                                        <th scope="col">Parcela</th>
                                         <th scope="col">Acción</th>
                                         <th>finca_id</th>
                                         <th>cultivo_id</th>
@@ -160,7 +160,7 @@
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
-{{--    <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>--}}
+    {{--    <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>--}}
 
     <script>
         var table_trazabilidad;
@@ -184,6 +184,7 @@
             $("#btnNuevaTrazabilidad").click(function (e) {
                 limpiarCamposTrazabilidad();
                 $("#modal-trazabilidad-title").html('Agregar Trazabilidad');
+                $("#trazabilidad_method").val('POST');
                 $("#modal-trazabilidad").modal("show");
             });
 
@@ -254,6 +255,34 @@
             $('#cultivo_id').on('change', function (evt, params) {
                 var valor = $(this).val();
                 ajaxSelectByCultivo(valor);
+            });
+
+            $("#trazabilidad_form").submit(function (e) {
+                e.preventDefault();
+                
+                var variedad_id = $("#variedad_id").val();
+                var parcela_id = $("#parcela_id").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('trazabilidad.ajaxTrazabilidadExist') }}",
+                    dataType: 'JSON',
+                    data: {
+                        variedad_id: variedad_id,
+                        parcela_id: parcela_id
+                    },
+                    success: function (data) {                        
+                        if (data.IsValid != true){
+                            swal('Atención', 'La Trazabilidad ya está registrada.', 'warning')
+                        }else{
+                            e.currentTarget.submit();
+                        }
+                    },
+                    error: function (error) {
+                        swal('¡Error!', 'Error en el proceso de verificación de trazabilidad.', 'error')
+                        console.error(error.statusText);
+                    },
+                });
             });
         });
 

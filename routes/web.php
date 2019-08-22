@@ -192,6 +192,7 @@ Route::get('/maestros/productos-compuestos/delete/{producto}', 'ProductosCompues
 Route::resource('/maestros/trazabilidad', 'TrazabilidadController');
 Route::post('/maestros/trazabilidad/ajaxSelectParcela', 'TrazabilidadController@ajaxSelectParcela')->name('trazabilidad.ajaxSelectParcela');
 Route::post('/maestros/trazabilidad/ajaxSelectByCultivo', 'TrazabilidadController@ajaxSelectByCultivo')->name('trazabilidad.ajaxSelectByCultivo');
+Route::post('/maestros/trazabilidad/ajaxTrazabilidadExist', 'TrazabilidadController@ajaxTrazabilidadExist')->name('trazabilidad.ajaxTrazabilidadExist');
 Route::get('/maestros/trazabilidad/delete/{trazabilidad}', 'TrazabilidadController@delete')->name('trazabilidad.delete');
 
 #endregion

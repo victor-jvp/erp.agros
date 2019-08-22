@@ -26,8 +26,15 @@ class Trazabilidad extends Model
         $finca_id    = str_pad($this->parcela->finca->id, 2, "0", STR_PAD_LEFT);
         $cultivo_id  = str_pad($this->variedad->cultivo->id, 2, "0", STR_PAD_LEFT);
         $variedad_id = str_pad($this->variedad->id, 2, "0", STR_PAD_LEFT);
-        $parcela_id  = $this->parcela->id;
-        $traza       = "TZ" . $finca_id . $cultivo_id . $variedad_id . $parcela_id;
+        $parcela     = $this->parcela->parcela;
+        $traza       = "TZ" . $finca_id . $cultivo_id . $variedad_id . $parcela;
         return $traza;
+    }
+
+    public function scopeIsValid($query, $variedad_id, $parcela_id)
+    {
+        $exist= $this->where('parcela_id', "=", $parcela_id)->where('variedad_id', "=" ,$variedad_id)->count();
+        if($exist>0) return false;
+        return true;
     }
 }

@@ -94,4 +94,14 @@ class TrazabilidadController extends Controller
 
         return response()->json($data);
     }
+
+    public function ajaxTrazabilidadExist(Request $request)
+    {
+        $variedad_id = $request->input('variedad_id');
+        $parcela_id  = $request->input('parcela_id');
+
+        $data['IsValid'] = Trazabilidad::IsValid($variedad_id, $parcela_id);
+
+        return response()->json($data);
+    }
 }
