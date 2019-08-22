@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\ClienteContactos;
 use App\ClienteDatosComerciales;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class ClientesController extends Controller
     public function index()
     {
         $data = array(
-            "clientes" => Cliente::with('datosComerciales')->get()
+            "clientes" => Cliente::with('contactos')->get()
         );
         return view('comercial.clientes.index', $data);
     }
@@ -57,9 +58,41 @@ class ClientesController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function contactos(Request $request, $id)
     {
-        //
+        $cliente = Cliente::find($id);
+
+        if (is_null($request->contacto_id)) {
+            $contacto = new ClienteContactos(array(
+                'descripcion' => $request->descripcion,
+                'telefono'    => $request->telefono,
+                'email'       => $request->email
+            ));
+            $cliente->contactos()->save($contacto);
+        } else {
+            $contacto              = ClienteContactos::find($request->contacto_id);
+            $contacto->descripcion = $request->descripcion;
+            $contacto->telefono    = $request->telefono;
+            $contacto->email       = $request->email;
+            $contacto->save();
+        }
+
+        $request->session()->flash('tab', $request->_tab);
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('clientes.show', $cliente->id);
+    }
+
+    public function delete_contacto(Request $request, $id)
+    {
+        $dato       = ClienteContactos::find($id);
+        $cliente_id = $dato->cliente_id;
+        $dato->delete();
+
+        $request->session()->flash('tab', 'contactos');
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('clientes.show', $cliente_id);
     }
 
     /**
@@ -120,15 +153,6 @@ class ClientesController extends Controller
         return redirect()->route('clientes.index');
     }
 
-    public function deleteDatoComercial(Request $request, $id)
-    {
-        $dato = ClienteDatosComerciales::find($id);
-        $cliente_id = $dato->cliente_id;
-        $dato->delete();
 
-        $request->session()->flash('tab', 'datos-comerciales');
-        $request->session()->keep(['tab']);
 
-        return redirect()->route('clientes.show', $cliente_id);
-    }
 }

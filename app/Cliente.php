@@ -11,8 +11,8 @@ class Cliente extends Model
     use softDeletes;
     protected $table = "clientes";
     
-    public function datosComerciales()
+    public function contactos()
     {
-        return $this->hasMany(ClienteDatosComerciales::class, 'cliente_id');
+        return $this->hasMany(ClienteContactos::class);
     }
 }

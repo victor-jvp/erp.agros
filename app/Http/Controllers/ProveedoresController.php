@@ -27,6 +27,11 @@ class ProveedoresController extends Controller
      */
     public function adjuntos(Request $request, $id)
     {
+
+    }
+
+    public function contactos(Request $request, $id)
+    {
         dd($request);
     }
 
