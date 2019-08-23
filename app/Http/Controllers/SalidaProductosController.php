@@ -32,19 +32,12 @@ class SalidaProductosController extends Controller
      */
     public function store(Request $request)
     {
-        $salida             = new Salida();
-        $salida->nro_salida = Contador::save_nro_salida();
-        $salida->fecha      = $request->fecha;
-
-        if ($request->categoria == "Cajas") {
-            $salida->caja_id   = $request->material;
-            $salida->pallet_id = null;
-        } else {
-            $salida->pallet_id = $request->material;
-            $salida->caja_id   = null;
-        }
-
-        $salida->cantidad = $request->cantidad;
+        $salida               = new Salida();
+        $salida->nro_salida   = Contador::save_nro_salida();
+        $salida->fecha        = $request->fecha;
+        $salida->categoria    = $request->categoria;
+        $salida->categoria_id = $request->material;
+        $salida->cantidad     = $request->cantidad;
         $salida->save();
 
         return redirect()->route("salida-productos.index");
@@ -81,19 +74,12 @@ class SalidaProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $salida             = Salida::find($id);
-        $salida->nro_salida = $request->nro_salida;
-        $salida->fecha      = $request->fecha;
-
-        if ($request->categoria == "Cajas") {
-            $salida->caja_id   = $request->material;
-            $salida->pallet_id = null;
-        } else {
-            $salida->pallet_id = $request->material;
-            $salida->caja_id   = null;
-        }
-
-        $salida->cantidad = $request->cantidad;
+        $salida               = Salida::find($id);
+        $salida->nro_salida   = $request->nro_salida;
+        $salida->fecha        = $request->fecha;
+        $salida->categoria    = $request->categoria;
+        $salida->categoria_id = $request->material;
+        $salida->cantidad     = $request->cantidad;
         $salida->save();
 
         return redirect()->route("salida-productos.index");
@@ -106,19 +92,19 @@ class SalidaProductosController extends Controller
         if (is_null($categoria)) return response()->json(null);
 
         $data = array();
-        if ($categoria == "caja") {
+        if ($categoria == "Caja") {
             $data = Caja::all('id', 'formato');
         }
-        if ($categoria == "pallet") {
+        if ($categoria == "Palet") {
             $data = Pallet::all('id', 'formato');
         }
-        if ($categoria == "cubre") {
+        if ($categoria == "Cubre") {
             $data = Cubre::all('id', 'formato');
         }
-        if ($categoria == "auxiliar") {
+        if ($categoria == "Auxiliar") {
             $data = Auxiliar::all('id', 'modelo as formato');
         }
-        if ($categoria == "tarrina") {
+        if ($categoria == "Tarrina") {
             $data = Tarrina::all('id', 'modelo as formato');
         }
 

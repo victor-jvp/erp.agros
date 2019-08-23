@@ -67,11 +67,11 @@
                                                 <select class="form-control chosen" name="categoria" id="categoria"
                                                         data-placeholder="Seleccione...">
                                                     <option value=""></option>
-                                                    <option value="caja">Cajas</option>
-                                                    <option value="pallet">Palets</option>
-                                                    <option value="cubre">Cubres</option>
-                                                    <option value="auxiliar">Auxiliares</option>
-                                                    <option value="tarrina">Tarrinas</option>
+                                                    <option value="Caja">Cajas</option>
+                                                    <option value="Palet">Palets</option>
+                                                    <option value="Cubre">Cubres</option>
+                                                    <option value="Auxiliar">Auxiliares</option>
+                                                    <option value="Tarrina">Tarrinas</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-12 mb-3">
@@ -124,15 +124,9 @@
                                             <td>{{ $salida->id }}</td>
                                             <td>{{ $salida->nro_salida }}</td>
                                             <td>{{ date('d/m/Y', strtotime($salida->fecha)) }}</td>
-                                            @if (!is_null($salida->pallet_id))
-                                                <td>Palets</td>
-                                                <td>{{ $salida->pallet_id }}</td>
-                                                <td>{{ $salida->pallet->formato }}</td>
-                                            @else
-                                                <td>Cajas</td>
-                                                <td>{{ $salida->caja_id }}</td>
-                                                <td>{{ $salida->caja->formato }}</td>
-                                            @endif
+                                            <td>{{ $salida->categoria }}</td>
+                                            <td>{{ $salida->categoria_id }}</td>
+                                            <td>{{ $salida->material }}</td>
                                             <td>{{ $salida->cantidad }}</td>
                                             <td>
                                                 <a href="javascript:void(0);" class="text-success mr-2 edit">
@@ -180,9 +174,9 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    {targets: [0,4], visible: false }
+                    {targets: [0, 4], visible: false}
                 ],
-                order:[ [1, 'desc']]
+                order: [[1, 'desc']]
             });
 
             $('#salidas_table .edit').on('click', function () {
