@@ -16,13 +16,29 @@ class Entrada extends Model
         return $this->belongsTo(Proveedor::class, 'proveedor_id');
     }
 
-    public function pallet()
+    public function getmaterialAttribute()
     {
-        return $this->belongsTo(Pallet::class, 'pallet_id');
-    }
-
-    public function caja()
-    {
-        return $this->belongsTo(Caja::class, 'caja_id');
+        $material = "";
+        if($this->categoria == "Caja")
+        {
+            $material = Caja::find($this->categoria_id)->formato;
+        }
+        elseif($this->categoria == "Palet")
+        {
+            $material = Pallet::find($this->categoria_id)->formato;
+        }
+        elseif($this->categoria == "Cubre")
+        {
+            $material = Cubre::find($this->categoria_id)->formato;
+        }
+        elseif($this->categoria == "Auxiliar")
+        {
+            $material = Auxiliar::find($this->categoria_id)->modelo;
+        }
+        elseif($this->categoria == "Tarrina")
+        {
+            $material = Tarrina::find($this->categoria_id)->modelo;
+        }
+        return $material;
     }
 }

@@ -63,12 +63,11 @@
                                                 <select class="form-control chosen" name="categoria" id="categoria"
                                                         data-placeholder="Seleccione...">
                                                     <option value=""></option>
-                                                    @if (isset($categorias))
-                                                        @foreach ($categorias as $categoria)
-                                                            <option value="{{ $categoria['value'] }}">{{ $categoria['text'] }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
+                                                    <option value="Caja">Cajas</option>
+                                                    <option value="Palet">Palets</option>
+                                                    <option value="Cubre">Cubres</option>
+                                                    <option value="Auxiliar">Auxiliares</option>
+                                                    <option value="Tarrina">Tarrinas</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4 mb-3">
@@ -76,11 +75,6 @@
                                                 <select class="form-control chosen" name="material" id="material"
                                                         data-placeholder="Seleccione...">
                                                     <option value=""></option>
-                                                    @if (isset($cultivos))
-                                                        @foreach ($cultivos as $cultivo)
-                                                            <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
-                                                        @endforeach
-                                                    @endif
                                                 </select>
                                             </div>
                                             <div class="col-md-4 mb-3">
@@ -225,13 +219,8 @@
                                             <td>{{ $entrada->id }}</td>
                                             <td>{{ $entrada->nro_lote }}</td>
                                             <td>{{ date('d/m/Y',strtotime($entrada->fecha)) }}</td>
-                                            @if($entrada->caja_id != null)
-                                                <td>Caja</td>
-                                                <td>{{ $entrada->caja->formato }}</td>
-                                            @else
-                                                <td>Palet</td>
-                                                <td>{{ $entrada->pallet->formato }}</td>
-                                            @endif
+                                            <td>{{ $entrada->categoria }}</td>
+                                            <td>{{ $entrada->material }}</td>
                                             <td>{{ $entrada->cantidad }}</td>
                                             <td>{{ $entrada->nro_albaran }}</td>
                                             <td>{{ date('d/m/Y',strtotime($entrada->fecha_albaran)) }}</td>
@@ -338,7 +327,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    {targets: [0, 3], visible: false},
+                    {targets: [0], visible: false},
                 ],
                 responsive: true,
                 order:[ [1, 'desc']]
@@ -380,7 +369,6 @@
         function LoadEntrada(id) {
             limpiarCamposEntrada();
 
-
             $.ajax({
                 type: 'POST',
                 url: "{{ route('entrada-productos.GetEntrada') }}",
@@ -393,16 +381,8 @@
 
                     $("#nro_lote").val(data.nro_lote);
                     $("#fecha").val(moment(data.fecha).format("YYYY-MM-DD"));
-                    var material = null;
-                    if (data.pallet_id != null) {
-                        $('#categoria').val("pallets").trigger('chosen:updated');
-                        material = data.pallet_id;
-                        loadMaterial("pallets", material)
-                    } else {
-                        $('#categoria').val("cajas").trigger('chosen:updated');
-                        material = data.caja_id;
-                        loadMaterial("cajas", material)
-                    }
+                    $('#categoria').val(data.categoria).trigger('chosen:updated');
+                    loadMaterial(data.categoria, data.categoria_id);
                     $("#cantidad").val(data.cantidad);
                     $("#nro_albaran").val(data.nro_albaran);
                     $("#fecha_albaran").val(moment(data.fecha_albaran).format("YYYY-MM-DD"));

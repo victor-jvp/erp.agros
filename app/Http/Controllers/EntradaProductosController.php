@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Auxiliar;
 use App\Caja;
+use App\Cubre;
 use App\Entrada;
 use App\Pallet;
 use App\Proveedor;
 use App\Contador;
+use App\Tarrina;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -18,19 +21,10 @@ class EntradaProductosController extends Controller
      */
     public function index()
     {
-        $entradas     = Entrada::with('proveedor')->with('pallet.modelo')->get();
-        $categorias[] = array(
-            "value" => "cajas",
-            "text"  => "Cajas"
-        );
-        $categorias[] = array(
-            "value" => "pallets",
-            "text"  => "Palets"
-        );
+        $entradas = Entrada::with('proveedor')->get();
 
         $data = array(
             'entradas'    => $entradas,
-            "categorias"  => $categorias,
             "proveedores" => Proveedor::all('id', 'razon_social'),
             "nro_lote"    => Contador::next_nro_lote(),
         );
@@ -52,14 +46,8 @@ class EntradaProductosController extends Controller
         $entrada->fecha    = $request->fecha;
         $entrada->cantidad = $request->cantidad;
 
-        if ($request->categoria == "cajas") {
-            $entrada->caja_id   = $request->material;
-            $entrada->pallet_id = null;
-        } else {
-            $entrada->pallet_id = $request->material;
-            $entrada->caja_id   = null;
-        }
-
+        $entrada->categoria    = $request->categoria;
+        $entrada->categoria_id = $request->material;
 
         $entrada->nro_albaran         = $request->nro_albaran;
         $entrada->fecha_albaran       = Carbon::parse($request->fecha_albaran)->toDateTimeString();
@@ -90,13 +78,8 @@ class EntradaProductosController extends Controller
         $entrada->fecha    = $request->fecha;
         $entrada->cantidad = $request->cantidad;
 
-        if ($request->categoria == "cajas") {
-            $entrada->caja_id   = $request->material;
-            $entrada->pallet_id = null;
-        } else {
-            $entrada->pallet_id = $request->material;
-            $entrada->caja_id   = null;
-        }
+        $entrada->categoria    = $request->categoria;
+        $entrada->categoria_id = $request->material;
 
         $entrada->nro_albaran         = $request->nro_albaran;
         $entrada->fecha_albaran       = Carbon::parse($request->fecha_albaran)->toDateTimeString();
@@ -135,11 +118,20 @@ class EntradaProductosController extends Controller
         if (is_null($categoria)) return response()->json(null);
 
         $data = array();
-        if ($categoria == "cajas") {
+        if ($categoria == "Caja") {
             $data = Caja::all('id', 'formato');
         }
-        if ($categoria == "pallets") {
+        if ($categoria == "Palet") {
             $data = Pallet::all('id', 'formato');
+        }
+        if ($categoria == "Cubre") {
+            $data = Cubre::all('id', 'formato');
+        }
+        if ($categoria == "Auxiliar") {
+            $data = Auxiliar::all('id', 'modelo as formato');
+        }
+        if ($categoria == "Tarrina") {
+            $data = Tarrina::all('id', 'modelo as formato');
         }
 
         return response()->json($data); // How do I return in json? in case of an error message?

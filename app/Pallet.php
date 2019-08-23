@@ -15,16 +15,4 @@ class Pallet extends Model
     {
         return $this->belongsTo(PalletModel::class);
     }
-
-    public function entradas()
-    {
-        return $this->hasMany(Entrada::class, 'pallet_id');
-    }
-
-    public function salidas()
-    {
-        return $this->hasMany(Salida::class, 'pallet_id');
-    }
-
-
 }

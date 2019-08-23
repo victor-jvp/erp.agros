@@ -8,7 +8,6 @@ class CreateEntradasTable extends Migration
 {
     /**
      * Run the migrations.
-     *
      * @return void
      */
     public function up()
@@ -17,8 +16,14 @@ class CreateEntradasTable extends Migration
             $table->increments('id');
             $table->string('nro_lote', 10);
             $table->dateTime('fecha');
-            $table->unsignedInteger('pallet_id')->nullable();
-            $table->unsignedInteger('caja_id')->nullable();
+            $table->enum('categoria', [
+                'Caja',
+                'Palet',
+                'Cubre',
+                'Auxiliar',
+                'Tarrina'
+            ]);
+            $table->unsignedInteger('categoria_id')->nullable();
             $table->double('cantidad');
             $table->string('nro_albaran', 35);
             $table->dateTime('fecha_albaran');
@@ -31,8 +36,6 @@ class CreateEntradasTable extends Migration
             $table->boolean('control_grapas')->default(false);
             $table->boolean('cantidad_conforme')->default(false);
             $table->unsignedInteger('proveedor_id')->nullable();
-            $table->foreign('pallet_id')->references('id')->on('pallets');
-            $table->foreign('caja_id')->references('id')->on('cajas');
             $table->foreign('proveedor_id')->references('id')->on('proveedores');
             $table->softDeletes();
             $table->timestamps();
@@ -41,7 +44,6 @@ class CreateEntradasTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()

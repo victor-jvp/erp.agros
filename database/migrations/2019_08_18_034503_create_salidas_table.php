@@ -8,7 +8,6 @@ class CreateSalidasTable extends Migration
 {
     /**
      * Run the migrations.
-     *
      * @return void
      */
     public function up()
@@ -17,11 +16,15 @@ class CreateSalidasTable extends Migration
             $table->increments('id');
             $table->string('nro_salida', 10);
             $table->dateTime('fecha');
-            $table->unsignedInteger('pallet_id')->nullable();
-            $table->unsignedInteger('caja_id')->nullable();
+            $table->enum('categoria', [
+                'Caja',
+                'Palet',
+                'Cubre',
+                'Auxiliar',
+                'Tarrina'
+            ]);
+            $table->unsignedInteger('categoria_id')->nullable();
             $table->double('cantidad');
-            $table->foreign('pallet_id')->references('id')->on('pallets');
-            $table->foreign('caja_id')->references('id')->on('cajas');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -29,7 +32,6 @@ class CreateSalidasTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()
