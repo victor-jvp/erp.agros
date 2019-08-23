@@ -33,8 +33,8 @@ class Trazabilidad extends Model
 
     public function scopeIsValid($query, $variedad_id, $parcela_id)
     {
-        $exist= $this->where('parcela_id', "=", $parcela_id)->where('variedad_id', "=" ,$variedad_id)->count();
-        if($exist>0) return false;
+        $exist = $this->where('parcela_id', "=", $parcela_id)->where('variedad_id', "=", $variedad_id)->count();
+        if ($exist > 0) return false;
         return true;
     }
 }
