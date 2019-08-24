@@ -43,7 +43,7 @@
                                             <td>{{ $row->material }}</td>
                                             <td><span class="badge badge-pill badge-success p-2 m-1">{{ $row->entradas }}</span></td>
                                             <td><span class="badge badge-pill badge-danger p-2 m-1">{{ $row->salidas }}</span></td>
-                                            <td><span class="badge badge-pill badge-info p-2 m-1">{{ $row->total }}</span></td>
+                                            <td><span class="badge badge-pill badge-info p-2 m-1">{{ $row->entradas - $row->salidas }}</span></td>
                                             {{--<td>
                                                 <a href="javascript:void(0);" class="text-success mr-2 edit">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold "></i>

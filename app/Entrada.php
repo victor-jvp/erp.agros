@@ -9,7 +9,26 @@ class Entrada extends Model
 {
     //
     use SoftDeletes;
-    protected $table = "entradas";
+    protected $table = "inventario";
+    protected $fillable = [
+        "tipo_mov",
+        "nro_lote",
+        "fecha",
+        "categoria",
+        "categoria_id",
+        "cantidad",
+        "nro_albaran",
+        "fechga_albaran",
+        "transporte_adecuado",
+        "control_plagas",
+        "estado_pallets",
+        "ficha_tecnica",
+        "material_daniado",
+        "material_limpio",
+        "control_grapas",
+        "cantidad_conforme",
+        "proveedor_id"
+    ];
 
     public function proveedor()
     {

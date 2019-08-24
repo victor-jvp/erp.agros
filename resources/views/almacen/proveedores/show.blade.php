@@ -267,13 +267,8 @@
                                                     <td>{{ $entrada->id }}</td>
                                                     <td>{{ $entrada->nro_lote }}</td>
                                                     <td>{{ date('d/m/Y',strtotime($entrada->fecha)) }}</td>
-                                                    @if($entrada->caja_id != null)
-                                                        <td>Caja</td>
-                                                        <td>{{ $entrada->caja->formato }}</td>
-                                                    @else
-                                                        <td>Palet</td>
-                                                        <td>{{ $entrada->pallet->formato }}</td>
-                                                    @endif
+                                                    <td>{{ $entrada->categoria }}</td>
+                                                    <td>{{ $entrada->material }}</td>
                                                     <td>{{ $entrada->cantidad }}</td>
                                                     <td>{{ $entrada->nro_albaran }}</td>
                                                     <td>{{ date('d/m/Y',strtotime($entrada->fecha_albaran)) }}</td>

@@ -21,7 +21,7 @@ class EntradaProductosController extends Controller
      */
     public function index()
     {
-        $entradas = Entrada::with('proveedor')->get();
+        $entradas = Entrada::where("tipo_mov", "E")->with('proveedor')->get();
 
         $data = array(
             'entradas'    => $entradas,
@@ -42,6 +42,7 @@ class EntradaProductosController extends Controller
         //dd($request);
 
         $entrada           = new Entrada();
+        $entrada->tipo_mov = "E";
         $entrada->nro_lote = Contador::save_nro_lote();
         $entrada->fecha    = $request->fecha;
         $entrada->cantidad = $request->cantidad;
@@ -75,6 +76,7 @@ class EntradaProductosController extends Controller
     public function update(Request $request, $id)
     {
         $entrada           = Entrada::find($id);
+        $entrada->tipo_mov = "E";
         $entrada->fecha    = $request->fecha;
         $entrada->cantidad = $request->cantidad;
 

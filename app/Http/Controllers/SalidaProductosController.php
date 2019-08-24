@@ -20,7 +20,7 @@ class SalidaProductosController extends Controller
      */
     public function index()
     {
-        $data['salidas']    = Salida::all();
+        $data['salidas']    = Salida::where("tipo_mov", "S")->get();
         $data['nro_salida'] = Contador::next_nro_salida();
         return view('almacen.salidas', $data);
     }
@@ -33,7 +33,8 @@ class SalidaProductosController extends Controller
     public function store(Request $request)
     {
         $salida               = new Salida();
-        $salida->nro_salida   = Contador::save_nro_salida();
+        $salida->tipo_mov     = "S";
+        $salida->nro_lote     = Contador::save_nro_salida();
         $salida->fecha        = $request->fecha;
         $salida->categoria    = $request->categoria;
         $salida->categoria_id = $request->material;
@@ -75,7 +76,8 @@ class SalidaProductosController extends Controller
     public function update(Request $request, $id)
     {
         $salida               = Salida::find($id);
-        $salida->nro_salida   = $request->nro_salida;
+        $salida->tipo_mov     = "S";
+        $salida->nro_lote     = $request->nro_salida;
         $salida->fecha        = $request->fecha;
         $salida->categoria    = $request->categoria;
         $salida->categoria_id = $request->material;

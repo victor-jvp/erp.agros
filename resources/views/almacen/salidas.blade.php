@@ -122,7 +122,7 @@
                                     @foreach ($salidas as $salida)
                                         <tr>
                                             <td>{{ $salida->id }}</td>
-                                            <td>{{ $salida->nro_salida }}</td>
+                                            <td>{{ $salida->nro_lote }}</td>
                                             <td>{{ date('d/m/Y', strtotime($salida->fecha)) }}</td>
                                             <td>{{ $salida->categoria }}</td>
                                             <td>{{ $salida->categoria_id }}</td>

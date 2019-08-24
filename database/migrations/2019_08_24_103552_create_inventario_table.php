@@ -4,18 +4,23 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEntradasTable extends Migration
+class CreateInventarioTable extends Migration
 {
     /**
      * Run the migrations.
+     *
      * @return void
      */
     public function up()
     {
-        Schema::create('entradas', function (Blueprint $table) {
+        Schema::create('inventario', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nro_lote', 10);
+            $table->enum('tipo_mov', [
+                'E',
+                'S'
+            ]);
             $table->dateTime('fecha');
+            $table->string('nro_lote', 10);
             $table->enum('categoria', [
                 'Caja',
                 'Palet',
@@ -23,10 +28,10 @@ class CreateEntradasTable extends Migration
                 'Auxiliar',
                 'Tarrina'
             ]);
-            $table->unsignedInteger('categoria_id')->nullable();
+            $table->unsignedInteger('categoria_id');
             $table->double('cantidad');
-            $table->string('nro_albaran', 35);
-            $table->dateTime('fecha_albaran');
+            $table->string('nro_albaran', 35)->nullable();
+            $table->dateTime('fecha_albaran')->nullable();
             $table->boolean('transporte_adecuado')->default(false);
             $table->boolean('control_plagas')->default(false);
             $table->boolean('estado_pallets')->default(false);
@@ -44,10 +49,11 @@ class CreateEntradasTable extends Migration
 
     /**
      * Reverse the migrations.
+     *
      * @return void
      */
     public function down()
     {
-        Schema::dropIfExists('entradas');
+        Schema::dropIfExists('inventario');
     }
 }

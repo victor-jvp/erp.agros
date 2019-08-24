@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Salida extends Model
 {
     use SoftDeletes;
-    protected $table = "salidas";
+    protected $table = "inventario";
+    protected $fillable = [
+        "tipo_mov",
+        "nro_lote",
+        "fecha",
+        "categoria",
+        "categoria_id",
+        "cantidad",
+    ];
 
     public function getmaterialAttribute()
     {
