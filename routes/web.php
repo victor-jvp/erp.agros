@@ -23,6 +23,12 @@ Route::get('/dashboard', function () {
     return view('starter');
 })->name('starter');
 
+#region Prevision
+
+Route::resource('prevision', 'PrevisionController');
+
+#endregion
+
 #region Comercial
 Route::resource('/comercial/clientes', 'ClientesController');
 Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
