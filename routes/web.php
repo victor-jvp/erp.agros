@@ -26,6 +26,8 @@ Route::get('/dashboard', function () {
 #region Prevision
 
 Route::resource('prevision', 'PrevisionController');
+Route::post('prevision/loadParcelaByFinca', 'PrevisionController@loadParcelaByFinca')->name('prevision.loadParcelaByFinca');
+Route::post('prevision/LoadTrazaByParcela', 'PrevisionController@LoadTrazaByParcela')->name('prevision.LoadTrazaByParcela');
 
 #endregion
 

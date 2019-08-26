@@ -21,11 +21,11 @@
                 <!-- Modal Prevision-->
                 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                     aria-hidden="true" id="modal-prevision">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            <form action="/prevision/create" method="POST" id="prevision_form">
+                            <form action="/prevision" method="POST" id="prevision_form">
                                 {{ csrf_field() }}
-                                <input type="hidden" name="_method" id="prevision_method" value="PUT">
+                                <input type="hidden" name="_method" id="prevision_method" value="">
                                 <input type="hidden" name="id" id="prevision_id">
 
                                 <div class="modal-header">
@@ -38,7 +38,8 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="finca">Finca</label>
-                                            <select class="form-control" name="finca" id="finca" required>
+                                            <input type="hidden" id="finca_id" name="finca_id">
+                                            <select class="form-control" id="finca" disabled>
                                                 @foreach ($fincas as $finca)
                                                 <option value="{{ $finca->id }}">{{ $finca->finca }}</option>
                                                 @endforeach
@@ -63,36 +64,35 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="parcela">Parcela</label>
-                                            <select class="form-control chosen" name="parcela" id="parcela" required>
+                                            <select class="form-control chosen" name="parcela" id="parcela" required
+                                                data-placeholder="Seleccione...">
                                                 <option value=""></option>
                                             </select>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="cantidad">Cantidad</label>
-                                            <input type="number" class="form-control chosen" name="cantidad"
-                                                id="cantidad" required>
+                                            <input type="number" class="form-control" name="cantidad" id="cantidad"
+                                                required step="0.01" value="0.00">
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
-                                            <label for="familia">Familia</label>
-                                            <input type="text" id="familia" class="form-control">
-                                            <input type="hidden" name="familia_id">
+                                            <label for="cultivo">Familia</label>
+                                            <input type="text" id="cultivo" class="form-control" disabled>
                                         </div>
 
 
                                         <div class="col-md-4 mb-3">
                                             <label for="variedad">Variedad</label>
-                                            <input type="text" id="variedad" class="form-control">
-                                            <input type="hidden" name="variedad_id">
+                                            <input type="text" id="variedad" class="form-control" disabled>
                                         </div>
 
 
                                         <div class="col-md-4 mb-3">
                                             <label for="traza">Trazabilidad</label>
-                                            <input type="text" id="traza" class="form-control">
-                                            <input type="hidden" name="traza_id">
+                                            <input type="text" id="traza" class="form-control" disabled>
+                                            <input type="hidden" name="traza_id" id="traza_id">
                                         </div>
                                     </div>
                                 </div>
@@ -108,16 +108,19 @@
                     </div>
                 </div>
 
+
                 <div class="row">
                     <div class="col-md-3 form-group mb-3">
-                        <label>Semana</label>
-                        <select class="form-control">
-                            @for($i = $semana_ini; $i <= $semana_fin; $i++) <option
-                                {{ ($i == $semana_act) ? 'selected' : '' }} value="{{ $i }}">
-                                {{ $i }}
-                                </option>
-                                @endfor
-                        </select>
+                        <form action="/prevision" method="GET" id="form_semana_act">
+                            <label>Semana</label>
+                            <select class="form-control" name="semana_act" id="semana_act">
+                                @for($i = $semana_ini; $i <= $semana_fin; $i++) <option
+                                    {{ ($i == $semana_act) ? 'selected' : '' }} value="{{ $i }}">
+                                    {{ $i }}
+                                    </option>
+                                    @endfor
+                            </select>
+                        </form>
                     </div>
                 </div>
 
@@ -146,13 +149,14 @@
                                 @foreach ($fincas as $finca)
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <div class="card-title">{{ $finca->finca }} <small>Semana xx</small>
+                                        <div class="card-title">{{ $finca->finca }} <small>Semana {{ $semana_act }}</small>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-3 text-right">
-                                        <button class="btnOpenModalPrevision btn btn-outline-primary"
-                                            type="button">Agregar</button>
+                                        <button data-finca="{{ $finca->id }}"
+                                            class="btnOpenModalPrevision btn btn-outline-primary" type="button">Agregar
+                                        </button>
                                     </div>
                                 </div>
 
@@ -166,7 +170,7 @@
                                                         <th scope="col">Parcela</th>
                                                         <th scope="col">Familia</th>
                                                         <th scope="col">Kg.</th>
-                                                        <th scope="col">Estado</th>
+                                                        <th scope="col">Registro</th>
                                                         <th scope="col">Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -211,12 +215,14 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <div class="card-title">{{ $finca->finca }} <small>Semana xx</small>
+                                        <div class="card-title">{{ $finca->finca }} <small>Semana {{ $semana_act }}</small>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-3 text-right">
-                                        <button class="btnOpenModalPrevision btn btn-outline-primary" type="button">Agregar</button>
+                                        <button data-finca="{{ $finca->id }}"
+                                            class="btnOpenModalPrevision btn btn-outline-primary" type="button">Agregar
+                                        </button>
                                     </div>
                                 </div>
 
@@ -259,11 +265,13 @@
                                                         <td>0.00</td>
                                                         <td>0 %</td>
                                                         <td>
-
+                                                            <textarea class="form-control" name="comentarios"
+                                                                id="comentarios" cols="" rows="2"
+                                                                placeholder="Comentarios..."></textarea>
                                                         </td>
                                                         <td>
                                                             <a href="#" class="text-success mr-2">
-                                                                <i class="nav-icon i-Data-Save font-weight-bold"></i>
+                                                                <i class="nav-icon i-Disk font-weight-bold"></i>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -333,25 +341,145 @@
 @section('page-css')
 <link rel="stylesheet" href="{{asset('assets/styles/vendor/datatables.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/styles/vendor/sweetalert2.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen-bootstrap-4.css')}}">
 @endsection
 
 @section('bottom-js')
 <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
 <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
+<script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
+<script src="{{asset('assets/js/vendor/calendar/moment-with-locales.js')}}"></script>
 
-{{--Proveedores--}}
 <script>
-    $(function () {
-
-        $(".btnOpenModalPrevision").click(function (e) {
-            // limpiarCamposProveedor();
-            $("#modal-prevision-title").html("Nueva Prevision");
-            $("#modal-prevision").modal('show');
-        })
+    $(document).ready(function () {
+        $(".chosen").chosen({
+            width: "100%",
+            no_results_text: "No se encontraron resultados... ",
+            allow_single_deselect: true
+        });
     });
 
-    function limpiarCamposProveedor() {
-        $('#cif, #razon_social').val(null);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
+{{--Prevision--}}
+<script>
+    $(function () {
+        $(".btnOpenModalPrevision").click(function (e) {
+            LimpiarCamposPrevision();
+            var finca_id = $(this).attr("data-finca");
+            if (finca_id != null) {
+                $("#finca").val(finca_id);
+                $("#finca_id").val(finca_id);
+                LoadParcelaByFinca(finca_id);
+            }
+
+            $("#modal-prevision-title").html("Nueva Prevision");
+            $("#prevision_method").val(null);
+            $("#modal-prevision").modal('show');
+        });
+
+        $("#fecha").change(function () {
+            ChangeFechaField($(this).val());
+        });
+
+        $("#semana_act").change(function () {
+            $("#form_semana_act").submit();
+        });
+
+        $("#parcela").change(function () {
+            var parcela = $(this).val();
+            LoadTrazaByParcela(parcela);
+        });
+    });
+
+    function LimpiarCamposPrevision() {
+        $('#finca, #finca_id, #fecha, #semana, #dia, #parcela, #cantidad, #cultivo, #variedad, #traza, #traza_id')
+            .val(null);
+    }
+
+    function ChangeFechaField(varFecha) {
+        moment.locale('es');
+        var $fecha;
+        if (varFecha != null) {
+            $fecha = varFecha
+        }
+        var fecha = moment($fecha);
+        $("#fecha").val(fecha.format("YYYY-MM-DD"));
+        $("#semana").val(fecha.week());
+        $("#dia").val(fecha.format("dddd"));
+    }
+
+    function clearParcelas() {
+        $("#parcela").html(null).append('<option value=""></option>');
+    }
+
+    function LoadParcelaByFinca(finca_id, parcela_id) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('prevision.loadParcelaByFinca') }}",
+            dataType: 'JSON',
+            data: {
+                finca_id: finca_id
+            },
+            success: function (data) {
+                clearParcelas();
+                if (data == null) return;
+
+                for (i = 0; i < data.length; i++) {
+                    var value = data[i].id;
+                    var text = data[i].parcela;
+                    var option = "<option value='" + value + "'>" + text + "</option>";
+                    $("#parcela").append(option);
+                }
+
+                if (parcela_id != null) {
+                    $("#parcela").val(parcela_id).trigger('chosen:updated');
+                } else {
+                    $("#parcela").trigger('chosen:updated');
+                }
+            },
+            error: function (error) {
+                console.log(error)
+                alert('Error. Check Console Log');
+            },
+        });
+    }
+
+    function clearTrazabilidad() {
+        $('#cultivo, #cultivo_id, #variedad, #variedad_id, #traza, #traza_id').val(null);
+    }
+
+    function LoadTrazaByParcela(parcela_id) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('prevision.LoadTrazaByParcela') }}",
+            dataType: 'JSON',
+            data: {
+                parcela_id: parcela_id
+            },
+            success: function (data) {
+                clearTrazabilidad();
+                if (data == null) return;
+
+                var traza_id = data.traza_id;
+                var traza = data.traza;
+                var cultivo = data.cultivo;
+                var variedad = data.variedad;
+                $("#cultivo").val(cultivo);
+                $("#variedad").val(variedad);
+                $("#traza").val(traza);
+                $("#traza_id").val(traza_id);
+            },
+            error: function (error) {
+                console.log(error)
+                alert('Error. Check Console Log');
+            },
+        });
     }
 </script>
 @endsection

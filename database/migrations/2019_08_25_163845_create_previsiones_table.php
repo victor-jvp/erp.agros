@@ -15,7 +15,13 @@ class CreatePrevisionesTable extends Migration
     {
         Schema::create('previsiones', function (Blueprint $table) {
             $table->increments('id');
-            
+            $table->date('fecha');
+            $table->unsignedInteger('traza_id')->nullable();
+            $table->double('cantidad_inicial');
+            $table->double('cantidad');
+            $table->string('registro', 3);
+            $table->foreign('traza_id')->references('id')->on('trazabilidad');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

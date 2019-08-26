@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Cultivo;
 use App\Finca;
+use App\Parcela;
+use App\Trazabilidad;
+use App\Variedad;
 use Illuminate\Http\Request;
 
 class PrevisionController extends Controller
@@ -12,9 +15,13 @@ class PrevisionController extends Controller
      * Display a listing of the resource.
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['semana_act']   = intval(date("W"));
+        if (!is_null($request->semana_act)) {
+            $data['semana_act'] = $request->semana_act;
+        } else {
+            $data['semana_act']   = intval(date("W"));
+        }
         $data['semana_dia'][] = "X";
         $data['semana_dia'][] = "J";
         $data['semana_dia'][] = "V";
@@ -31,63 +38,41 @@ class PrevisionController extends Controller
         return view('prevision.panel', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function store(Request $request){
+        dd($request);
+
+        
+
+        return redirect()->route('prevision.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function loadParcelaByFinca(Request $request)
     {
-        //
+        $finca_id = $request->input('finca_id');
+
+        if (is_null($finca_id)) return response()->json(null);
+
+        $data = array();
+        $data = Parcela::where('finca_id', $finca_id)->get(['id', 'parcela']);
+
+        return response()->json($data);
     }
 
-    /**
-     * Display the specified resource.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function LoadTrazaByParcela(Request $request)
     {
-        //
-    }
+        $parcela_id = $request->input('parcela_id');
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        if (is_null($parcela_id)) return response()->json(null);
 
-    /**
-     * Update the specified resource in storage.
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $data = array();
+        $traza = Trazabilidad::where('parcela_id', $parcela_id)->with('variedad')->with('variedad.cultivo')->first();
+        $data['traza'] = $traza->Traza;
+        $data['traza_id'] = $traza->id;
+        $data['variedad'] = $traza->variedad->variedad;
+        // $data['variedad_id'] = $traza->variedad_id;
+        $data['cultivo'] = $traza->variedad->cultivo->cultivo;
+        // $data['cultivo_id'] = $traza->variedad->cultivo_id;
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json($data);
     }
 }

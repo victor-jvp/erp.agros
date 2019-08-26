@@ -95,7 +95,7 @@ class SalidaProductosController extends Controller
 
         $data = array();
         if ($categoria == "Caja") {
-            $data = Caja::all('id', 'formato');
+            $data = Caja::all('id', 'formato', 'modelo');
         }
         if ($categoria == "Palet") {
             $data = Pallet::all('id', 'formato');
