@@ -11,8 +11,14 @@ class Prevision extends Model
     use SoftDeletes;
     protected $table = "previsiones";
 
-    public function trazabilidades()
+    public function trazabilidad()
     {
-        return $this->hasMany(Prevision::class, 'traza_id');
+        return $this->belongsTo(Trazabilidad::class, 'trazabilidad_id');
+    }
+
+    public function getdiaAttribute()
+    {
+        $dia = date("W", strtotime($this->fecha));
+        return intval($dia);
     }
 }

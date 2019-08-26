@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\CatDiasSemana;
 use App\Cultivo;
 use App\Finca;
 use App\Parcela;
+use App\Prevision;
 use App\Trazabilidad;
-use App\Variedad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PrevisionController extends Controller
 {
@@ -18,30 +20,40 @@ class PrevisionController extends Controller
     public function index(Request $request)
     {
         if (!is_null($request->semana_act)) {
-            $data['semana_act'] = $request->semana_act;
+            $data['semana_act'] = intval($request->semana_act);
         } else {
-            $data['semana_act']   = intval(date("W"));
+            $data['semana_act'] = intval(date("W"));
         }
-        $data['semana_dia'][] = "X";
-        $data['semana_dia'][] = "J";
-        $data['semana_dia'][] = "V";
-        $data['semana_dia'][] = "S";
-        $data['semana_dia'][] = "D";
-        $data['semana_dia'][] = "L";
-        $data['semana_dia'][] = "M";
-        $data['semana_ini']   = 1;
-        $data['semana_fin']   = 50;
+        $data['semana'] = CatDiasSemana::orderBy('order', 'ASC')->get();
+        $data['semana_ini'] = 1;
+        $data['semana_fin'] = 50;
+
+        foreach ($data['semana'] as $k => $value) {
+            $data['semana'][$k]->previsiones = Prevision::where('semana', $data['semana_act'])
+                                                        ->where(DB::raw("YEAR(fecha)"), date('Y'))
+                                                        ->where(DB::raw("DAYOFWEEK(fecha)"), $value->valor)->get();
+        }
 
         $data['fincas']   = Finca::all();
         $data['cultivos'] = Cultivo::all();
 
+//        dd($data['semana']);
+
         return view('prevision.panel', $data);
     }
 
-    public function store(Request $request){
-        dd($request);
+    public function store(Request $request)
+    {
 
-        
+        $prevision                   = new Prevision();
+        $prevision->fecha            = $request->fecha;
+        $prevision->semana           = $request->semana;
+        $prevision->trazabilidad_id  = $request->traza_id;
+        $prevision->cantidad_inicial = $request->cantidad;
+        $prevision->cantidad         = $request->cantidad;
+        $prevision->registro         = "A";
+
+        $prevision->save();
 
         return redirect()->route('prevision.index');
     }
@@ -53,7 +65,10 @@ class PrevisionController extends Controller
         if (is_null($finca_id)) return response()->json(null);
 
         $data = array();
-        $data = Parcela::where('finca_id', $finca_id)->get(['id', 'parcela']);
+        $data = Parcela::where('finca_id', $finca_id)->get([
+            'id',
+            'parcela'
+        ]);
 
         return response()->json($data);
     }
@@ -64,9 +79,9 @@ class PrevisionController extends Controller
 
         if (is_null($parcela_id)) return response()->json(null);
 
-        $data = array();
-        $traza = Trazabilidad::where('parcela_id', $parcela_id)->with('variedad')->with('variedad.cultivo')->first();
-        $data['traza'] = $traza->Traza;
+        $data             = array();
+        $traza            = Trazabilidad::where('parcela_id', $parcela_id)->with('variedad')->with('variedad.cultivo')->first();
+        $data['traza']    = $traza->Traza;
         $data['traza_id'] = $traza->id;
         $data['variedad'] = $traza->variedad->variedad;
         // $data['variedad_id'] = $traza->variedad_id;

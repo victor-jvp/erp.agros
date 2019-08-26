@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TarrinasTableSeeder::class);
         $this->call(ProductosCompuestos_cabTableSeeder::class);
         $this->call(ContadoresTableSeeder::class);
+        $this->call(CatDiasSemanaSeeder::class);
     }
 }
