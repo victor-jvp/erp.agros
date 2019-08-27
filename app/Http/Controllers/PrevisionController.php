@@ -37,18 +37,42 @@ class PrevisionController extends Controller
                 ->get();
         }
 
-        $data['fincas']   = Finca::all();
-        $data['cultivos'] = Cultivo::all();
-
         // dd($data['semana']);
+        $data['resumen']  = array();
+        $data['fincas']   = Finca  ::all();
+        $data['cultivos'] = Cultivo::all();
+        foreach ($data['fincas'] as $f => $finca) {
+            $data['resumen'][$f]['finca'] = $finca->id;
+            foreach ($data['cultivos'] as $c => $cultivo) {
+                $data['resumen'][$f]['cultivos'][$c]['id'] = $cultivo->id;
+                foreach ($data['semana'] as $k => $value) {
+                    $data['resumen'][$f]['cultivos'][$c]['total'][$k] = DB::table('previsiones')
+                        ->join('trazabilidad', 'trazabilidad.id', '=', 'previsiones.trazabilidad_id')
+                        ->join('variedades', 'variedades.id', '=', 'trazabilidad.variedad_id')
+                        ->where('finca_id', '=', $finca->id)
+                        ->where('cultivo_id', '=', $cultivo->id)
+                        ->where('semana', $data['semana_act'])
+                        ->where(DB::raw("YEAR(fecha)"), date('Y'))
+                        ->where(DB::raw("DAYOFWEEK(fecha)"), $value->valor)
+                        ->where('previsiones.deleted_at', null)
+                        ->sum('cantidad');
+                }
+            }
+        }
+        
+        // dd($data['resumen']);    
 
         return view('prevision.panel', $data);
     }
 
     public function store(Request $request)
     {
+        if (is_null($request->id)) {
+            $prevision = new Prevision();
+        } else {
+            $prevision = Prevision::find($request->id);
+        }
 
-        $prevision                   = new Prevision();
         $prevision->fecha            = $request->fecha;
         $prevision->finca_id         = $request->finca_id;
         $prevision->semana           = $request->semana;
@@ -121,7 +145,7 @@ class PrevisionController extends Controller
         $data = array();
         $prevision = Prevision::find($id);
         $prevision->delete();
-    
+
         return response()->json($data);
     }
 }

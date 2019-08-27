@@ -273,11 +273,19 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        @foreach($semana as $dia_d)
-                                                                        <td>0</td>
-                                                                        @endforeach
-                                                                    </tr>
+                                                                    @foreach ($resumen as $finca_)                                                                        
+                                                                    @if($finca_['finca'] == $finca->id)
+                                                                    @foreach ($finca_['cultivos'] as $cultivo_)
+                                                                        @if ($cultivo_['id'] == $cultivo->id)
+                                                                        <tr>
+                                                                            @foreach ($cultivo_['total'] as $item)
+                                                                            <td>{{ ($item) }}</td>
+                                                                            @endforeach
+                                                                        </tr>
+                                                                        @endif
+                                                                    @endforeach
+                                                                    @endif
+                                                                    @endforeach                                                                    
                                                                 </tbody>
                                                             </table>
                                                         </td>
@@ -338,11 +346,15 @@
                                                                         <td>{{ $prevision->cantidad }}</td>
                                                                         <td>{{ $prevision->registro }}</td>
                                                                         <td>
-                                                                            <a href="#" class="text-success mr-2 edit">
+                                                                            <a href="javascript:void(0);"
+                                                                                onclick="EditPrevision({{ $prevision->id }})"
+                                                                                class="text-success mr-2 edit">
                                                                                 <i
                                                                                     class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                             </a>
-                                                                            <a href="#" class="text-danger mr-2 delete">
+                                                                            <a href="javascript:void(0);"
+                                                                                onclick="DeletePrevision({{ $prevision->id }})"
+                                                                                class="text-danger mr-2 delete">
                                                                                 <i
                                                                                     class="nav-icon i-Close-Window font-weight-bold"></i>
                                                                             </a>
@@ -418,7 +430,7 @@
             }
 
             $("#modal-prevision-title").html("Nueva Prevision");
-            $("#prevision_method").val(null);
+            $("#prevision_id").val(null);
             $("#modal-prevision").modal('show');
         });
 
@@ -454,17 +466,19 @@
                 type: 'POST',
                 url: "{{ route('prevision.DeletePrevision') }}",
                 dataType: 'JSON',
-                data: { id: id },
+                data: {
+                    id: id
+                },
                 success: function (data) {
-                    if(data != null){
+                    if (data != null) {
                         swal({
-                            title: "Procesado", 
-                            text: "Registro eliminado", 
+                            title: "Procesado",
+                            text: "Registro eliminado",
                             type: "info",
-                        }).then(function(){
+                        }).then(function () {
                             window.location.reload();
-                        });                        
-                    }                    
+                        });
+                    }
                 },
                 error: function (error) {
                     console.log(error)
@@ -495,6 +509,8 @@
                 $("#traza").val(data.trazabilidad.traza);
                 $("#traza_id").val(data.trazabilidad_id);
 
+                $("#modal-prevision-title").html('Modificar Prevision');
+                $("#prevision_id").val(data.id);
                 $("#modal-prevision").modal('show');
             },
             error: function (error) {
