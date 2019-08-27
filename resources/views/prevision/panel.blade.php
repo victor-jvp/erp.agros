@@ -273,19 +273,19 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach ($resumen as $finca_)                                                                        
+                                                                    @foreach ($resumen as $finca_)
                                                                     @if($finca_['finca'] == $finca->id)
                                                                     @foreach ($finca_['cultivos'] as $cultivo_)
-                                                                        @if ($cultivo_['id'] == $cultivo->id)
-                                                                        <tr>
-                                                                            @foreach ($cultivo_['total'] as $item)
-                                                                            <td>{{ ($item) }}</td>
-                                                                            @endforeach
-                                                                        </tr>
-                                                                        @endif
+                                                                    @if ($cultivo_['id'] == $cultivo->id)
+                                                                    <tr>
+                                                                        @foreach ($cultivo_['total'] as $item)
+                                                                        <td>{{ ($item) }}</td>
+                                                                        @endforeach
+                                                                    </tr>
+                                                                    @endif
                                                                     @endforeach
                                                                     @endif
-                                                                    @endforeach                                                                    
+                                                                    @endforeach
                                                                 </tbody>
                                                             </table>
                                                         </td>
@@ -297,7 +297,9 @@
                                                                 placeholder="Comentarios..."></textarea>
                                                         </td>
                                                         <td>
-                                                            <a href="#" class="text-success mr-2">
+                                                            <a href="javascript:void(0);"
+                                                                onclick="CommentPrevision({{ $prevision->id }})"
+                                                                class="text-success mr-2">
                                                                 <i class="nav-icon i-Disk font-weight-bold"></i>
                                                             </a>
                                                         </td>
