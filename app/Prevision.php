@@ -16,6 +16,11 @@ class Prevision extends Model
         return $this->belongsTo(Trazabilidad::class, 'trazabilidad_id');
     }
 
+    public function finca()
+    {
+        return $this->belongsTo(Finca::class, 'finca_id');
+    }
+
     public function getdiaAttribute()
     {
         $dia = date("W", strtotime($this->fecha));

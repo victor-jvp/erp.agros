@@ -30,14 +30,17 @@ class PrevisionController extends Controller
 
         foreach ($data['semana'] as $k => $value) {
             $data['semana'][$k]->previsiones = Prevision::where('semana', $data['semana_act'])
-                                                        ->where(DB::raw("YEAR(fecha)"), date('Y'))
-                                                        ->where(DB::raw("DAYOFWEEK(fecha)"), $value->valor)->get();
+                ->where(DB::raw("YEAR(fecha)"), date('Y'))
+                ->where(DB::raw("DAYOFWEEK(fecha)"), $value->valor)
+                ->with('finca')
+                ->with('trazabilidad')
+                ->get();
         }
 
         $data['fincas']   = Finca::all();
         $data['cultivos'] = Cultivo::all();
 
-//        dd($data['semana']);
+        // dd($data['semana']);
 
         return view('prevision.panel', $data);
     }
@@ -47,6 +50,7 @@ class PrevisionController extends Controller
 
         $prevision                   = new Prevision();
         $prevision->fecha            = $request->fecha;
+        $prevision->finca_id         = $request->finca_id;
         $prevision->semana           = $request->semana;
         $prevision->trazabilidad_id  = $request->traza_id;
         $prevision->cantidad_inicial = $request->cantidad;
@@ -88,6 +92,36 @@ class PrevisionController extends Controller
         $data['cultivo'] = $traza->variedad->cultivo->cultivo;
         // $data['cultivo_id'] = $traza->variedad->cultivo_id;
 
+        return response()->json($data);
+    }
+
+    public function GetPrevision(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (is_null($id)) return response()->json(null);
+
+        $data = array();
+        $data = Prevision::where('id', $id)
+            ->with('finca')
+            ->with('trazabilidad.variedad.cultivo')
+            ->first();
+
+        $data->trazabilidad->traza = $data->trazabilidad->Traza;
+
+        return response()->json($data);
+    }
+
+    public function DeletePrevision(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (is_null($id)) return response()->json(null);
+
+        $data = array();
+        $prevision = Prevision::find($id);
+        $prevision->delete();
+    
         return response()->json($data);
     }
 }

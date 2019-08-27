@@ -17,10 +17,12 @@ class CreatePrevisionesTable extends Migration
             $table->increments('id');
             $table->date('fecha');
             $table->integer('semana')->nullable();
+            $table->unsignedInteger('finca_id')->nullable();
             $table->unsignedInteger('trazabilidad_id')->nullable();
             $table->double('cantidad_inicial');
             $table->double('cantidad');
             $table->string('registro', 3);
+            $table->foreign('finca_id')->references('id')->on('fincas');
             $table->foreign('trazabilidad_id')->references('id')->on('trazabilidad');
             $table->softDeletes();
             $table->timestamps();
