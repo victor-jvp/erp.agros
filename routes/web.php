@@ -30,6 +30,7 @@ Route::post('prevision/loadParcelaByFinca', 'PrevisionController@loadParcelaByFi
 Route::post('prevision/LoadTrazaByParcela', 'PrevisionController@LoadTrazaByParcela')->name('prevision.LoadTrazaByParcela');
 Route::post('prevision/GetPrevision', 'PrevisionController@GetPrevision')->name('prevision.GetPrevision');
 Route::post('prevision/DeletePrevision', 'PrevisionController@DeletePrevision')->name('prevision.DeletePrevision');
+Route::post('prevision/comentario', 'PrevisionController@SaveComentario')->name('prevision.SaveComentario');
 
 #endregion
 
