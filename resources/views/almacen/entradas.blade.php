@@ -455,7 +455,12 @@
 
                     for (i = 0; i < data.length; i++) {
                         var value = data[i].id;
-                        var text = data[i].formato;
+                        if(data[i].modelo != null && data[i].modelo != undefined && data[i].modelo != ""){
+                            var text = data[i].formato+ " | " + data[i].modelo;
+                        }else{
+                            var text = data[i].formato;
+                        }
+
                         var option = "<option value='" + value + "'>" + text + "</option>";
                         $("#material").append(option);
                     }
