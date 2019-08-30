@@ -19,7 +19,8 @@
                     <div class="card-title mb-3">Semanas y Fincas</div>
 
                     <!-- Modal Prevision-->
-                    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+                    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                         aria-hidden="true"
                          id="modal-prevision">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -47,17 +48,69 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="fecha">Fecha</label>
-                                                <input type="date" name="fecha" id="fecha" class="form-control">
+                                            <div class="col-md-3 mb-3">
+                                                <label for="anio">Año</label>
+                                                <input type="text" readonly name="anio" id="anio" class="form-control">
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label for="semana">Semana</label>
-                                                <input type="text" readonly name="semana" id="semana" class="form-control">
+                                                <input type="text" readonly name="semana" id="semana"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+
+                                         <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dia[]" value="1" class="dias">
+                                                    <span>Miércoles</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
                                             </div>
                                             <div class="col-md-3 mb-3">
-                                                <label for="dia">Dia</label>
-                                                <input type="text" readonly name="dia" id="dia" class="form-control">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dia[]" value="2" class="dias">
+                                                    <span>Jueves</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dia[]" value="3" class="dias">
+                                                    <span>Viernes</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dia[]" value="4" class="dias">
+                                                    <span>Sábado</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dia[]" value="5" class="dias">
+                                                    <span>Domingo</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dia[]" value="6" class="dias">
+                                                    <span>Lunes</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dia[]" value="7" class="dias">
+                                                    <span>Martes</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
                                             </div>
                                         </div>
 
@@ -71,7 +124,8 @@
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="cantidad">Cantidad</label>
-                                                <input type="number" class="form-control" name="cantidad" id="cantidad" required step="0.01"
+                                                <input type="number" class="form-control" name="cantidad" id="cantidad"
+                                                       required step="0.01"
                                                        value="0.00">
                                             </div>
                                         </div>
@@ -107,22 +161,35 @@
                             </div>
                         </div>
                     </div>
+                    {{-- Fin modal Prevision --}}
 
+                    <form action="/prevision" method="GET" id="form_semana_act">
+                        <div class="row">
 
-                    <div class="row">
-                        <div class="col-md-3 form-group mb-3">
-                            <form action="/prevision" method="GET" id="form_semana_act">
-                                <label>Semana</label>
-                                <select class="form-control" name="semana_act" id="semana_act">
-                                    @for($i = $semana_ini; $i <= $semana_fin; $i++) <option {{ ($i == $semana_act) ? 'selected' : '' }}
-                                                                                            value="{{ $i }}">
-                                        {{ $i }}
-                                    </option>
+                            <div class="col-md-3 form-group mb-3">
+                                <label>Año</label>
+                                <select class="form-control" name="anio_act" id="anio_act">
+                                    @for($i = $anio_ini; $i <= $anio_fin; $i++)
+                                        <option {{ ($i == $anio_act) ? 'selected' : '' }}
+                                                value="{{ $i }}">
+                                            {{ $i }}
+                                        </option>
                                     @endfor
                                 </select>
-                            </form>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label>Semana</label>
+                                <select class="form-control" name="semana_act" id="semana_act">
+                                    @for($i = $semana_ini; $i <= $semana_fin; $i++)
+                                        <option {{ ($i == $semana_act) ? 'selected' : '' }}
+                                                value="{{ $i }}">
+                                            {{ $i }}
+                                        </option>
+                                    @endfor
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    </form>
 
                     <div class="row">
                         <div class="col-md-12 form-group mb-3">
@@ -130,13 +197,16 @@
 
                             <ul class="nav nav-pills" id="myPillTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-icon-pill" data-toggle="pill" href="#finca_all_pill" role="tab"
+                                    <a class="nav-link active" id="home-icon-pill" data-toggle="pill"
+                                       href="#finca_all_pill" role="tab"
                                        aria-controls="finca_all_pill" aria-selected="true">- Todas -</a>
                                 </li>
                                 @foreach ($fincas as $finca)
                                     <li class="nav-item">
-                                        <a class="nav-link" id="home-icon-pill" data-toggle="pill" href="#finca_{{ $finca->id }}_pill"
-                                           role="tab" aria-controls="finca_{{ $finca->id }}_pill" aria-selected="false">{{ $finca->finca }}</a>
+                                        <a class="nav-link" id="home-icon-pill" data-toggle="pill"
+                                           href="#finca_{{ $finca->id }}_pill"
+                                           role="tab" aria-controls="finca_{{ $finca->id }}_pill"
+                                           aria-selected="false">{{ $finca->finca }}</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -153,7 +223,8 @@
                                             </div>
 
                                             <div class="col-md-6 mb-3 text-right">
-                                                <button data-finca="{{ $finca->id }}" class="btnOpenModalPrevision btn btn-outline-primary"
+                                                <button data-finca="{{ $finca->id }}"
+                                                        class="btnOpenModalPrevision btn btn-outline-primary"
                                                         type="button">Agregar
                                                 </button>
                                             </div>
@@ -192,11 +263,13 @@
                                                                                         <td>{{ $prevision->cantidad }}</td>
                                                                                         <td>{{ $prevision->registro }}</td>
                                                                                         <td>
-                                                                                            <a href="javascript:void(0);" onclick="EditPrevision({{ $prevision->id }})"
+                                                                                            <a href="javascript:void(0);"
+                                                                                               onclick="EditPrevision({{ $prevision->id }})"
                                                                                                class="text-success mr-2 edit">
                                                                                                 <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                                             </a>
-                                                                                            <a href="javascript:void(0);" onclick="DeletePrevision({{ $prevision->id }})"
+                                                                                            <a href="javascript:void(0);"
+                                                                                               onclick="DeletePrevision({{ $prevision->id }})"
                                                                                                class="text-danger mr-2 delete">
                                                                                                 <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                                                             </a>
@@ -233,7 +306,8 @@
                                             </div>
 
                                             <div class="col-md-6 mb-3 text-right">
-                                                <button data-finca="{{ $finca->id }}" class="btnOpenModalPrevision btn btn-outline-primary"
+                                                <button data-finca="{{ $finca->id }}"
+                                                        class="btnOpenModalPrevision btn btn-outline-primary"
                                                         type="button">Agregar
                                                 </button>
                                             </div>
@@ -287,11 +361,16 @@
                                                                 <td>0 %</td>
                                                                 <form action="/prevision/comentario" method="POST">
                                                                     {{ csrf_field() }}
-                                                                    <input type="hidden" name="_method" id="prevision_method" value="POST">
-                                                                    <input type="hidden" name="anio" value="{{ date('Y') }}">
-                                                                    <input type="hidden" name="semana" value="{{ $semana_act  }}">
-                                                                    <input type="hidden" name="finca_id" value="{{ $finca->id  }}">
-                                                                    <input type="hidden" name="cultivo_id" value="{{ $cultivo->id  }}">
+                                                                    <input type="hidden" name="_method"
+                                                                           id="prevision_method" value="POST">
+                                                                    <input type="hidden" name="anio"
+                                                                           value="{{ $anio_act }}">
+                                                                    <input type="hidden" name="semana"
+                                                                           value="{{ $semana_act  }}">
+                                                                    <input type="hidden" name="finca_id"
+                                                                           value="{{ $finca->id  }}">
+                                                                    <input type="hidden" name="cultivo_id"
+                                                                           value="{{ $cultivo->id  }}">
                                                                     <td>
                                                                         @php
                                                                             $seccionComentario = "";
@@ -313,8 +392,10 @@
                                                                         @endphp
                                                                     </td>
                                                                     <td>
-                                                                        <button type="submit" class="btn btn-outline-success btn-icon m-1">
-                                                                            <span class="ul-btn__icon"><i class="i-Disk"></i></span>
+                                                                        <button type="submit"
+                                                                                class="btn btn-outline-success btn-icon m-1">
+                                                                            <span class="ul-btn__icon"><i
+                                                                                        class="i-Disk"></i></span>
                                                                         </button>
                                                                     </td>
                                                                 </form>
@@ -363,11 +444,13 @@
                                                                                             <td>{{ $prevision->cantidad }}</td>
                                                                                             <td>{{ $prevision->registro }}</td>
                                                                                             <td>
-                                                                                                <a href="javascript:void(0);" onclick="EditPrevision({{ $prevision->id }})"
+                                                                                                <a href="javascript:void(0);"
+                                                                                                   onclick="EditPrevision({{ $prevision->id }})"
                                                                                                    class="text-success mr-2 edit">
                                                                                                     <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                                                 </a>
-                                                                                                <a href="javascript:void(0);" onclick="DeletePrevision({{ $prevision->id }})"
+                                                                                                <a href="javascript:void(0);"
+                                                                                                   onclick="DeletePrevision({{ $prevision->id }})"
                                                                                                    class="text-danger mr-2 delete">
                                                                                                     <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                                                                 </a>
@@ -439,6 +522,8 @@
                 if (finca_id != null) {
                     $("#finca").val(finca_id);
                     $("#finca_id").val(finca_id);
+                    $("#anio").val($("#anio_act").val())
+                    $("#semana").val($("#semana_act").val())
                     LoadParcelaByFinca(finca_id);
                 }
 
@@ -514,7 +599,9 @@
                     if (data == null) return;
 
                     $("#finca_id, #finca").val(data.finca_id);
-                    ChangeFechaField(data.fecha);
+                    $(".dias").prop("checked", false);
+                    $(".dias[value="+data.dia+"]").prop("checked", true);
+                    $(".dias").prop('disabled', true);
                     LoadParcelaByFinca(data.finca_id, data.trazabilidad.parcela_id)
                     $("#cantidad").val(data.cantidad);
                     $("#cultivo").val(data.trazabilidad.variedad.cultivo.cultivo);
@@ -534,20 +621,8 @@
         }
 
         function LimpiarCamposPrevision() {
-            $('#finca, #finca_id, #fecha, #semana, #dia, #parcela, #cantidad, #cultivo, #variedad, #traza, #traza_id')
-                .val(null);
-        }
-
-        function ChangeFechaField(varFecha) {
-            moment.locale('es');
-            var $fecha;
-            if (varFecha != null) {
-                $fecha = varFecha
-            }
-            var fecha = moment($fecha);
-            $("#fecha").val(fecha.format("YYYY-MM-DD"));
-            $("#semana").val(fecha.week());
-            $("#dia").val(fecha.format("dddd"));
+            $('#finca, #finca_id, #anio, #semana, #parcela, #cantidad, #cultivo, #variedad, #traza, #traza_id').val(null);
+            $(".dias").prop("checked", false).prop('disabled', false);
         }
 
         function clearParcelas() {

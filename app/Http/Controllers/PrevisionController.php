@@ -25,40 +25,56 @@ class PrevisionController extends Controller
         } else {
             $data['semana_act'] = intval(date("W"));
         }
+
+        if (!is_null($request->anio_act)) {
+            $data['anio_act'] = intval($request->anio_act);
+        } else {
+            $data['anio_act'] = intval(date("Y"));
+        }
+
         $data['semana']     = CatDiasSemana::orderBy('order', 'ASC')->get();
         $data['semana_ini'] = 1;
         $data['semana_fin'] = 50;
+        $data['anio_ini']   = 2019;
+        $data['anio_fin']   = Date('Y');
 
         foreach ($data['semana'] as $k => $value) {
-            $data['semana'][$k]->previsiones = Prevision::where('semana', $data['semana_act'])->where(DB::raw("YEAR(fecha)"), date('Y'))->where(DB::raw("DAYOFWEEK(fecha)"), $value->valor)->with('finca')->with('trazabilidad')->get();
+            $result = Prevision::where('anio', $data['anio_act'])
+                               ->where('semana', $data['semana_act'])
+                               ->where('dia', $value->id)
+                               ->with('finca')
+                               ->with('trazabilidad')
+                               ->get();
+
+            $data['semana'][$k]->previsiones = $result;
         }
 
         // dd($data['semana']);
         $data['resumen']     = array();
         $data['fincas']      = Finca::all();
         $data['cultivos']    = Cultivo::all();
-        $data['comentarios'] = PrevisionComentarios::where("semana", $data['semana_act'])
-                                                   ->where('anio', date('Y'))
-                                                   ->get();
+        $data['comentarios'] = PrevisionComentarios::where("semana", $data['semana_act'])->where('anio', $data['anio_act'])->get();
         foreach ($data['fincas'] as $f => $finca) {
             $data['resumen'][$f]['finca'] = $finca->id;
             foreach ($data['cultivos'] as $c => $cultivo) {
                 $data['resumen'][$f]['cultivos'][$c]['id'] = $cultivo->id;
                 foreach ($data['semana'] as $k => $value) {
-                    $data['resumen'][$f]['cultivos'][$c]['total'][$k] = DB::table('previsiones')
-                                                                          ->join('trazabilidad', 'trazabilidad.id', '=', 'previsiones.trazabilidad_id')
-                                                                          ->join('variedades', 'variedades.id', '=', 'trazabilidad.variedad_id')
-                                                                          ->where('finca_id', '=', $finca->id)
-                                                                          ->where('cultivo_id', '=', $cultivo->id)
-                                                                          ->where('semana', $data['semana_act'])
-                                                                          ->where(DB::raw("YEAR(fecha)"), date('Y'))
-                                                                          ->where(DB::raw("DAYOFWEEK(fecha)"), $value->valor)
-                                                                          ->where('previsiones.deleted_at', null)
-                                                                          ->sum('cantidad');
+                    $result = DB::table('previsiones')
+                                ->join('trazabilidad', 'trazabilidad.id', '=', 'previsiones.trazabilidad_id')
+                                ->join('variedades', 'variedades.id', '=', 'trazabilidad.variedad_id')
+                                ->where('finca_id', '=', $finca->id)
+                                ->where('cultivo_id', '=', $cultivo->id)
+                                ->where('anio', $data['anio_act'])
+                                ->where('semana', $data['semana_act'])
+                                ->where('dia', $value->id)
+                                ->where('previsiones.deleted_at', null)
+                                ->sum('cantidad');
+
+                    $data['resumen'][$f]['cultivos'][$c]['total'][$k] = $result;
                 }
             }
         }
-        
+
         // dd($data['resumen']);    
 
         return view('prevision.panel', $data);
@@ -66,21 +82,35 @@ class PrevisionController extends Controller
 
     public function store(Request $request)
     {
+//        dd($request);
+
         if (is_null($request->id)) {
-            $prevision = new Prevision();
+
+            if (isset($request->dia)) {
+                foreach ($request->dia as $dia) {
+
+                    $prevision = new Prevision();
+                    $prevision->anio             = $request->anio;
+                    $prevision->semana           = $request->semana;
+                    $prevision->dia              = $dia;
+                    $prevision->registro         = "A";
+                    $prevision->finca_id         = $request->finca_id;
+                    $prevision->trazabilidad_id  = $request->traza_id;
+                    $prevision->cantidad_inicial = $request->cantidad;
+                    $prevision->cantidad         = $request->cantidad;
+
+                    $prevision->save();
+                }
+            }
         } else {
             $prevision = Prevision::find($request->id);
+            $prevision->finca_id         = $request->finca_id;
+            $prevision->trazabilidad_id  = $request->traza_id;
+            $prevision->cantidad_inicial = $request->cantidad;
+            $prevision->cantidad         = $request->cantidad;
+
+            $prevision->save();
         }
-
-        $prevision->fecha            = $request->fecha;
-        $prevision->finca_id         = $request->finca_id;
-        $prevision->semana           = $request->semana;
-        $prevision->trazabilidad_id  = $request->traza_id;
-        $prevision->cantidad_inicial = $request->cantidad;
-        $prevision->cantidad         = $request->cantidad;
-        $prevision->registro         = "A";
-
-        $prevision->save();
 
         return redirect()->route('prevision.index');
     }
@@ -147,9 +177,9 @@ class PrevisionController extends Controller
 
     public function SaveComentario(Request $request)
     {
-        if(is_null($request->comentario_id)){
+        if (is_null($request->comentario_id)) {
             $comentario = new PrevisionComentarios();
-        }else{
+        } else {
             $comentario = PrevisionComentarios::find($request->comentario_id);
         }
 
@@ -161,6 +191,6 @@ class PrevisionController extends Controller
 
         $comentario->save();
 
-        return redirect('prevision?semana_act='.$request->semana);
+        return redirect('prevision?anio_act='.$request->anio.'&semana_act=' . $request->semana);
     }
 }

@@ -15,8 +15,9 @@ class CreatePrevisionesTable extends Migration
     {
         Schema::create('previsiones', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha');
+            $table->integer('anio')->nullable();
             $table->integer('semana')->nullable();
+            $table->integer('dia')->nullable();
             $table->unsignedInteger('finca_id')->nullable();
             $table->unsignedInteger('trazabilidad_id')->nullable();
             $table->double('cantidad_inicial');
