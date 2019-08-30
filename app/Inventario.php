@@ -15,7 +15,7 @@ class Inventario extends Model
                     inv.categoria,
                     inv.categoria_id,
                     (CASE 
-                        WHEN inv.categoria = "Caja" THEN (SELECT formato FROM cajas WHERE cajas.id = inv.categoria_id)
+                        WHEN inv.categoria = "Caja" THEN (SELECT CONCAT(formato," | ", modelo) as formato FROM cajas WHERE cajas.id = inv.categoria_id)
                         WHEN inv.categoria = "Palet" THEN (SELECT formato FROM pallets WHERE pallets.id = inv.categoria_id)
                         WHEN inv.categoria = "Cubre" THEN (SELECT formato FROM cubres WHERE cubres.id = inv.categoria_id)
                         WHEN inv.categoria = "Auxiliar" THEN (SELECT modelo FROM auxiliares WHERE auxiliares.id = inv.categoria_id)
