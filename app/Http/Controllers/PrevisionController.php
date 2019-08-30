@@ -49,7 +49,6 @@ class PrevisionController extends Controller
             $data['semana'][$k]->previsiones = $result;
         }
 
-        // dd($data['semana']);
         $data['resumen']     = array();
         $data['fincas']      = Finca::all();
         $data['cultivos']    = Cultivo::all();
@@ -95,8 +94,6 @@ class PrevisionController extends Controller
             }
             $data['resumen'][$f]['totalFinca'] = $totalFinca;
         }
-
-        // dd($data['resumen']);    
 
         return view('prevision.panel', $data);
     }
