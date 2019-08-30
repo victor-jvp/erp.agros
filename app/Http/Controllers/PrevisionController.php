@@ -56,8 +56,10 @@ class PrevisionController extends Controller
         $data['comentarios'] = PrevisionComentarios::where("semana", $data['semana_act'])->where('anio', $data['anio_act'])->get();
         foreach ($data['fincas'] as $f => $finca) {
             $data['resumen'][$f]['finca'] = $finca->id;
+            $totalFinca = 0;
             foreach ($data['cultivos'] as $c => $cultivo) {
                 $data['resumen'][$f]['cultivos'][$c]['id'] = $cultivo->id;
+                $totalSemana = 0;
                 foreach ($data['semana'] as $k => $value) {
                     $result = DB::table('previsiones')
                                 ->join('trazabilidad', 'trazabilidad.id', '=', 'previsiones.trazabilidad_id')
@@ -71,8 +73,13 @@ class PrevisionController extends Controller
                                 ->sum('cantidad');
 
                     $data['resumen'][$f]['cultivos'][$c]['total'][$k] = $result;
+                    $totalSemana += $result;
                 }
+                $totalFinca += $totalSemana;
+                $data['resumen'][$f]['cultivos'][$c]['totalSemana'] = round($totalSemana, 2);
             }
+            $data['resumen'][$f]['totalFinca'] = $totalFinca;
+            //Calular totales
         }
 
         // dd($data['resumen']);    
