@@ -60,7 +60,9 @@ class PrevisionController extends Controller
             foreach ($data['cultivos'] as $c => $cultivo) {
                 $data['resumen'][$f]['cultivos'][$c]['id'] = $cultivo->id;
                 $totalSemana = 0;
+                $totalSemanaAnt = 0;
                 foreach ($data['semana'] as $k => $value) {
+                    //Calcular total de la semana actual
                     $result = DB::table('previsiones')
                                 ->join('trazabilidad', 'trazabilidad.id', '=', 'previsiones.trazabilidad_id')
                                 ->join('variedades', 'variedades.id', '=', 'trazabilidad.variedad_id')
@@ -74,12 +76,24 @@ class PrevisionController extends Controller
 
                     $data['resumen'][$f]['cultivos'][$c]['total'][$k] = $result;
                     $totalSemana += $result;
+
+                    //Calcular total de la semana anterior
+                    $result2 = DB::table('previsiones')
+                                ->join('trazabilidad', 'trazabilidad.id', '=', 'previsiones.trazabilidad_id')
+                                ->join('variedades', 'variedades.id', '=', 'trazabilidad.variedad_id')
+                                ->where('finca_id', '=', $finca->id)
+                                ->where('cultivo_id', '=', $cultivo->id)
+                                ->where('anio', $data['anio_act'])
+                                ->where('semana', ($data['semana_act']-1))
+                                ->where('previsiones.deleted_at', null)
+                                ->sum('cantidad');
+                    $totalSemanaAnt += $result2;
                 }
                 $totalFinca += $totalSemana;
                 $data['resumen'][$f]['cultivos'][$c]['totalSemana'] = round($totalSemana, 2);
+                $data['resumen'][$f]['cultivos'][$c]['totalSemanaAnt'] = round($totalSemanaAnt, 2);
             }
             $data['resumen'][$f]['totalFinca'] = $totalFinca;
-            //Calular totales
         }
 
         // dd($data['resumen']);    

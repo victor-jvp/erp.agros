@@ -321,16 +321,20 @@
                                                         <tr>
                                                             <th scope="col">Familia / Producto</th>
                                                             <th scope="col">Total Días</th>
-                                                            <th scope="col">Total Semana</th>
-                                                            <th scope="col">Porcentaje</th>
+                                                            <th scope="col">Total Semana Actual</th>
+                                                            <th scope="col">Total Semana Previa</th>
+                                                            <th scope="col">Porcentaje Actual Vs Previa</th>
                                                             <th scope="col">Comentarios</th>
                                                             <th scope="col">Acciones</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         @foreach($cultivos as $cultivo)
-                                                            @php($totalSemana = 0)
-                                                            @php($porcSemana = 0)
+                                                            @php
+                                                                $totalSemana = 0;
+                                                                $totalSemanaAnt = 0;
+                                                                $porcSemana = 0;
+                                                            @endphp
                                                             <tr>
                                                                 <td>{{ $cultivo->cultivo }}</td>
                                                                 <td>
@@ -348,6 +352,7 @@
                                                                                 @foreach ($finca_['cultivos'] as $cultivo_)
                                                                                     @if ($cultivo_['id'] == $cultivo->id)
                                                                                         @php($totalSemana = $cultivo_['totalSemana'])
+                                                                                        @php($totalSemanaAnt = $cultivo_['totalSemanaAnt'])
                                                                                         <tr>
                                                                                             @foreach ($cultivo_['total'] as $item)
                                                                                                 <td>{{ $item }}</td>
@@ -356,10 +361,12 @@
                                                                                     @endif
                                                                                 @endforeach
                                                                                 @php
-                                                                                    if($finca_['totalFinca'] > 0) {
-                                                                                         $porcSemana = (($totalSemana / $finca_['totalFinca']) * 100);
-                                                                                    }else{
+                                                                                    if($totalSemanaAnt > 0) {
+                                                                                        $porcSemana = (($totalSemana/$totalSemanaAnt) * 100)-100;
+                                                                                    }else if($totalSemanaAnt == 0 && $totalSemana == 0){
                                                                                         $porcSemana = 0;
+                                                                                    }else{
+                                                                                        $porcSemana = 100;
                                                                                     }
                                                                                 @endphp
                                                                             @endif
@@ -368,6 +375,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td class="text-center">{{ round($totalSemana, 2) }}</td>
+                                                                <td class="text-center">{{ round($totalSemanaAnt, 2) }}</td>
                                                                 <td class="text-center">{{ round($porcSemana, 0) }} %</td>
                                                                 <form action="/prevision/comentario" method="POST">
                                                                     {{ csrf_field() }}
@@ -505,7 +513,7 @@
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
-    <script src="{{asset('assets/js/vendor/calendar/moment-with-locales.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/calendar/moment-with-locales.min.js')}}"></script>
 
     <script>
         $(document).ready(function () {
