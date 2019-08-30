@@ -599,6 +599,8 @@
                     if (data == null) return;
 
                     $("#finca_id, #finca").val(data.finca_id);
+                    $("#anio").val(data.anio);
+                    $("#semana").val(data.semana);
                     $(".dias").prop("checked", false);
                     $(".dias[value="+data.dia+"]").prop("checked", true);
                     $(".dias").prop('disabled', true);
