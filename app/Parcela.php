@@ -15,4 +15,9 @@ class Parcela extends Model
     {
         return $this->belongsTo(Finca::class);
     }
+
+    public function pedidos()
+    {
+        return $this->hasMany(PedidosCampo::class);
+    }
 }

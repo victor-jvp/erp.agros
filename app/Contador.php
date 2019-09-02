@@ -44,4 +44,19 @@ class Contador extends Model
         return $nro_salida;
     }
     #endregion
+
+    #region Salida
+    public function scopeNext_nro_lote_pedido()
+    {
+        $nro_lote_pedido = $this->where('contador', '=', 'nro_lote_pedido')->first(['valor'])->valor + 1;
+        return $nro_lote_pedido;
+    }
+
+    public function scopeSave_nro_lote_pedido()
+    {
+        $nro_lote_pedido = $this->where('contador', '=', 'nro_lote_pedido')->first(['valor'])->valor + 1;
+        DB::table('contadores')->where('contador', 'nro_lote_pedido')->update(['valor' => $nro_lote_pedido]);
+        return $nro_lote_pedido;
+    }
+    #endregion
 }

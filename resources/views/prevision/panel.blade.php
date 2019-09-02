@@ -552,10 +552,6 @@
                 $("#modal-prevision").modal('show');
             });
 
-            $("#fecha").change(function () {
-                ChangeFechaField($(this).val());
-            });
-
             $("#semana_act").change(function () {
                 $("#form_semana_act").submit();
             });

@@ -13,6 +13,11 @@ class Finca extends Model
 
     public function parcelas()
     {
-        return $this->hasMany(Variedad::class);
+        return $this->hasMany(Parcela::class);
+    }
+
+    public function pedidos()
+    {
+        return $this->hasManyThrough(PedidosCampo::class, Parcela::class);
     }
 }

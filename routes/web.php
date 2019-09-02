@@ -33,7 +33,7 @@ Route::post('prevision/DeletePrevision', 'PrevisionController@DeletePrevision')-
 Route::post('prevision/comentario', 'PrevisionController@SaveComentario')->name('prevision.SaveComentario');
 
 Route::resource('pedidos-campo', 'PedidosCampoController');
-
+Route::post('pedidos-campo/loadParcelaByFinca', 'PedidosCampoController@loadParcelaByFinca')->name('pedidos-campo.loadParcelaByFinca');
 #endregion
 
 #region Comercial
