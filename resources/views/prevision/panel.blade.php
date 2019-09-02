@@ -360,12 +360,18 @@
                                                                                     @endif
                                                                                 @endforeach
                                                                                 @php
-                                                                                    if($totalSemanaAnt > 0) {
-                                                                                    $porcSemana = (($totalSemana/$totalSemanaAnt) * 100)-100;
-                                                                                    }else if($totalSemanaAnt == 0 && $totalSemana == 0){
+                                                                                    if($totalSemanaAnt == 0 && $totalSemana == 0) {
                                                                                         $porcSemana = 0;
+                                                                                    }else if($totalSemana > 0){
+                                                                                        $porcSemana = 100-(($totalSemanaAnt/$totalSemana) * 100 );
                                                                                     }else{
                                                                                         $porcSemana = 100;
+                                                                                    }
+                                                                                    $signo = "";
+                                                                                    if($totalSemana > $totalSemanaAnt){
+                                                                                        $signo = '<span class="badge badge-success"><i class="i-Triangle-Arrow-Up"></i></span>';
+                                                                                    }else if($totalSemana < $totalSemanaAnt){
+                                                                                        $signo = '<span class="badge badge-danger"><i class="i-Triangle-Arrow-Down"></i></span>';
                                                                                     }
                                                                                 @endphp
                                                                             @endif
@@ -375,7 +381,8 @@
                                                                 </td>
                                                                 <td class="text-center">{{ round($totalSemana, 2) }}</td>
                                                                 <td class="text-center">{{ round($totalSemanaAnt, 2) }}</td>
-                                                                <td class="text-center">{{ round($porcSemana, 0) }}%
+                                                                <td class="text-center">
+                                                                    {!! $signo." ".round($porcSemana, 2) !!}%
                                                                 </td>
                                                                 <form action="/prevision/comentario" method="POST">
                                                                     {{ csrf_field() }}
