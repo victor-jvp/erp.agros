@@ -58,13 +58,13 @@
         <!-- Submenu Dashboards -->
         <ul class="childNav" data-parent="prevision">
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='prevision' ? 'open' : '' }}" href="{{ url('prevision') }}">
+                <a class="{{ Route::currentRouteName()=='prevision.index' ? 'open' : '' }}" href="{{ url('prevision') }}">
                     <i class="nav-icon i-Clock-3"></i>
                     <span class="item-name">Panel de control</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#">
+                <a class="{{ Route::currentRouteName()=='pedidos-campo.index' ? 'open' : '' }}" href="{{ url('pedidos-campo') }}">
                     <i class="nav-icon i-Clock-4"></i>
                     <span class="item-name">Pedido Campo</span>
                 </a>

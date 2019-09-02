@@ -32,6 +32,8 @@ Route::post('prevision/GetPrevision', 'PrevisionController@GetPrevision')->name(
 Route::post('prevision/DeletePrevision', 'PrevisionController@DeletePrevision')->name('prevision.DeletePrevision');
 Route::post('prevision/comentario', 'PrevisionController@SaveComentario')->name('prevision.SaveComentario');
 
+Route::resource('pedidos-campo', 'PedidosCampoController');
+
 #endregion
 
 #region Comercial
