@@ -171,12 +171,16 @@
                 columnDefs: [
                     {targets: [0, 4], visible: false}
                 ],
-                order: [[1, 'desc']]
+                order: [[1, 'desc']],
+                responsive: true
             });
 
-            $('#salidas_table .edit').on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = salidas_table.row(tr).data();
+            $('#salidas_table').on('click', '.edit',function () {
+                var current_row = $(this).parents('tr');
+                if (current_row.hasClass('child')) {
+                    current_row = current_row.prev();
+                }
+                var row = salidas_table.row(current_row).data();
                 LimpiarCamposSalidas();
 
                 $('#salida_id').val(row[0]);
@@ -192,9 +196,12 @@
                 $("#modal-salidas").modal('show');
             });
 
-            $('#salidas_table .delete').on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = salidas_table.row(tr).data();
+            $('#salidas_table').on('click', '.delete',function () {
+                var current_row = $(this).parents('tr');
+                if (current_row.hasClass('child')) {
+                    current_row = current_row.prev();
+                }
+                var row = salidas_table.row(current_row).data();
 
                 swal({
                     title: 'Confirmar Proceso',

@@ -34,6 +34,8 @@ Route::post('prevision/comentario', 'PrevisionController@SaveComentario')->name(
 
 Route::resource('pedidos-campo', 'PedidosCampoController');
 Route::post('pedidos-campo/loadParcelaByFinca', 'PedidosCampoController@loadParcelaByFinca')->name('pedidos-campo.loadParcelaByFinca');
+Route::post('pedidos-campo/GetPedido', 'PedidosCampoController@GetPedido')->name('pedidos-campo.GetPedido');
+Route::get('pedidos-campo/delete/{pedido}', 'PedidosCampoController@delete')->name('pedidos-campo.delete');
 #endregion
 
 #region Comercial
