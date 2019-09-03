@@ -28,9 +28,11 @@ class PedidosCampoController extends Controller
                 INNER JOIN parcelas ON parcelas.id = pedidos_campo.parcela_id
                 INNER JOIN fincas ON fincas.id = parcelas.finca_id
                 WHERE
-                    fincas.id = " . $finca->id . " AND pedidos_campo.fecha = '" . $fecha_act . "'";
+                   pedidos_campo.deleted_at IS NULL AND fincas.id = " . $finca->id . " AND pedidos_campo.fecha = '" . $fecha_act . "'
+                ORDER BY
+                    pedidos_campo.sort ASC";
 
-            $pedidos = DB::select($query);
+            $pedidos             = DB::select($query);
             $fincas[$f]->pedidos = $pedidos;
 
             $query = "SELECT
@@ -41,9 +43,9 @@ class PedidosCampoController extends Controller
                 INNER JOIN parcelas ON parcelas.id = pedidos_campo.parcela_id
                 INNER JOIN fincas ON fincas.id = parcelas.finca_id
                 WHERE
-                    fincas.id = " . $finca->id . " AND pedidos_campo.fecha = '" . $fecha_act . "'";
+                   pedidos_campo.deleted_at IS NULL AND fincas.id = " . $finca->id . " AND pedidos_campo.fecha = '" . $fecha_act . "'";
 
-            $totales = DB::select($query);
+            $totales                 = DB::select($query);
             $fincas[$f]->totalPedido = $totales[0];
         }
 
@@ -133,5 +135,24 @@ class PedidosCampoController extends Controller
         $data = PedidosCampo::with('parcela')->find($id);
 
         return response()->json($data); // How do I return in json? in case of an error message?
+    }
+
+    public function up(Request $request, $id)
+    {
+        $fecha_act = $request->fecha_act;
+
+        $pedidos   = PedidosCampo::where("fecha", $fecha_act)->where('id', ">=", $id)->get();
+
+        foreach ($pedidos as $row)
+        {
+            $pedido = PedidosCampo::find($row->id);
+            $pedido->sort = $pedido->sort - 1;
+            $pedido->save();
+        }
+
+        $data = array(
+            'fecha_act' => $request->fecha,
+        );
+        return redirect()->route('pedidos-campo.index', $data);
     }
 }

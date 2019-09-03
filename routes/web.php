@@ -36,6 +36,8 @@ Route::resource('pedidos-campo', 'PedidosCampoController');
 Route::post('pedidos-campo/loadParcelaByFinca', 'PedidosCampoController@loadParcelaByFinca')->name('pedidos-campo.loadParcelaByFinca');
 Route::post('pedidos-campo/GetPedido', 'PedidosCampoController@GetPedido')->name('pedidos-campo.GetPedido');
 Route::get('pedidos-campo/delete/{pedido}', 'PedidosCampoController@delete')->name('pedidos-campo.delete');
+Route::get('pedidos-campo/{pedido}/up', 'PedidosCampoController@up')->name('pedidos-campo.up');
+Route::get('pedidos-campo/{pedido}/down', 'PedidosCampoController@down')->name('pedidos-campo.down');
 #endregion
 
 #region Comercial

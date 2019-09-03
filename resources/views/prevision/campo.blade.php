@@ -191,10 +191,10 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="table-responsive">
-                                                        <table class="table table-striped">
+                                                        <table class="table table-striped table-hover" >
                                                             <thead>
                                                             <tr>
-                                                                <th scope="col" width="120" class="text-center">Nº
+                                                                <th scope="col" class="text-center">Nº
                                                                     Lote<br>Pedido Campo
                                                                 </th>
                                                                 <th scope="col">Encargado</th>
@@ -204,14 +204,14 @@
                                                                 <th scope="col">Kilos</th>
                                                                 <th scope="col">Cliente</th>
                                                                 <th scope="col">Comentario</th>
-                                                                <th scope="col">Acción</th>
+                                                                <th scope="col" width="80">Acción</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
                                                             @if(isset($finca->pedidos))
-                                                                @foreach($finca->pedidos as $pedido)
+                                                                @foreach($finca->pedidos as $p => $pedido)
                                                                     <tr>
-                                                                        <td>{{ $pedido->nro_lote_pedido }}</td>
+                                                                        <td class="text-center">{{ $pedido->nro_lote_pedido }}</td>
                                                                         <td>{{ $pedido->encargado }}</td>
                                                                         <td>{{ $pedido->parcela }}</td>
                                                                         <td>{{ $pedido->formato }}</td>
@@ -223,14 +223,20 @@
                                                                             <a href="javascript:void(0);"
                                                                                onclick="EditPedido({{ $pedido->id }})"
                                                                                class="text-success mr-2 edit">
-                                                                                <i
-                                                                                        class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                             </a>
                                                                             <a href="javascript:void(0);"
-                                                                               onclick="DeletePedido({{ $pedido->id }})"
-                                                                               class="text-danger mr-2 delete">
-                                                                                <i
-                                                                                        class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                                                    onclick="DeletePedido({{ $pedido->id }})"
+                                                                                    class="text-danger mr-2 delete">
+                                                                                <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                                            </a>
+                                                                            <a href="{{ url('pedidos-campo/'.$pedido->id.'/up?fecha_act='.$fecha_act) }}"
+                                                                               class="text-primary mr-2" title="Subir">
+                                                                                <i class="nav-icon i-Arrow-Up-3 font-weight-bold"></i>
+                                                                            </a>
+                                                                            <a href="{{ url('pedidos-campo/'.$pedido->id.'/down?fecha_act='.$fecha_act) }}"
+                                                                               class="text-primary mr-2" title="Bajar">
+                                                                                <i class="nav-icon i-Arrow-Down-3 font-weight-bold"></i>
                                                                             </a>
                                                                         </td>
                                                                     </tr>
@@ -353,7 +359,7 @@
             });
         }
 
-        function DeletePedido(id){
+        function DeletePedido(id) {
             swal({
                 title: 'Confirmar Proceso',
                 text: "Confirme eliminar el registro seleccionado",
