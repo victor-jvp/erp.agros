@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cliente;
 use App\ClienteContactos;
 use App\ClienteDatosComerciales;
+use App\Mail\SendMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -154,6 +155,38 @@ class ClientesController extends Controller
         return redirect()->route('clientes.index');
     }
 
+    public function ajaxSendEmail(Request $request)
+    {
+        $email   = $request->input('email');
+        $message = $request->input('message');
 
+        if (is_null($email)) return response()->json(null);
+
+        $data     = array(
+            "email"   => $email,
+            "message" => $message
+        );
+        $sendMail = new SendMail($data);
+        Mail::to($email)->send($sendMail);
+
+        $response = array();
+
+        // check for failures
+        if (Mail::failures()) {
+            $response = array(
+                "title"   => "Aviso",
+                "message" => "Error al enviar email. Intente nuevamente",
+                "type"    => "error"
+            );
+        }else{
+            $response = array(
+                "title"   => "Éxito",
+                "message" => "Email enviado con éxito",
+                "type"    => "success"
+            );
+        }
+
+        return response()->json($response);
+    }
 
 }

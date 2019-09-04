@@ -238,18 +238,21 @@
                         <div class="tab-pane fade" id="contactar-email" role="tabpanel"
                              aria-labelledby="contactar-email-tab">
 
-                            <div class="row">
-                                <div class="col-md-6 form-group mb-3">
-                                    <label for="exampleInputEmail2">Email</label>
-                                    <input type="email" class="form-control form-control-rounded" readonly
-                                           id="exampleInputEmail2" placeholder="No se ha registrado Email"
-                                           value="{{ $cliente->email }}">
-                                </div>
-                            </div>
+                            <form action="/comercial/clientes/ajaxSendEmail" method="POST" id="email_form">
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <form class="inputForm">
+                                <div class="row">
+                                    <div class="col-md-6 form-group mb-3">
+                                        <label for="exampleInputEmail2">Email</label>
+                                        <input type="email" class="form-control form-control-rounded" readonly
+                                               name="email"
+                                               id="exampleInputEmail2" placeholder="No se ha registrado Email"
+                                               value="{{ $cliente->email }}">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+
                                         <div class="form-group">
                                             <textarea class="form-control" placeholder="Ingrese su mensaje" required
                                                       name="message" id="message" cols="30" rows="3"></textarea>
@@ -262,9 +265,11 @@
                                                 <i class="i-Paper-Plane"></i>
                                             </button>
                                         </div>
-                                    </form>
+
+                                    </div>
                                 </div>
-                            </div>
+
+                            </form>
 
                         </div>
 
@@ -403,6 +408,12 @@
             $("#" + tab + "").addClass('active show');
             $("#" + tab + "-tab").addClass('active show').attr('aria-selected', true);
         });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     </script>
 
     {{--Contacto--}}
@@ -469,6 +480,42 @@
             $("#contacto_id, #contacto_descripcion, #contacto_telefono, #contacto_email, #contacto_method").val(null);
         }
     </script>
+
+    {{-- Enviar Email --}}
+    <script>
+        $(function () {
+            $("#email_form").submit(function (e) {
+                e.preventDefault();
+                var form = $(this);
+                var url = form.attr('action');
+
+                swal({
+                    title: 'Enviando...',
+                    text: 'Por favor espere.',
+                    //imageUrl: "{{ asset('assets/images/loader.gif') }}",
+                    html: '<div class="spinner-bubble spinner-bubble-primary m-5"></div>',
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: 'JSON',
+                    data: form.serialize(),
+                    success: function (data) {
+                        swal(data.title, data.message, data.type);
+                    },
+                    error: function (error) {
+                        swal(error.title, error.message, error.type);
+                        console.log(error); // show response from the php script.
+                    }
+                });
+
+            });
+        })
+    </script>
+
 
     {{--Documentos adjuntos--}}
     <script>

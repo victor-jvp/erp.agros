@@ -45,6 +45,7 @@ Route::resource('/comercial/clientes', 'ClientesController');
 Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
 Route::get('/comercial/clientes/delete-contacto/{contacto}', 'ClientesController@delete_contacto');
 Route::post('/comercial/clientes/{cliente}/contactos', 'ClientesController@contactos')->name('clientes.contactos');
+Route::post('/comercial/clientes/ajaxSendEmail', 'ClientesController@ajaxSendEmail')->name('clientes.ajaxSendEmail');
 #endregion
 
 #region Almacen
