@@ -18,6 +18,6 @@ class Finca extends Model
 
     public function pedidos()
     {
-        return $this->hasManyThrough(PedidosCampo::class, Parcela::class);
+        return $this->hasMany(PedidosCampo::class);
     }
 }

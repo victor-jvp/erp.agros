@@ -38,6 +38,7 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label for="finca">Finca</label>
+                                                <input type="hidden" name="finca_id" id="finca_id">
                                                 <select class="form-control" id="finca" disabled>
                                                     @foreach ($fincas as $finca)
                                                         <option value="{{ $finca->id }}">{{ $finca->finca }}</option>
@@ -230,14 +231,18 @@
                                                                                     class="text-danger mr-2 delete">
                                                                                 <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                                             </a>
+                                                                            @if ($p > 0)
                                                                             <a href="{{ url('pedidos-campo/'.$pedido->id.'/up?fecha_act='.$fecha_act) }}"
                                                                                class="text-primary mr-2" title="Subir">
                                                                                 <i class="nav-icon i-Arrow-Up-3 font-weight-bold"></i>
                                                                             </a>
+                                                                            @endif
+                                                                            @if ($p < count($finca->pedidos)-1)
                                                                             <a href="{{ url('pedidos-campo/'.$pedido->id.'/down?fecha_act='.$fecha_act) }}"
                                                                                class="text-primary mr-2" title="Bajar">
                                                                                 <i class="nav-icon i-Arrow-Down-3 font-weight-bold"></i>
-                                                                            </a>
+                                                                            </a>    
+                                                                            @endif                                                                            
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -298,6 +303,7 @@
                 var finca_id = $(this).attr("data-finca");
                 if (finca_id != null) {
                     $("#finca").val(finca_id);
+                    $("#finca_id").val(finca_id);
                     $("#fecha").val(moment().format("YYYY-MM-DD"));
                     $("#nro_lote_pedido").val(nro_pedido);
                     LoadParcelaByFinca(finca_id);
@@ -336,6 +342,7 @@
                     if (data == null) return;
 
                     $("#finca").val(data.parcela.finca_id);
+                    $("#finca_id").val(data.parcela.finca_id);
                     $("#fecha").val(moment(data.fecha).format("YYYY-MM-DD"));
                     $('#nro_lote_pedido').val(data.nro_lote_pedido);
                     $("#encargado").val(data.encargado);

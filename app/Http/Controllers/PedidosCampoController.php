@@ -80,7 +80,9 @@ class PedidosCampoController extends Controller
         $pedido->fecha           = $request->fecha;
         $pedido->nro_lote_pedido = Contador::save_nro_lote_pedido();
         $pedido->encargado       = $request->encargado;
+        $pedido->finca_id        = $request->finca_id;
         $pedido->parcela_id      = $request->parcela;
+        $pedido->sort            = $pedido->SetSort;
         $pedido->formato         = $request->formato;
         $pedido->caja            = $request->caja;
         $pedido->kilos           = $request->kilos;
@@ -103,7 +105,8 @@ class PedidosCampoController extends Controller
         $pedido->fecha           = $request->fecha;
         $pedido->nro_lote_pedido = $request->nro_lote_pedido;
         $pedido->encargado       = $request->encargado;
-        $pedido->parcela_id      = $request->parcela;
+        $pedido->finca_id        = $request->finca_id;
+        $pedido->parcela_id      = $request->parcela;        
         $pedido->formato         = $request->formato;
         $pedido->caja            = $request->caja;
         $pedido->kilos           = $request->kilos;
@@ -139,15 +142,46 @@ class PedidosCampoController extends Controller
 
     public function up(Request $request, $id)
     {
-        $fecha_act = $request->fecha_act;
+        $fecha_act = (is_null($request->fecha_act)) ? date('Y-m-d') : date("Y-m-d", strtotime($request->fecha_act));
 
-        $pedidos   = PedidosCampo::where("fecha", $fecha_act)->where('id', ">=", $id)->get();
+        $pedido  = PedidosCampo::find($id);
+        $pedidos = PedidosCampo::where("fecha", $pedido->fecha)->where("finca_id", $pedido->finca_id)->orderBy('sort', 'ASC')->get();
 
-        foreach ($pedidos as $row)
-        {
-            $pedido = PedidosCampo::find($row->id);
-            $pedido->sort = $pedido->sort - 1;
-            $pedido->save();
+        if($pedido->sort > 1){
+            foreach ($pedidos as $row) {
+                $current = PedidosCampo::find($row->id);
+                if ($current->sort == ($pedido->sort - 1)) {
+                    $current->sort = $pedido->sort;
+                    $pedido->sort = $pedido->sort - 1;
+                    $current->save();
+                    $pedido->save();
+                }
+            }
+        }        
+
+        $data = array(
+            'fecha_act' => $fecha_act
+        );
+        return redirect()->route('pedidos-campo.index', $data);
+    }
+
+    public function down(Request $request, $id)
+    {
+        $fecha_act = (is_null($request->fecha_act)) ? date('Y-m-d') : date("Y-m-d", strtotime($request->fecha_act));
+
+        $pedido  = PedidosCampo::find($id);
+        $pedidos = PedidosCampo::where("fecha", $pedido->fecha)->where("finca_id", $pedido->finca_id)->orderBy('sort', 'ASC')->get();
+
+        if ($pedido->sort < count($pedidos)) {
+            foreach ($pedidos as $row) {
+                $current = PedidosCampo::find($row->id);
+                if ($current->sort == ($pedido->sort + 1)) {
+                    $current->sort = $pedido->sort;
+                    $pedido->sort = $pedido->sort + 1;
+                    $current->save();
+                    $pedido->save();
+                }
+            }
         }
 
         $data = array(

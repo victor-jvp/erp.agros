@@ -16,8 +16,9 @@ class CreatePedidosCampoTable extends Migration
             $table->increments('id');
             $table->date('fecha');
             $table->integer('nro_lote_pedido');
-            $table->integer('sort')->nullable();
+            $table->integer('sort')->default(0);
             $table->string('encargado', 155)->nullable();
+            $table->unsignedInteger('finca_id');
             $table->unsignedInteger('parcela_id');
             $table->string('formato')->nullable();
             $table->string('caja')->nullable();
@@ -25,6 +26,7 @@ class CreatePedidosCampoTable extends Migration
             $table->string('cliente')->nullable();
             $table->text('comentario')->nullable();
             $table->foreign('parcela_id')->references('id')->on('parcelas');
+            $table->foreign('finca_id')->references('id')->on('fincas');
             $table->softDeletes();
             $table->timestamps();
         });
