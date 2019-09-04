@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\ProveedorContactos;
 use Illuminate\Http\Request;
 use App\Proveedor;
-use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
-use Symfony\Component\Finder\Finder;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class ProveedoresController extends Controller
 {
@@ -57,7 +57,7 @@ class ProveedoresController extends Controller
 
     public function delete_contacto(Request $request, $id)
     {
-        $dato       = ProveedorContactos::find($id);
+        $dato         = ProveedorContactos::find($id);
         $proveedor_id = $dato->proveedor_id;
         $dato->delete();
 
@@ -95,7 +95,7 @@ class ProveedoresController extends Controller
 
         $data = array(
             'proveedor' => $proveedor,
-            "tab"     => ($request->session()->get('tab')) ? $request->session()->get('tab') : "datos-fiscales",
+            "tab"       => ($request->session()->get('tab')) ? $request->session()->get('tab') : "datos-fiscales",
         );
 
         return view('almacen.proveedores.show', $data);
@@ -129,7 +129,7 @@ class ProveedoresController extends Controller
         }
 
         $data = array(
-            'id'  => $proveedor->id,
+            'id' => $proveedor->id,
         );
 
         $request->session()->flash('tab', $request->_tab);
@@ -148,7 +148,7 @@ class ProveedoresController extends Controller
 
     public function deleteDatoComercial(Request $request, $id)
     {
-        $dato = ProveedorDatosComerciales::find($id);
+        $dato         = ProveedorDatosComerciales::find($id);
         $proveedor_id = $dato->proveedor_id;
         $dato->delete();
 
@@ -156,5 +156,39 @@ class ProveedoresController extends Controller
         $request->session()->keep(['tab']);
 
         return redirect()->route('proveedores.show', $proveedor_id);
+    }
+
+    public function ajaxSendEmail(Request $request)
+    {
+        $email   = $request->input('email');
+        $message = $request->input('message');
+
+        if (is_null($email)) return response()->json(null);
+
+        $data     = array(
+            "email"   => $email,
+            "message" => $message
+        );
+        $sendMail = new SendMail($data);
+        Mail::to($email)->send($sendMail);
+
+        $response = array();
+
+        // check for failures
+        if (Mail::failures()) {
+            $response = array(
+                "title"   => "Aviso",
+                "message" => "Error al enviar email. Intente nuevamente",
+                "type"    => "error"
+            );
+        }else{
+            $response = array(
+                "title"   => "Éxito",
+                "message" => "Email enviado con éxito",
+                "type"    => "success"
+            );
+        }
+
+        return response()->json($response);
     }
 }

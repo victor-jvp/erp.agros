@@ -6,6 +6,7 @@ use App\Cliente;
 use App\ClienteContactos;
 use App\ClienteDatosComerciales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ClientesController extends Controller
 {

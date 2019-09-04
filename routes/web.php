@@ -72,6 +72,7 @@ Route::get('/almacen/proveedores/delete/{proveedor}', 'ProveedoresController@del
 Route::get('/almacen/proveedores/delete-contacto/{contacto}', 'ProveedoresController@delete_contacto');
 Route::post('/almacen/proveedores/{id}/contactos', 'ProveedoresController@contactos')->name('proveedores.contactos');
 Route::post('/almacen/proveedores/{id}/adjuntos', 'ProveedoresController@adjuntos')->name('proveedores.adjuntos');
+Route::post('/almacen/proveedores/ajaxSendEmail', 'ProveedoresController@ajaxSendEmail')->name('proveedores.ajaxSendEmail');
 #endregion
 
 #endregion
