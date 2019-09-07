@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cliente;
 use App\ClienteContactos;
+use App\ClienteAdjunto;
 use App\ClienteDatosComerciales;
 use App\Mail\SendMail;
 use Illuminate\Http\Request;
@@ -83,6 +84,41 @@ class ClientesController extends Controller
         $request->session()->keep(['tab']);
 
         return redirect()->route('clientes.show', $cliente->id);
+    }
+
+    public function adjuntos(Request $request, $id)
+    {
+        $cliente = Cliente::find($id);
+
+        $adjunto = new ClienteAdjunto();
+
+        $adjunto->tipo        = $request->file('file')->getClientOriginalExtension();
+        $adjunto->file        = $request->file('file')->store('uploads/clientes');
+        $adjunto->descripcion = $request->descripcion;
+        $adjunto->fecha       = $request->fecha;
+
+        $request->file('file')->move('uploads/clientes', $adjunto->file);
+
+        $cliente->adjuntos()->save($adjunto);
+
+        $request->session()->flash('tab', $request->_tab);
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('clientes.show', $cliente->id);
+    }
+
+
+    public function delete_adjunto(Request $request, $id)
+    {
+        $dato         = ClienteAdjunto::find($id);
+        $cliente_id = $dato->cliente_id;
+        unlink(public_path() . "/" . $dato->file);
+        $dato->delete();
+
+        $request->session()->flash('tab', 'documentacion');
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('proveedores.show', $cliente_id);
     }
 
     public function delete_contacto(Request $request, $id)
@@ -178,7 +214,7 @@ class ClientesController extends Controller
                 "message" => "Error al enviar email. Intente nuevamente",
                 "type"    => "error"
             );
-        }else{
+        } else {
             $response = array(
                 "title"   => "Éxito",
                 "message" => "Email enviado con éxito",
@@ -188,5 +224,4 @@ class ClientesController extends Controller
 
         return response()->json($response);
     }
-
 }

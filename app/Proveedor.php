@@ -20,4 +20,9 @@ class Proveedor extends Model
     {
         return $this->hasMany(ProveedorContactos::class);
     }
+
+    public function adjuntos()
+    {
+        return $this->hasMany(ProveedorAdjunto::class);
+    }
 }

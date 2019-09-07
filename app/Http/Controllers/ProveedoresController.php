@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\ProveedorContactos;
-use Illuminate\Http\Request;
 use App\Proveedor;
-use Illuminate\Support\Facades\Mail;
+use App\ProveedorContactos;
 use App\Mail\SendMail;
+use App\ProveedorAdjunto;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 
 class ProveedoresController extends Controller
 {
@@ -27,7 +29,37 @@ class ProveedoresController extends Controller
      */
     public function adjuntos(Request $request, $id)
     {
+        $proveedor = Proveedor::find($id);
 
+        $adjunto = new ProveedorAdjunto();
+
+        $adjunto->tipo        = $request->file('file')->getClientOriginalExtension();
+        $adjunto->file        = $request->file('file')->store('uploads/proveedores');
+        $adjunto->descripcion = $request->descripcion;
+        $adjunto->fecha       = $request->fecha;
+
+        $request->file('file')->move('uploads/proveedores', $adjunto->file);
+
+        $proveedor->adjuntos()->save($adjunto);
+
+        $request->session()->flash('tab', $request->_tab);
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('proveedores.show', $proveedor->id);
+    }
+
+
+    public function delete_adjunto(Request $request, $id)
+    {
+        $dato         = ProveedorAdjunto::find($id);
+        $proveedor_id = $dato->proveedor_id;
+        unlink(public_path() . "/" . $dato->file);
+        $dato->delete();
+
+        $request->session()->flash('tab', 'documentacion');
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('proveedores.show', $proveedor_id);
     }
 
     public function contactos(Request $request, $id)
@@ -181,7 +213,7 @@ class ProveedoresController extends Controller
                 "message" => "Error al enviar email. Intente nuevamente",
                 "type"    => "error"
             );
-        }else{
+        } else {
             $response = array(
                 "title"   => "Éxito",
                 "message" => "Email enviado con éxito",

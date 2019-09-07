@@ -380,7 +380,7 @@
                             </div>
                         </div>
 
-                        <!-- Modal entradas-->
+                        <!-- Modal Documentos-->
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                             aria-hidden="true" id="modal-adjunto">
                             <div class="modal-dialog modal-lg">
@@ -388,6 +388,7 @@
                                     <form action="/almacen/proveedores/{{$proveedor->id}}/adjuntos" method="POST"
                                         id="adjunto_form" enctype="multipart/form-data">
                                         {{ csrf_field() }}
+                                        <input type="hidden" name="_tab" value="documentacion">
 
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="modal-adjunto-title"></h5>
@@ -401,7 +402,7 @@
                                                     <label for="adjunto_fecha">Fecha</label>
                                                     <input type="date" class="form-control" id="adjunto_fecha"
                                                         value="{{ date('Y-m-d') }}" placeholder="Fecha" required=""
-                                                        name="adjunto_fecha">
+                                                        name="fecha">
                                                 </div>
 
                                                 <div class="col-md-8 mb-3">
@@ -416,9 +417,7 @@
                                                     <div class="card text-left">
                                                         <div class="card-body">
                                                             <h4 class="card-title">Adjuntar</h4>
-                                                            <form action="" method="post" enctype="multipart/form-data">
-                                                                <input type="file" name="file" />
-                                                            </form>
+                                                                <input type="file" name="file" required/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -436,7 +435,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 table-responsive">
                                 <table id="adjuntos_table" class="display table table-striped table-bordered"
                                     style="width:100%">
                                     <thead>
@@ -452,16 +451,13 @@
                                         @if (isset($proveedor->adjuntos))
                                         @foreach ($proveedor->adjuntos as $adjunto)
                                         <tr>
-                                            <td>{{ $entrada->id }}</td>
-                                            <td>{{ $adjunto->fecha }}</td>
+                                            <td>{{ $adjunto->id }}</td>
+                                            <td>{{ date('d/m/Y', strtotime($adjunto->fecha)) }}</td>
                                             <td>
-                                                <a href="{{ $adjunto->url }}">{{ $adjunto->descripcion }}</a>
+                                                <a target="_blank" href="{{ url($adjunto->file) }}">{{ $adjunto->descripcion }}</a>
                                             </td>
                                             <td>{{ $adjunto->tipo }}</td>
                                             <td>
-                                                <a href="javascript:void(0);" class="text-success mr-2 edit">
-                                                    <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                                </a>
                                                 <a href="javascript:void(0);" class="text-danger mr-2 delete">
                                                     <i class="nav-icon i-Close-Window font-weight-bold "></i>
                                                 </a>
@@ -671,18 +667,26 @@
             $("#modal-adjunto").modal('show');
         });
 
-        // "myAwesomeDropzone" is the camelized version of the HTML element's ID
-        Dropzone.options.myAwesomeDropzone = {
-            paramName: "file", // The name that will be used to transfer the file
-            maxFilesize: 2, // MB
-            accept: function (file, done) {
-                if (file.name == "justinbieber.jpg") {
-                    done("Naha, you don't.");
-                } else {
-                    done();
-                }
-            }
-        };
+        $('#adjuntos_table .delete').on('click', function () {
+            var tr = $(this).closest('tr');
+            var row = adjuntos_table.row(tr).data();
+
+            swal({
+                title: 'Confirmar Proceso',
+                text: "Confirme eliminar el registro seleccionado",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#0CC27E',
+                cancelButtonColor: '#FF586B',
+                confirmButtonText: 'Confirmar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonClass: 'btn btn-success mr-5',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function () {
+                window.location.href = "{{ url('almacen/proveedores/delete-adjunto') }}" + "/" + row[0]
+            });
+        });
     });
 </script>
 @endsection

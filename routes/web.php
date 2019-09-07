@@ -44,6 +44,8 @@ Route::get('pedidos-campo/{pedido}/down', 'PedidosCampoController@down')->name('
 Route::resource('/comercial/clientes', 'ClientesController');
 Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
 Route::get('/comercial/clientes/delete-contacto/{contacto}', 'ClientesController@delete_contacto');
+Route::post('/comercial/clientes/{id}/adjuntos', 'ClientesController@adjuntos')->name('clientes.adjuntos');
+Route::get('/comercial/clientes/delete-adjunto/{adjunto}', 'ClientesController@delete_adjunto');
 Route::post('/comercial/clientes/{cliente}/contactos', 'ClientesController@contactos')->name('clientes.contactos');
 Route::post('/comercial/clientes/ajaxSendEmail', 'ClientesController@ajaxSendEmail')->name('clientes.ajaxSendEmail');
 #endregion
@@ -71,6 +73,7 @@ Route::post('almacen/salida-productos/selectMaterial', 'SalidaProductosControlle
 Route::resource('almacen/proveedores', 'ProveedoresController');
 Route::get('/almacen/proveedores/delete/{proveedor}', 'ProveedoresController@delete')->name('proveedores.delete');
 Route::get('/almacen/proveedores/delete-contacto/{contacto}', 'ProveedoresController@delete_contacto');
+Route::get('/almacen/proveedores/delete-adjunto/{adjunto}', 'ProveedoresController@delete_adjunto');
 Route::post('/almacen/proveedores/{id}/contactos', 'ProveedoresController@contactos')->name('proveedores.contactos');
 Route::post('/almacen/proveedores/{id}/adjuntos', 'ProveedoresController@adjuntos')->name('proveedores.adjuntos');
 Route::post('/almacen/proveedores/ajaxSendEmail', 'ProveedoresController@ajaxSendEmail')->name('proveedores.ajaxSendEmail');
