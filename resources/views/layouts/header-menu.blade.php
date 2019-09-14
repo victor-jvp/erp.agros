@@ -1,6 +1,6 @@
     <div class="main-header">
             <div class="logo">
-                <img src="{{asset('assets/images/logo.png')}}" alt="">
+                <img src="{{asset('assets/images/LOGO-ERP-MORADO2.png')}}" alt="">
             </div>
 
             <div class="menu-toggle">

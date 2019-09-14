@@ -16,7 +16,7 @@
         <div class="col-md-12">
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="card-title mb-3">Semanas y Fincas</div>
+                    <div class="card-title mb-3">Fecha y Fincas</div>
 
                     <!-- Modal Pedido-->
                     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -118,7 +118,6 @@
 
                     <form action="/pedidos-campo" method="GET" id="form_fecha_act">
                         <div class="row">
-
                             <div class="col-md-3 form-group mb-3">
                                 <label>Fecha</label>
                                 <input type="date" name="fecha_act" id="fecha_act" class="form-control"

@@ -73,8 +73,20 @@
         <ul class="childNav" data-parent="comercial">
             <li class="nav-item">
                 <a href="#">
+                    <i class="nav-icon i-Dashboard"></i>
+                    <span class="item-name">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="{{ Route::currentRouteName()=='pedidos-comercial.index' ? 'open' : '' }}" href="{{ url('comercial/pedidos-comercial') }}">
                     <i class="nav-icon i-File-Clipboard-Text--Image"></i>
-                    <span class="item-name">Listado de Pedidos</span>
+                    <span class="item-name">Pedidos Comerciales</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#">
+                    <i class="nav-icon i-File-Clipboard-Text--Image"></i>
+                    <span class="item-name">Pedidos Producción</span>
                 </a>
             </li>
             <li class="nav-item">

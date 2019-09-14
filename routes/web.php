@@ -41,6 +41,8 @@ Route::get('pedidos-campo/{pedido}/down', 'PedidosCampoController@down')->name('
 #endregion
 
 #region Comercial
+Route::resource('/comercial/pedidos-comercial', 'PedidosComercialController');
+
 Route::resource('/comercial/clientes', 'ClientesController');
 Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
 Route::get('/comercial/clientes/delete-contacto/{contacto}', 'ClientesController@delete_contacto');
