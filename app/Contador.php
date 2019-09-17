@@ -59,4 +59,19 @@ class Contador extends Model
         return $nro_lote_pedido;
     }
     #endregion
+
+    #region Pedidos comerciales
+    public function scopeNext_nro_pedido_comercial()
+    {
+        $nro_pedido_comercial = $this->where('contador', '=', 'nro_pedido_comercial')->first(['valor'])->valor + 1;
+        return $nro_pedido_comercial;
+    }
+
+    public function scopeSave_nro_pedido_comercial()
+    {
+        $nro_pedido_comercial = $this->where('contador', '=', 'nro_pedido_comercial')->first(['valor'])->valor + 1;
+        DB::table('contadores')->where('contador', 'nro_pedido_comercial')->update(['valor' => $nro_pedido_comercial]);
+        return $nro_pedido_comercial;
+    }
+    #endregion
 }

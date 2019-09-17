@@ -135,7 +135,8 @@
                                                     <a href="javascript:void(0);" class="input-group-text"
                                                         id="btnOpenFormatoModal"><i class="i-Information"></i></a>
                                                 </div>
-                                                <input type="text" class="form-control" name="formato" id="formato">
+                                                <input type="text" class="form-control" id="formato"
+                                                    placeholder="Seleccione las opciones del formato">
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
@@ -225,10 +226,9 @@
                                     </select>
                                 </div>
 
-                                 <div class="col-md-12 mb-3">
+                                <div class="col-md-12 mb-3">
                                     <label for="modelo_palet">Tipo de Palet</label>
-                                    <select class="form-control chosen" id="modelo_palet"
-                                        name="modelo_palet">
+                                    <select class="form-control chosen" id="modelo_palet" name="modelo_palet">
                                         @foreach ($modelos as $modelo)
                                         <option value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
                                         @endforeach
@@ -237,21 +237,19 @@
 
                                 <div class="col-md-12 mb-3">
                                     <label for="formato_palet">Formato de Palet</label>
-                                    <select class="form-control chosen" id="formato_palet"
-                                        name="formato_palet">
+                                    <select class="form-control chosen" id="formato_palet" name="formato_palet">
                                     </select>
                                 </div>
 
                                 <div class="col-md-12 mb-3">
-                                            <label for="cantidad">Cantidad</label>
-                                            <input type="number" class="form-control" name="cantidad" id="cantidad"
-                                                step="0.01" min="0.00" placeholder="0.00">
-                                        </div>
+                                    <label for="cantidad">Cantidad</label>
+                                    <input type="number" class="form-control" name="cantidad" id="cantidad" step="0.01"
+                                        min="0.00" placeholder="0.00">
+                                </div>
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary ml-2" data-dismiss="modal">Aceptar</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -260,14 +258,27 @@
 
                 <form action="/comercial/pedidos-comercial" method="GET" id="form_fecha_act">
                     <div class="row">
+
+                        <div class="col-md-3 form-group mb-3">
+                            <label>Año</label>
+                            <select class="form-control" name="anio_act" id="anio_act">
+                                @for($i = $anio_ini; $i <= $anio_fin; $i++) <option
+                                    {{ ($i == $anio_act) ? 'selected' : '' }} value="{{ $i }}">
+                                    {{ $i }}
+                                    </option>
+                                    @endfor
+                            </select>
+                        </div>
+
                         <div class="col-md-3 form-group mb-3">
                             <label>Semana</label>
-                            <input type="text" readonly value="{{ $semana_act }}" class="form-control">
-                        </div>
-                        <div class="col-md-3 form-group mb-3">
-                            <label>Fecha</label>
-                            <input type="date" name="fecha_act" id="fecha_act" class="form-control"
-                                value="{{ $fecha_act }}">
+                            <select class="form-control" name="semana_act" id="semana_act">
+                                @for($i = $semana_ini; $i <= $semana_fin; $i++) <option
+                                    {{ ($i == $semana_act) ? 'selected' : '' }} value="{{ $i }}">
+                                    {{ $i }}
+                                    </option>
+                                    @endfor
+                            </select>
                         </div>
 
                         <div class="col-md-6  text-right form-group mb-3">
@@ -368,6 +379,7 @@
 </script>
 
 <script>
+    var nro_orden = "{{ $nro_orden }}";
     $(document).ready(function () {
         // Configuracion de Datatable
         $('.table_pedidos').DataTable({
@@ -404,6 +416,8 @@
 
         $("#btnAddPedido").click(function (e) {
             limpiarCamposPedido();
+            $(".estado").hide();
+            $("#nro_orden").val(nro_orden);
             $("#modal-pedido-title").html("Nuevo Pedido");
             $("#modal-pedido").modal('show');
         })
@@ -412,21 +426,23 @@
             $("#modal-producto").modal('show');
         })
 
-        $("#producto").on('change', function(){
+        $("#producto").on('change', function () {
             var compuesto_id = $(this).val();
             loadCompuesto(compuesto_id)
         });
 
-        $("#modelo_palet").on('change', function(){
+        $("#modelo_palet").on('change', function () {
             var modelo_id = $(this).val();
             loadPalet(modelo_id)
         });
     });
 
     function limpiarCamposPedido() {
-        $('#nro_orden, #cliente, #destino_comercial, #cultivo, #formato, #etiqueta, #transporte, #precio, #kilos, #comentario').val(null);
+        $('#nro_orden, #cliente, #destino_comercial, #cultivo, #formato, #etiqueta, #transporte, #precio, #kilos, #comentario')
+            .val(null);
         $('#producto, #producto_compuesto, #modelo_palet, #formato_palet, #cantidad').val(null);
         $(".dias").prop("checked", false).prop('disabled', false);
+        $(".chosen").trigger("chosen:updated");
     }
 
     function loadCompuesto(valor, selected) {
@@ -444,7 +460,7 @@
                 for (i = 0; i < data.length; i++) {
                     var value = data[i].id;
                     var text = data[i].variable;
-                    var option = "<option value='" + value + "'>" + text + "</option>";                
+                    var option = "<option value='" + value + "'>" + text + "</option>";
                     $("#producto_compuesto").append(option);
                 }
 
@@ -480,7 +496,7 @@
                 for (i = 0; i < data.length; i++) {
                     var value = data[i].id;
                     var text = data[i].formato;
-                    var option = "<option value='" + value + "'>" + text + "</option>";                
+                    var option = "<option value='" + value + "'>" + text + "</option>";
                     $("#formato_palet").append(option);
                 }
 
