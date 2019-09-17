@@ -39,6 +39,16 @@
                                             <label for="nro_orden">Nº Orden</label>
                                             <input type="text" name="nro_orden" id="nro_orden" class="form-control">
                                         </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label for="anio">Año</label>
+                                            <input type="text" name="anio" id="anio" class="form-control" readonly>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label for="semana">Semana</label>
+                                            <input type="text" name="semana" id="semana" class="form-control" readonly>
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -308,28 +318,31 @@
                             <div class="tab-pane fade {{ ($c==0) ? 'active show' : '' }}"
                                 id="cultivo_{{ $cultivo->id }}_pill" role="tabpanel"
                                 aria-labelledby="cultivo_{{ $cultivo->id }}_pill">
-                                <div class="table-responsive">
-                                    <table class="table table_pedidos">
-                                        <thead>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3 table-responsive">
+                                        <table class="table table_pedidos" width="100%">
+                                            <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th scope="col">Nº Orden</th>
-                                                <th scope="col">Fecha</th>
-                                                <th scope="col">Cliente</th>
-                                                <th scope="col">Destino</th>
+                                                <th>Nº Orden</th>
+                                                <th>Año</th>
+                                                <th>Semana</th>
+                                                <th>Dia</th>
+                                                <th>Cliente</th>
+                                                <th>Destino</th>
                                                 <th>Formato</th>
                                                 <th>Etiqueta</th>
                                                 <th>Transporte</th>
                                                 <th>Precio €/Kg</th>
                                                 <th>Observación</th>
                                                 <th>Estado</th>
-                                                <th scope="col">Acciones</th>
+                                                <th>Acciones</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             @endforeach
@@ -372,7 +385,7 @@
 
 <script>
     $(function () {
-        $("#fecha_act").change(function () {
+        $("#semana_act, #anio_act").change(function () {
             $("#form_fecha_act").submit();
         });
     })
@@ -392,6 +405,10 @@
             }, ],
             responsive: true
         });
+
+        // $.fn.dataTable
+        //     .tables( { visible: true, api: true } )
+        //     .columns.adjust();
 
         $('#clientes_table .delete').on('click', function () {
             var tr = $(this).closest('tr');
@@ -418,6 +435,8 @@
             limpiarCamposPedido();
             $(".estado").hide();
             $("#nro_orden").val(nro_orden);
+            $("#anio").val($("#anio_act").val())
+            $("#semana").val($("#semana_act").val())
             $("#modal-pedido-title").html("Nuevo Pedido");
             $("#modal-pedido").modal('show');
         })
