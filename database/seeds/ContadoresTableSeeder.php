@@ -25,5 +25,10 @@ class ContadoresTableSeeder extends Seeder
             'contador' => 'nro_lote_pedido',
             'valor'    => 0
         ]);
+
+        DB::table('contadores')->insert([
+            'contador' => 'nro_pedido_comercial',
+            'valor'    => 0
+        ]);
     }
 }

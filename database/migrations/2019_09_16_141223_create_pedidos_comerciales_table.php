@@ -25,6 +25,7 @@ class CreatePedidosComercialesTable extends Migration
             $table->double('cantidad')->default(0);
             $table->string('etiqueta');
             $table->double('precio');
+            $table->double('kilos');
             $table->text('comentarios');
             $table->unsignedInteger('estado_id');
             $table->boolean('cancelado')->default(false);

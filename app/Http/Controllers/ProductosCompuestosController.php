@@ -131,4 +131,15 @@ class ProductosCompuestosController extends Controller
 
         return redirect()->route('productos-compuestos-show', $compuesto_id);
     }
+
+    public function ajaxGetDetalles(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (is_null($id)) return response()->json(null);
+
+        $data = ProductoCompuesto_det::where('compuesto_id', $id)->get();
+
+        return response()->json($data);
+    }
 }

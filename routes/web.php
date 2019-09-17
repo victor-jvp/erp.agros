@@ -114,6 +114,7 @@ Route::get('/maestros/cubres/delete/{cubre}', 'CubresController@delete')->name('
 Route::get('/maestros/auxiliares/delete/{auxiliar}', 'AuxiliaresController@delete')->name('auxiliares.delete');
 Route::get('/maestros/tarrinas/delete/{tarrina}', 'TarrinasController@delete')->name('auxiliares.delete');
 
+Route::post('/maestros/pallets/ajaxGetPalletByModelo', 'PalletsController@ajaxGetPalletByModelo')->name('pallets.ajaxGetPalletByModelo');
 #endregion
 
 #region Familias y Marcas
@@ -210,6 +211,8 @@ Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
 Route::put('/maestros/productos-compuestos/store', 'ProductosCompuestosController@store')->name('productos-compuestos.store');
 Route::get('/maestros/productos-compuestos/details/{producto}', 'ProductosCompuestosController@details')->name('productos-compuestos.details');
 Route::get('/maestros/productos-compuestos/delete/{producto}', 'ProductosCompuestosController@delete')->name('productos-compuestos.delete');
+Route::post('/maestros/productos-compuestos/ajaxGetDetalles', 'ProductosCompuestosController@ajaxGetDetalles')->name('productos-compuestos.ajaxGetDetalles');
+
 
 #endregion
 

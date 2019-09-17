@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\CatDiasSemana;
 use App\Cliente;
 use App\Cultivo;
+use App\Pallet;
+use App\PalletModel;
 use App\PedidoComercialEstado;
 use App\ProductoCompuesto_cab;
 use Illuminate\Http\Request;
@@ -20,19 +22,21 @@ class PedidosComercialController extends Controller
             $data['semana_act'] = intval(date("W"));
         }
 
-        $cultivos = Cultivo::all();
-        $clientes = Cliente::all();
-        $estados  = PedidoComercialEstado::all();
+        $cultivos  = Cultivo::all();
+        $clientes  = Cliente::all();
+        $estados   = PedidoComercialEstado::all();
         $productos = ProductoCompuesto_cab::with('det')->get();
+        $modelos   = PalletModel::all();
 
         $data['semana']     = CatDiasSemana::orderBy('order', 'ASC')->get();
         $data['semana_ini'] = 1;
         $data['semana_fin'] = 50;
-        $data['fecha_act'] = $fecha_act;
-        $data["cultivos"]  = $cultivos;
-        $data['clientes']  = $clientes;
-        $data['estados'] = $estados;
-        $data['productos'] = $productos;
+        $data['fecha_act']  = $fecha_act;
+        $data["cultivos"]   = $cultivos;
+        $data['clientes']   = $clientes;
+        $data['estados']    = $estados;
+        $data['productos']  = $productos;
+        $data['modelos']    = $modelos;
 
         return view("comercial.pedidos-comercial.index")->with($data);
     }

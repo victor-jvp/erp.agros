@@ -26,7 +26,6 @@
                             <form action="/comercial/pedidos-comercial" method="POST" id="pedido_form">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="_method" id="pedido_method" value="">
-                                <input type="hidden" name="id" id="pedido_id">
 
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="modal-pedido-title"></h5>
@@ -45,7 +44,7 @@
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label for="cliente">Cliente</label>
-                                            <select class="form-control chosen" id="cliente" name="producto">
+                                            <select class="form-control chosen" id="cliente" name="cliente">
                                                 @foreach ($clientes as $cliente)
                                                 <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                 @endforeach
@@ -64,8 +63,8 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="producto">Producto</label>
-                                            <select class="form-control chosen" id="producto" name="producto">
+                                            <label for="cultivo">Producto</label>
+                                            <select class="form-control chosen" id="cultivo" name="cultivo">
                                                 @foreach ($cultivos as $cultivo)
                                                 <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
                                                 @endforeach
@@ -131,13 +130,13 @@
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label for="formato">Formato</label>
-                                            <div class="input-group mb-3">                                                
+                                            <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <a href="javascript:void(0);" class="input-group-text"
                                                         id="btnOpenFormatoModal"><i class="i-Information"></i></a>
                                                 </div>
                                                 <input type="text" class="form-control" name="formato" id="formato">
-                                            </div>                                            
+                                            </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label for="etiqueta">Etiqueta</label>
@@ -220,15 +219,39 @@
 
                                 <div class="col-md-12 mb-3">
                                     <label for="producto_compuesto">Compuesto</label>
-                                    <select class="form-control chosen" id="producto_compuesto" name="producto_compuesto">
+                                    <select class="form-control chosen" id="producto_compuesto"
+                                        name="producto_compuesto">
                                         <option value=""></option>
                                     </select>
                                 </div>
 
+                                 <div class="col-md-12 mb-3">
+                                    <label for="modelo_palet">Tipo de Palet</label>
+                                    <select class="form-control chosen" id="modelo_palet"
+                                        name="modelo_palet">
+                                        @foreach ($modelos as $modelo)
+                                        <option value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <label for="formato_palet">Formato de Palet</label>
+                                    <select class="form-control chosen" id="formato_palet"
+                                        name="formato_palet">
+                                    </select>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                            <label for="cantidad">Cantidad</label>
+                                            <input type="number" class="form-control" name="cantidad" id="cantidad"
+                                                step="0.01" min="0.00" placeholder="0.00">
+                                        </div>
+
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary ml-2">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary ml-2" data-dismiss="modal">Aceptar</button>
                             </div>
                         </div>
                     </div>
@@ -380,7 +403,7 @@
         });
 
         $("#btnAddPedido").click(function (e) {
-            //limpiarCamposProveedor();
+            limpiarCamposPedido();
             $("#modal-pedido-title").html("Nuevo Pedido");
             $("#modal-pedido").modal('show');
         })
@@ -388,10 +411,94 @@
         $("#btnOpenFormatoModal").click(function (e) {
             $("#modal-producto").modal('show');
         })
+
+        $("#producto").on('change', function(){
+            var compuesto_id = $(this).val();
+            loadCompuesto(compuesto_id)
+        });
+
+        $("#modelo_palet").on('change', function(){
+            var modelo_id = $(this).val();
+            loadPalet(modelo_id)
+        });
     });
 
-    function limpiarCamposProveedor() {
-        $('#cif, #razon_social').val(null);
+    function limpiarCamposPedido() {
+        $('#nro_orden, #cliente, #destino_comercial, #cultivo, #formato, #etiqueta, #transporte, #precio, #kilos, #comentario').val(null);
+        $('#producto, #producto_compuesto, #modelo_palet, #formato_palet, #cantidad').val(null);
+        $(".dias").prop("checked", false).prop('disabled', false);
+    }
+
+    function loadCompuesto(valor, selected) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('productos-compuestos.ajaxGetDetalles') }}",
+            dataType: 'JSON',
+            data: {
+                "id": valor
+            },
+            success: function (data) {
+                ClearCompuesto();
+                if (data == null) return;
+
+                for (i = 0; i < data.length; i++) {
+                    var value = data[i].id;
+                    var text = data[i].variable;
+                    var option = "<option value='" + value + "'>" + text + "</option>";                
+                    $("#producto_compuesto").append(option);
+                }
+
+                if (selected != null) {
+                    $("#producto_compuesto").val(selected).trigger('chosen:updated');
+                } else {
+                    $("#producto_compuesto").trigger('chosen:updated');
+                }
+            },
+            error: function (error) {
+                console.log(error)
+                alert('Error. Check Console Log');
+            },
+        });
+    }
+
+    function ClearCompuesto() {
+        $("#producto_compuesto").html(null).append('<option value=""></option>');
+    }
+
+    function loadPalet(valor, selected) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('pallets.ajaxGetPalletByModelo') }}",
+            dataType: 'JSON',
+            data: {
+                "id": valor
+            },
+            success: function (data) {
+                ClearPalet();
+                if (data == null) return;
+
+                for (i = 0; i < data.length; i++) {
+                    var value = data[i].id;
+                    var text = data[i].formato;
+                    var option = "<option value='" + value + "'>" + text + "</option>";                
+                    $("#formato_palet").append(option);
+                }
+
+                if (selected != null) {
+                    $("#formato_palet").val(selected).trigger('chosen:updated');
+                } else {
+                    $("#formato_palet").trigger('chosen:updated');
+                }
+            },
+            error: function (error) {
+                console.log(error)
+                alert('Error. Check Console Log');
+            },
+        });
+    }
+
+    function ClearPalet() {
+        $("#formato_palet").html(null).append('<option value=""></option>');
     }
 </script>
 @endsection

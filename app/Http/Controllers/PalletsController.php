@@ -49,4 +49,15 @@ class PalletsController extends Controller
 
         return redirect()->route('materiales')->with('activeNav', 'pallets');
     }
+
+    public function ajaxGetPalletByModelo(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (is_null($id)) return response()->json(null);
+
+        $data = Pallet::where('modelo_id', $id)->get();
+
+        return response()->json($data);
+    }
 }
