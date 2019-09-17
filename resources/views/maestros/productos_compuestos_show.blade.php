@@ -1122,6 +1122,7 @@
             $(".chosen").chosen({
                 width: "100%",
                 no_results_text: "No se encontraron resultados... ",
+                placeholder_text_single: "Seleccione una opción...",
                 allow_single_deselect: true
             });
         })

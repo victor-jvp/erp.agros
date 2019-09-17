@@ -18,14 +18,15 @@
             <div class="card-body">
                 <div class="card-title mb-3">Pedidos Comerciales</div>
 
-                <!-- Modal Pedido-->
-                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                    aria-hidden="true" id="modal-pedido">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <form action="/comercial/pedidos-comercial" method="POST" id="pedido_form">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="_method" id="pedido_method" value="">
+                <form action="/comercial/pedidos-comercial" method="POST" id="pedido_form">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="_method" id="pedido_method" value="">
+
+                    <!-- Modal Pedido-->
+                    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true" id="modal-pedido">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
 
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="modal-pedido-title"></h5>
@@ -73,7 +74,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="cultivo">Producto</label>
+                                            <label for="cultivo">Cultivo</label>
                                             <select class="form-control chosen" id="cultivo" name="cultivo">
                                                 @foreach ($cultivos as $cultivo)
                                                 <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
@@ -85,28 +86,28 @@
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
                                             <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="dia[]" value="1" class="dias">
+                                                <input type="checkbox" name="dias[]" value="1" class="dias">
                                                 <span>Miércoles</span>
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="dia[]" value="2" class="dias">
+                                                <input type="checkbox" name="dias[]" value="2" class="dias">
                                                 <span>Jueves</span>
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="dia[]" value="3" class="dias">
+                                                <input type="checkbox" name="dias[]" value="3" class="dias">
                                                 <span>Viernes</span>
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="dia[]" value="4" class="dias">
+                                                <input type="checkbox" name="dias[]" value="4" class="dias">
                                                 <span>Sábado</span>
                                                 <span class="checkmark"></span>
                                             </label>
@@ -116,21 +117,21 @@
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
                                             <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="dia[]" value="5" class="dias">
+                                                <input type="checkbox" name="dias[]" value="5" class="dias">
                                                 <span>Domingo</span>
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="dia[]" value="6" class="dias">
+                                                <input type="checkbox" name="dias[]" value="6" class="dias">
                                                 <span>Lunes</span>
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label class="checkbox checkbox-success">
-                                                <input type="checkbox" name="dia[]" value="7" class="dias">
+                                                <input type="checkbox" name="dias[]" value="7" class="dias">
                                                 <span>Martes</span>
                                                 <span class="checkmark"></span>
                                             </label>
@@ -162,7 +163,8 @@
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label for="precio">Precio Kg</label>
-                                            <input type="text" name="precio" id="precio" class="form-control">
+                                            <input type="number" name="precio" id="precio" class="form-control"
+                                                step="0.01" min="0.00" placeholder="0.00">
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label for="kilos">Kilos</label>
@@ -200,71 +202,73 @@
                                     </button>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                {{-- Fin modal Pedido --}}
-
-                {{-- Modal Producto compuesto --}}
-                <div class="modal fade" id="modal-producto" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modal-producto-title">Seleccionar Producto Compuesto</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-
-                                <div class="col-md-12 mb-3">
-                                    <label for="producto">Producto</label>
-                                    <select class="form-control chosen" id="producto" name="producto">
-                                        @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->compuesto }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <label for="producto_compuesto">Compuesto</label>
-                                    <select class="form-control chosen" id="producto_compuesto"
-                                        name="producto_compuesto">
-                                        <option value=""></option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <label for="modelo_palet">Tipo de Palet</label>
-                                    <select class="form-control chosen" id="modelo_palet" name="modelo_palet">
-                                        @foreach ($modelos as $modelo)
-                                        <option value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <label for="formato_palet">Formato de Palet</label>
-                                    <select class="form-control chosen" id="formato_palet" name="formato_palet">
-                                    </select>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <label for="cantidad">Cantidad</label>
-                                    <input type="number" class="form-control" name="cantidad" id="cantidad" step="0.01"
-                                        min="0.00" placeholder="0.00">
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>
-                </div>
-                {{-- Fin Modal Producto Compuesto --}}
+                    {{-- Fin modal Pedido --}}
+
+                    {{-- Modal Producto compuesto --}}
+                    <div class="modal fade" id="modal-producto" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-producto-title">Seleccionar Producto
+                                        Compuesto</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="producto">Producto</label>
+                                        <select class="form-control chosen" id="producto">
+                                            @foreach ($productos as $producto)
+                                            <option value="{{ $producto->id }}">{{ $producto->compuesto }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="producto_compuesto">Compuesto</label>
+                                        <select class="form-control chosen" id="producto_compuesto"
+                                            name="producto_compuesto">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="modelo_palet">Tipo de Palet</label>
+                                        <select class="form-control chosen" id="modelo_palet">
+                                            @foreach ($modelos as $modelo)
+                                            <option value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="formato_palet">Formato de Palet</label>
+                                        <select class="form-control chosen" id="formato_palet" name="formato_palet">
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="cantidad">Cantidad</label>
+                                        <input type="number" class="form-control" name="cantidad" id="cantidad"
+                                            step="0.01" min="0.00" placeholder="0.00">
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Fin Modal Producto Compuesto --}}
+                </form>
 
                 <form action="/comercial/pedidos-comercial" method="GET" id="form_fecha_act">
                     <div class="row">
@@ -322,24 +326,42 @@
                                     <div class="col-md-12 mb-3 table-responsive">
                                         <table class="table table_pedidos" width="100%">
                                             <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Nº Orden</th>
-                                                <th>Año</th>
-                                                <th>Semana</th>
-                                                <th>Dia</th>
-                                                <th>Cliente</th>
-                                                <th>Destino</th>
-                                                <th>Formato</th>
-                                                <th>Etiqueta</th>
-                                                <th>Transporte</th>
-                                                <th>Precio €/Kg</th>
-                                                <th>Observación</th>
-                                                <th>Estado</th>
-                                                <th>Acciones</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nº Orden</th>
+                                                    <th>Año</th>
+                                                    <th>Semana</th>
+                                                    <th>Dia</th>
+                                                    <th>Cliente</th>
+                                                    <th>Destino</th>
+                                                    <th>Formato</th>
+                                                    <th>Etiqueta</th>
+                                                    <th>Transporte</th>
+                                                    <th>Precio €/Kg</th>
+                                                    <th>Observación</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($cultivo->pedidos as $pedido)
+                                                <tr>
+                                                    <td>{{ $pedido->id }}</td>
+                                                    <td>{{ $pedido->nro_orden }}</td>
+                                                    <td>{{ $pedido->anio }}</td>
+                                                    <td>{{ $pedido->semana }}</td>
+                                                    <td>{{ $pedido->dia->dia }}</td>
+                                                    <td>{{ (!is_null($pedido->cliente)) ? $pedido->cliente->razon_social : "" }}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>{{ $pedido->etiqueta }}</td>
+                                                    <td></td>
+                                                    <td>{{ $pedido->precio }}</td>
+                                                    <td>{{ $pedido->comentarios }}</td>
+                                                    <td>{{ $pedido->estado->estado }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -372,6 +394,7 @@
         $(".chosen").chosen({
             width: "100%",
             no_results_text: "No se encontraron resultados... ",
+            placeholder_text_single: "Seleccione una opción...",
             allow_single_deselect: true
         });
     });
@@ -410,7 +433,7 @@
         //     .tables( { visible: true, api: true } )
         //     .columns.adjust();
 
-        $('#clientes_table .delete').on('click', function () {
+        $('.table_pedidos .delete').on('click', function () {
             var tr = $(this).closest('tr');
             var row = table_clientes.row(tr).data();
 
@@ -438,6 +461,7 @@
             $("#anio").val($("#anio_act").val())
             $("#semana").val($("#semana_act").val())
             $("#modal-pedido-title").html("Nuevo Pedido");
+            $("#pedido_method").val(null);
             $("#modal-pedido").modal('show');
         })
 
