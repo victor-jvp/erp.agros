@@ -10,7 +10,7 @@ class Cliente extends Model
     //
     use softDeletes;
     protected $table = "clientes";
-    
+
     public function contactos()
     {
         return $this->hasMany(ClienteContactos::class);
@@ -19,5 +19,10 @@ class Cliente extends Model
     public function adjuntos()
     {
         return $this->hasMany(ClienteAdjunto::class);
+    }
+
+    public function destinos()
+    {
+        return $this->hasMany(ClienteDestinos::class);
     }
 }

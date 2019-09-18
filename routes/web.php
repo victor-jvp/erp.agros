@@ -42,13 +42,16 @@ Route::get('pedidos-campo/{pedido}/down', 'PedidosCampoController@down')->name('
 
 #region Comercial
 Route::resource('/comercial/pedidos-comercial', 'PedidosComercialController');
+Route::resource('/comercial/transporte', 'TransporteController');
 
 Route::resource('/comercial/clientes', 'ClientesController');
 Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
-Route::get('/comercial/clientes/delete-contacto/{contacto}', 'ClientesController@delete_contacto');
 Route::post('/comercial/clientes/{id}/adjuntos', 'ClientesController@adjuntos')->name('clientes.adjuntos');
 Route::get('/comercial/clientes/delete-adjunto/{adjunto}', 'ClientesController@delete_adjunto');
 Route::post('/comercial/clientes/{cliente}/contactos', 'ClientesController@contactos')->name('clientes.contactos');
+Route::get('/comercial/clientes/delete-contacto/{contacto}', 'ClientesController@delete_contacto');
+Route::post('/comercial/clientes/{cliente}/destinos', 'ClientesController@destinos')->name('clientes.destinos');
+Route::get('/comercial/clientes/delete-destino/{destino}', 'ClientesController@delete_destino');
 Route::post('/comercial/clientes/ajaxSendEmail', 'ClientesController@ajaxSendEmail')->name('clientes.ajaxSendEmail');
 #endregion
 

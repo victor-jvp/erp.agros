@@ -6,6 +6,7 @@ use App\Cliente;
 use App\ClienteContactos;
 use App\ClienteAdjunto;
 use App\ClienteDatosComerciales;
+use App\ClienteDestinos;
 use App\Mail\SendMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -19,7 +20,7 @@ class ClientesController extends Controller
     public function index()
     {
         $data = array(
-            "clientes" => Cliente::with('contactos')->get()
+            "clientes" => Cliente::with('contactos')->with('destinos')->get()
         );
         return view('comercial.clientes.index', $data);
     }
@@ -86,6 +87,35 @@ class ClientesController extends Controller
         return redirect()->route('clientes.show', $cliente->id);
     }
 
+    public function destinos(Request $request, $id)
+    {
+        $cliente = Cliente::find($id);
+
+        if (is_null($request->destino_id)) {
+            $destino = new ClienteDestinos(array(
+                'descripcion' => $request->descripcion,
+                'direccion'   => $request->direccion,
+                'poblacion'   => $request->poblacion,
+                'ciudad'      => $request->ciudad,
+                'pais'        => $request->pais,
+            ));
+            $cliente->destinos()->save($destino);
+        } else {
+            $destino              = ClienteDestinos::find($request->destino_id);
+            $destino->descripcion = $request->descripcion;
+            $destino->direccion   = $request->direccion;
+            $destino->poblacion   = $request->poblacion;
+            $destino->ciudad      = $request->ciudad;
+            $destino->pais        = $request->pais;
+            $destino->save();
+        }
+
+        $request->session()->flash('tab', $request->_tab);
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('clientes.show', $cliente->id);
+    }
+
     public function adjuntos(Request $request, $id)
     {
         $cliente = Cliente::find($id);
@@ -110,7 +140,7 @@ class ClientesController extends Controller
 
     public function delete_adjunto(Request $request, $id)
     {
-        $dato         = ClienteAdjunto::find($id);
+        $dato       = ClienteAdjunto::find($id);
         $cliente_id = $dato->cliente_id;
         unlink(public_path() . "/" . $dato->file);
         $dato->delete();
@@ -128,6 +158,18 @@ class ClientesController extends Controller
         $dato->delete();
 
         $request->session()->flash('tab', 'contactos');
+        $request->session()->keep(['tab']);
+
+        return redirect()->route('clientes.show', $cliente_id);
+    }
+
+    public function delete_destino(Request $request, $id)
+    {
+        $dato       = ClienteDestinos::find($id);
+        $cliente_id = $dato->cliente_id;
+        $dato->delete();
+
+        $request->session()->flash('tab', 'destinos');
         $request->session()->keep(['tab']);
 
         return redirect()->route('clientes.show', $cliente_id);

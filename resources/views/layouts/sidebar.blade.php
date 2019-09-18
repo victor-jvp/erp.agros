@@ -95,33 +95,11 @@
                     <span class="item-name">Clientes</span>
                 </a>
             </li>
-            <li class="nav-item dropdown-sidemenu">
+            <li class="nav-item">
                 <a>
                     <i class="nav-icon i-Receipt"></i>
                     <span class="item-name">Transporte</span>
-                    <i class="dd-arrow i-Arrow-Down"></i>
                 </a>
-                <ul class="submenu">
-                    <li>
-                        <a class="" href="#">
-                            <i class="nav-icon i-Receipt"></i>
-                            <span class="item-name">Datos Fiscales</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="" href="#">
-                            <i class="nav-icon i-Receipt-4"></i>
-                            <span class="item-name">Datos Contactos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="" href="#">
-                            <i class="nav-icon i-Receipt-4"></i>
-                            <span class="item-name">Contactos por Email</span>
-                        </a>
-                    </li>
-                    <li></li>
-                </ul>
             </li>
         </ul>
         <ul class="childNav" data-parent="almacen">
