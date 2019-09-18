@@ -146,8 +146,11 @@
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="transporte">Transporte</label>
-                                                <input type="text" name="transporte" id="transporte"
-                                                       class="form-control">
+                                                <select class="form-control chosen" id="transporte" name="transporte_id">
+                                                    @foreach ($transportes as $transporte)
+                                                        <option value="{{ $transporte->id }}">{{ $transporte->razon_social }} | {{ $transporte->cif }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
@@ -196,18 +199,13 @@
 
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
-                                                <label for="cantidad">Cantidad</label>
-                                                <input type="number" class="form-control" name="cantidad" id="cantidad"
-                                                       step="0.01" min="0.00" placeholder="0.00">
-                                            </div>
-                                            <div class="col-md-4 mb-3">
                                                 <label for="precio">Precio Kg</label>
                                                 <input type="number" name="precio" id="precio" class="form-control"
                                                        step="0.01" min="0.00" placeholder="0.00">
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="kilos">Kilos</label>
-                                                <input type="number" class="form-control" name="kilos" id="kilos" readonly>
+                                                <input type="number" class="form-control" name="kilos" id="kilos" readonly placeholder="0.00">
                                             </div>
                                         </div>
 
@@ -221,7 +219,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row estado">
+                                        <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="estado">Estado</label>
                                                 <select name="estado" id="estado" class="form-control">
@@ -492,7 +490,6 @@
 
             $("#btnAddPedido").click(function (e) {
                 limpiarCamposPedido();
-                $(".estado").hide();
                 $("#nro_orden").val(nro_orden);
                 $("#anio").val($("#anio_act").val())
                 $("#semana").val($("#semana_act").val())
