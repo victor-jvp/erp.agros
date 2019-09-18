@@ -136,7 +136,7 @@
                             aria-hidden="true" id="modal-contacto">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <form action="/almacen/transporte/{{$transporte->id}}/contactos" method="POST"
+                                    <form action="/comercial/transportes/{{$transporte->id}}/contactos" method="POST"
                                         id="contacto_form">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="_tab" value="contactos">
@@ -338,7 +338,7 @@
                     <div class="tab-pane fade" id="contactar-email" role="tabpanel"
                         aria-labelledby="contactar-email-tab">
 
-                        <form action="/almacen/transporte/ajaxSendEmail" method="POST" id="email_form">
+                        <form action="/coemrcial/transportes/ajaxSendEmail" method="POST" id="email_form">
 
                             <div class="row">
                                 <div class="col-md-6 form-group mb-3">
@@ -384,7 +384,7 @@
                             aria-hidden="true" id="modal-adjunto">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <form action="/almacen/transporte/{{$transporte->id}}/adjuntos" method="POST"
+                                    <form action="/comercial/transportes/{{$transporte->id}}/adjuntos" method="POST"
                                         id="adjunto_form" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="_tab" value="documentacion">
@@ -596,7 +596,7 @@
                 cancelButtonClass: 'btn btn-danger',
                 buttonsStyling: false
             }).then(function () {
-                window.location.href = "{{ url('almacen/transportes/delete-contacto') }}" +
+                window.location.href = "{{ url('comercial/transportes/delete-contacto') }}" +
                     "/" + row[0]
             });
         });
@@ -684,7 +684,7 @@
                 cancelButtonClass: 'btn btn-danger',
                 buttonsStyling: false
             }).then(function () {
-                window.location.href = "{{ url('almacen/transporte/delete-adjunto') }}" + "/" + row[0]
+                window.location.href = "{{ url('comercial/transportes/delete-adjunto') }}" + "/" + row[0]
             });
         });
     });

@@ -42,7 +42,6 @@ Route::get('pedidos-campo/{pedido}/down', 'PedidosCampoController@down')->name('
 
 #region Comercial
 Route::resource('/comercial/pedidos-comercial', 'PedidosComercialController');
-Route::resource('/comercial/transportes', 'TransporteController');
 
 Route::resource('/comercial/clientes', 'ClientesController');
 Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
@@ -53,6 +52,17 @@ Route::get('/comercial/clientes/delete-contacto/{contacto}', 'ClientesController
 Route::post('/comercial/clientes/{cliente}/destinos', 'ClientesController@destinos')->name('clientes.destinos');
 Route::get('/comercial/clientes/delete-destino/{destino}', 'ClientesController@delete_destino');
 Route::post('/comercial/clientes/ajaxSendEmail', 'ClientesController@ajaxSendEmail')->name('clientes.ajaxSendEmail');
+
+Route::resource('/comercial/transportes', 'TransporteController');
+Route::get('/comercial/transportes/delete/{transporte}', 'TransporteController@delete')->name('transportes.delete');
+Route::post('/comercial/transportes/{id}/adjuntos', 'TransporteController@adjuntos')->name('transportes.adjuntos');
+Route::get('/comercial/transportes/delete-adjunto/{adjunto}', 'TransporteController@delete_adjunto');
+Route::post('/comercial/transportes/{transporte}/contactos', 'TransporteController@contactos')->name('transportes.contactos');
+Route::get('/comercial/transportes/delete-contacto/{contacto}', 'TransporteController@delete_contacto');
+Route::post('/comercial/transportes/{transporte}/destinos', 'TransporteController@destinos')->name('transportes.destinos');
+Route::get('/comercial/transportes/delete-destino/{destino}', 'TransporteController@delete_destino');
+Route::post('/comercial/transportes/ajaxSendEmail', 'TransporteController@ajaxSendEmail')->name('transportes.ajaxSendEmail');
+
 #endregion
 
 #region Almacen
