@@ -96,9 +96,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a>
+                <a class="{{ Route::currentRouteName()=='transportes.index' ? 'open' : '' }}" href="{{ route('transportes.index') }}">
                     <i class="nav-icon i-Receipt"></i>
-                    <span class="item-name">Transporte</span>
+                    <span class="item-name">Transportes</span>
                 </a>
             </li>
         </ul>

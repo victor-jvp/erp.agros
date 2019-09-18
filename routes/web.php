@@ -42,7 +42,7 @@ Route::get('pedidos-campo/{pedido}/down', 'PedidosCampoController@down')->name('
 
 #region Comercial
 Route::resource('/comercial/pedidos-comercial', 'PedidosComercialController');
-Route::resource('/comercial/transporte', 'TransporteController');
+Route::resource('/comercial/transportes', 'TransporteController');
 
 Route::resource('/comercial/clientes', 'ClientesController');
 Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
