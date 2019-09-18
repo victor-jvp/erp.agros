@@ -140,22 +140,11 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="formato">Formato</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <a href="javascript:void(0);" class="input-group-text"
-                                                           id="btnOpenFormatoModal"><i class="i-Information"></i></a>
-                                                    </div>
-                                                    <input type="text" class="form-control" id="formato"
-                                                           placeholder="Seleccione las opciones del formato">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-6 mb-3">
                                                 <label for="etiqueta">Etiqueta</label>
                                                 <input type="text" class="form-control" name="etiqueta" id="etiqueta">
                                             </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-6 mb-3">
                                                 <label for="transporte">Transporte</label>
                                                 <input type="text" name="transporte" id="transporte"
                                                        class="form-control">
@@ -163,6 +152,54 @@
                                         </div>
 
                                         <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="producto">Producto</label>
+                                                <select class="form-control chosen" id="producto">
+                                                    @foreach ($productos as $producto)
+                                                        <option value="{{ $producto->id }}">{{ $producto->compuesto }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label for="producto_compuesto">Compuesto</label>
+                                                <select class="form-control chosen" id="producto_compuesto"
+                                                        name="producto_compuesto">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="modelo_palet">Tipo de Palet</label>
+                                                <select class="form-control chosen" id="modelo_palet">
+                                                    @foreach ($modelos as $modelo)
+                                                        <option value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3">
+                                                <label for="formato_palet">Formato de Palet</label>
+                                                <select class="form-control chosen" id="formato_palet"
+                                                        name="formato_palet">
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3">
+                                                <label for="cantidad">Cantidad</label>
+                                                <input type="number" class="form-control" name="cantidad" id="cantidad"
+                                                       step="0.01" min="0.00" placeholder="0.00">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="cantidad">Cantidad</label>
+                                                <input type="number" class="form-control" name="cantidad" id="cantidad"
+                                                       step="0.01" min="0.00" placeholder="0.00">
+                                            </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="precio">Precio Kg</label>
                                                 <input type="number" name="precio" id="precio" class="form-control"
@@ -170,8 +207,7 @@
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="kilos">Kilos</label>
-                                                <input type="number" class="form-control" name="kilos" id="kilos"
-                                                       step="0.01" min="0.00" placeholder="0.00">
+                                                <input type="number" class="form-control" name="kilos" id="kilos" readonly>
                                             </div>
                                         </div>
 
@@ -209,75 +245,14 @@
                         </div>
                         {{-- Fin modal Pedido --}}
 
-                        {{-- Modal Producto compuesto --}}
-                        <div class="modal fade" id="modal-producto" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-producto-title">Seleccionar Producto
-                                            Compuesto</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <div class="col-md-12 mb-3">
-                                            <label for="producto">Producto</label>
-                                            <select class="form-control chosen" id="producto">
-                                                @foreach ($productos as $producto)
-                                                    <option value="{{ $producto->id }}">{{ $producto->compuesto }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-12 mb-3">
-                                            <label for="producto_compuesto">Compuesto</label>
-                                            <select class="form-control chosen" id="producto_compuesto"
-                                                    name="producto_compuesto">
-                                                <option value=""></option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-12 mb-3">
-                                            <label for="modelo_palet">Tipo de Palet</label>
-                                            <select class="form-control chosen" id="modelo_palet">
-                                                @foreach ($modelos as $modelo)
-                                                    <option value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-12 mb-3">
-                                            <label for="formato_palet">Formato de Palet</label>
-                                            <select class="form-control chosen" id="formato_palet" name="formato_palet">
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-12 mb-3">
-                                            <label for="cantidad">Cantidad</label>
-                                            <input type="number" class="form-control" name="cantidad" id="cantidad"
-                                                   step="0.01" min="0.00" placeholder="0.00">
-                                        </div>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Fin Modal Producto Compuesto --}}
-
                         {{--Modal Destino Comercial--}}
                         <div class="modal fade" id="modal-destino_comercial" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-destino_comercial-title">Destino Comercial del
+                                        <h5 class="modal-title" id="modal-destino_comercial-title">Destinos Comerciales
+                                            del
                                             Cliente</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -293,7 +268,6 @@
                                                         <th>ID</th>
                                                         <th>Destino</th>
                                                         <th>Direccion</th>
-                                                        <th>Nro.</th>
                                                         <th>Poblacion</th>
                                                         <th>Ciudad</th>
                                                         <th>Pais</th>
@@ -308,7 +282,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
+                                        <button type="button" class="btn btn-secondary" id="btnCloseModalDestinoComercial">Cerrar
                                         </button>
                                     </div>
                                 </div>
@@ -484,7 +458,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    { targets: [0], visible: false }
+                    {targets: [0], visible: false}
                 ],
                 responsive: true,
                 info: false,
@@ -525,14 +499,21 @@
                 $("#modal-pedido-title").html("Nuevo Pedido");
                 $("#pedido_method").val(null);
                 $("#modal-pedido").modal('show');
-            })
-
-            $("#btnOpenFormatoModal").click(function (e) {
-                $("#modal-producto").modal('show');
             });
 
             $("#btnDestinoComercial").click(function (e) {
                 $("#modal-destino_comercial").modal('show');
+            });
+
+            $("#btnCloseModalDestinoComercial").click(function (e) {
+                $("#modal-destino_comercial").modal('toggle');
+                $('#modal-pedido').css('overflow-y', 'auto');
+
+            });
+
+            $("#cliente").change(function () {
+                var cliente = $(this).val();
+                LoadDestinosComerciales(cliente);
             });
 
             $("#producto").on('change', function () {
@@ -552,6 +533,43 @@
             $('#producto, #producto_compuesto, #modelo_palet, #formato_palet, #cantidad').val(null);
             $(".dias").prop("checked", false).prop('disabled', false);
             $(".chosen").trigger("chosen:updated");
+        }
+
+        function LoadDestinosComerciales(valor, selected) {
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('pedidos-comercial.ajaxGetDestinosComerciales') }}",
+                dataType: 'JSON',
+                data: {
+                    "id": valor
+                },
+                success: function (data) {
+                    ClearDestinosComerciales();
+                    if (data == null) return;
+
+                    for (i = 0; i < data.length; i++) {
+                        var row = data[i];
+                        var options = '<label class="checkbox checkbox-success"><input type="checkbox" name="destinos[]" value="' + row.id + '"><span class="checkmark"></span></label>';
+                        table_destinos.row.add([
+                            row.id,
+                            row.descripcion,
+                            row.direccion,
+                            row.poblacion,
+                            row.ciudad,
+                            row.pais,
+                            options
+                        ]).draw();
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('Error. Check Console Log');
+                },
+            });
+        }
+
+        function ClearDestinosComerciales() {
+            table_destinos.rows().remove().draw();
         }
 
         function loadCompuesto(valor, selected) {

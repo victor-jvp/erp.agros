@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CatDiasSemana;
 use App\Cliente;
+use App\ClienteDestinos;
 use App\Contador;
 use App\Cultivo;
 use App\Pallet;
@@ -92,5 +93,17 @@ class PedidosComercialController extends Controller
 
     public function update(Request $request, $id)
     {
+    }
+
+    public function ajaxGetDestinosComerciales(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (is_null($id)) return response()->json(null);
+
+        $data = array();
+        $data = ClienteDestinos::where('cliente_id', $id)->get();
+
+        return response()->json($data);
     }
 }

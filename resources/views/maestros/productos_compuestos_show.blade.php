@@ -117,7 +117,6 @@
                                                         </div>
 
 
-
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3">
                                                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -204,7 +203,8 @@
                                                                         <div class="row">
                                                                             <div class="col-md-6 mb-3">
                                                                                 <label for="euro_cubre_id">Cubres</label>
-                                                                                <select name="euro_cubre_id" id="euro_cubre_id"
+                                                                                <select name="euro_cubre_id"
+                                                                                        id="euro_cubre_id"
                                                                                         class="form-control chosen"
                                                                                         data-placeholder="Seleccione...">
                                                                                     <option value=""></option>
@@ -216,8 +216,10 @@
                                                                                 </select>
                                                                             </div>
                                                                             <div class="col-md-4 mb-3">
-                                                                                <label for="euro_cubre_cantidad">Cantidad Cubres</label>
-                                                                                <input type="number" class="form-control"
+                                                                                <label for="euro_cubre_cantidad">Cantidad
+                                                                                    Cubres</label>
+                                                                                <input type="number"
+                                                                                       class="form-control"
                                                                                        id="euro_cubre_cantidad"
                                                                                        placeholder="Cantidad Cubres"
                                                                                        name="euro_cubre_cantidad">
@@ -307,7 +309,6 @@
                                                         </div>
 
 
-
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3">
                                                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -393,7 +394,8 @@
                                                                         <div class="row">
                                                                             <div class="col-md-6 mb-3">
                                                                                 <label for="grand_cubre_id">Cubres</label>
-                                                                                <select name="grand_cubre_id" id="grand_cubre_id"
+                                                                                <select name="grand_cubre_id"
+                                                                                        id="grand_cubre_id"
                                                                                         class="form-control chosen"
                                                                                         data-placeholder="Seleccione...">
                                                                                     <option value=""></option>
@@ -407,7 +409,8 @@
                                                                             <div class="col-md-4 mb-3">
                                                                                 <label for="grand_cubre_cantidad">Cantidad
                                                                                     Cubres</label>
-                                                                                <input type="number" class="form-control"
+                                                                                <input type="number"
+                                                                                       class="form-control"
                                                                                        id="grand_cubre_cantidad"
                                                                                        placeholder="Cantidad Cubres"
                                                                                        name="grand_cubre_cantidad">
@@ -718,9 +721,9 @@
                         '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
                         '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
                         '</a>';
-                    //Tarrinas table
-                    for (i = 0; i < row.tarrinas.length; i++) {
-                        var tarrina = row.tarrinas[i];
+                    //Euro Tarrinas table
+                    for (i = 0; i < row.euro_tarrinas.length; i++) {
+                        var tarrina = row.euro_tarrinas[i];
                         euro_table_tarrinas.row.add([
                             tarrina.tarrina_id,
                             tarrina.tarrina.modelo,
@@ -728,11 +731,12 @@
                             '<input type="hidden" name="tarrinas_id[]" value="' + tarrina.tarrina_id + '">' +
                             '<input type="hidden" name="tarrinas_cantidad[]" value="' + tarrina.cantidad + '"> ' +
                             opciones
-                        ]).draw(false);
+                        ]).draw();
                     }
-                    //Auxiliares Table
-                    for (i = 0; i < row.auxiliares.length; i++) {
-                        var auxiliar = row.auxiliares[i];
+
+                    //Euro Auxiliares Table
+                    for (i = 0; i < row.euro_auxiliares.length; i++) {
+                        var auxiliar = row.euro_auxiliares[i];
                         euro_table_auxiliares.row.add([
                             auxiliar.auxiliar_id,
                             auxiliar.auxiliar.modelo,
@@ -740,7 +744,33 @@
                             '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar.auxiliar_id + '">' +
                             '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar.cantidad + '"> ' +
                             opciones
-                        ]).draw(false);
+                        ]).draw();
+                    }
+
+                    //Euro Tarrinas table
+                    for (i = 0; i < row.grand_tarrinas.length; i++) {
+                        var tarrina = row.grand_tarrinas[i];
+                        grand_table_tarrinas.row.add([
+                            tarrina.tarrina_id,
+                            tarrina.tarrina.modelo,
+                            tarrina.cantidad,
+                            '<input type="hidden" name="tarrinas_id[]" value="' + tarrina.tarrina_id + '">' +
+                            '<input type="hidden" name="tarrinas_cantidad[]" value="' + tarrina.cantidad + '"> ' +
+                            opciones
+                        ]).draw();
+                    }
+
+                    //Euro Auxiliares Table
+                    for (i = 0; i < row.grand_auxiliares.length; i++) {
+                        var auxiliar = row.grand_auxiliares[i];
+                        grand_table_auxiliares.row.add([
+                            auxiliar.auxiliar_id,
+                            auxiliar.auxiliar.modelo,
+                            auxiliar.cantidad,
+                            '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar.auxiliar_id + '">' +
+                            '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar.cantidad + '"> ' +
+                            opciones
+                        ]).draw();
                     }
                 },
                 error: function () {

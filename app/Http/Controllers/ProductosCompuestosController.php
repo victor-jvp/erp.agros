@@ -108,7 +108,11 @@ class ProductosCompuestosController extends Controller
     {
         if (is_null($id)) return false;
 
-        $detalle = ProductoCompuesto_det::with('tarrinas.tarrina')->with('auxiliares.auxiliar')->find($id);
+        $detalle = ProductoCompuesto_det::with('euro_tarrinas.tarrina')
+            ->with('euro_auxiliares.auxiliar')
+            ->with('grand_tarrinas.tarrina')
+            ->with('grand_auxiliares.auxiliar')
+            ->find($id);
 
         return response()->json(['detalle' => $detalle]);
     }
