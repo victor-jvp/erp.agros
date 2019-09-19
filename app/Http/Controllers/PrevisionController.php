@@ -100,22 +100,20 @@ class PrevisionController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request);
-
         if (is_null($request->id)) {
 
             if (isset($request->dia)) {
-                foreach ($request->dia as $dia) {
+                foreach ($request->dia as $d => $dia) {
 
                     $prevision = new Prevision();
                     $prevision->anio             = $request->anio;
                     $prevision->semana           = $request->semana;
                     $prevision->dia              = $dia;
                     $prevision->registro         = "A";
-                    $prevision->finca_id         = $request->finca_id;
-                    $prevision->trazabilidad_id  = $request->traza_id;
-                    $prevision->cantidad_inicial = $request->cantidad;
-                    $prevision->cantidad         = $request->cantidad;
+                    $prevision->finca_id         = $request->finca;
+                    $prevision->trazabilidad_id  = $request->traza[$d];
+                    $prevision->cantidad_inicial = $request->cantidad[$d];
+                    $prevision->cantidad         = $request->cantidad[$d];
 
                     $prevision->save();
                 }
@@ -124,7 +122,6 @@ class PrevisionController extends Controller
             $prevision = Prevision::find($request->id);
             $prevision->finca_id         = $request->finca_id;
             $prevision->trazabilidad_id  = $request->traza_id;
-            $prevision->cantidad_inicial = $request->cantidad;
             $prevision->cantidad         = $request->cantidad;
 
             $prevision->save();
