@@ -550,8 +550,8 @@
                                                                                 @php
                                                                                     if($totalSemanaAnt == 0 && $totalSemana == 0) {
                                                                                         $porcSemana = 0;
-                                                                                    }else if($totalSemana > 0){
-                                                                                        $porcSemana = 100-(($totalSemanaAnt/$totalSemana) * 100 );
+                                                                                    }else if($totalSemanaAnt > 0){
+                                                                                        $porcSemana = 100-(($totalSemana/$totalSemanaAnt) * 100);
                                                                                     }else{
                                                                                         $porcSemana = 100;
                                                                                     }
