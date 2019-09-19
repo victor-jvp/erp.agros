@@ -108,11 +108,11 @@ class ProductosCompuestosController extends Controller
     {
         if (is_null($id)) return false;
 
-        $detalle = ProductoCompuesto_det::with('euro_tarrinas.tarrina')
-            ->with('euro_auxiliares.auxiliar')
-            ->with('grand_tarrinas.tarrina')
-            ->with('grand_auxiliares.auxiliar')
-            ->find($id);
+        $detalle                   = ProductoCompuesto_det::find($id);
+        $detalle->euro_tarrinas    = ProductoCompuesto_tarrinas::with('tarrina')->where('model_id', '=', 1)->where('det_id', $id)->get();
+        $detalle->euro_auxiliares  = ProductoCompuesto_auxiliares::with('auxiliar')->where('model_id', '=', 1)->where('det_id', $id)->get();
+        $detalle->grand_tarrinas   = ProductoCompuesto_tarrinas::with('tarrina')->where('model_id', '=', 2)->where('det_id', $id)->get();
+        $detalle->grand_auxiliares = ProductoCompuesto_auxiliares::with('auxiliar')->where('model_id', '=', 2)->where('det_id', $id)->get();
 
         return response()->json(['detalle' => $detalle]);
     }
@@ -122,10 +122,10 @@ class ProductosCompuestosController extends Controller
         if (is_null($id)) return false;
 
         $detalle      = ProductoCompuesto_det::with('euro_tarrinas')
-                                             ->with('euro_auxiliares')
-                                             ->with('grand_tarrinas')
-                                             ->with('grand_auxiliares')
-                                             ->find($id);
+            ->with('euro_auxiliares')
+            ->with('grand_tarrinas')
+            ->with('grand_auxiliares')
+            ->find($id);
         $compuesto_id = $detalle->compuesto_id;
         $detalle->euro_tarrinas()->delete();
         $detalle->euro_auxiliares()->delete();

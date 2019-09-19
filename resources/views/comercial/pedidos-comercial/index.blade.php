@@ -856,7 +856,7 @@
                     targets: [0],
                     visible: false
                 },],
-                responsive: true
+                responsive: true,
             });
 
             table_destinos = $('#table_destinos_comerciales').DataTable({
