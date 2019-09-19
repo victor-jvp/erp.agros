@@ -73,6 +73,15 @@ class TransporteController extends Controller
         return redirect()->route('transportes.show', $data);
     }
 
+    public function delete($id)
+    {
+        $transporte = Transporte::find($id);
+        $transporte->delete();
+
+        return redirect()->route('transportes.index');
+    }
+
+
     public function adjuntos(Request $request, $id)
     {
         $transporte = Transporte::find($id);

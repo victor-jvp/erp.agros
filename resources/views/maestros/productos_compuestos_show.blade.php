@@ -494,111 +494,109 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12 mb-4">
-                            <div class="table-responsive">
-                                <table id="productos_table" class="display table table-striped table-bordered"
-                                       style="width:100%">
-                                    <thead>
+                        <div class="col-md-12 mb-3 table-responsive">
+                            <table id="productos_table" class="display table table-striped table-bordered"
+                                   style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th scope="col">Variable</th>
+                                    <th scope="col">Caja</th>
+                                    <th scope="col">EuroPalet<br>Cantidad</th>
+                                    <th scope="col">EuroPalet<br>Kg</th>
+                                    <th scope="col">EuroPalet<br>Cantoneras</th>
+                                    <th scope="col">EuroPalet<br>Cubre</th>
+                                    <th scope="col">EuroPalet<br>Cubre Cantidad</th>
+                                    <th scope="col">EuroPalet Tarrinas</th>
+                                    <th scope="col">EuroPalet Auxiliares</th>
+                                    <th scope="col">Palet Grande<br>Cantidad</th>
+                                    <th scope="col">Palet Grande<br>Kg</th>
+                                    <th scope="col">Palet Grande<br>Cantoneras</th>
+                                    <th scope="col">Palet Grande<br>Cubre</th>
+                                    <th scope="col">Palet Grande<br>Cubre Cantidad</th>
+                                    <th scope="col">Palet Grande Tarrinas</th>
+                                    <th scope="col">Palet Grande Auxiliares</th>
+                                    <th scope="col">Acción</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($detalles as $detalle)
                                     <tr>
-                                        <th>ID</th>
-                                        <th scope="col">Variable</th>
-                                        <th scope="col">Caja</th>
-                                        <th scope="col">EuroPalet<br>Cantidad</th>
-                                        <th scope="col">EuroPalet<br>Kg</th>
-                                        <th scope="col">EuroPalet<br>Cantoneras</th>
-                                        <th scope="col">EuroPalet<br>Cubre</th>
-                                        <th scope="col">EuroPalet<br>Cubre Cantidad</th>
-                                        <th scope="col">EuroPalet Tarrinas</th>
-                                        <th scope="col">EuroPalet Auxiliares</th>
-                                        <th scope="col">Palet Grande<br>Cantidad</th>
-                                        <th scope="col">Palet Grande<br>Kg</th>
-                                        <th scope="col">Palet Grande<br>Cantoneras</th>
-                                        <th scope="col">Palet Grande<br>Cubre</th>
-                                        <th scope="col">Palet Grande<br>Cubre Cantidad</th>
-                                        <th scope="col">Palet Grande Tarrinas</th>
-                                        <th scope="col">Palet Grande Auxiliares</th>
-                                        <th scope="col">Acción</th>
+                                        <td>{{ $detalle->id }}</td>
+                                        <td>{{ $detalle->variable }}</td>
+                                        <td>{{ (!is_null($detalle->caja_id)) ? $detalle->caja->formato : "" }}</td>
+                                        <td>{{ $detalle->euro_cantidad }}</td>
+                                        <td>{{ $detalle->euro_kg }}</td>
+                                        <td>{{ $detalle->euro_cantoneras }}</td>
+                                        <td>{{ (!is_null($detalle->euro_cubre_id)) ? $detalle->euro_cubre->formato : "" }}</td>
+                                        <td>{{ $detalle->euro_cubre_cantidad }}</td>
+                                        <td>
+                                            @if(isset($detalle->euro_tarrinas))
+                                                <ul class="list-group text-left">
+                                                    @foreach($detalle->euro_tarrinas as $tarrina)
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            {{ $tarrina->tarrina->modelo }}
+                                                            <span class="badge badge-primary badge-pill">{{ $tarrina->cantidad }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(isset($detalle->euro_auxiliares))
+                                                <ul class="list-group text-left">
+                                                    @foreach($detalle->euro_auxiliares as $auxiliar)
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            {{ $auxiliar->auxiliar->modelo }}
+                                                            <span class="badge badge-primary badge-pill">{{ $auxiliar->cantidad }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </td>
+
+                                        <td>{{ $detalle->grand_cantidad }}</td>
+                                        <td>{{ $detalle->grand_kg}}</td>
+                                        <td>{{ $detalle->grand_cantoneras}}</td>
+                                        <td>{{ (!is_null($detalle->grand_cubre_id)) ? $detalle->grand_cubre->formato : "" }}</td>
+                                        <td>{{ $detalle->grand_cubre_cantidad }}</td>
+                                        <td>
+                                            @if(isset($detalle->grand_tarrinas))
+                                                <ul class="list-group text-left">
+                                                    @foreach($detalle->grand_tarrinas as $tarrina)
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            {{ $tarrina->tarrina->modelo }}
+                                                            <span class="badge badge-primary badge-pill">{{ $tarrina->cantidad }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(isset($detalle->grand_auxiliares))
+                                                <ul class="list-group text-left">
+                                                    @foreach($detalle->grand_auxiliares as $auxiliar)
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            {{ $auxiliar->auxiliar->modelo }}
+                                                            <span class="badge badge-primary badge-pill">{{ $auxiliar->cantidad }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </td>
+
+                                        <td>
+                                            <a href="javascript:void(0);" class="text-success mr-2">
+                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                            </a>
+                                            <a href="javascript:void(0);" class="text-danger mr-2">
+                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                            </a>
+                                        </td>
                                     </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach ($detalles as $detalle)
-                                        <tr>
-                                            <td>{{ $detalle->id }}</td>
-                                            <td>{{ $detalle->variable }}</td>
-                                            <td>{{ (!is_null($detalle->caja_id)) ? $detalle->caja->formato : "" }}</td>
-                                            <td>{{ $detalle->euro_cantidad }}</td>
-                                            <td>{{ $detalle->euro_kg }}</td>
-                                            <td>{{ $detalle->euro_cantoneras }}</td>
-                                            <td>{{ (!is_null($detalle->euro_cubre_id)) ? $detalle->euro_cubre->formato : "" }}</td>
-                                            <td>{{ $detalle->euro_cubre_cantidad }}</td>
-                                            <td>
-                                                @if(isset($detalle->euro_tarrinas))
-                                                    <ul class="list-group text-left">
-                                                        @foreach($detalle->euro_tarrinas as $tarrina)
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                {{ $tarrina->tarrina->modelo }}
-                                                                <span class="badge badge-primary badge-pill">{{ $tarrina->cantidad }}</span>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if(isset($detalle->euro_auxiliares))
-                                                    <ul class="list-group text-left">
-                                                        @foreach($detalle->euro_auxiliares as $auxiliar)
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                {{ $auxiliar->auxiliar->modelo }}
-                                                                <span class="badge badge-primary badge-pill">{{ $auxiliar->cantidad }}</span>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                @endif
-                                            </td>
-
-                                            <td>{{ $detalle->grand_cantidad }}</td>
-                                            <td>{{ $detalle->grand_kg}}</td>
-                                            <td>{{ $detalle->grand_cantoneras}}</td>
-                                            <td>{{ (!is_null($detalle->grand_cubre_id)) ? $detalle->grand_cubre->formato : "" }}</td>
-                                            <td>{{ $detalle->grand_cubre_cantidad }}</td>
-                                            <td>
-                                                @if(isset($detalle->grand_tarrinas))
-                                                    <ul class="list-group text-left">
-                                                        @foreach($detalle->grand_tarrinas as $tarrina)
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                {{ $tarrina->tarrina->modelo }}
-                                                                <span class="badge badge-primary badge-pill">{{ $tarrina->cantidad }}</span>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if(isset($detalle->grand_auxiliares))
-                                                    <ul class="list-group text-left">
-                                                        @foreach($detalle->grand_auxiliares as $auxiliar)
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                {{ $auxiliar->auxiliar->modelo }}
-                                                                <span class="badge badge-primary badge-pill">{{ $auxiliar->cantidad }}</span>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                @endif
-                                            </td>
-
-                                            <td>
-                                                <a href="javascript:void(0);" class="text-success mr-2">
-                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                </a>
-                                                <a href="javascript:void(0);" class="text-danger mr-2">
-                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -643,6 +641,7 @@
                 info: false,
                 paging: false,
                 searching: false,
+                responsive: true,
                 columnDefs: [
                     {targets: [0], visible: false}
                 ]
@@ -655,9 +654,13 @@
                 $("#modal-producto").modal("show");
             });
 
-            $('#productos_table .edit').on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = table_productos.row(tr).data();
+            $('#productos_table').on('click', '.edit', function () {
+                var current_row = $(this).parents('tr');
+                if (current_row.hasClass('child')) {
+                    current_row = current_row.prev();
+                }
+                var row = table_productos.row(current_row).data();
+
                 var id = row[0];
 
                 LimpiarModalDetalles();
@@ -668,9 +671,12 @@
                 $("#modal-producto").modal("show");
             });
 
-            $('#productos_table .delete').on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = table_productos.row(tr).data();
+            $('#productos_table').on('click', '.delete', function () {
+                var current_row = $(this).parents('tr');
+                if (current_row.hasClass('child')) {
+                    current_row = current_row.prev();
+                }
+                var row = table_productos.row(current_row).data();
 
                 swal({
                     title: 'Confirmar Proceso',
