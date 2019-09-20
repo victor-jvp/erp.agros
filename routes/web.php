@@ -43,6 +43,8 @@ Route::get('pedidos-campo/{pedido}/down', 'PedidosCampoController@down')->name('
 #region Comercial
 Route::resource('/comercial/pedidos-comercial', 'PedidosComercialController');
 Route::post('/comercial/pedidos-comercial/ajaxGetDestinosComerciales', 'PedidosComercialController@ajaxGetDestinosComerciales')->name('pedidos-comercial.ajaxGetDestinosComerciales');
+Route::post('/comercial/pedidos-comercial/ajaxGetDestinosComercialesForCliente', 'PedidosComercialController@ajaxGetDestinosComercialesForCliente')->name('pedidos-comercial.ajaxGetDestinosComercialesForCliente');
+
 
 Route::resource('/comercial/clientes', 'ClientesController');
 Route::get('/comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');

@@ -105,6 +105,20 @@ class PedidosComercialController extends Controller
         if (is_null($id)) return response()->json(null);
 
         $data = array();
+        $clienteDestino = ClienteDestinos::find($id);
+        $query = "SELECT ";
+        $destino = DB::select();
+
+        return response()->json($data);
+    }
+
+    public function ajaxGetDestinosComercialesForCliente(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (is_null($id)) return response()->json(null);
+
+        $data = array();
         $data = ClienteDestinos::where('cliente_id', $id)->get();
 
         return response()->json($data);

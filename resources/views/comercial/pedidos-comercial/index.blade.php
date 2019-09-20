@@ -69,9 +69,12 @@
                                                         <a href="javascript:void(0);" class="input-group-text"
                                                            id="btnDestinoComercial"><i class="i-Information"></i></a>
                                                     </div>
-                                                    <input type="text" name="destino_comercial" id="destino_comercial"
-                                                           class="form-control" value="" aria-label="Username"
-                                                           aria-describedby="zona_info">
+                                                    {{--<input type="text" name="destino_comercial" id="destino_comercial"--}}
+                                                           {{--class="form-control" value="" aria-label="Username"--}}
+                                                           {{--aria-describedby="zona_info">--}}
+                                                    <select name="destino_comercial" id="destino_comercial" class="form-control">
+                                                        <option value="">Seleccione...</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
@@ -670,18 +673,13 @@
                                                        id="table_destinos_comerciales">
                                                     <thead>
                                                     <tr>
-                                                        <th>ID</th>
-                                                        <th>Destino</th>
-                                                        <th>Direccion</th>
-                                                        <th>Poblacion</th>
-                                                        <th>Ciudad</th>
                                                         <th>Pais</th>
-                                                        <th>Accion</th>
+                                                        <th>Cliente</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Precio</th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
-
-                                                    </tbody>
+                                                    <tbody></tbody>
                                                 </table>
                                             </div>
                                         </div>
@@ -758,18 +756,18 @@
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Nº Orden</th>
-                                                        <th>Año</th>
                                                         <th>Semana</th>
                                                         <th>Dia</th>
                                                         <th>Cliente</th>
                                                         <th>Destino</th>
                                                         <th>Formato</th>
-                                                        <th>Etiqueta</th>
                                                         <th>Transporte</th>
                                                         <th>Precio €/Kg</th>
                                                         <th>Observación</th>
                                                         <th>Estado</th>
                                                         <th>Acciones</th>
+                                                        <th>Año</th>
+                                                        <th>Etiqueta</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -777,18 +775,18 @@
                                                         <tr>
                                                             <td>{{ $pedido->id }}</td>
                                                             <td>{{ $pedido->nro_orden }}</td>
-                                                            <td>{{ $pedido->anio }}</td>
                                                             <td>{{ $pedido->semana }}</td>
                                                             <td>{{ $pedido->dia->dia }}</td>
                                                             <td>{{ (!is_null($pedido->cliente)) ? $pedido->cliente->razon_social : "" }}</td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td>{{ $pedido->etiqueta }}</td>
                                                             <td></td>
                                                             <td>{{ $pedido->precio }}</td>
                                                             <td>{{ $pedido->comentarios }}</td>
                                                             <td>{{ $pedido->estado->estado }}</td>
                                                             <td></td>
+                                                            <td>{{ $pedido->anio }}</td>
+                                                            <td>{{ $pedido->etiqueta }}</td>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>
@@ -853,7 +851,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [{
-                    targets: [0],
+                    targets: [0,12,13],
                     visible: false
                 },],
                 responsive: true,
@@ -863,9 +861,9 @@
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
-                columnDefs: [
-                    {targets: [0], visible: false}
-                ],
+                // columnDefs: [
+                //     {targets: [0], visible: false}
+                // ],
                 responsive: true,
                 info: false,
                 paging: false
@@ -921,7 +919,7 @@
 
             $("#cliente").change(function () {
                 var cliente = $(this).val();
-                LoadDestinosComerciales(cliente);
+                LoadDestinosComercialesForCliente(cliente);
             });
 
             $("#producto").on('change', function () {
@@ -957,15 +955,12 @@
 
                     for (i = 0; i < data.length; i++) {
                         var row = data[i];
-                        var options = '<label class="checkbox checkbox-success"><input type="checkbox" name="destinos[]" value="' + row.id + '"><span class="checkmark"></span></label>';
+                        // var options = '<label class="checkbox checkbox-success"><input type="checkbox" name="destinos[]" value="' + row.id + '"><span class="checkmark"></span></label>';
                         table_destinos.row.add([
-                            row.id,
-                            row.descripcion,
-                            row.direccion,
-                            row.poblacion,
-                            row.ciudad,
                             row.pais,
-                            options
+                            row.cliente,
+                            row.cantidad,
+                            row.precio
                         ]).draw();
                     }
                 },
@@ -978,6 +973,40 @@
 
         function ClearDestinosComerciales() {
             table_destinos.rows().remove().draw();
+        }
+
+        function LoadDestinosComercialesForCliente(valor, selected) {
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('pedidos-comercial.ajaxGetDestinosComercialesForCliente') }}",
+                dataType: 'JSON',
+                data: {
+                    "id": valor
+                },
+                success: function (data) {
+                    ClearDestinosComercialesForCliente();
+                    if (data == null) return;
+
+                    for (i = 0; i < data.length; i++) {
+                        var value = data[i].id;
+                        var text = data[i].descripcion;
+                        var option = "<option value='" + value + "'>" + text + "</option>";
+                        $("#destino_comercial").append(option);
+                    }
+
+                    if (selected != null) {
+                        $("#destino_comercial").val(selected);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('Error. Check Console Log');
+                },
+            });
+        }
+
+        function ClearDestinosComercialesForCliente() {
+            $("#destino_comercial").html(null).append('<option value="">Seleccione...</option>');
         }
 
         function loadCompuesto(valor, selected) {
