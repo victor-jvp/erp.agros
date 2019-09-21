@@ -112,6 +112,8 @@ class PedidosComercialController extends Controller
                             ->select('precio', 'kilos', 'clientes.razon_social as cliente', 'clientes_destinos.pais')
                             ->get();
 
+        dd($data);
+
         return response()->json($data);
     }
 
