@@ -161,9 +161,28 @@
                                         </div>
 
                                         <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="producto">Producto</label>
+                                                <select class="form-control chosen" id="producto">
+                                                    @foreach ($productos as $producto)
+                                                        <option value="{{ $producto->id }}">{{ $producto->compuesto }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label for="producto_compuesto">Compuesto</label>
+                                                <select class="form-control chosen" id="producto_compuesto"
+                                                        name="producto_compuesto">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="modelo_palet">Tipo de Palet</label>
-                                                <select class="form-control chosen" id="modelo_palet">
+                                                <select class="form-control" id="modelo_palet">
                                                     @foreach ($modelos as $modelo)
                                                         <option value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
                                                     @endforeach
@@ -185,41 +204,22 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="producto">Producto</label>
-                                                <select class="form-control chosen" id="producto">
-                                                    @foreach ($productos as $producto)
-                                                        <option value="{{ $producto->id }}">{{ $producto->compuesto }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-                                            <div class="col-md-6 mb-3">
-                                                <label for="producto_compuesto">Compuesto</label>
-                                                <select class="form-control chosen" id="producto_compuesto"
-                                                        name="producto_compuesto">
-                                                    <option value=""></option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
                                             <div class="col-md-12 mb-3">
                                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active show" id="EuroPallet-tab"
+                                                    <li class="nav-item EuroPallet">
+                                                        <a class="nav-link" id="EuroPallet-tab"
                                                            data-toggle="tab" href="#EuroPallet" role="tab"
-                                                           aria-controls="EuroPallet" aria-selected="true">Euro
+                                                           aria-controls="EuroPallet" aria-selected="false">Euro
                                                             Palet</a>
                                                     </li>
-                                                    <li class="nav-item">
+                                                    <li class="nav-item PalletGrande">
                                                         <a class="nav-link" id="PalletGrande-tab" data-toggle="tab"
                                                            href="#PalletGrande" role="tab" aria-controls="PalletGrande"
                                                            aria-selected="false">Palet Grande</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content" id="myTabContent">
-                                                    <div class="tab-pane fade active show" id="EuroPallet"
+                                                    <div class="tab-pane fade EuroPallet" id="EuroPallet"
                                                          role="tabpanel"
                                                          aria-labelledby="EuroPallet-tab">
                                                         <div class="row">
@@ -311,9 +311,9 @@
                                                                                         <tr>
                                                                                             <th>modelo_id</th>
                                                                                             <th scope="col">Tarrina</th>
-                                                                                            <th scope="col">Cantidad
-                                                                                            </th>
+                                                                                            <th scope="col">Cantidad</th>
                                                                                             <th scope="col">Acción</th>
+                                                                                            <th>Cantidad Default</th>
                                                                                         </tr>
                                                                                         </thead>
                                                                                         <tbody></tbody>
@@ -399,6 +399,7 @@
                                                                                             <th scope="col">Cantidad
                                                                                             </th>
                                                                                             <th scope="col">Acción</th>
+                                                                                            <th>Cantidad Default</th>
                                                                                         </tr>
                                                                                         </thead>
                                                                                         <tbody></tbody>
@@ -412,7 +413,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="tab-pane fade" id="PalletGrande" role="tabpanel"
+                                                    <div class="tab-pane fade PalletGrande" id="PalletGrande"
+                                                         role="tabpanel"
                                                          aria-labelledby="PalletGrande-tab">
                                                         <div class="row">
                                                             <div class="col-md-4 mb-3">
@@ -505,6 +507,7 @@
                                                                                             <th scope="col">Cantidad
                                                                                             </th>
                                                                                             <th scope="col">Acción</th>
+                                                                                            <th>Cantidad Default</th>
                                                                                         </tr>
                                                                                         </thead>
                                                                                         <tbody></tbody>
@@ -590,6 +593,7 @@
                                                                                             <th scope="col">Cantidad
                                                                                             </th>
                                                                                             <th scope="col">Acción</th>
+                                                                                            <th>Cantidad Default</th>
                                                                                         </tr>
                                                                                         </thead>
                                                                                         <tbody></tbody>
@@ -827,6 +831,16 @@
             });
         });
 
+        $.fn.dataTable.Api.register('inTable()', function (value) {
+            return this
+                .data()
+                .toArray()
+                .toString()
+                .toLowerCase()
+                .split(',')
+                .indexOf(value.toString().toLowerCase()) > -1
+        })
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -905,6 +919,8 @@
                 $("#semana").val($("#semana_act").val())
                 $("#modal-pedido-title").html("Nuevo Pedido");
                 $("#pedido_method").val(null);
+
+                $(".EuroPallet, .PalletGrande").css('display', 'none');
                 $("#modal-pedido").modal('show');
             });
 
@@ -923,7 +939,7 @@
                 LoadDestinosComercialesForCliente(cliente);
             });
 
-            $("#destino_comercial").change(function(){
+            $("#destino_comercial").change(function () {
                 var destino = $(this).val();
                 LoadDestinosComerciales(destino);
             });
@@ -933,11 +949,121 @@
                 loadCompuesto(compuesto_id)
             });
 
+            $("#producto_compuesto").change(function (e) {
+                var id = $(this).val();
+                loadTipoPalet(id);
+            });
+
+            $(".EuroPallet, .PalletGrande").css('display', 'none');
             $("#modelo_palet").on('change', function () {
                 var modelo_id = $(this).val();
                 loadPalet(modelo_id)
+                $(".EuroPallet, .PalletGrande").css('display', 'none');
+                if (modelo_id == "1") {
+                    $(".EuroPallet").css('display', 'block');
+                    // $("#EuroPallet-tab").addClass('active show').attr('aria-selected', "true");
+                    // $("#EuroPallet").addClass('active show');
+                    $("#EuroPallet-tab").trigger('click');
+                } else if (modelo_id == "2") {
+                    $(".PalletGrande").css('display', 'block');
+                    $("#PalletGrande-tab").trigger('click');
+                }
+
+                calcularCantidades();
+            });
+
+            $("#cantidad").change(function () {
+                calcularCantidades();
+            });
+
+            $("#euro_kg, #grand_kg").change(function(){
+                calcularKilos();
             });
         });
+
+        function calcularCantidades() {
+            calcularKilos();
+            calcularTarrinasAuxiliares();
+        }
+
+        function calcularKilos() {
+            var cantidad = $("#cantidad").val();
+            var euro_kg = $("#euro_kg").val();
+            var grand_kg = $("#grand_kg").val();
+
+            var kilos = 0;
+            if (cantidad > 0) {
+                if ($("#EuroPallet-tab").hasClass('active')) {
+                    kilos = cantidad * euro_kg;
+                } else if($("#PalletGrande").hasClass('active')) {
+                    kilos = cantidad * grand_kg;
+                }
+            }
+
+            $("#kilos").val(kilos);
+        }
+
+        function calcularTarrinasAuxiliares()
+        {
+            var cantidad = $("#cantidad").val();
+            var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
+                '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
+                '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
+                '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                '</a>';
+
+            var euro_tarrinas_count = euro_table_tarrinas.rows().count();
+            if (euro_tarrinas_count > 0) {
+                euro_table_tarrinas.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                    var data = this.data();
+                    data[2] = data[4] * cantidad;
+                    data[3] = '<input type="hidden" name="tarrinas_id[]" value="' + data[0] + '">' +
+                        '<input type="hidden" name="tarrinas_cantidad[]" value="' + data[2] + '"> ' +
+                        opciones;
+                    this.row(rowIdx).data(data);
+                    euro_table_tarrinas.draw();
+                });
+            }
+
+            var euro_auxiliares_count = euro_table_auxiliares.rows().count();
+            if (euro_auxiliares_count > 0) {
+                euro_table_auxiliares.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                    var data = this.data();
+                    data[2] = data[4] * cantidad;
+                    data[3] = '<input type="hidden" name="auxiliares_id[]" value="' + data[0] + '">' +
+                        '<input type="hidden" name="auxiliares_cantidad[]" value="' + data[2] + '"> ' +
+                        opciones;
+                    this.row(rowIdx).data(data);
+                    euro_table_auxiliares.draw();
+                });
+            }
+
+            var grand_tarrinas_count = grand_table_tarrinas.rows().count();
+            if (grand_tarrinas_count > 0) {
+                grand_table_tarrinas.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                    var data = this.data();
+                    data[2] = data[4] * cantidad;
+                    data[3] = '<input type="hidden" name="tarrinas_id[]" value="' + data[0] + '">' +
+                        '<input type="hidden" name="tarrinas_cantidad[]" value="' + data[2] + '"> ' +
+                        opciones;
+                    this.row(rowIdx).data(data);
+                    grand_table_tarrinas.draw();
+                });
+            }
+
+            var grand_auxiliares_count = grand_table_auxiliares.rows().count();
+            if (grand_auxiliares_count > 0) {
+                grand_table_auxiliares.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                    var data = this.data();
+                    data[2] = data[4] * cantidad;
+                    data[3] = '<input type="hidden" name="auxiliares_id[]" value="' + data[0] + '">' +
+                        '<input type="hidden" name="auxiliares_cantidad[]" value="' + data[2] + '"> ' +
+                        opciones;
+                    this.row(rowIdx).data(data);
+                    grand_table_auxiliares.draw();
+                });
+            }
+        }
 
         function limpiarCamposPedido() {
             $('#nro_orden, #cliente, #destino_comercial, #cultivo, #formato, #etiqueta, #transporte, #precio, #kilos, #comentario')
@@ -1086,5 +1212,476 @@
         function ClearPalet() {
             $("#formato_palet").html(null).append('<option value=""></option>');
         }
+
+        function loadTipoPalet(id) {
+            ClearTipoPalet();
+            if (id == null || id == undefined || id == "") {
+                return;
+            }
+            var myUrl = "{{ url('maestros/productos-compuestos/details') }}" + '/' + id;
+            $.ajax({
+                type: 'GET', //THIS NEEDS TO BE GET
+                url: myUrl,
+                dataType: 'json',
+                success: function (data) {
+
+                    var row = data.detalle;
+
+                    $('#euro_cantidad').val(row.euro_cantidad);
+                    $('#grand_cantidad').val(row.grand_cantidad);
+                    $('#euro_kg').val(row.euro_kg);
+                    $('#grand_kg').val(row.grand_kg);
+                    $('#euro_cantoneras').val(row.cantoneras);
+                    $('#euro_cubre_id').val(row.cubre_id).trigger('chosen:updated');
+                    $('#euro_cubre_cantidad').val(row.cubre_cantidad);
+
+                    var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
+                        '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
+                        '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
+                        '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                        '</a>';
+                    //Euro Tarrinas table
+                    for (i = 0; i < row.euro_tarrinas.length; i++) {
+                        var tarrina = row.euro_tarrinas[i];
+                        euro_table_tarrinas.row.add([
+                            tarrina.tarrina_id,
+                            tarrina.tarrina.modelo,
+                            tarrina.cantidad,
+                            '<input type="hidden" name="tarrinas_id[]" value="' + tarrina.tarrina_id + '">' +
+                            '<input type="hidden" name="tarrinas_cantidad[]" value="' + tarrina.cantidad + '"> ' +
+                            opciones,
+                            tarrina.cantidad
+                        ]).draw();
+                    }
+
+                    //Euro Auxiliares Table
+                    for (i = 0; i < row.euro_auxiliares.length; i++) {
+                        var auxiliar = row.euro_auxiliares[i];
+                        euro_table_auxiliares.row.add([
+                            auxiliar.auxiliar_id,
+                            auxiliar.auxiliar.modelo,
+                            auxiliar.cantidad,
+                            '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar.auxiliar_id + '">' +
+                            '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar.cantidad + '"> ' +
+                            opciones,
+                            auxiliar.cantidad
+                        ]).draw();
+                    }
+
+                    //Euro Tarrinas table
+                    for (i = 0; i < row.grand_tarrinas.length; i++) {
+                        var tarrina = row.grand_tarrinas[i];
+                        grand_table_tarrinas.row.add([
+                            tarrina.tarrina_id,
+                            tarrina.tarrina.modelo,
+                            tarrina.cantidad,
+                            '<input type="hidden" name="tarrinas_id[]" value="' + tarrina.tarrina_id + '">' +
+                            '<input type="hidden" name="tarrinas_cantidad[]" value="' + tarrina.cantidad + '"> ' +
+                            opciones,
+                            tarrina.cantidad
+                        ]).draw();
+                    }
+
+                    //Euro Auxiliares Table
+                    for (i = 0; i < row.grand_auxiliares.length; i++) {
+                        var auxiliar = row.grand_auxiliares[i];
+                        grand_table_auxiliares.row.add([
+                            auxiliar.auxiliar_id,
+                            auxiliar.auxiliar.modelo,
+                            auxiliar.cantidad,
+                            '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar.auxiliar_id + '">' +
+                            '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar.cantidad + '"> ' +
+                            opciones,
+                            auxiliar.cantidad
+                        ]).draw();
+                    }
+
+                    calcularCantidades();
+                },
+                error: function () {
+                    console.log("Error");
+                }
+            });
+        }
+
+        function ClearTipoPalet() {
+            $("#euro_cantidad, #euro_kg, #euro_cantoneras, #euro_cubre_id, #euro_cubre_cantidad").val(null);
+            $("#grand_cantidad, #grand_kg, #grand_cantoneras, #grand_cubre_id, #grand_cubre_cantidad").val(null);
+            $("#euro_cubre_id, #grand_cubre_id").trigger('chosen:updated');
+
+            euro_table_auxiliares.rows().remove().draw();
+            euro_table_tarrinas.rows().remove().draw();
+            grand_table_auxiliares.rows().remove().draw();
+            grand_table_tarrinas.rows().remove().draw();
+        }
+    </script>
+
+    {{--Table Euro Pallet Tarrinas--}}
+    <script>
+        var euro_table_tarrinas;
+
+        $(function () {
+            euro_table_tarrinas = $("#euro_tarrinas_table").DataTable({
+                language: {
+                    url: "{{ asset('assets/Spanish.json') }}"
+                },
+                ordering: false,
+                info: false,
+                paging: false,
+                searching: false,
+                columnDefs: [
+                    {targets: [0], visible: false}
+                ]
+            });
+
+            $("#btnAddEuroTarrina").click(function (e) {
+                var index = $(this).attr('data-index');
+                var cantidad_ini = $(this).attr('data-inicial');
+                if (!ValidarEuroTarrina(index)) return;
+                var modelo_id = $("#euro_tarrina_modelo").val();
+                var modelo = $("#euro_tarrina_modelo option:selected").text();
+                var cantidad = $("#euro_tarrina_cantidad").val();
+                var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
+                    '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
+                    '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
+                    '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                    '</a>';
+
+                var data = [
+                    modelo_id,
+                    modelo,
+                    cantidad,
+                    '<input type="hidden" name="euro_tarrinas_id[]" value="' + modelo_id + '">' +
+                    '<input type="hidden" name="euro_tarrinas_cantidad[]" value="' + cantidad + '">' +
+                    opciones,
+                    cantidad_ini
+                ];
+
+                if (index == null || index == "") {
+                    euro_table_tarrinas.row.add(data).draw(false);
+                } else {
+                    euro_table_tarrinas.row(index).data(data).draw(false);
+                }
+
+                LimpiarEuroTarrina();
+            });
+
+            $('#euro_tarrinas_table').on('click', '.edit', function () {
+                var tr = $(this).closest('tr');
+                var row = euro_table_tarrinas.row(tr).data();
+                var index = euro_table_tarrinas.row(tr).index();
+
+                $('#euro_tarrina_modelo').val(row[0]).trigger('chosen:updated');
+                $('#euro_tarrina_cantidad').val(row[2]);
+                $('#btnAddEuroTarrina').attr('data-index', index).attr('data-inicial', row[4]);
+            });
+
+            $('#euro_tarrinas_table').on('click', '.delete', function () {
+                var tr = $(this).closest('tr');
+                euro_table_tarrinas.row(tr).remove().draw(false);
+            });
+
+            function ValidarEuroTarrina(index) {
+                var modelo_id = $("#euro_tarrina_modelo").val();
+                if (modelo_id == null || modelo_id == "") {
+                    swal("Atención", "El campo Tarrina es requerido.", "warning");
+                    return false;
+                }
+
+                var cantidad = $("#euro_tarrina_cantidad").val();
+                if (cantidad == null || cantidad == "") {
+                    swal("Atención", "El campo Cantidad es requerido.", "warning");
+                    return false;
+                }
+
+                if (euro_table_tarrinas.inTable(modelo_id) && index == null) {
+                    swal("Atención", "Tarrina cargada en la tabla.", "warning");
+                    return false;
+                }
+
+                return true;
+            }
+
+            function LimpiarEuroTarrina() {
+                $('#euro_tarrina_cantidad').val(null);
+                $('#btnAddEuroTarrina').attr('data-index', null);
+                $('#euro_tarrina_modelo').val(null).trigger('chosen:updated');
+            }
+        });
+    </script>
+    {{--Table Euro Pallet Auxiliares--}}
+    <script>
+        var euro_table_auxiliares;
+
+        $(function () {
+
+            euro_table_auxiliares = $("#euro_auxiliares_table").DataTable({
+                language: {
+                    url: "{{ asset('assets/Spanish.json')}}"
+                },
+                ordering: false,
+                info: false,
+                paging: false,
+                searching: false,
+                columnDefs: [
+                    {targets: [0], visible: false}
+                ]
+            });
+
+            $("#btnAddEuroAuxiliar").click(function (e) {
+                var index = $(this).attr('data-index');
+                if (!ValidarEuroAuxiliar(index)) return;
+                var modelo_id = $("#euro_auxiliar_modelo").val();
+                var modelo = $("#euro_auxiliar_modelo option:selected").text();
+                var cantidad = $("#euro_auxiliar_cantidad").val();
+                var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
+                    '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
+                    '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
+                    '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                    '</a>';
+
+                var data = [
+                    modelo_id,
+                    modelo,
+                    cantidad,
+                    '<input type="hidden" name="euro_auxiliares_id[]" value="' + modelo_id + '">' +
+                    '<input type="hidden" name="euro_auxiliares_cantidad[]" value="' + cantidad + '"> ' +
+                    opciones
+                ];
+
+                if (index == null || index == "") {
+                    euro_table_auxiliares.row.add(data).draw(false);
+                } else {
+                    euro_table_auxiliares.row(index).data(data).draw(false);
+                }
+
+                LimpiarEuroAuxiliar();
+            });
+
+            $('#euro_auxiliares_table').on('click', '.edit', function () {
+                var tr = $(this).closest('tr');
+                var row = euro_table_auxiliares.row(tr).data();
+                var index = euro_table_auxiliares.row(tr).index();
+
+                $('#euro_auxiliar_modelo').val(row[0]).trigger('chosen:updated');
+                $('#euro_auxiliar_cantidad').val(row[2]);
+                $('#btnAddEuroAuxiliar').attr('data-index', index);
+            });
+
+            $('#euro_auxiliares_table').on('click', '.delete', function () {
+                var tr = $(this).closest('tr');
+                euro_table_auxiliares.row(tr).remove().draw(false);
+            });
+
+            function ValidarEuroAuxiliar(index) {
+                var modelo_id = $("#euro_auxiliar_modelo").val();
+                if (modelo_id == null || modelo_id == "") {
+                    swal("Atención", "El campo Auxiliar es requerido.", "warning");
+                    return false;
+                }
+
+                var cantidad = $("#euro_auxiliar_cantidad").val();
+                if (cantidad == null || cantidad == "") {
+                    swal("Atención", "El campo Cantidad es requerido.", "warning");
+                    return false;
+                }
+
+                if (euro_table_auxiliares.inTable(modelo_id) && index == null) {
+                    swal("Atención", "Auxiliar cargada en la tabla.", "warning");
+                    return false;
+                }
+
+                return true;
+            }
+
+            function LimpiarEuroAuxiliar() {
+                $('#euro_auxiliar_cantidad').val(null);
+                $('#btnAddEuroAuxiliar').attr('data-index', null);
+                $('#euro_auxiliar_modelo').val(null).trigger('chosen:updated');
+            }
+        });
+    </script>
+    {{--Table Grand Pallet Tarrinas--}}
+    <script>
+        var grand_table_tarrinas;
+
+        $(function () {
+            grand_table_tarrinas = $("#grand_tarrinas_table").DataTable({
+                language: {
+                    url: "{{ asset('assets/Spanish.json') }}"
+                },
+                ordering: false,
+                info: false,
+                paging: false,
+                searching: false,
+                columnDefs: [
+                    {targets: [0], visible: false}
+                ]
+            });
+
+            $("#btnAddGrandTarrina").click(function (e) {
+                var index = $(this).attr('data-index');
+                if (!ValidarGrandTarrina(index)) return;
+                var modelo_id = $("#grand_tarrina_modelo").val();
+                var modelo = $("#grand_tarrina_modelo option:selected").text();
+                var cantidad = $("#grand_tarrina_cantidad").val();
+                var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
+                    '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
+                    '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
+                    '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                    '</a>';
+
+                var data = [
+                    modelo_id,
+                    modelo,
+                    cantidad,
+                    '<input type="hidden" name="grand_tarrinas_id[]" value="' + modelo_id + '">' +
+                    '<input type="hidden" name="grand_tarrinas_cantidad[]" value="' + cantidad + '">' +
+                    opciones
+                ];
+
+                if (index == null || index == "") {
+                    grand_table_tarrinas.row.add(data).draw(false);
+                } else {
+                    grand_table_tarrinas.row(index).data(data).draw(false);
+                }
+
+                LimpiarGrandTarrina();
+            });
+
+            $('#grand_tarrinas_table').on('click', '.edit', function () {
+                var tr = $(this).closest('tr');
+                var row = grand_table_tarrinas.row(tr).data();
+                var index = grand_table_tarrinas.row(tr).index();
+
+                $('#grand_tarrina_modelo').val(row[0]).trigger('chosen:updated');
+                $('#grand_tarrina_cantidad').val(row[2]);
+                $('#btnAddGrandTarrina').attr('data-index', index);
+            });
+
+            $('#grand_tarrinas_table').on('click', '.delete', function () {
+                var tr = $(this).closest('tr');
+                grand_table_tarrinas.row(tr).remove().draw(false);
+            });
+
+            function ValidarGrandTarrina(index) {
+                var modelo_id = $("#grand_tarrina_modelo").val();
+                if (modelo_id == null || modelo_id == "") {
+                    swal("Atención", "El campo Tarrina es requerido.", "warning");
+                    return false;
+                }
+
+                var cantidad = $("#grand_tarrina_cantidad").val();
+                if (cantidad == null || cantidad == "") {
+                    swal("Atención", "El campo Cantidad es requerido.", "warning");
+                    return false;
+                }
+
+                if (grand_table_tarrinas.inTable(modelo_id) && index == null) {
+                    swal("Atención", "Tarrina cargada en la tabla.", "warning");
+                    return false;
+                }
+
+                return true;
+            }
+
+            function LimpiarGrandTarrina() {
+                $('#grand_tarrina_cantidad').val(null);
+                $('#btnAddGrandTarrina').attr('data-index', null);
+                $('#grand_tarrina_modelo').val(null).trigger('chosen:updated');
+            }
+        });
+    </script>
+    {{--Table Grand Pallet Auxiliares--}}
+    <script>
+        var grand_table_auxiliares;
+
+        $(function () {
+
+            grand_table_auxiliares = $("#grand_auxiliares_table").DataTable({
+                language: {
+                    url: "{{ asset('assets/Spanish.json')}}"
+                },
+                ordering: false,
+                info: false,
+                paging: false,
+                searching: false,
+                columnDefs: [
+                    {targets: [0], visible: false}
+                ]
+            });
+
+            $("#btnAddGrandAuxiliar").click(function (e) {
+                var index = $(this).attr('data-index');
+                if (!ValidarGrandAuxiliar(index)) return;
+                var modelo_id = $("#grand_auxiliar_modelo").val();
+                var modelo = $("#grand_auxiliar_modelo option:selected").text();
+                var cantidad = $("#grand_auxiliar_cantidad").val();
+                var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
+                    '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
+                    '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
+                    '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                    '</a>';
+
+                var data = [
+                    modelo_id,
+                    modelo,
+                    cantidad,
+                    '<input type="hidden" name="grand_auxiliares_id[]" value="' + modelo_id + '">' +
+                    '<input type="hidden" name="grand_auxiliares_cantidad[]" value="' + cantidad + '"> ' +
+                    opciones
+                ];
+
+                if (index == null || index == "") {
+                    grand_table_auxiliares.row.add(data).draw(false);
+                } else {
+                    grand_table_auxiliares.row(index).data(data).draw(false);
+                }
+
+                LimpiarGrandAuxiliar();
+            });
+
+            $('#grand_auxiliares_table').on('click', '.edit', function () {
+                var tr = $(this).closest('tr');
+                var row = grand_table_auxiliares.row(tr).data();
+                var index = grand_table_auxiliares.row(tr).index();
+
+                $('#grand_auxiliar_modelo').val(row[0]).trigger('chosen:updated');
+                $('#grand_auxiliar_cantidad').val(row[2]);
+                $('#btnAddGrandAuxiliar').attr('data-index', index);
+            });
+
+            $('#grand_auxiliares_table').on('click', '.delete', function () {
+                var tr = $(this).closest('tr');
+                grand_table_auxiliares.row(tr).remove().draw(false);
+            });
+
+            function ValidarGrandAuxiliar(index) {
+                var modelo_id = $("#grand_auxiliar_modelo").val();
+                if (modelo_id == null || modelo_id == "") {
+                    swal("Atención", "El campo Auxiliar es requerido.", "warning");
+                    return false;
+                }
+
+                var cantidad = $("#grand_auxiliar_cantidad").val();
+                if (cantidad == null || cantidad == "") {
+                    swal("Atención", "El campo Cantidad es requerido.", "warning");
+                    return false;
+                }
+
+                if (grand_table_auxiliares.inTable(modelo_id) && index == null) {
+                    swal("Atención", "Auxiliar cargada en la tabla.", "warning");
+                    return false;
+                }
+
+                return true;
+            }
+
+            function LimpiarGrandAuxiliar() {
+                $('#grand_auxiliar_cantidad').val(null);
+                $('#btnAddGrandAuxiliar').attr('data-index', null);
+                $('#grand_auxiliar_modelo').val(null).trigger('chosen:updated');
+            }
+        });
     </script>
 @endsection

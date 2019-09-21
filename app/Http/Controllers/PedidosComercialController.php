@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Auxiliar;
 use App\CatDiasSemana;
 use App\Cliente;
 use App\ClienteDestinos;
 use App\Contador;
+use App\Cubre;
 use App\Cultivo;
-use App\Pallet;
 use App\PalletModel;
 use App\PedidoComercial;
 use App\PedidoComercialEstado;
 use App\ProductoCompuesto_cab;
+use App\Tarrina;
 use App\Transporte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +41,9 @@ class PedidosComercialController extends Controller
         $productos   = ProductoCompuesto_cab::with('det')->get();
         $modelos     = PalletModel::all();
         $nro_orden   = Contador::Next_nro_pedido_comercial();
+        $tarrinas    = Tarrina::all();
+        $auxiliares  = Auxiliar::all();
+        $cubres      = Cubre::all();
 
         foreach ($cultivos as $c => $cultivo) {
             $pedidos               = PedidoComercial::where('cultivo_id', $cultivo->id)->where('anio', $data['anio_act'])->where('semana', $data['semana_act'])->get();
@@ -56,6 +61,9 @@ class PedidosComercialController extends Controller
         $data['estados']     = $estados;
         $data['productos']   = $productos;
         $data['modelos']     = $modelos;
+        $data['tarrinas']    = $tarrinas;
+        $data['auxiliares']  = $auxiliares;
+        $data['cubres']      = $cubres;
         $data['nro_orden']   = date('dmY') . "-" . $nro_orden;
 
         return view("comercial.pedidos-comercial.index")->with($data);
@@ -106,13 +114,11 @@ class PedidosComercialController extends Controller
         $clienteDestino = ClienteDestinos::find($id);
         $pais           = $clienteDestino->pais;
         $data           = DB::table('pedidos_comerciales')
-                            ->join('clientes_destinos', 'clientes_destinos.id', '=', 'pedidos_comerciales.destino_id')
-                            ->join('clientes', 'clientes.id', '=', 'clientes_destinos.cliente_id')
-                            ->where('clientes_destinos.pais', 'like', '%'.$pais.'%')
-                            ->select('precio', 'kilos', 'clientes.razon_social as cliente', 'clientes_destinos.pais')
-                            ->get();
-
-        dd($data);
+            ->join('clientes_destinos', 'clientes_destinos.id', '=', 'pedidos_comerciales.destino_id')
+            ->join('clientes', 'clientes.id', '=', 'clientes_destinos.cliente_id')
+            ->where('clientes_destinos.pais', 'like', '%' . $pais . '%')
+            ->select('precio', 'kilos', 'clientes.razon_social as cliente', 'clientes_destinos.pais')
+            ->get();
 
         return response()->json($data);
     }
