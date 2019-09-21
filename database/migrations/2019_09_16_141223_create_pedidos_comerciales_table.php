@@ -19,7 +19,7 @@ class CreatePedidosComercialesTable extends Migration
             $table->integer('anio')->nullable();
             $table->integer('semana')->nullable();
             $table->unsignedInteger('dia_id')->nullable();
-            $table->unsignedInteger('cliente_id')->nullable();
+            $table->unsignedInteger('destino_id')->nullable();
             $table->unsignedInteger('cultivo_id')->nullable();
             $table->unsignedInteger('producto_id')->nullable();
             $table->unsignedInteger('pallet_id')->nullable();
@@ -32,7 +32,7 @@ class CreatePedidosComercialesTable extends Migration
             $table->unsignedInteger('cancelado_id')->nullable();
             $table->string('cancelado_coment')->nullable();
             $table->foreign('dia_id')->references('id')->on('cat_dias_semana');
-            $table->foreign('cliente_id')->references('id')->on('clientes');
+            $table->foreign('destino_id')->references('id')->on('clientes_destinos');
             $table->foreign('cultivo_id')->references('id')->on('cultivos');
             $table->foreign('producto_id')->references('id')->on('productoscompuestos_det');
             $table->foreign('estado_id')->references('id')->on('pedidos_comerciales_estados');
