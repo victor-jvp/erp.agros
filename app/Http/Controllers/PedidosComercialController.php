@@ -14,6 +14,7 @@ use App\PedidoComercialEstado;
 use App\ProductoCompuesto_cab;
 use App\Transporte;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PedidosComercialController extends Controller
 {
@@ -40,10 +41,7 @@ class PedidosComercialController extends Controller
         $nro_orden   = Contador::Next_nro_pedido_comercial();
 
         foreach ($cultivos as $c => $cultivo) {
-            $pedidos               = PedidoComercial::where('cultivo_id', $cultivo->id)
-                ->where('anio', $data['anio_act'])
-                ->where('semana', $data['semana_act'])
-                ->get();
+            $pedidos               = PedidoComercial::where('cultivo_id', $cultivo->id)->where('anio', $data['anio_act'])->where('semana', $data['semana_act'])->get();
             $cultivos[$c]->pedidos = $pedidos;
         }
 
@@ -104,10 +102,15 @@ class PedidosComercialController extends Controller
 
         if (is_null($id)) return response()->json(null);
 
-        $data = array();
+        $data           = array();
         $clienteDestino = ClienteDestinos::find($id);
-        $query = "SELECT ";
-        $destino = DB::select();
+        $pais           = $clienteDestino->pais;
+        $data           = DB::table('pedidos_comerciales')
+                            ->join('clientes_destinos', 'clientes_destinos.id', '=', 'pedidos_comerciales.destino_id')
+                            ->join('clientes', 'clientes.id', '=', 'clientes_destinos.cliente_id')
+                            ->where('clientes_destinos.pais', 'like', '%'.$pais.'%')
+                            ->select('precio', 'kilos', 'clientes.razon_social as cliente', 'clientes_destinos.pais')
+                            ->get();
 
         return response()->json($data);
     }

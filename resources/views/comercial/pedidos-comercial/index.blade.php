@@ -70,9 +70,10 @@
                                                            id="btnDestinoComercial"><i class="i-Information"></i></a>
                                                     </div>
                                                     {{--<input type="text" name="destino_comercial" id="destino_comercial"--}}
-                                                           {{--class="form-control" value="" aria-label="Username"--}}
-                                                           {{--aria-describedby="zona_info">--}}
-                                                    <select name="destino_comercial" id="destino_comercial" class="form-control">
+                                                    {{--class="form-control" value="" aria-label="Username"--}}
+                                                    {{--aria-describedby="zona_info">--}}
+                                                    <select name="destino_comercial" id="destino_comercial"
+                                                            class="form-control">
                                                         <option value="">Seleccione...</option>
                                                     </select>
                                                 </div>
@@ -851,7 +852,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [{
-                    targets: [0,12,13],
+                    targets: [0, 12, 13],
                     visible: false
                 },],
                 responsive: true,
@@ -873,7 +874,7 @@
             //     .tables( { visible: true, api: true } )
             //     .columns.adjust();
 
-            $('.table_pedidos').on('click', '.delete',function () {
+            $('.table_pedidos').on('click', '.delete', function () {
                 var current_row = $(this).parents('tr');
                 if (current_row.hasClass('child')) {
                     current_row = current_row.prev();
@@ -922,6 +923,11 @@
                 LoadDestinosComercialesForCliente(cliente);
             });
 
+            $("#destino_comercial").change(function(){
+                var destino = $(this).val();
+                LoadDestinosComerciales(destino);
+            });
+
             $("#producto").on('change', function () {
                 var compuesto_id = $(this).val();
                 loadCompuesto(compuesto_id)
@@ -959,7 +965,7 @@
                         table_destinos.row.add([
                             row.pais,
                             row.cliente,
-                            row.cantidad,
+                            row.kilos,
                             row.precio
                         ]).draw();
                     }
