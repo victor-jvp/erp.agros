@@ -182,7 +182,7 @@
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="modelo_palet">Tipo de Palet</label>
-                                                <select class="form-control" id="modelo_palet">
+                                                <select class="form-control" id="modelo_palet" name="modelo_palet">
                                                     @foreach ($modelos as $modelo)
                                                         <option value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
                                                     @endforeach
@@ -311,7 +311,8 @@
                                                                                         <tr>
                                                                                             <th>modelo_id</th>
                                                                                             <th scope="col">Tarrina</th>
-                                                                                            <th scope="col">Cantidad</th>
+                                                                                            <th scope="col">Cantidad
+                                                                                            </th>
                                                                                             <th scope="col">Acción</th>
                                                                                             <th>Cantidad Default</th>
                                                                                         </tr>
@@ -768,11 +769,10 @@
                                                         <th>Formato</th>
                                                         <th>Transporte</th>
                                                         <th>Precio €/Kg</th>
+                                                        <th>Total Kilos</th>
                                                         <th>Observación</th>
                                                         <th>Estado</th>
                                                         <th>Acciones</th>
-                                                        <th>Año</th>
-                                                        <th>Etiqueta</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -783,15 +783,14 @@
                                                             <td>{{ $pedido->semana }}</td>
                                                             <td>{{ $pedido->dia->dia }}</td>
                                                             <td>{{ (!is_null($pedido->cliente)) ? $pedido->cliente->razon_social : "" }}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td>{{ (!is_null($pedido->destino)) ? $pedido->destino->descripcion : "" }}</td>
+                                                            <td>{{ (!is_null($pedido->formato)) ? $pedido->formato->formato : "" }}</td>
+                                                            <td>{{ (!is_null($pedido->transporte)) ? $pedido->transporte->razon_social : "" }}</td>
                                                             <td>{{ $pedido->precio }}</td>
+                                                            <td>{{ $pedido->kilos }}</td>
                                                             <td>{{ $pedido->comentarios }}</td>
                                                             <td>{{ $pedido->estado->estado }}</td>
                                                             <td></td>
-                                                            <td>{{ $pedido->anio }}</td>
-                                                            <td>{{ $pedido->etiqueta }}</td>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>
@@ -866,7 +865,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [{
-                    targets: [0, 12, 13],
+                    targets: [0],
                     visible: false
                 },],
                 responsive: true,
@@ -976,7 +975,7 @@
                 calcularCantidades();
             });
 
-            $("#euro_kg, #grand_kg").change(function(){
+            $("#euro_kg, #grand_kg").change(function () {
                 calcularKilos();
             });
         });
@@ -995,7 +994,7 @@
             if (cantidad > 0) {
                 if ($("#EuroPallet-tab").hasClass('active')) {
                     kilos = cantidad * euro_kg;
-                } else if($("#PalletGrande").hasClass('active')) {
+                } else if ($("#PalletGrande").hasClass('active')) {
                     kilos = cantidad * grand_kg;
                 }
             }
@@ -1003,8 +1002,7 @@
             $("#kilos").val(kilos);
         }
 
-        function calcularTarrinasAuxiliares()
-        {
+        function calcularTarrinasAuxiliares() {
             var cantidad = $("#cantidad").val();
             var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
                 '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
@@ -1017,8 +1015,9 @@
                 euro_table_tarrinas.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     var data = this.data();
                     data[2] = data[4] * cantidad;
-                    data[3] = '<input type="hidden" name="tarrinas_id[]" value="' + data[0] + '">' +
-                        '<input type="hidden" name="tarrinas_cantidad[]" value="' + data[2] + '"> ' +
+                    data[3] = '<input type="hidden" name="euro_tarrinas_id[]" value="' + data[0] + '">' +
+                        '<input type="hidden" name="euro_tarrinas_cantidad[]" value="' + data[2] + '"> ' +
+                        '<input type="hidden" name="euro_tarrinas_inicial[]" value="' + data[4] + '"> ' +
                         opciones;
                     this.row(rowIdx).data(data);
                     euro_table_tarrinas.draw();
@@ -1030,8 +1029,9 @@
                 euro_table_auxiliares.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     var data = this.data();
                     data[2] = data[4] * cantidad;
-                    data[3] = '<input type="hidden" name="auxiliares_id[]" value="' + data[0] + '">' +
-                        '<input type="hidden" name="auxiliares_cantidad[]" value="' + data[2] + '"> ' +
+                    data[3] = '<input type="hidden" name="euro_auxiliares_id[]" value="' + data[0] + '">' +
+                        '<input type="hidden" name="euro_auxiliares_cantidad[]" value="' + data[2] + '"> ' +
+                        '<input type="hidden" name="euro_auxiliares_inicial[]" value="' + data[4] + '"> ' +
                         opciones;
                     this.row(rowIdx).data(data);
                     euro_table_auxiliares.draw();
@@ -1043,8 +1043,9 @@
                 grand_table_tarrinas.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     var data = this.data();
                     data[2] = data[4] * cantidad;
-                    data[3] = '<input type="hidden" name="tarrinas_id[]" value="' + data[0] + '">' +
-                        '<input type="hidden" name="tarrinas_cantidad[]" value="' + data[2] + '"> ' +
+                    data[3] = '<input type="hidden" name="grand_tarrinas_id[]" value="' + data[0] + '">' +
+                        '<input type="hidden" name="grand_tarrinas_cantidad[]" value="' + data[2] + '"> ' +
+                        '<input type="hidden" name="grand_tarrinas_inicial[]" value="' + data[4] + '"> ' +
                         opciones;
                     this.row(rowIdx).data(data);
                     grand_table_tarrinas.draw();
@@ -1056,8 +1057,9 @@
                 grand_table_auxiliares.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     var data = this.data();
                     data[2] = data[4] * cantidad;
-                    data[3] = '<input type="hidden" name="auxiliares_id[]" value="' + data[0] + '">' +
-                        '<input type="hidden" name="auxiliares_cantidad[]" value="' + data[2] + '"> ' +
+                    data[3] = '<input type="hidden" name="grand_auxiliares_id[]" value="' + data[0] + '">' +
+                        '<input type="hidden" name="grand_auxiliares_cantidad[]" value="' + data[2] + '"> ' +
+                        '<input type="hidden" name="grand_auxiliares_inicial[]" value="' + data[4] + '"> ' +
                         opciones;
                     this.row(rowIdx).data(data);
                     grand_table_auxiliares.draw();
@@ -1247,8 +1249,9 @@
                             tarrina.tarrina_id,
                             tarrina.tarrina.modelo,
                             tarrina.cantidad,
-                            '<input type="hidden" name="tarrinas_id[]" value="' + tarrina.tarrina_id + '">' +
-                            '<input type="hidden" name="tarrinas_cantidad[]" value="' + tarrina.cantidad + '"> ' +
+                            '<input type="hidden" name="euro_tarrinas_id[]" value="' + tarrina.tarrina_id + '">' +
+                            '<input type="hidden" name="euro_tarrinas_cantidad[]" value="' + tarrina.cantidad + '"> ' +
+                            '<input type="hidden" name="euro_tarrinas_inicial[]" value="' + tarrina.cantidad + '"> ' +
                             opciones,
                             tarrina.cantidad
                         ]).draw();
@@ -1261,10 +1264,11 @@
                             auxiliar.auxiliar_id,
                             auxiliar.auxiliar.modelo,
                             auxiliar.cantidad,
-                            '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar.auxiliar_id + '">' +
-                            '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar.cantidad + '"> ' +
+                            '<input type="hidden" name="euro_auxiliares_id[]" value="' + auxiliar.auxiliar_id + '">' +
+                            '<input type="hidden" name="euro_auxiliares_cantidad[]" value="' + auxiliar.cantidad + '"> ' +
+                            '<input type="hidden" name="euro_auxiliares_inicial[]" value="' + auxiliar.cantidad + '"> ' +
                             opciones,
-                            auxiliar.cantidad
+                            auxiliar.cantidad,
                         ]).draw();
                     }
 
@@ -1275,10 +1279,11 @@
                             tarrina.tarrina_id,
                             tarrina.tarrina.modelo,
                             tarrina.cantidad,
-                            '<input type="hidden" name="tarrinas_id[]" value="' + tarrina.tarrina_id + '">' +
-                            '<input type="hidden" name="tarrinas_cantidad[]" value="' + tarrina.cantidad + '"> ' +
+                            '<input type="hidden" name="grand_tarrinas_id[]" value="' + tarrina.tarrina_id + '">' +
+                            '<input type="hidden" name="grand_tarrinas_cantidad[]" value="' + tarrina.cantidad + '"> ' +
+                            '<input type="hidden" name="grand_tarrinas_inicial[]" value="' + tarrina.cantidad + '"> ' +
                             opciones,
-                            tarrina.cantidad
+                            tarrina.cantidad,
                         ]).draw();
                     }
 
@@ -1289,8 +1294,9 @@
                             auxiliar.auxiliar_id,
                             auxiliar.auxiliar.modelo,
                             auxiliar.cantidad,
-                            '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar.auxiliar_id + '">' +
-                            '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar.cantidad + '"> ' +
+                            '<input type="hidden" name="grand_auxiliares_id[]" value="' + auxiliar.auxiliar_id + '">' +
+                            '<input type="hidden" name="grand_auxiliares_cantidad[]" value="' + auxiliar.cantidad + '"> ' +
+                            '<input type="hidden" name="grand_auxiliares_inicial[]" value="' + auxiliar.cantidad + '"> ' +
                             opciones,
                             auxiliar.cantidad
                         ]).draw();
@@ -1354,7 +1360,7 @@
                     '<input type="hidden" name="euro_tarrinas_id[]" value="' + modelo_id + '">' +
                     '<input type="hidden" name="euro_tarrinas_cantidad[]" value="' + cantidad + '">' +
                     opciones,
-                    cantidad_ini
+                    '<input type="hidden" name="euro_tarrinas_inicial[]" value="' + cantidad_ini + '">'
                 ];
 
                 if (index == null || index == "") {
@@ -1446,7 +1452,8 @@
                     cantidad,
                     '<input type="hidden" name="euro_auxiliares_id[]" value="' + modelo_id + '">' +
                     '<input type="hidden" name="euro_auxiliares_cantidad[]" value="' + cantidad + '"> ' +
-                    opciones
+                    opciones,
+                    '<input type="hidden" name="euro_auxiliares_inicial[]" value="' + cantidad + '"> '
                 ];
 
                 if (index == null || index == "") {
@@ -1537,7 +1544,8 @@
                     cantidad,
                     '<input type="hidden" name="grand_tarrinas_id[]" value="' + modelo_id + '">' +
                     '<input type="hidden" name="grand_tarrinas_cantidad[]" value="' + cantidad + '">' +
-                    opciones
+                    opciones,
+                    '<input type="hidden" name="grand_tarrinas_inicial[]" value="' + cantidad + '">'
                 ];
 
                 if (index == null || index == "") {
@@ -1629,7 +1637,8 @@
                     cantidad,
                     '<input type="hidden" name="grand_auxiliares_id[]" value="' + modelo_id + '">' +
                     '<input type="hidden" name="grand_auxiliares_cantidad[]" value="' + cantidad + '"> ' +
-                    opciones
+                    opciones,
+                    '<input type="hidden" name="grand_auxiliares_inicial[]" value="' + cantidad + '"> '
                 ];
 
                 if (index == null || index == "") {

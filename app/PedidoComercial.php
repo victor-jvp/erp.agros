@@ -24,8 +24,33 @@ class PedidoComercial extends Model
         return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
+    public function destino()
+    {
+        return $this->belongsTo(ClienteDestinos::class, 'destino_id');
+    }
+
+    public function formato()
+    {
+        return $this->belongsTo(Pallet::class, 'pallet_id');
+    }
+
+    public function transporte()
+    {
+        return $this->belongsTo(Transporte::class, 'transporte_id');
+    }
+
     public function dia()
     {
         return $this->belongsTo(CatDiasSemana::class, 'dia_id');
+    }
+
+    public function auxiliares()
+    {
+        return $this->hasMany(PedidoComercialAuxiliar::class, 'pedido_id');
+    }
+
+    public function tarrinas()
+    {
+        return $this->hasMany(PedidoComercialTarrina::class, 'pedido_id');
     }
 }
