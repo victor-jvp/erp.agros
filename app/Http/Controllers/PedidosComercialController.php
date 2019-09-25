@@ -176,7 +176,6 @@ class PedidosComercialController extends Controller
 
     public function update(Request $request, $id)
     {
-        dd($request);
         $data   = array();
         $pedido = PedidoComercial::find($id);
 

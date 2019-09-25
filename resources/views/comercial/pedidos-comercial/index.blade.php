@@ -905,14 +905,14 @@
                 if (current_row.hasClass('child')) {
                     current_row = current_row.prev();
                 }
-                var row = table_pedidos.row(current_row).data();
+                var trow = table_pedidos.row(current_row).data();
 
                 $.ajax({
                     type: 'POST',
                     url: "{{ route('pedidos-comercial.details') }}",
                     dataType: 'JSON',
                     data: {
-                        "id": row[0]
+                        "id": trow[0]
                     },
                     success: function (data) {
                         limpiarCamposPedido();
@@ -925,7 +925,7 @@
                         LoadDestinosComercialesForCliente(data.cliente_id, data.destino_id);
                         $("#cultivo").val(data.cultivo_id).trigger('chosen:updated');
                         $(".dias").prop("checked", false);
-                        $(".dias[value=" + data.dia + "]").prop("checked", true);
+                        $(".dias[value=" + data.dia_id + "]").prop("checked", true);
                         $(".dias").prop('disabled', true);
                         $("#etiqueta").val(data.etiqueta);
                         $("#transporte").val(data.transporte_id).trigger('chosen:updated');
@@ -942,7 +942,7 @@
                         $("#precio").val(data.precio);
 
                         var row = null;
-                        if(data.compuesto != null){
+                        if (data.compuesto != null) {
                             row = data.compuesto;
                             row.modelo_id = data.modelo_id;
                             row.tarrinas = data.tarrinas;
@@ -951,7 +951,7 @@
 
                         setTimeout(function () {
 
-                            if(row != null){
+                            if (row != null) {
                                 loadTipoPalet(row.id, row);
                             }
 
@@ -968,6 +968,8 @@
                         }, 500);
 
                         $("#modal-pedido-title").html("Modificar Pedido");
+                        var url = '{{ url("comercial/pedidos-comercial") }}' + '/' + trow[0];
+                        $("#pedido_form").attr('action', url);
                         $("#pedido_method").val('PUT');
 
                         $(".EuroPallet, .PalletGrande").css('display', 'none');
@@ -1011,6 +1013,8 @@
                 $("#semana").val($("#semana_act").val())
                 $("#modal-pedido-title").html("Nuevo Pedido");
                 $("#pedido_method").val(null);
+                var url = '{{ url("comercial/pedidos-comercial") }}';
+                $("#pedido_form").attr('action', url);
 
                 $(".dias").prop("checked", false).prop('disabled', false);
 
@@ -1331,11 +1335,11 @@
 
                     var row = data.detalle;
 
-                    if(erow != null){
-                        if(erow.modelo_id == 1){
+                    if (erow != null) {
+                        if (erow.modelo_id == 1) {
                             row.euro_tarrinas = erow.tarrinas;
                             row.euro_auxiliares = erow.auxiliares;
-                        }else if(erow.modelo_id == 2){
+                        } else if (erow.modelo_id == 2) {
                             row.grand_tarrinas = erow.tarrinas;
                             row.grand_auxiliares = erow.auxiliares;
                         }
