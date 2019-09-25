@@ -664,11 +664,16 @@
                 var id = row[0];
 
                 LimpiarModalDetalles();
-                GetDataModalDetalle(id);
+                setTimeout(function(){
+                    GetDataModalDetalle(id);
+                },200);
+
 
                 $("#modal-producto-title").html("Modificar Producto");
                 $("#det_id").val(id);
-                $("#modal-producto").modal("show");
+                setTimeout(function(){
+                    $("#modal-producto").modal("show");
+                }, 300);
             });
 
             $('#productos_table').on('click', '.delete', function () {
@@ -701,6 +706,8 @@
             $('#cajas, #euro_cubre_id').val(null).trigger('chosen:updated');
             euro_table_tarrinas.rows().remove().draw();
             euro_table_auxiliares.rows().remove().draw();
+            grand_table_tarrinas.rows().remove().draw();
+            grand_table_auxiliares.rows().remove().draw();
         }
 
         function GetDataModalDetalle(id) {
