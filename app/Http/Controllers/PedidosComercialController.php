@@ -71,6 +71,17 @@ class PedidosComercialController extends Controller
         return view("comercial.pedidos-comercial.index")->with($data);
     }
 
+    public function details(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (is_null($id)) return response()->json(null);
+
+        $data = PedidoComercial::with(['compuesto', 'tarrinas.tarrina', 'auxiliares.auxiliar'])->find($id);
+
+        return response()->json($data);
+    }
+
     public function store(Request $request)
     {
 //        dd($request);
@@ -93,6 +104,7 @@ class PedidosComercialController extends Controller
             $pedido->kilos       = $request->kilos;
             $pedido->comentarios = $request->comentario;
             $pedido->estado_id   = $request->estado;
+            $pedido->modelo_id   = $request->modelo_palet;
 
             $pedido->save();
             $data['anio_act']   = $request->anio;
@@ -164,6 +176,91 @@ class PedidosComercialController extends Controller
 
     public function update(Request $request, $id)
     {
+        dd($request);
+        $data   = array();
+        $pedido = PedidoComercial::find($id);
+
+        $pedido->cliente_id  = $request->cliente;
+        $pedido->destino_id  = $request->destino_comercial;
+        $pedido->cultivo_id  = $request->cultivo;
+        $pedido->producto_id = $request->producto_compuesto;
+        $pedido->pallet_id   = $request->formato_palet;
+        $pedido->cantidad    = $request->cantidad;
+        $pedido->etiqueta    = $request->etiqueta;
+        $pedido->precio      = $request->precio;
+        $pedido->kilos       = $request->kilos;
+        $pedido->comentarios = $request->comentario;
+        $pedido->estado_id   = $request->estado;
+        $pedido->modelo_id   = $request->modelo_palet;
+
+        $pedido->save();
+        $data['anio_act']   = $request->anio;
+        $data['semana_act'] = $request->semana;
+
+        $pedido->tarrinas()->delete();
+        $pedido->auxiliares()->delete();
+
+        if ($request->modelo_palet == "1") { // Es un Europalet
+            $pedido->formato_cantidad = $request->euro_cantidad;
+            $pedido->formato_kilos    = $request->euro_kg;
+            $pedido->cubre_id         = null;
+            $pedido->cubre_cantidad   = null;
+
+            $pedido->save();
+
+            if (count($request->euro_tarrinas_id) > 0) {
+                foreach ($request->euro_tarrinas_id as $e => $euro_tarrina) {
+                    $tarrina                   = new PedidoComercialTarrina();
+                    $tarrina->tarrina_id       = $request->euro_tarrina;
+                    $tarrina->cantidad         = $request->euro_tarrinas_cantidad[$e];
+                    $tarrina->cantidad_inicial = $request->euro_tarrinas_inicial[$e];
+
+                    $pedido->tarrinas()->save($tarrina);
+                }
+            }
+
+            if (count($request->euro_auxiliares_id) > 0) {
+                foreach ($request->euro_auxiliares_id as $e => $euro_auxiliar) {
+                    $auxiliar                   = new PedidoComercialAuxiliar();
+                    $auxiliar->auxiliar_id      = $euro_auxiliar;
+                    $auxiliar->cantidad         = $request->euro_auxiliares_cantidad[$e];
+                    $auxiliar->cantidad_inicial = $request->euro_auxiliares_inicial[$e];
+
+                    $pedido->auxiliares()->save($auxiliar);
+                }
+            }
+        } else { // Es un palet Grande
+            $pedido->formato_cantidad = $request->grand_cantidad;
+            $pedido->formato_kilos    = $request->grand_kg;
+            $pedido->cubre_id         = $request->grand_cubre_id;
+            $pedido->cubre_cantidad   = $request->grand_cubre_cantidad;
+
+            $pedido->save();
+
+            if (count($request->grand_tarrinas_id) > 0) {
+                foreach ($request->grand_tarrinas_id as $e => $grand_tarrina) {
+                    $tarrina                   = new PedidoComercialTarrina();
+                    $tarrina->tarrina_id       = $grand_tarrina;
+                    $tarrina->cantidad         = $request->grand_tarrinas_cantidad[$e];
+                    $tarrina->cantidad_inicial = $request->grand_tarrinas_inicial[$e];
+
+                    $pedido->tarrinas()->save($tarrina);
+                }
+            }
+
+            if (count($request->grand_auxiliares_id) > 0) {
+                foreach ($request->grand_auxiliares_id as $e => $grand_auxiliar) {
+                    $auxiliar                   = new PedidoComercialAuxiliar();
+                    $auxiliar->auxiliar_id      = $grand_auxiliar;
+                    $auxiliar->cantidad         = $request->grand_auxiliares_cantidad[$e];
+                    $auxiliar->cantidad_inicial = $request->grand_auxiliares_inicial[$e];
+
+                    $pedido->auxiliares()->save($auxiliar);
+                }
+            }
+        }
+
+        return redirect()->route('pedidos-comercial.index')->with($data);
     }
 
     public function ajaxGetDestinosComerciales(Request $request)

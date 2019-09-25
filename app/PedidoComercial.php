@@ -53,4 +53,9 @@ class PedidoComercial extends Model
     {
         return $this->hasMany(PedidoComercialTarrina::class, 'pedido_id');
     }
+
+    public function compuesto()
+    {
+        return $this->belongsTo(ProductoCompuesto_det::class, 'producto_id');
+    }
 }

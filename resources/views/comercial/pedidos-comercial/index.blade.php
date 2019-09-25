@@ -792,12 +792,21 @@
                                                             <td>{{ (!is_null($pedido->destino)) ? $pedido->destino->descripcion : "" }}</td>
                                                             <td>{{ (!is_null($pedido->formato)) ? $pedido->formato->formato : "" }}</td>
                                                             <td>{{ (!is_null($pedido->transporte)) ? $pedido->transporte->razon_social : "" }}</td>
-                                                            <td>{{ $pedido->precio }}</td>
-                                                            <td>{{ $pedido->kilos }}</td>
-                                                            <td>{{ $pedido->precio * $pedido->kilos }}</td>
+                                                            <td>{{ number_format($pedido->precio, 2,",",".") }}</td>
+                                                            <td>{{ number_format($pedido->kilos, 2,",",".") }}</td>
+                                                            <td>{{ number_format($pedido->precio * $pedido->kilos, 2,",",".") }}</td>
                                                             <td>{{ $pedido->comentarios }}</td>
                                                             <td>{{ $pedido->estado->estado }}</td>
-                                                            <td></td>
+                                                            <td>
+                                                                <a href="javascript:void(0);"
+                                                                   class="text-success mr-2 edit">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                   class="text-danger mr-2 delete">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                                </a>
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>
@@ -865,9 +874,10 @@
     <script>
         var nro_orden = "{{ $nro_orden }}";
         var table_destinos;
+        var table_pedidos;
         $(document).ready(function () {
             // Configuracion de Datatable
-            $('.table_pedidos').DataTable({
+            table_pedidos = $('.table_pedidos').DataTable({
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
@@ -890,16 +900,92 @@
                 paging: false
             });
 
-            // $.fn.dataTable
-            //     .tables( { visible: true, api: true } )
-            //     .columns.adjust();
+            $('.table_pedidos').on('click', '.edit', function () {
+                var current_row = $(this).parents('tr');
+                if (current_row.hasClass('child')) {
+                    current_row = current_row.prev();
+                }
+                var row = table_pedidos.row(current_row).data();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('pedidos-comercial.details') }}",
+                    dataType: 'JSON',
+                    data: {
+                        "id": row[0]
+                    },
+                    success: function (data) {
+                        limpiarCamposPedido();
+                        if (data == null) return;
+
+                        $("#nro_orden").val(data.nro_orden);
+                        $("#anio").val(data.anio);
+                        $("#semana").val(data.semana);
+                        $("#cliente").val(data.cliente_id).trigger('chosen:updated');
+                        LoadDestinosComercialesForCliente(data.cliente_id, data.destino_id);
+                        $("#cultivo").val(data.cultivo_id).trigger('chosen:updated');
+                        $(".dias").prop("checked", false);
+                        $(".dias[value=" + data.dia + "]").prop("checked", true);
+                        $(".dias").prop('disabled', true);
+                        $("#etiqueta").val(data.etiqueta);
+                        $("#transporte").val(data.transporte_id).trigger('chosen:updated');
+                        if (data.producto_id != null) {
+                            $("#producto").val(data.compuesto.id).trigger('chosen:updated');
+                            loadCompuesto(data.compuesto.compuesto_id, data.producto_id);
+                        }
+                        if (data.modelo_id != null) {
+                            $("#modelo_palet").val(data.modelo_id);
+                            loadPalet(data.modelo_id, data.pallet_id);
+                        }
+                        $("#cantidad").val(data.cantidad);
+
+                        $("#precio").val(data.precio);
+
+                        var row = null;
+                        if(data.compuesto != null){
+                            row = data.compuesto;
+                            row.modelo_id = data.modelo_id;
+                            row.tarrinas = data.tarrinas;
+                            row.auxiliares = data.auxiliares;
+                        }
+
+                        setTimeout(function () {
+
+                            if(row != null){
+                                loadTipoPalet(row.id, row);
+                            }
+
+                            $(".EuroPallet, .PalletGrande").css('display', 'none');
+                            if (data.modelo_id == 1) {
+                                $(".EuroPallet").css('display', 'block');
+                                $("#EuroPallet-tab").trigger('click');
+                            } else if (data.modelo_id == 2) {
+                                $(".PalletGrande").css('display', 'block');
+                                $("#PalletGrande-tab").trigger('click');
+                            }
+
+                            calcularCantidades();
+                        }, 500);
+
+                        $("#modal-pedido-title").html("Modificar Pedido");
+                        $("#pedido_method").val('PUT');
+
+                        $(".EuroPallet, .PalletGrande").css('display', 'none');
+                        $("#modal-pedido").modal('show');
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert('Error. Check Console Log');
+                    },
+                });
+            });
 
             $('.table_pedidos').on('click', '.delete', function () {
                 var current_row = $(this).parents('tr');
                 if (current_row.hasClass('child')) {
                     current_row = current_row.prev();
                 }
-                var row = table_destinos.row(current_row).data();
+                var row = table_pedidos.row(current_row).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -914,7 +1000,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('comercial/clientes/delete') }}" + "/" + row[0]
+                    window.location.href = "{{ url('comercial/pedidos-comercial/delete') }}" + "/" + row[0]
                 })
             });
 
@@ -925,6 +1011,8 @@
                 $("#semana").val($("#semana_act").val())
                 $("#modal-pedido-title").html("Nuevo Pedido");
                 $("#pedido_method").val(null);
+
+                $(".dias").prop("checked", false).prop('disabled', false);
 
                 $(".EuroPallet, .PalletGrande").css('display', 'none');
                 $("#modal-pedido").modal('show');
@@ -937,7 +1025,6 @@
             $("#btnCloseModalDestinoComercial").click(function (e) {
                 $("#modal-destino_comercial").modal('toggle');
                 $('#modal-pedido').css('overflow-y', 'auto');
-
             });
 
             $("#cliente").change(function () {
@@ -1007,7 +1094,7 @@
                     kilos = cantidad * grand_kg;
                 }
 
-                if (precio > 0){
+                if (precio > 0) {
                     total_pedido = precio * kilos;
                 }
             }
@@ -1229,11 +1316,12 @@
             $("#formato_palet").html(null).append('<option value=""></option>');
         }
 
-        function loadTipoPalet(id) {
+        function loadTipoPalet(id, erow = null) {
             ClearTipoPalet();
             if (id == null || id == undefined || id == "") {
                 return;
             }
+
             var myUrl = "{{ url('maestros/productos-compuestos/details') }}" + '/' + id;
             $.ajax({
                 type: 'GET', //THIS NEEDS TO BE GET
@@ -1242,6 +1330,16 @@
                 success: function (data) {
 
                     var row = data.detalle;
+
+                    if(erow != null){
+                        if(erow.modelo_id == 1){
+                            row.euro_tarrinas = erow.tarrinas;
+                            row.euro_auxiliares = erow.auxiliares;
+                        }else if(erow.modelo_id == 2){
+                            row.grand_tarrinas = erow.tarrinas;
+                            row.grand_auxiliares = erow.auxiliares;
+                        }
+                    }
 
                     $('#euro_cantidad').val(row.euro_cantidad);
                     $('#grand_cantidad').val(row.grand_cantidad);
