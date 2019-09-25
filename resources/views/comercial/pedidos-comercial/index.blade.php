@@ -623,6 +623,11 @@
                                                 <input type="number" class="form-control" name="kilos" id="kilos"
                                                        readonly placeholder="0.00">
                                             </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="kilos">Total Pedido €</label>
+                                                <input type="number" class="form-control" id="total_pedido" value="0.00"
+                                                       readonly placeholder="0.00">
+                                            </div>
                                         </div>
 
                                         <div class="row">
@@ -770,6 +775,7 @@
                                                         <th>Transporte</th>
                                                         <th>Precio €/Kg</th>
                                                         <th>Total Kilos</th>
+                                                        <th>Total Pedido</th>
                                                         <th>Observación</th>
                                                         <th>Estado</th>
                                                         <th>Acciones</th>
@@ -788,6 +794,7 @@
                                                             <td>{{ (!is_null($pedido->transporte)) ? $pedido->transporte->razon_social : "" }}</td>
                                                             <td>{{ $pedido->precio }}</td>
                                                             <td>{{ $pedido->kilos }}</td>
+                                                            <td>{{ $pedido->precio * $pedido->kilos }}</td>
                                                             <td>{{ $pedido->comentarios }}</td>
                                                             <td>{{ $pedido->estado->estado }}</td>
                                                             <td></td>
@@ -975,7 +982,7 @@
                 calcularCantidades();
             });
 
-            $("#euro_kg, #grand_kg").change(function () {
+            $("#euro_kg, #grand_kg, #precio").change(function () {
                 calcularKilos();
             });
         });
@@ -989,17 +996,24 @@
             var cantidad = $("#cantidad").val();
             var euro_kg = $("#euro_kg").val();
             var grand_kg = $("#grand_kg").val();
+            var precio = $("#precio").val();
 
             var kilos = 0;
+            var total_pedido = 0;
             if (cantidad > 0) {
                 if ($("#EuroPallet-tab").hasClass('active')) {
                     kilos = cantidad * euro_kg;
                 } else if ($("#PalletGrande").hasClass('active')) {
                     kilos = cantidad * grand_kg;
                 }
+
+                if (precio > 0){
+                    total_pedido = precio * kilos;
+                }
             }
 
             $("#kilos").val(kilos);
+            $("#total_pedido").val(total_pedido);
         }
 
         function calcularTarrinasAuxiliares() {
