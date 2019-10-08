@@ -799,11 +799,15 @@
                                                             <td>{{ $pedido->estado->estado }}</td>
                                                             <td>
                                                                 <a href="javascript:void(0);"
-                                                                   class="text-success mr-2 edit">
+                                                                   class="text-success mr-2 edit" data-toggle="tooltip"
+                                                                   data-placement="top" title=""
+                                                                   data-original-title="Editar">
                                                                     <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                 </a>
                                                                 <a href="javascript:void(0);"
-                                                                   class="text-danger mr-2 delete">
+                                                                   class="text-danger mr-2 delete" data-toggle="tooltip"
+                                                                   data-placement="top" title=""
+                                                                   data-original-title="Borrar">
                                                                     <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                                 </a>
                                                             </td>

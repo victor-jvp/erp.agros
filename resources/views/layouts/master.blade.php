@@ -55,9 +55,9 @@
 
     <script src="{{asset('assets/js/es5/sidebar.large.script.min.js')}}"></script>
 
-
     <script src="{{asset('assets/js/es5/customizer.script.min.js')}}"></script>
 
+    <script src="{{ asset('assets/js/tooltip.script.js') }}"></script>
     {{-- laravel js --}}
      <script src="{{mix('assets/js/laravel/app.js')}}"></script>
 

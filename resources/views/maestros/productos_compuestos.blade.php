@@ -99,11 +99,13 @@
                                         <td>{{ date('d/m/Y', strtotime($producto->fecha))}}</td>
                                         <td>{{ (isset($producto->detalles)) ? count($producto->detalles) : 0}}</td>
                                         <td>
-                                            <a href="javascript:void(0);" class="text-success mr-2">
+                                            <a href="javascript:void(0);" class="text-success mr-2" data-toggle="tooltip"
+                                               data-placement="top" title="" data-original-title="Editar">
                                                 <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
                                             </a>
                                             <a href="{{ url('maestros/productos-compuestos/show/'.$producto->id) }}"
-                                               class="text-primary mr-2" title="Compuestos">
+                                               class="text-primary mr-2" data-toggle="tooltip"
+                                               data-placement="top" title="" data-original-title="Compuestos">
                                                 <i class="nav-icon i-Notepad-2 font-weight-bold"></i>
                                             </a>
                                         </td>
@@ -152,7 +154,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    {targets: [0,1], visible: false},
+                    {targets: [0, 1], visible: false},
                 ],
                 responsive: true,
             });
@@ -176,7 +178,7 @@
                 $("#compuesto").val(row[3]);
 
                 $("#modal-producto-title").html('Modificar Producto');
-                $("#producto_form").attr('action', "{{ url('maestros/productos-compuestos/update') }}" + "/" + row[0] );
+                $("#producto_form").attr('action', "{{ url('maestros/productos-compuestos/update') }}" + "/" + row[0]);
                 $("#modal-producto").modal("show");
             });
         });

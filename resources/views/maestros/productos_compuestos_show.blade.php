@@ -571,11 +571,13 @@
                                         </td>
 
                                         <td>
-                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                            <a href="javascript:void(0);" class="text-success mr-2 edit" data-toggle="tooltip"
+                                               data-placement="top" title="" data-original-title="Editar" title="Editar">
+                                                <i class="nav-icon i-Pen-2 font-weight-bold "></i>
                                             </a>
-                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                            <a href="javascript:void(0);" class="text-danger mr-2 delete"  data-toggle="tooltip"
+                                               data-placement="top" title="" data-original-title="Borrar" title="Borrar">
+                                                <i class="nav-icon i-Close-Window font-weight-bold "></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -712,10 +714,10 @@
                     $('#euro_cubre_id').val(row.cubre_id).trigger('chosen:updated');
                     $('#euro_cubre_cantidad').val(row.cubre_cantidad);
 
-                    var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
-                        '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
-                        '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
-                        '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                    var opciones = '<a href="javascript:void(0);" class="text-success mr-2 edit">\n' +
+                        '<i class="nav-icon i-Pen-2 font-weight-bold "></i></a>' +
+                        '<a href="javascript:void(0);" class="text-danger mr-2 delete">\n' +
+                        '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
                         '</a>';
                     //Euro Tarrinas table
                     for (i = 0; i < row.euro_tarrinas.length; i++) {
@@ -799,10 +801,10 @@
                 var modelo_id = $("#euro_tarrina_modelo").val();
                 var modelo = $("#euro_tarrina_modelo option:selected").text();
                 var cantidad = $("#euro_tarrina_cantidad").val();
-                var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
-                    '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
-                    '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
-                    '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                var opciones = '<a href="javascript:void(0);" class="text-success mr-2 edit" >\n' +
+                    '<i class="nav-icon i-Pen-2 font-weight-bold "></i></a>' +
+                    '<a href="javascript:void(0);" class="text-danger mr-2 delete">\n' +
+                    '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
                     '</a>';
 
                 var data = [
@@ -891,10 +893,10 @@
                 var modelo_id = $("#euro_auxiliar_modelo").val();
                 var modelo = $("#euro_auxiliar_modelo option:selected").text();
                 var cantidad = $("#euro_auxiliar_cantidad").val();
-                var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
-                    '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
-                    '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
-                    '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                var opciones = '<a href="javascript:void(0);" class="text-success mr-2 edit">\n' +
+                    '<i class="nav-icon i-Pen-2 font-weight-bold "></i></a>' +
+                    '<a href="javascript:void(0);" class="text-danger mr-2 delete">\n' +
+                    '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
                     '</a>';
 
                 var data = [
@@ -983,10 +985,10 @@
                 var modelo_id = $("#grand_tarrina_modelo").val();
                 var modelo = $("#grand_tarrina_modelo option:selected").text();
                 var cantidad = $("#grand_tarrina_cantidad").val();
-                var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
-                    '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
-                    '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
-                    '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                var opciones = '<a href="javascript:void(0);" class="text-success mr-2 edit">\n' +
+                    '<i class="nav-icon i-Pen-2 font-weight-bold "></i></a>' +
+                    '<a href="javascript:void(0);" class="text-danger mr-2 delete">\n' +
+                    '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
                     '</a>';
 
                 var data = [
@@ -1075,10 +1077,10 @@
                 var modelo_id = $("#grand_auxiliar_modelo").val();
                 var modelo = $("#grand_auxiliar_modelo option:selected").text();
                 var cantidad = $("#grand_auxiliar_cantidad").val();
-                var opciones = '<a href="javascript:void(0);" class="text-success mr-2">\n' +
-                    '<i class="nav-icon i-Pen-2 font-weight-bold edit"></i></a>' +
-                    '<a href="javascript:void(0);" class="text-danger mr-2">\n' +
-                    '<i class="nav-icon i-Close-Window font-weight-bold delete"></i>\n' +
+                var opciones = '<a href="javascript:void(0);" class="text-success mr-2 edit">\n' +
+                    '<i class="nav-icon i-Pen-2 font-weight-bold "></i></a>' +
+                    '<a href="javascript:void(0);" class="text-danger mr-2 delete">\n' +
+                    '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
                     '</a>';
 
                 var data = [
