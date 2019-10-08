@@ -55,12 +55,12 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="cif">CIF</label>
                                     <input type="text" class="form-control" id="cif" value="{{ $transporte->cif }}"
-                                        placeholder="CIF" required="" name="cif">
+                                        placeholder="CIF"  name="cif">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="razon_social">Razón Social</label>
                                     <input type="text" class="form-control" id="razon_social"
-                                        value="{{ $transporte->razon_social }}" placeholder="Razón Social" required=""
+                                        value="{{ $transporte->razon_social }}" placeholder="Razón Social"
                                         name="razon_social">
                                 </div>
                             </div>
@@ -153,7 +153,7 @@
                                                 <div class="col-md-12 mb-3">
                                                     <label for="contacto_descripcion">Descripcion</label>
                                                     <input type="text" class="form-control" id="contacto_descripcion"
-                                                        name="descripcion" required>
+                                                        name="descripcion">
                                                 </div>
                                             </div>
 
@@ -167,7 +167,7 @@
                                                 <div class="col-md-6 mb-3">
                                                     <label for="contacto_telefono">Email</label>
                                                     <input type="email" class="form-control" id="contacto_email"
-                                                        name="email" required>
+                                                        name="email">
                                                 </div>
                                             </div>
                                         </div>
@@ -352,7 +352,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <textarea class="form-control" placeholder="Ingrese su mensaje" required
+                                        <textarea class="form-control" placeholder="Ingrese su mensaje"
                                             name="message" id="message" cols="30" rows="3"></textarea>
                                     </div>
                                     <div class="d-flex">
@@ -400,7 +400,7 @@
                                                 <div class="col-md-4 mb-3">
                                                     <label for="adjunto_fecha">Fecha</label>
                                                     <input type="date" class="form-control" id="adjunto_fecha"
-                                                        value="{{ date('Y-m-d') }}" placeholder="Fecha" required=""
+                                                        value="{{ date('Y-m-d') }}" placeholder="Fecha"
                                                         name="fecha">
                                                 </div>
 
@@ -416,7 +416,7 @@
                                                     <div class="card text-left">
                                                         <div class="card-body">
                                                             <h4 class="card-title">Adjuntar</h4>
-                                                                <input type="file" name="file" required/>
+                                                                <input type="file" name="file"/>
                                                         </div>
                                                     </div>
                                                 </div>

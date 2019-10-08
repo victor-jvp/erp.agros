@@ -868,6 +868,12 @@
             $("#semana_act, #anio_act").change(function () {
                 $("#form_fecha_act").submit();
             });
+
+            $("#pedido_form").one('submit',function(f){
+                f.preventDefault();
+
+                $(this).submit();
+            });
         })
     </script>
 
