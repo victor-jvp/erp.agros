@@ -17,7 +17,9 @@
             <div class="card text-left">
 
                 <div class="card-body">
-                    <h4 class="card-title mb-3">Producto: <b>{{ $producto->compuesto }}</b></h4>
+                    <h4 class="card-title mb-3">
+                        {!! (isset($producto->cultivo)) ? "Cultivo: <b>".$producto->cultivo->cultivo."</b><br>" : "" !!}
+                        Producto: <b>{{ $producto->compuesto }}</b></h4>
 
                     <div class="row">
                         <div class="col-md-3 mb-3">
@@ -664,14 +666,14 @@
                 var id = row[0];
 
                 LimpiarModalDetalles();
-                setTimeout(function(){
+                setTimeout(function () {
                     GetDataModalDetalle(id);
-                },200);
+                }, 200);
 
 
                 $("#modal-producto-title").html("Modificar Producto");
                 $("#det_id").val(id);
-                setTimeout(function(){
+                setTimeout(function () {
                     $("#modal-producto").modal("show");
                 }, 300);
             });
