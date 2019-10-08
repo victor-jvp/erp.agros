@@ -42,6 +42,16 @@ class ProductosCompuestosController extends Controller
         return redirect()->route('productos-compuestos-show', $producto->id);
     }
 
+    public function update(Request $request, $id)
+    {
+        $producto             = ProductoCompuesto_cab::find($id);
+        $producto->compuesto  = $request->compuesto;
+        $producto->cultivo_id = $request->cultivo;
+        $producto->save();
+
+        return redirect()->route('productos-compuestos.index');
+    }
+
     //Agrega los detalles a productos compuestos
     public function store(Request $request)
     {

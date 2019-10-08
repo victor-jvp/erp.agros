@@ -185,6 +185,7 @@ Route::get('/maestros/parcelas/delete/{parcela}', 'ParcelasController@delete')->
 
 Route::get('/maestros/productos-compuestos', 'ProductosCompuestosController@index')->name('productos-compuestos.index');
 Route::post('maestros/productos-compuestos/create', 'ProductosCompuestosController@create')->name('productos-compuestos.create');
+Route::post('maestros/productos-compuestos/update/{producto}', 'ProductosCompuestosController@update')->name('productos-compuestos.update');
 
 Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
     $producto = App\ProductoCompuesto_cab::find($id);
