@@ -15,8 +15,10 @@ class CreateProductosCompuestosCabTable extends Migration
     {
         Schema::create('productoscompuestos_cab', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('cultivo_id');
             $table->string('compuesto');
             $table->date('fecha');
+            $table->foreign('cultivo_id')->references('id')->on('cultivos');
             $table->timestamps();
         });
     }

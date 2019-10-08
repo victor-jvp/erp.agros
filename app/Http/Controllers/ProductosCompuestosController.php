@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cultivo;
 use App\ProductoCompuesto_auxiliares;
 use Illuminate\Http\Request;
 use App\ProductoCompuesto_cab;
@@ -10,12 +11,32 @@ use App\ProductoCompuesto_tarrinas;
 
 class ProductosCompuestosController extends Controller
 {
+    //Listar Productos compuestos
+    public function index()
+    {
+        $productos = ProductoCompuesto_cab::all();
+
+        foreach ($productos as $i => $producto) {
+            $productos[$i]->detalles = ProductoCompuesto_det::where('compuesto_id', $producto->id)->get();
+        }
+
+        $cultivos = Cultivo::all();
+
+        $data = [
+            "productos" => $productos,
+            "cultivos"  => $cultivos,
+        ];
+
+        return view('maestros.productos_compuestos', $data);
+    }
+
     //Crea un nuevo producto compuesto CAB
     public function create(Request $request)
     {
-        $producto            = new ProductoCompuesto_cab();
-        $producto->compuesto = $request->compuesto;
-        $producto->fecha     = date("Y-m-d");
+        $producto             = new ProductoCompuesto_cab();
+        $producto->compuesto  = $request->compuesto;
+        $producto->cultivo_id = $request->cultivo;
+        $producto->fecha      = date("Y-m-d");
         $producto->save();
 
         return redirect()->route('productos-compuestos-show', $producto->id);
@@ -121,11 +142,7 @@ class ProductosCompuestosController extends Controller
     {
         if (is_null($id)) return false;
 
-        $detalle      = ProductoCompuesto_det::with('euro_tarrinas')
-            ->with('euro_auxiliares')
-            ->with('grand_tarrinas')
-            ->with('grand_auxiliares')
-            ->find($id);
+        $detalle      = ProductoCompuesto_det::with('euro_tarrinas')->with('euro_auxiliares')->with('grand_tarrinas')->with('grand_auxiliares')->find($id);
         $compuesto_id = $detalle->compuesto_id;
         $detalle->euro_tarrinas()->delete();
         $detalle->euro_auxiliares()->delete();
