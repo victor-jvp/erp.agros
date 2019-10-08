@@ -99,12 +99,6 @@
                                                          aria-labelledby="EuroPallet-tab">
                                                         <div class="row">
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="euro_pallet_id">Cantidad</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="euro_cantidad"
-                                                                       placeholder="Cantidad" name="euro_cantidad">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
                                                                 <label for="euro_pallet_id">Kilogramos</label>
                                                                 <input type="number" class="form-control"
                                                                        id="euro_kg"
@@ -290,12 +284,6 @@
                                                     <div class="tab-pane fade" id="PalletGrande" role="tabpanel"
                                                          aria-labelledby="PalletGrande-tab">
                                                         <div class="row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_cantidad">Cantidad</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="grand_cantidad"
-                                                                       placeholder="Cantidad" name="grand_cantidad">
-                                                            </div>
                                                             <div class="col-md-4 mb-3">
                                                                 <label for="grand_kg">Kilogramos</label>
                                                                 <input type="number" class="form-control"
@@ -504,14 +492,12 @@
                                     <th>ID</th>
                                     <th scope="col">Variable</th>
                                     <th scope="col">Caja</th>
-                                    <th scope="col">EuroPalet<br>Cantidad</th>
                                     <th scope="col">EuroPalet<br>Kg</th>
                                     <th scope="col">EuroPalet<br>Cantoneras</th>
                                     <th scope="col">EuroPalet<br>Cubre</th>
                                     <th scope="col">EuroPalet<br>Cubre Cantidad</th>
                                     <th scope="col">EuroPalet Tarrinas</th>
                                     <th scope="col">EuroPalet Auxiliares</th>
-                                    <th scope="col">Palet Grande<br>Cantidad</th>
                                     <th scope="col">Palet Grande<br>Kg</th>
                                     <th scope="col">Palet Grande<br>Cantoneras</th>
                                     <th scope="col">Palet Grande<br>Cubre</th>
@@ -527,7 +513,6 @@
                                         <td>{{ $detalle->id }}</td>
                                         <td>{{ $detalle->variable }}</td>
                                         <td>{{ (!is_null($detalle->caja_id)) ? $detalle->caja->formato : "" }}</td>
-                                        <td>{{ $detalle->euro_cantidad }}</td>
                                         <td>{{ $detalle->euro_kg }}</td>
                                         <td>{{ $detalle->euro_cantoneras }}</td>
                                         <td>{{ (!is_null($detalle->euro_cubre_id)) ? $detalle->euro_cubre->formato : "" }}</td>
@@ -556,8 +541,6 @@
                                                 </ul>
                                             @endif
                                         </td>
-
-                                        <td>{{ $detalle->grand_cantidad }}</td>
                                         <td>{{ $detalle->grand_kg}}</td>
                                         <td>{{ $detalle->grand_cantoneras}}</td>
                                         <td>{{ (!is_null($detalle->grand_cubre_id)) ? $detalle->grand_cubre->formato : "" }}</td>
@@ -704,7 +687,7 @@
         })
 
         function LimpiarModalDetalles() {
-            $('#variable, #euro_cantidad, #euro_kg, #grand_cantidad, #grand_kg, #euro_cantoneras, #euro_cubre_cantidad').val(null);
+            $('#variable, #euro_kg, #grand_kg, #euro_cantoneras, #euro_cubre_cantidad').val(null);
             $('#cajas, #euro_cubre_id').val(null).trigger('chosen:updated');
             euro_table_tarrinas.rows().remove().draw();
             euro_table_auxiliares.rows().remove().draw();
@@ -723,8 +706,6 @@
 
                     $('#variable').val(row.variable);
                     $('#caja_id').val(row.caja_id).trigger('chosen:updated');
-                    $('#euro_cantidad').val(row.euro_cantidad);
-                    $('#grand_cantidad').val(row.grand_cantidad);
                     $('#euro_kg').val(row.euro_kg);
                     $('#grand_kg').val(row.grand_kg);
                     $('#euro_cantoneras').val(row.cantoneras);

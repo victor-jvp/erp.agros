@@ -64,13 +64,13 @@ class ProductosCompuestosController extends Controller
         $detalle->variable     = $request->variable;
         $detalle->caja_id      = $request->caja_id;
         //euro Pallet
-        $detalle->euro_cantidad       = $request->euro_cantidad;
+//        $detalle->euro_cantidad       = $request->euro_cantidad;
         $detalle->euro_kg             = $request->euro_kg;
         $detalle->euro_cantoneras     = $request->euro_cantoneras;
         $detalle->euro_cubre_id       = $request->euro_cubre_id;
         $detalle->euro_cubre_cantidad = $request->euro_cubre_cantidad;
         //Grand Pallet
-        $detalle->grand_cantidad       = $request->grand_cantidad;
+//        $detalle->grand_cantidad       = $request->grand_cantidad;
         $detalle->grand_kg             = $request->grand_kg;
         $detalle->grand_cantoneras     = $request->grand_cantoneras;
         $detalle->grand_cubre_id       = $request->grand_cubre_id;
