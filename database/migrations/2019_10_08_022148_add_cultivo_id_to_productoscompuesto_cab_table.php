@@ -26,6 +26,10 @@ class AddCultivoIdToProductoscompuestoCabTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('productoscompuestos_cab', function (Blueprint $table){
+            $table->dropForeign(['cultivo_id']);
+            $table->dropColumn('cultivo_id');
+        });
+
     }
 }
