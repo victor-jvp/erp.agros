@@ -18,4 +18,13 @@ class RemoveCantidadesFromProductoscompuestosDetTable extends Migration
             $table->dropColumn(['euro_cantidad', 'grand_cantidad']);
         });
     }
+
+    public function down()
+    {
+        Schema::table('productoscompuestos_det', function (Blueprint $table) {
+            //Agregar columnas cantidades de productoscompuestos_det
+            $table->double('euro_cantidad')->default('0')->nullable();
+            $table->double('grand_cantidad')->default('0')->nullable();
+        });
+    }
 }
