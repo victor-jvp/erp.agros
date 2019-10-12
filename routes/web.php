@@ -219,7 +219,8 @@ Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
 Route::put('/maestros/productos-compuestos/store', 'ProductosCompuestosController@store')->name('productos-compuestos.store');
 Route::get('/maestros/productos-compuestos/details/{producto}', 'ProductosCompuestosController@details')->name('productos-compuestos.details');
 Route::get('/maestros/productos-compuestos/delete/{producto}', 'ProductosCompuestosController@delete')->name('productos-compuestos.delete');
-Route::post('/maestros/productos-compuestos/ajaxGetDetalles', 'ProductosCompuestosController@ajaxGetDetalles')->name('productos-compuestos.ajaxGetDetalles');
+Route::post('/maestros/productos-compuestos/ajaxGetCompuesto', 'ProductosCompuestosController@ajaxGetCompuesto')->name('productos-compuestos.ajaxGetCompuesto');
+Route::post('/maestros/productos-compuestos/ajaxGetVariedad', 'ProductosCompuestosController@ajaxGetVariedad')->name('productos-compuestos.ajaxGetVariedad');
 Route::post('/maestros/productos-compuestos/ajaxGetById', 'ProductosCompuestosController@ajaxGetById')->name('productos-compuestos.ajaxGetById');
 
 #endregion

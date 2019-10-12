@@ -78,77 +78,8 @@
                                                     </select>
                                                 </div>
                                             </div>
+
                                             <div class="col-md-4 mb-3">
-                                                <label for="cultivo">Cultivo</label>
-                                                <select class="form-control chosen" id="cultivo" name="cultivo">
-                                                    @foreach ($cultivos as $cultivo)
-                                                        <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-3 mb-3">
-                                                <label class="checkbox checkbox-success">
-                                                    <input type="checkbox" name="dias[]" value="1" class="dias">
-                                                    <span>Miércoles</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label class="checkbox checkbox-success">
-                                                    <input type="checkbox" name="dias[]" value="2" class="dias">
-                                                    <span>Jueves</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label class="checkbox checkbox-success">
-                                                    <input type="checkbox" name="dias[]" value="3" class="dias">
-                                                    <span>Viernes</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label class="checkbox checkbox-success">
-                                                    <input type="checkbox" name="dias[]" value="4" class="dias">
-                                                    <span>Sábado</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-3 mb-3">
-                                                <label class="checkbox checkbox-success">
-                                                    <input type="checkbox" name="dias[]" value="5" class="dias">
-                                                    <span>Domingo</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label class="checkbox checkbox-success">
-                                                    <input type="checkbox" name="dias[]" value="6" class="dias">
-                                                    <span>Lunes</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label class="checkbox checkbox-success">
-                                                    <input type="checkbox" name="dias[]" value="7" class="dias">
-                                                    <span>Martes</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="etiqueta">Etiqueta</label>
-                                                <input type="text" class="form-control" name="etiqueta" id="etiqueta">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
                                                 <label for="transporte">Transporte</label>
                                                 <select class="form-control chosen" id="transporte"
                                                         name="transporte_id">
@@ -161,25 +92,47 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="producto">Producto</label>
-                                                <select class="form-control chosen" id="producto">
-                                                    @foreach ($productos as $producto)
-                                                        <option value="{{ $producto->id }}">{{ $producto->compuesto }}</option>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="cultivo">Cultivo</label>
+                                                <select class="form-control chosen" id="cultivo" name="cultivo">
+                                                    @foreach ($cultivos as $cultivo)
+                                                        <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
-
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-md-4 mb-3">
                                                 <label for="producto_compuesto">Compuesto</label>
                                                 <select class="form-control chosen" id="producto_compuesto"
                                                         name="producto_compuesto">
                                                     <option value=""></option>
                                                 </select>
                                             </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="variedad">Variedad</label>
+                                                <select class="form-control chosen" id="variedad" name="variedad">
+{{--                                                    @foreach ($productos as $producto)--}}
+{{--                                                        <option value="{{ $producto->id }}">{{ $producto->compuesto }}</option>--}}
+{{--                                                    @endforeach--}}
+                                                </select>
+                                            </div>
+
+
+
                                         </div>
 
                                         <div class="row">
+
+
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-4 mb-3">
+                                                <label for="etiqueta">Etiqueta</label>
+                                                <input type="text" class="form-control" name="etiqueta" id="etiqueta">
+                                            </div>
+
                                             <div class="col-md-4 mb-3">
                                                 <label for="modelo_palet">Tipo de Palet</label>
                                                 <select class="form-control" id="modelo_palet" name="modelo_palet">
@@ -189,12 +142,12 @@
                                                 </select>
                                             </div>
 
-                                            <div class="col-md-4 mb-3">
-                                                <label for="formato_palet">Formato de Palet</label>
-                                                <select class="form-control chosen" id="formato_palet"
-                                                        name="formato_palet">
-                                                </select>
-                                            </div>
+{{--                                            <div class="col-md-4 mb-3">--}}
+{{--                                                <label for="formato_palet">Formato de Palet</label>--}}
+{{--                                                <select class="form-control chosen" id="formato_palet"--}}
+{{--                                                        name="formato_palet">--}}
+{{--                                                </select>--}}
+{{--                                            </div>--}}
 
                                             <div class="col-md-4 mb-3">
                                                 <label for="cantidad">Cantidad</label>
@@ -841,7 +794,7 @@
     <script src="{{asset('assets/js/vendor/calendar/moment-with-locales.min.js')}}"></script>
 
     <script>
-        $(document).ready(function () {
+            $(document).ready(function () {
             $(".chosen").chosen({
                 width: "100%",
                 no_results_text: "No se encontraron resultados... ",
@@ -1051,32 +1004,38 @@
                 LoadDestinosComerciales(destino);
             });
 
-            $("#producto").on('change', function () {
-                var compuesto_id = $(this).val();
-                loadCompuesto(compuesto_id)
+            $("#cultivo").on('change', function () {
+                var cultivo_id = $(this).val();
+                loadCompuesto(cultivo_id);
             });
 
             $("#producto_compuesto").change(function (e) {
                 var id = $(this).val();
-                loadTipoPalet(id);
+                //loadTipoPalet(id);
+                loadVariedad(id);
             });
 
-            $(".EuroPallet, .PalletGrande").css('display', 'none');
-            $("#modelo_palet").on('change', function () {
-                var modelo_id = $(this).val();
-                loadPalet(modelo_id)
+            $("#modelo_palet").change(function(){
+                var tipo_palet = $(this).val();
+
                 $(".EuroPallet, .PalletGrande").css('display', 'none');
-                if (modelo_id == "1") {
+                if (tipo_palet == "1") {
                     $(".EuroPallet").css('display', 'block');
                     // $("#EuroPallet-tab").addClass('active show').attr('aria-selected', "true");
                     // $("#EuroPallet").addClass('active show');
                     $("#EuroPallet-tab").trigger('click');
-                } else if (modelo_id == "2") {
+                } else if (tipo_palet == "2") {
                     $(".PalletGrande").css('display', 'block');
                     $("#PalletGrande-tab").trigger('click');
                 }
 
                 calcularCantidades();
+            });
+
+            $(".EuroPallet, .PalletGrande").css('display', 'none');
+            $("#variedad").on('change', function () {
+                var variedad_id = $(this).val();
+                loadVariedadDetails(variedad_id);
             });
 
             $("#cantidad").change(function () {
@@ -1261,18 +1220,19 @@
         function loadCompuesto(valor, selected) {
             $.ajax({
                 type: 'POST',
-                url: "{{ route('productos-compuestos.ajaxGetDetalles') }}",
+                url: "{{ route('productos-compuestos.ajaxGetCompuesto') }}",
                 dataType: 'JSON',
                 data: {
                     "id": valor
                 },
                 success: function (data) {
                     ClearCompuesto();
+                    ClearVariedad();
                     if (data == null) return;
 
                     for (i = 0; i < data.length; i++) {
                         var value = data[i].id;
-                        var text = data[i].variable;
+                        var text = data[i].compuesto;
                         var option = "<option value='" + value + "'>" + text + "</option>";
                         $("#producto_compuesto").append(option);
                     }
@@ -1291,7 +1251,43 @@
         }
 
         function ClearCompuesto() {
-            $("#producto_compuesto").html(null).append('<option value=""></option>');
+            $("#producto_compuesto").html(null).append('<option value=""></option>').trigger('chosen:updated');
+        }
+
+        function loadVariedad(valor, selected) {
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('productos-compuestos.ajaxGetVariedad') }}",
+                dataType: 'JSON',
+                data: {
+                    "id": valor
+                },
+                success: function (data) {
+                    ClearVariedad();
+                    if (data == null) return;
+
+                    for (i = 0; i < data.length; i++) {
+                        var value = data[i].id;
+                        var text = data[i].variable;
+                        var option = "<option value='" + value + "'>" + text + "</option>";
+                        $("#variedad").append(option);
+                    }
+
+                    if (selected != null) {
+                        $("#variedad").val(selected).trigger('chosen:updated');
+                    } else {
+                        $("#variedad").trigger('chosen:updated');
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                    alert('Error. Check Console Log');
+                },
+            });
+        }
+
+        function ClearVariedad() {
+            $("#variedad").html(null).append('<option value=""></option>').trigger('chosen:updated');
         }
 
         function loadPalet(valor, selected) {
@@ -1330,7 +1326,7 @@
             $("#formato_palet").html(null).append('<option value=""></option>');
         }
 
-        function loadTipoPalet(id, erow = null) {
+        function loadVariedadDetails(id, erow = null) {
             ClearTipoPalet();
             if (id == null || id == undefined || id == "") {
                 return;

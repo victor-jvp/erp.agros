@@ -30,6 +30,7 @@ class ProductosCompuestosController extends Controller
         return view('maestros.productos_compuestos', $data);
     }
 
+
     //Crea un nuevo producto compuesto CAB
     public function create(Request $request)
     {
@@ -163,7 +164,18 @@ class ProductosCompuestosController extends Controller
         return redirect()->route('productos-compuestos-show', $compuesto_id);
     }
 
-    public function ajaxGetDetalles(Request $request)
+    public function ajaxGetCompuesto(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (is_null($id)) return response()->json(null);
+
+        $data = ProductoCompuesto_cab::where('cultivo_id', $id)->get();
+
+        return response()->json($data);
+    }
+
+    public function ajaxGetVariedad(Request $request)
     {
         $id = $request->input('id');
 
