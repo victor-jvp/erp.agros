@@ -23,7 +23,7 @@
 
                     <div class="row">
                         <div class="col-md-3 mb-3">
-                            <label for="producto">Fecha</label>
+                            <label for="fecha">Fecha</label>
                             <input type="date" class="form-control" id="fecha" disabled
                                    value="{{ date('Y-m-d', strtotime($producto->fecha)) }}">
                         </div>
@@ -41,7 +41,7 @@
                          aria-hidden="true" id="modal-producto">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <form action="/maestros/productos-compuestos/store" method="POST" id="producto_form">
+                                <form action="maestros/productos-compuestos/store" method="POST" id="producto_form">
                                     {{ csrf_field() }}
                                     {{ method_field('PUT') }}
                                     <input type="hidden" name="compuesto_id" id="compuesto_id"
@@ -640,9 +640,7 @@
                     $('#euro_cubre_id').val(row.cubre_id).trigger('chosen:updated');
                     $('#euro_cubre_cantidad').val(row.cubre_cantidad);
 
-                    var opciones = '<a href="javascript:void(0);" class="text-success mr-2 edit">\n' +
-                        '<i class="nav-icon i-Pen-2 font-weight-bold "></i></a>' +
-                        '<a href="javascript:void(0);" class="text-danger mr-2 delete">\n' +
+                    var opciones = '<a href="javascript:void(0);" class="text-danger mr-2 delete">\n' +
                         '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
                         '</a>';
 
@@ -677,6 +675,12 @@
                             opciones
                         ]).draw();
                     }
+
+                    var opciones = '<a href="javascript:void(0);" class="text-success mr-2 edit">\n' +
+                        '<i class="nav-icon i-Pen-2 font-weight-bold "></i></a>' +
+                        '<a href="javascript:void(0);" class="text-danger mr-2 delete">\n' +
+                        '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
+                        '</a>';
 
                     //Euro Auxiliares Table
                     for (i = 0; i < row.euro_auxiliares.length; i++) {

@@ -76,7 +76,7 @@
 
                     <div class="row">
                         <div class="col-md-12 table-responsive">
-                            <table id="productos_table" class="display table table-striped table-bordered"
+                            <table id="productos_table" class="display table table-striped"
                                    style="width:100%">
                                 <thead>
                                 <tr>
@@ -157,6 +157,8 @@
                     {targets: [0, 1], visible: false},
                 ],
                 responsive: true,
+                //length:[[50, 100, -1],[50, 100, "Todos"]],
+                paging: false,
             });
 
             $("#btnNuevoProducto").click(function (e) {
