@@ -41,8 +41,10 @@ class ProductosCompuestosController extends Controller
         $detalles = ProductoCompuesto_det::where('compuesto_id', $id)->get();
 
         foreach ($detalles as $i => $detalle) {
-            $detalles[$i]->tarrinas   = ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->get();
-            $detalles[$i]->auxiliares = ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->get();
+            $detalles[$i]->tarrinas         = ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->get();
+            $detalles[$i]->auxiliares       = ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->get();
+            $detalles[$i]->euro_auxiliares  = ProductoCompuesto_palets_auxiliares::where('det_id', $detalle->id)->where('palet_model_id', '=', 1)->get();
+            $detalles[$i]->grand_auxiliares = ProductoCompuesto_palets_auxiliares::where('det_id', $detalle->id)->where('palet_model_id', '=', 2)->get();
         }
 
         $cajas      = Caja::all();
@@ -87,8 +89,7 @@ class ProductosCompuestosController extends Controller
     {
         // dd($request);
 
-        if ($request->id == "") $detalle = new ProductoCompuesto_det();
-        else
+        if ($request->id == "") $detalle = new ProductoCompuesto_det(); else
             $detalle = ProductoCompuesto_det::find($request->id);
 
         $detalle->compuesto_id = $request->compuesto_id;
@@ -142,7 +143,7 @@ class ProductosCompuestosController extends Controller
                 $auxiliar = new ProductoCompuesto_palets_auxiliares();
 
                 $auxiliar->det_id          = $detalle->id;
-                $auxiliar->pallet_model_id = 1;
+                $auxiliar->palet_model_id = 1;
                 $auxiliar->auxiliar_id     = $request->euro_auxiliares_id[$i];
                 $auxiliar->cantidad        = $request->euro_auxiliares_cantidad[$i];
                 $auxiliar->save();
@@ -154,7 +155,7 @@ class ProductosCompuestosController extends Controller
                 $auxiliar = new ProductoCompuesto_palets_auxiliares();
 
                 $auxiliar->det_id          = $detalle->id;
-                $auxiliar->pallet_model_id = 2;
+                $auxiliar->palet_model_id = 2;
                 $auxiliar->auxiliar_id     = $request->grand_auxiliares_id[$i];
                 $auxiliar->cantidad        = $request->grand_auxiliares_cantidad[$i];
                 $auxiliar->save();
@@ -170,10 +171,10 @@ class ProductosCompuestosController extends Controller
         if (is_null($id)) return false;
 
         $detalle                   = ProductoCompuesto_det::find($id);
-        $detalle->euro_tarrinas    = ProductoCompuesto_tarrinas::with('tarrina')->where('model_id', '=', 1)->where('det_id', $id)->get();
-        $detalle->euro_auxiliares  = ProductoCompuesto_auxiliares::with('auxiliar')->where('model_id', '=', 1)->where('det_id', $id)->get();
-        $detalle->grand_tarrinas   = ProductoCompuesto_tarrinas::with('tarrina')->where('model_id', '=', 2)->where('det_id', $id)->get();
-        $detalle->grand_auxiliares = ProductoCompuesto_auxiliares::with('auxiliar')->where('model_id', '=', 2)->where('det_id', $id)->get();
+        $detalle->tarrinas         = ProductoCompuesto_tarrinas::with('tarrina')->where('det_id', $id)->get();
+        $detalle->auxiliares       = ProductoCompuesto_auxiliares::with('auxiliar')->where('det_id', $id)->get();
+        $detalle->euro_auxiliares  = ProductoCompuesto_palets_auxiliares::with('auxiliar')->where('palet_model_id', '=', 1)->where('det_id', $id)->get();
+        $detalle->grand_auxiliares = ProductoCompuesto_palets_auxiliares::with('auxiliar')->where('palet_model_id', '=', 2)->where('det_id', $id)->get();
 
         return response()->json(['detalle' => $detalle]);
     }
@@ -182,12 +183,11 @@ class ProductosCompuestosController extends Controller
     {
         if (is_null($id)) return false;
 
-        $detalle      = ProductoCompuesto_det::with('euro_tarrinas')->with('euro_auxiliares')->with('grand_tarrinas')->with('grand_auxiliares')->find($id);
+        $detalle      = ProductoCompuesto_det::with('auxiliares')->with('tarrinas')->with('palets_auxiliares')->find($id);
         $compuesto_id = $detalle->compuesto_id;
-        $detalle->euro_tarrinas()->delete();
-        $detalle->euro_auxiliares()->delete();
-        $detalle->grand_tarrinas()->delete();
-        $detalle->grand_auxiliares()->delete();
+        $detalle->auxiliares()->delete();
+        $detalle->tarrinas()->delete();
+        $detalle->palets_auxiliares()->delete();
         $detalle->delete();
 
         return redirect()->route('productos-compuestos-show', $compuesto_id);

@@ -23,23 +23,18 @@ class ProductoCompuesto_det extends Model
         return $this->belongsTo(Cubre::class, 'grand_cubre_id');
     }
 
-    public function euro_tarrinas()
+    public function tarrinas()
     {
         return $this->hasMany(ProductoCompuesto_tarrinas::class, 'det_id');
     }
 
-    public function euro_auxiliares()
+    public function auxiliares()
     {
         return $this->hasMany(ProductoCompuesto_auxiliares::class, 'det_id');
     }
 
-    public function grand_tarrinas()
+    public function palets_auxiliares()
     {
-        return $this->hasMany(ProductoCompuesto_tarrinas::class, 'det_id');
-    }
-
-    public function grand_auxiliares()
-    {
-        return $this->hasMany(ProductoCompuesto_auxiliares::class, 'det_id');
+        return $this->hasMany(ProductoCompuesto_palets_auxiliares::class, 'det_id');
     }
 }

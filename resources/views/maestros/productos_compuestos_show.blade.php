@@ -646,6 +646,38 @@
                         '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
                         '</a>';
 
+                    //Auxiliares - Tarrinas Table
+                    for (i = 0; i < row.auxiliares.length; i++) {
+                        var auxiliar = row.auxiliares[i];
+                        var tipo = "Auxiliar";
+                        tarrinas_auxiliares_table.row.add([
+                            tipo+auxiliar.auxiliar_id,
+                            tipo,
+                            auxiliar.auxiliar.modelo,
+                            auxiliar.cantidad,
+                            '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar
+                                .auxiliar_id + '">' +
+                            '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar
+                                .cantidad + '"> ' +
+                            opciones
+                        ]).draw();
+                    }
+                    for (i = 0; i < row.tarrinas.length; i++) {
+                        var tarrina = row.tarrinas[i];
+                        var tipo = "Tarrina";
+                        tarrinas_auxiliares_table.row.add([
+                            tipo+tarrina.tarrina_id,
+                            tipo,
+                            tarrina.tarrina.modelo,
+                            tarrina.cantidad,
+                            '<input type="hidden" name="tarrinas_id[]" value="' + tarrina
+                                .tarrina_id + '">' +
+                            '<input type="hidden" name="tarrinas_cantidad[]" value="' + tarrina
+                                .cantidad + '"> ' +
+                            opciones
+                        ]).draw();
+                    }
+
                     //Euro Auxiliares Table
                     for (i = 0; i < row.euro_auxiliares.length; i++) {
                         var auxiliar = row.euro_auxiliares[i];
@@ -661,7 +693,7 @@
                         ]).draw();
                     }
 
-                    //Euro Auxiliares Table
+                    //Grand Auxiliares Table
                     for (i = 0; i < row.grand_auxiliares.length; i++) {
                         var auxiliar = row.grand_auxiliares[i];
                         grand_table_auxiliares.row.add([

@@ -16,7 +16,7 @@ class CreateProductoscompuestosPaletsAuxiliaresTable extends Migration
         Schema::create('productoscompuestos_palets_auxiliares', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('det_id');
-            $table->unsignedInteger('pallet_model_id');
+            $table->unsignedInteger('palet_model_id');
             $table->unsignedInteger('auxiliar_id');
             $table->double('cantidad');            
             $table->foreign('det_id')->references('id')->on('productosCompuestos_det');
