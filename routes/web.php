@@ -187,34 +187,7 @@ Route::get('/maestros/productos-compuestos', 'ProductosCompuestosController@inde
 Route::post('maestros/productos-compuestos/create', 'ProductosCompuestosController@create')->name('productos-compuestos.create');
 Route::post('maestros/productos-compuestos/update/{producto}', 'ProductosCompuestosController@update')->name('productos-compuestos.update');
 
-Route::get('/maestros/productos-compuestos/show/{id}', function ($id) {
-    $producto = App\ProductoCompuesto_cab::find($id);
-    $detalles = App\ProductoCompuesto_det::where('compuesto_id', $id)->get();
-
-    foreach ($detalles as $i => $detalle) {
-        $detalles[$i]->euro_tarrinas  = App\ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->where('model_id', '=', 1)->get();
-        $detalles[$i]->grand_tarrinas = App\ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->where('model_id', '=', 2)->get();
-    }
-
-    foreach ($detalles as $i => $detalle) {
-        $detalles[$i]->euro_auxiliares  = App\ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->where('model_id', '=', 1)->get();
-        $detalles[$i]->grand_auxiliares = App\ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->where('model_id', '=', 2)->get();
-    }
-
-    $cajas      = App\Caja::all();
-    $tarrinas   = App\Tarrina::all();
-    $auxiliares = App\Auxiliar::all();
-    $cubres     = App\Cubre::all();
-
-    return view('maestros.productos_compuestos_show', [
-        'producto'   => $producto,
-        'detalles'   => $detalles,
-        'cajas'      => $cajas,
-        'auxiliares' => $auxiliares,
-        'tarrinas'   => $tarrinas,
-        'cubres'     => $cubres
-    ]);
-})->name('productos-compuestos-show');
+Route::get('/maestros/productos-compuestos/show/{id}', 'ProductosCompuestosController@show')->name('productos-compuestos-show');
 
 Route::put('/maestros/productos-compuestos/store', 'ProductosCompuestosController@store')->name('productos-compuestos.store');
 Route::get('/maestros/productos-compuestos/details/{producto}', 'ProductosCompuestosController@details')->name('productos-compuestos.details');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductosCompuestosAuxiliaresTable extends Migration
+class CreateProductoscompuestosPaletsAuxiliaresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateProductosCompuestosAuxiliaresTable extends Migration
      */
     public function up()
     {
-        Schema::create('productoscompuestos_auxiliares', function (Blueprint $table) {
+        Schema::create('productoscompuestos_palets_auxiliares', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('det_id');
+            $table->unsignedInteger('pallet_model_id');
             $table->unsignedInteger('auxiliar_id');
-            $table->double('cantidad');
+            $table->double('cantidad');            
             $table->foreign('det_id')->references('id')->on('productosCompuestos_det');
+            $table->foreign('pallet_model_id')->references('id')->on('pallets_models');
             $table->foreign('auxiliar_id')->references('id')->on('auxiliares');
             $table->timestamps();
         });
@@ -31,6 +33,6 @@ class CreateProductosCompuestosAuxiliaresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('productoscompuestos_auxiliares');
+        Schema::dropIfExists('productoscompuestos_palets_auxiliares');
     }
 }

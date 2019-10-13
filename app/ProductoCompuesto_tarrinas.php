@@ -13,9 +13,4 @@ class ProductoCompuesto_tarrinas extends Model
     {
         return $this->belongsTo(Tarrina::class);
     }
-
-    public function pallet_model()
-    {
-        return $this->belongsTo(PalletModel::class, 'model_id');
-    }
 }

@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Auxiliar;
 use App\Cultivo;
+use App\Caja;
+use App\Cubre;
+use App\Tarrina;
 use App\ProductoCompuesto_auxiliares;
+use App\ProductoCompuesto_palets_auxiliares;
 use Illuminate\Http\Request;
 use App\ProductoCompuesto_cab;
 use App\ProductoCompuesto_det;
@@ -30,6 +35,30 @@ class ProductosCompuestosController extends Controller
         return view('maestros.productos_compuestos', $data);
     }
 
+    public function show($id)
+    {
+        $producto = ProductoCompuesto_cab::find($id);
+        $detalles = ProductoCompuesto_det::where('compuesto_id', $id)->get();
+
+        foreach ($detalles as $i => $detalle) {
+            $detalles[$i]->tarrinas   = ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->get();
+            $detalles[$i]->auxiliares = ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->get();
+        }
+
+        $cajas      = Caja::all();
+        $tarrinas   = Tarrina::all();
+        $auxiliares = Auxiliar::all();
+        $cubres     = Cubre::all();
+
+        return view('maestros.productos_compuestos_show', [
+            'producto'   => $producto,
+            'detalles'   => $detalles,
+            'cajas'      => $cajas,
+            'auxiliares' => $auxiliares,
+            'tarrinas'   => $tarrinas,
+            'cubres'     => $cubres
+        ]);
+    }
 
     //Crea un nuevo producto compuesto CAB
     public function create(Request $request)
@@ -56,9 +85,10 @@ class ProductosCompuestosController extends Controller
     //Agrega los detalles a productos compuestos
     public function store(Request $request)
     {
-//        dd($request);
+        // dd($request);
 
-        if ($request->id == "") $detalle = new ProductoCompuesto_det(); else
+        if ($request->id == "") $detalle = new ProductoCompuesto_det();
+        else
             $detalle = ProductoCompuesto_det::find($request->id);
 
         $detalle->compuesto_id = $request->compuesto_id;
@@ -81,55 +111,54 @@ class ProductosCompuestosController extends Controller
 
         ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->delete();
 
-        if (isset($request->euro_tarrinas_id)) {
-            foreach ($request->euro_tarrinas_id as $i => $item) {
+        if (isset($request->tarrinas_id)) {
+            foreach ($request->tarrinas_id as $i => $item) {
                 $tarrinas = new ProductoCompuesto_tarrinas();
 
                 $tarrinas->det_id     = $detalle->id;
-                $tarrinas->model_id   = 1;
-                $tarrinas->tarrina_id = $request->euro_tarrinas_id[$i];
-                $tarrinas->cantidad   = $request->euro_tarrinas_cantidad[$i];
-                $tarrinas->save();
-            }
-        }
-
-        if (isset($request->grand_tarrinas_id)) {
-            foreach ($request->grand_tarrinas_id as $i => $item) {
-                $tarrinas = new ProductoCompuesto_tarrinas();
-
-                $tarrinas->det_id     = $detalle->id;
-                $tarrinas->model_id   = 2;
-                $tarrinas->tarrina_id = $request->grand_tarrinas_id[$i];
-                $tarrinas->cantidad   = $request->grand_tarrinas_cantidad[$i];
+                $tarrinas->tarrina_id = $request->tarrinas_id[$i];
+                $tarrinas->cantidad   = $request->tarrinas_cantidad[$i];
                 $tarrinas->save();
             }
         }
 
         ProductoCompuesto_auxiliares::where('det_id', $detalle->id)->delete();
 
-        if (isset($request->euro_auxiliares_id)) {
-            foreach ($request->euro_auxiliares_id as $i => $item) {
+        if (isset($request->auxiliares_id)) {
+            foreach ($request->auxiliares_id as $i => $item) {
                 $auxiliar = new ProductoCompuesto_auxiliares();
 
                 $auxiliar->det_id      = $detalle->id;
-                $auxiliar->model_id    = 1;
-                $auxiliar->auxiliar_id = $request->euro_auxiliares_id[$i];
-                $auxiliar->cantidad    = $request->euro_auxiliares_cantidad[$i];
+                $auxiliar->auxiliar_id = $request->auxiliares_id[$i];
+                $auxiliar->cantidad    = $request->auxiliares_cantidad[$i];
+                $auxiliar->save();
+            }
+        }
+
+        ProductoCompuesto_palets_auxiliares::where('det_id', $detalle->id)->delete();
+
+        if (isset($request->euro_auxiliares_id)) {
+            foreach ($request->euro_auxiliares_id as $i => $item) {
+                $auxiliar = new ProductoCompuesto_palets_auxiliares();
+
+                $auxiliar->det_id          = $detalle->id;
+                $auxiliar->pallet_model_id = 1;
+                $auxiliar->auxiliar_id     = $request->euro_auxiliares_id[$i];
+                $auxiliar->cantidad        = $request->euro_auxiliares_cantidad[$i];
                 $auxiliar->save();
             }
         }
 
         if (isset($request->grand_auxiliares_id)) {
             foreach ($request->grand_auxiliares_id as $i => $item) {
-                $auxiliar = new ProductoCompuesto_auxiliares();
+                $auxiliar = new ProductoCompuesto_palets_auxiliares();
 
-                $auxiliar->det_id      = $detalle->id;
-                $auxiliar->model_id    = 2;
-                $auxiliar->auxiliar_id = $request->grand_auxiliares_id[$i];
-                $auxiliar->cantidad    = $request->grand_auxiliares_cantidad[$i];
+                $auxiliar->det_id          = $detalle->id;
+                $auxiliar->pallet_model_id = 2;
+                $auxiliar->auxiliar_id     = $request->grand_auxiliares_id[$i];
+                $auxiliar->cantidad        = $request->grand_auxiliares_cantidad[$i];
                 $auxiliar->save();
             }
-
         }
 
         return redirect()->route('productos-compuestos-show', $request->compuesto_id);

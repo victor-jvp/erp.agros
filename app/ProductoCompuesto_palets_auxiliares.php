@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductoCompuesto_auxiliares extends Model
+class ProductoCompuesto_palets_auxiliares extends Model
 {
     //
-     protected $table = "productoscompuestos_auxiliares";
+    protected $table = "productoscompuestos_palets_auxiliares";
 
     public function auxiliar()
     {
