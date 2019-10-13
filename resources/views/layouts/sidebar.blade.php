@@ -58,13 +58,13 @@
         <!-- Submenu Dashboards -->
         <ul class="childNav" data-parent="prevision">
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='prevision.index' ? 'open' : '' }}" href="{{ url('prevision') }}">
+                <a class="{{ Route::currentRouteName()=='prevision.index' ? 'open' : '' }}" href="{{ route('prevision.index') }}">
                     <i class="nav-icon i-Clock-3"></i>
                     <span class="item-name">Panel de control</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='pedidos-campo.index' ? 'open' : '' }}" href="{{ url('pedidos-campo') }}">
+                <a class="{{ Route::currentRouteName()=='pedidos-campo.index' ? 'open' : '' }}" href="{{ route('pedidos-campo.index')  }}">
                     <i class="nav-icon i-Clock-4"></i>
                     <span class="item-name">Pedido Campo</span>
                 </a>
@@ -72,13 +72,13 @@
         </ul>
         <ul class="childNav" data-parent="comercial">
             <li class="nav-item">
-                <a href="#">
+                <a class="{{ Route::currentRouteName()=='comercial.dashboard' ? 'open' : '' }}" href="{{ route('comercial.dashboard') }}">
                     <i class="nav-icon i-Dashboard"></i>
                     <span class="item-name">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='pedidos-comercial.index' ? 'open' : '' }}" href="{{ url('comercial/pedidos-comercial') }}">
+                <a class="{{ Route::currentRouteName()=='pedidos-comercial.index' ? 'open' : '' }}" href="{{ route('pedidos-comercial.index') }}">
                     <i class="nav-icon i-File-Clipboard-Text--Image"></i>
                     <span class="item-name">Pedidos Comerciales</span>
                 </a>
@@ -169,7 +169,7 @@
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='productos-compuestos.index' ? 'open' : '' }}"
-                    href="{{ url('maestros/productos-compuestos') }}">
+                    href="{{ route('productos-compuestos.index') }}">
                     <i class="nav-icon i-Split-Horizontal-2-Window"></i>
                     <span class="item-name">Productos Compuestos</span>
                 </a>

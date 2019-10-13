@@ -19,6 +19,7 @@ class ProductosCompuestosController extends Controller
     //Listar Productos compuestos
     public function index()
     {
+
         $productos = ProductoCompuesto_cab::all();
 
         foreach ($productos as $i => $producto) {

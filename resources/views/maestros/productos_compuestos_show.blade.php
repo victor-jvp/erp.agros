@@ -617,7 +617,7 @@
 
         function LimpiarModalDetalles() {
             $('#variable, #euro_kg, #grand_kg, #euro_cantoneras, #euro_cubre_cantidad').val(null);
-            $('#cajas, #euro_cubre_id').val(null).trigger('chosen:updated');
+            $('#caja_id, #euro_cubre_id').val(null).trigger('chosen:updated');
             tarrinas_auxiliares_table.rows().remove().draw();
             euro_table_auxiliares.rows().remove().draw();
             grand_table_auxiliares.rows().remove().draw();

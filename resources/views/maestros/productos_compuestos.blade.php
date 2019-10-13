@@ -99,11 +99,12 @@
                                         <td>{{ date('d/m/Y', strtotime($producto->fecha))}}</td>
                                         <td>{{ (isset($producto->detalles)) ? count($producto->detalles) : 0}}</td>
                                         <td>
-                                            <a href="javascript:void(0);" class="text-success mr-2" data-toggle="tooltip"
+                                            <a href="javascript:void(0);" class="text-success mr-2"
+                                               data-toggle="tooltip"
                                                data-placement="top" title="" data-original-title="Editar">
                                                 <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
                                             </a>
-                                            <a href="{{ url('maestros/productos-compuestos/show/'.$producto->id) }}"
+                                            <a href="{{ route('productos-compuestos.show', $producto->id)  }}"
                                                class="text-primary mr-2" data-toggle="tooltip"
                                                data-placement="top" title="" data-original-title="Compuestos">
                                                 <i class="nav-icon i-Notepad-2 font-weight-bold"></i>
