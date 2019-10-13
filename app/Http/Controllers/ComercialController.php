@@ -9,6 +9,6 @@ class ComercialController extends Controller
     //
     public function dashboard(Request $request)
     {
-        //return view();
+        return view('comercial.dashboard.index');
     }
 }
