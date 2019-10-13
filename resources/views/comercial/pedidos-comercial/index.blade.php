@@ -110,20 +110,8 @@
                                             <div class="col-md-4 mb-3">
                                                 <label for="variedad">Variedad</label>
                                                 <select class="form-control chosen" id="variedad" name="variedad">
-{{--                                                    @foreach ($productos as $producto)--}}
-{{--                                                        <option value="{{ $producto->id }}">{{ $producto->compuesto }}</option>--}}
-{{--                                                    @endforeach--}}
                                                 </select>
                                             </div>
-
-
-
-                                        </div>
-
-                                        <div class="row">
-
-
-
                                         </div>
 
                                         <div class="row">
@@ -141,13 +129,6 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
-{{--                                            <div class="col-md-4 mb-3">--}}
-{{--                                                <label for="formato_palet">Formato de Palet</label>--}}
-{{--                                                <select class="form-control chosen" id="formato_palet"--}}
-{{--                                                        name="formato_palet">--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
 
                                             <div class="col-md-4 mb-3">
                                                 <label for="cantidad">Cantidad</label>
@@ -660,12 +641,12 @@
                     </form>
 
                     <form action="/comercial/pedidos-comercial" method="GET" id="form_fecha_act">
-                        <div class="row">
 
+                        <div class="row">
                             <div class="col-md-3 form-group mb-3">
                                 <label>Año</label>
                                 <select class="form-control" name="anio_act" id="anio_act">
-                                    @for($i = $anio_ini; $i <= $anio_fin; $i++)
+                                    @for($i = $anio_fin; $i >= $anio_ini; $i--)
                                         <option
                                                 {{ ($i == $anio_act) ? 'selected' : '' }} value="{{ $i }}">
                                             {{ $i }}
@@ -677,7 +658,7 @@
                             <div class="col-md-3 form-group mb-3">
                                 <label>Semana</label>
                                 <select class="form-control" name="semana_act" id="semana_act">
-                                    @for($i = $semana_ini; $i <= $semana_fin; $i++)
+                                    @for($i = $semana_fin; $i >= $semana_ini; $i--)
                                         <option
                                                 {{ ($i == $semana_act) ? 'selected' : '' }} value="{{ $i }}">
                                             {{ $i }}
@@ -692,6 +673,7 @@
                                 </button>
                             </div>
                         </div>
+
                     </form>
 
                     <div class="row">
