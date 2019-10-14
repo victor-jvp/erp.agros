@@ -54,6 +54,34 @@
                                         </div>
 
                                         <div class="row">
+                                            <div class="col-md-2 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dias[]" value="1" class="dias">
+                                                    <span>Miércoles</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dias[]" value="2" class="dias">
+                                                    <span>Jueves</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dias[]" value="3" class="dias">
+                                                    <span>Viernes</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dias[]" value="4" class="dias">
+                                                    <span>Sábado</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="cliente">Cliente</label>
                                                 <select class="form-control chosen" id="cliente" name="cliente">
@@ -61,6 +89,30 @@
                                                         <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dias[]" value="5" class="dias">
+                                                    <span>Domingo</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dias[]" value="6" class="dias">
+                                                    <span>Lunes</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label class="checkbox checkbox-success">
+                                                    <input type="checkbox" name="dias[]" value="7" class="dias">
+                                                    <span>Martes</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="destino_comercial">Destino Comercial</label>
@@ -78,7 +130,23 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                        </div>
 
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="variedad">Variedad</label>
+                                                <select class="form-control chosen" id="variedad" name="variedad">
+                                                    <option value=""></option>
+                                                @foreach($variedades as $variedad)
+                                                    <option value="{{ $variedad->id }}">{{ $variedad->variable }}</option>
+                                                @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="cantidad">Kilogramos</label>
+                                                <input type="number" class="form-control" name="kilos" id="kilos"
+                                                       step="0.01" min="0.00" placeholder="0.00">
+                                            </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="transporte">Transporte</label>
                                                 <select class="form-control chosen" id="transporte"
@@ -92,29 +160,21 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="cultivo">Cultivo</label>
-                                                <select class="form-control chosen" id="cultivo" name="cultivo">
-                                                    @foreach ($cultivos as $cultivo)
-                                                        <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="producto_compuesto">Compuesto</label>
-                                                <select class="form-control chosen" id="producto_compuesto"
-                                                        name="producto_compuesto">
-                                                    <option value=""></option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="variedad">Variedad</label>
-                                                <select class="form-control chosen" id="variedad" name="variedad">
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
+                                            {{--                                            <div class="col-md-4 mb-3">--}}
+                                            {{--                                                <label for="cultivo">Cultivo</label>--}}
+                                            {{--                                                <select class="form-control chosen" id="cultivo" name="cultivo">--}}
+                                            {{--                                                    @foreach ($cultivos as $cultivo)--}}
+                                            {{--                                                        <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>--}}
+                                            {{--                                                    @endforeach--}}
+                                            {{--                                                </select>--}}
+                                            {{--                                            </div>--}}
+                                            {{--                                            <div class="col-md-4 mb-3">--}}
+                                            {{--                                                <label for="producto_compuesto">Compuesto</label>--}}
+                                            {{--                                                <select class="form-control chosen" id="producto_compuesto"--}}
+                                            {{--                                                        name="producto_compuesto">--}}
+                                            {{--                                                    <option value=""></option>--}}
+                                            {{--                                                </select>--}}
+                                            {{--                                            </div>--}}
 
                                             <div class="col-md-4 mb-3">
                                                 <label for="etiqueta">Etiqueta</label>
@@ -131,9 +191,12 @@
                                             </div>
 
                                             <div class="col-md-4 mb-3">
-                                                <label for="cantidad">Cantidad</label>
-                                                <input type="number" class="form-control" name="cantidad" id="cantidad"
-                                                       step="0.01" min="0.00" placeholder="0.00">
+                                                <label for="estado">Estado</label>
+                                                <select name="estado" id="estado" class="form-control">
+                                                    @foreach ($estados as $estado)
+                                                        <option value="{{ $estado->id }}">{{ $estado->estado }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
@@ -575,14 +638,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="estado">Estado</label>
-                                                <select name="estado" id="estado" class="form-control">
-                                                    @foreach ($estados as $estado)
-                                                        <option value="{{ $estado->id }}">{{ $estado->estado }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+
                                         </div>
 
                                     </div>
@@ -776,7 +832,7 @@
     <script src="{{asset('assets/js/vendor/calendar/moment-with-locales.min.js')}}"></script>
 
     <script>
-            $(document).ready(function () {
+        $(document).ready(function () {
             $(".chosen").chosen({
                 width: "100%",
                 no_results_text: "No se encontraron resultados... ",
@@ -808,7 +864,7 @@
                 $("#form_fecha_act").submit();
             });
 
-            $("#pedido_form").one('submit',function(f){
+            $("#pedido_form").one('submit', function (f) {
                 f.preventDefault();
 
                 $(this).submit();
@@ -997,7 +1053,7 @@
                 loadVariedad(id);
             });
 
-            $("#modelo_palet").change(function(){
+            $("#modelo_palet").change(function () {
                 var tipo_palet = $(this).val();
 
                 $(".EuroPallet, .PalletGrande").css('display', 'none');
@@ -1236,7 +1292,7 @@
             $("#producto_compuesto").html(null).append('<option value=""></option>').trigger('chosen:updated');
         }
 
-        function loadVariedad(valor, selected) {
+        /*function loadVariedad(valor, selected) {
             $.ajax({
                 type: 'POST',
                 url: "{{ route('productos-compuestos.ajaxGetVariedad') }}",
@@ -1266,11 +1322,11 @@
                     alert('Error. Check Console Log');
                 },
             });
-        }
+        }*/
 
-        function ClearVariedad() {
+        /*function ClearVariedad() {
             $("#variedad").html(null).append('<option value=""></option>').trigger('chosen:updated');
-        }
+        }*/
 
         function loadPalet(valor, selected) {
             $.ajax({

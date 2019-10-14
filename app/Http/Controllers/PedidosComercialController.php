@@ -15,6 +15,7 @@ use App\PedidoComercialAuxiliar;
 use App\PedidoComercialEstado;
 use App\PedidoComercialTarrina;
 use App\ProductoCompuesto_cab;
+use App\ProductoCompuesto_det;
 use App\Tarrina;
 use App\Transporte;
 use Illuminate\Http\Request;
@@ -46,6 +47,7 @@ class PedidosComercialController extends Controller
         $tarrinas    = Tarrina::all();
         $auxiliares  = Auxiliar::all();
         $cubres      = Cubre::all();
+        $variedades  = ProductoCompuesto_det::all();
 
         foreach ($cultivos as $c => $cultivo) {
             $pedidos               = PedidoComercial::where('cultivo_id', $cultivo->id)->where('anio', $data['anio_act'])->where('semana', $data['semana_act'])->get();
@@ -66,6 +68,7 @@ class PedidosComercialController extends Controller
         $data['tarrinas']    = $tarrinas;
         $data['auxiliares']  = $auxiliares;
         $data['cubres']      = $cubres;
+        $data['variedades']  = $variedades;
         $data['nro_orden']   = date('dmY') . "-" . $nro_orden;
 
         return view("comercial.pedidos-comercial.index")->with($data);
@@ -77,7 +80,11 @@ class PedidosComercialController extends Controller
 
         if (is_null($id)) return response()->json(null);
 
-        $data = PedidoComercial::with(['compuesto', 'tarrinas.tarrina', 'auxiliares.auxiliar'])->find($id);
+        $data = PedidoComercial::with([
+            'compuesto',
+            'tarrinas.tarrina',
+            'auxiliares.auxiliar'
+        ])->find($id);
 
         return response()->json($data);
     }
@@ -271,12 +278,7 @@ class PedidosComercialController extends Controller
         $data           = array();
         $clienteDestino = ClienteDestinos::find($id);
         $pais           = $clienteDestino->pais;
-        $data           = DB::table('pedidos_comerciales')
-            ->join('clientes_destinos', 'clientes_destinos.id', '=', 'pedidos_comerciales.destino_id')
-            ->join('clientes', 'clientes.id', '=', 'clientes_destinos.cliente_id')
-            ->where('clientes_destinos.pais', 'like', '%' . $pais . '%')
-            ->select('precio', 'kilos', 'clientes.razon_social as cliente', 'clientes_destinos.pais')
-            ->get();
+        $data           = DB::table('pedidos_comerciales')->join('clientes_destinos', 'clientes_destinos.id', '=', 'pedidos_comerciales.destino_id')->join('clientes', 'clientes.id', '=', 'clientes_destinos.cliente_id')->where('clientes_destinos.pais', 'like', '%' . $pais . '%')->select('precio', 'kilos', 'clientes.razon_social as cliente', 'clientes_destinos.pais')->get();
 
         return response()->json($data);
     }
