@@ -72,7 +72,7 @@ class ProductosCompuestosController extends Controller
         $producto->fecha      = date("Y-m-d");
         $producto->save();
 
-        return redirect()->route('productos-compuestos-show', $producto->id);
+        return redirect()->route('productos-compuestos.show', $producto->id);
     }
 
     public function update(Request $request, $id)
@@ -93,22 +93,16 @@ class ProductosCompuestosController extends Controller
         if ($request->id == "") $detalle = new ProductoCompuesto_det(); else
             $detalle = ProductoCompuesto_det::find($request->id);
 
-        $detalle->compuesto_id = $request->compuesto_id;
-        $detalle->variable     = $request->variable;
-        $detalle->caja_id      = $request->caja_id;
+        $detalle->compuesto_id   = $request->compuesto_id;
+        $detalle->variable       = $request->variable;
+        $detalle->caja_id        = $request->caja_id;
+        $detalle->kg             = $request->kg;
+        $detalle->cubre_id       = $request->cubre_id;
+        $detalle->cubre_cantidad = $request->cubre_cantidad;
         //euro Pallet
-        $detalle->euro_cantidad       = $request->euro_cantidad;
-        $detalle->euro_kg             = $request->euro_kg;
-        $detalle->euro_cantoneras     = $request->euro_cantoneras;
-        $detalle->euro_cubre_id       = $request->euro_cubre_id;
-        $detalle->euro_cubre_cantidad = $request->euro_cubre_cantidad;
+        $detalle->euro_cantidad = $request->euro_cantidad;
         //Grand Pallet
-        $detalle->grand_cantidad       = $request->grand_cantidad;
-        $detalle->grand_kg             = $request->grand_kg;
-        $detalle->grand_cantoneras     = $request->grand_cantoneras;
-        $detalle->grand_cubre_id       = $request->grand_cubre_id;
-        $detalle->grand_cubre_cantidad = $request->grand_cubre_cantidad;
-
+        $detalle->grand_cantidad = $request->grand_cantidad;
         $detalle->save();
 
         ProductoCompuesto_tarrinas::where('det_id', $detalle->id)->delete();
@@ -143,10 +137,10 @@ class ProductosCompuestosController extends Controller
             foreach ($request->euro_auxiliares_id as $i => $item) {
                 $auxiliar = new ProductoCompuesto_palets_auxiliares();
 
-                $auxiliar->det_id          = $detalle->id;
+                $auxiliar->det_id         = $detalle->id;
                 $auxiliar->palet_model_id = 1;
-                $auxiliar->auxiliar_id     = $request->euro_auxiliares_id[$i];
-                $auxiliar->cantidad        = $request->euro_auxiliares_cantidad[$i];
+                $auxiliar->auxiliar_id    = $request->euro_auxiliares_id[$i];
+                $auxiliar->cantidad       = $request->euro_auxiliares_cantidad[$i];
                 $auxiliar->save();
             }
         }
@@ -155,15 +149,15 @@ class ProductosCompuestosController extends Controller
             foreach ($request->grand_auxiliares_id as $i => $item) {
                 $auxiliar = new ProductoCompuesto_palets_auxiliares();
 
-                $auxiliar->det_id          = $detalle->id;
+                $auxiliar->det_id         = $detalle->id;
                 $auxiliar->palet_model_id = 2;
-                $auxiliar->auxiliar_id     = $request->grand_auxiliares_id[$i];
-                $auxiliar->cantidad        = $request->grand_auxiliares_cantidad[$i];
+                $auxiliar->auxiliar_id    = $request->grand_auxiliares_id[$i];
+                $auxiliar->cantidad       = $request->grand_auxiliares_cantidad[$i];
                 $auxiliar->save();
             }
         }
 
-        return redirect()->route('productos-compuestos-show', $request->compuesto_id);
+        return redirect()->route('productos-compuestos.show', $request->compuesto_id);
     }
 
     //Ajax para obtener detalles de producto
@@ -191,7 +185,7 @@ class ProductosCompuestosController extends Controller
         $detalle->palets_auxiliares()->delete();
         $detalle->delete();
 
-        return redirect()->route('productos-compuestos-show', $compuesto_id);
+        return redirect()->route('productos-compuestos.show', $compuesto_id);
     }
 
     public function ajaxGetCompuesto(Request $request)

@@ -41,7 +41,8 @@
                          aria-hidden="true" id="modal-producto">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <form action="maestros/productos-compuestos/store" method="POST" id="producto_form">
+                                <form action="{{ route('productos-compuestos.store') }}" method="POST"
+                                      id="producto_form">
                                     {{ csrf_field() }}
                                     {{ method_field('PUT') }}
                                     <input type="hidden" name="compuesto_id" id="compuesto_id"
@@ -75,6 +76,38 @@
                                                         @endforeach
                                                     @endif
                                                 </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="kg">Kilogramos</label>
+                                                <input type="number" class="form-control" id="kg" placeholder="Kg"
+                                                       name="kg"
+                                                       step="0.01" min="0.00">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="cubre_id">Cubres</label>
+                                                <select name="cubre_id" id="cubre_id"
+                                                        class="form-control chosen"
+                                                        data-placeholder="Seleccione...">
+                                                    <option value=""></option>
+                                                    @if (isset($cubres))
+                                                        @foreach ($cubres as $cubre)
+                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="cubre_cantidad">Cantidad
+                                                    Cubres</label>
+                                                <input type="number" class="form-control" id="cubre_cantidad"
+                                                       placeholder="Cantidad Cubres" name="cubre_cantidad"
+                                                       step="0.01"
+                                                       min="0.00">
                                             </div>
                                         </div>
 
@@ -175,51 +208,15 @@
 
                                                         <div class="row">
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="euro_cantidad">Cantidad</label>
+                                                                <label for="euro_cantidad">Cantidad de Cajas</label>
                                                                 <input type="number" class="form-control"
                                                                        id="euro_cantidad"
-                                                                       placeholder="Cantidad de cajas"
-                                                                       name="euro_cantidad" step="0.01" min="0.00">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_pallet_id">Kilogramos</label>
-                                                                <input type="number" class="form-control" id="euro_kg"
-                                                                       placeholder="Kg" name="euro_kg" step="0.01"
-                                                                       min="0.00">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_cantoneras">Cantoneras</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="euro_cantoneras"
-                                                                       placeholder="Cantoneras" name="euro_cantoneras">
+                                                                       placeholder="Cantidad de Cajas"
+                                                                       name="euro_cantidad"
+                                                                       step="0.01" min="0.00">
                                                             </div>
                                                         </div>
 
-                                                        <div class="row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_cubre_id">Cubres</label>
-                                                                <select name="euro_cubre_id" id="euro_cubre_id"
-                                                                        class="form-control chosen"
-                                                                        data-placeholder="Seleccione...">
-                                                                    <option value=""></option>
-                                                                    @if (isset($cubres))
-                                                                        @foreach ($cubres as $cubre)
-                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_cubre_cantidad">Cantidad
-                                                                    Cubres</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="euro_cubre_cantidad"
-                                                                       placeholder="Cantidad Cubres"
-                                                                       name="euro_cubre_cantidad" step="0.01"
-                                                                       min="0.00">
-                                                            </div>
-                                                        </div>
 
                                                         <div class="row">
                                                             <div class="col-md-6 mb-3">
@@ -279,49 +276,11 @@
                                                          aria-labelledby="PalletGrande-tab">
                                                         <div class="row">
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="grand_cantidad">Cantidad</label>
+                                                                <label for="grand_cantidad">Cantidad de Cajas</label>
                                                                 <input type="number" class="form-control"
                                                                        id="grand_cantidad"
                                                                        placeholder="Cantidad de cajas"
                                                                        name="grand_cantidad" step="0.01" min="0.00">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_kg">Kilogramos</label>
-                                                                <input type="number" class="form-control" id="grand_kg"
-                                                                       placeholder="Kg" name="grand_kg" step="0.01"
-                                                                       min="0.00">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_cantoneras">Cantoneras</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="grand_cantoneras" placeholder="Cantoneras"
-                                                                       name="grand_cantoneras">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_cubre_id">Cubres</label>
-                                                                <select name="grand_cubre_id" id="grand_cubre_id"
-                                                                        class="form-control chosen"
-                                                                        data-placeholder="Seleccione...">
-                                                                    <option value=""></option>
-                                                                    @if (isset($cubres))
-                                                                        @foreach ($cubres as $cubre)
-                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_cubre_cantidad">Cantidad
-                                                                    Cubres</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="grand_cubre_cantidad"
-                                                                       placeholder="Cantidad Cubres"
-                                                                       name="grand_cubre_cantidad" step="0.01"
-                                                                       min="0.00">
                                                             </div>
                                                         </div>
 
@@ -394,27 +353,16 @@
 
                     <div class="row">
                         <div class="col-md-12 mb-3 table-responsive">
-                            <table id="productos_table" class="display table table-sm table-hover table-bordered"
+                            <table id="productos_table" class="display table table-sm table-hover table-striped"
                                    style="width:100%">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th scope="col">Variable</th>
                                     <th scope="col">Caja</th>
-                                    <th scope="col">Tarrinas</th>
-                                    <th scope="col">Auxiliares</th>
+                                    <th scope="col">Kilos</th>
                                     <th scope="col">Euro Palet<br>Cantidad</th>
-                                    <th scope="col">Euro Palet<br>Kg</th>
-                                    <th scope="col">Euro Palet<br>Cantoneras</th>
-                                    <th scope="col">Euro Palet<br>Cubre</th>
-                                    <th scope="col">Euro Palet<br>Cubre Cantidad</th>
-                                    <th scope="col">Euro Palet<br>Auxiliares</th>
                                     <th scope="col">Palet Grande<br>Cantidad</th>
-                                    <th scope="col">Palet Grande<br>Kg</th>
-                                    <th scope="col">Palet Grande<br>Cantoneras</th>
-                                    <th scope="col">Palet Grande<br>Cubre</th>
-                                    <th scope="col">Palet Grande<br>Cubre Cantidad</th>
-                                    <th scope="col">Palet Grande<br>Auxiliares</th>
                                     <th scope="col">Acción</th>
                                 </tr>
                                 </thead>
@@ -424,75 +372,9 @@
                                         <td>{{ $detalle->id }}</td>
                                         <td>{{ $detalle->variable }}</td>
                                         <td>{{ (!is_null($detalle->caja_id)) ? $detalle->caja->formato : "" }}</td>
-                                        <td>
-                                            @if(isset($detalle->tarrinas))
-                                                <ul class="list-group text-left">
-                                                    @foreach($detalle->tarrinas as $tarrina)
-                                                        <li
-                                                                class="list-group-item d-flex justify-content-between align-items-center">
-                                                            {{ $tarrina->tarrina->modelo }}
-                                                            <span
-                                                                    class="badge badge-primary badge-pill">{{ $tarrina->cantidad }}</span>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if(isset($detalle->auxiliares))
-                                                <ul class="list-group text-left">
-                                                    @foreach($detalle->auxiliares as $auxiliar)
-                                                        <li
-                                                                class="list-group-item d-flex justify-content-between align-items-center">
-                                                            {{ $auxiliar->auxiliar->modelo }}
-                                                            <span
-                                                                    class="badge badge-primary badge-pill">{{ $auxiliar->cantidad }}</span>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </td>
+                                        <td>{{ $detalle->kg }}</td>
                                         <td>{{ $detalle->euro_cantidad }}</td>
-                                        <td>{{ $detalle->euro_kg }}</td>
-                                        <td>{{ $detalle->euro_cantoneras }}</td>
-                                        <td>{{ (!is_null($detalle->euro_cubre_id)) ? $detalle->euro_cubre->formato : "" }}
-                                        </td>
-                                        <td>{{ $detalle->euro_cubre_cantidad }}</td>
-                                        <td>
-                                            @if(isset($detalle->euro_auxiliares))
-                                                <ul class="list-group text-left">
-                                                    @foreach($detalle->euro_auxiliares as $auxiliar)
-                                                        <li
-                                                                class="list-group-item d-flex justify-content-between align-items-center">
-                                                            {{ $auxiliar->auxiliar->modelo }}
-                                                            <span
-                                                                    class="badge badge-primary badge-pill">{{ $auxiliar->cantidad }}</span>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </td>
                                         <td>{{ $detalle->grand_cantidad }}</td>
-                                        <td>{{ $detalle->grand_kg}}</td>
-                                        <td>{{ $detalle->grand_cantoneras}}</td>
-                                        <td>{{ (!is_null($detalle->grand_cubre_id)) ? $detalle->grand_cubre->formato : "" }}
-                                        </td>
-                                        <td>{{ $detalle->grand_cubre_cantidad }}</td>
-                                        <td>
-                                            @if(isset($detalle->grand_auxiliares))
-                                                <ul class="list-group text-left">
-                                                    @foreach($detalle->grand_auxiliares as $auxiliar)
-                                                        <li
-                                                                class="list-group-item d-flex justify-content-between align-items-center">
-                                                            {{ $auxiliar->auxiliar->modelo }}
-                                                            <span
-                                                                    class="badge badge-primary badge-pill">{{ $auxiliar->cantidad }}</span>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </td>
-
                                         <td>
                                             <a href="javascript:void(0);" class="text-success mr-2 edit"
                                                data-toggle="tooltip" data-placement="top" title=""
@@ -616,8 +498,8 @@
         })
 
         function LimpiarModalDetalles() {
-            $('#variable, #euro_kg, #grand_kg, #euro_cantoneras, #euro_cubre_cantidad').val(null);
-            $('#caja_id, #euro_cubre_id').val(null).trigger('chosen:updated');
+            $('#variable, #kg, #cubre_cantidad, #tarrina_cantidad, #auxiliar_cantidad, #euro_cantidad, #grand_cantidad, #euro_auxiliar_cantidad, #grand_auxiliar_cantidad').val(null);
+            $('#caja_id, #cubre_id, #tarrina_id, #auxiliar_id, #euro_auxiliar_modelo, #grand_auxiliar_modelo').val(null).trigger('chosen:updated');
             tarrinas_auxiliares_table.rows().remove().draw();
             euro_table_auxiliares.rows().remove().draw();
             grand_table_auxiliares.rows().remove().draw();
@@ -634,11 +516,11 @@
 
                     $('#variable').val(row.variable);
                     $('#caja_id').val(row.caja_id).trigger('chosen:updated');
-                    $('#euro_kg').val(row.euro_kg);
-                    $('#grand_kg').val(row.grand_kg);
-                    $('#euro_cantoneras').val(row.cantoneras);
-                    $('#euro_cubre_id').val(row.cubre_id).trigger('chosen:updated');
-                    $('#euro_cubre_cantidad').val(row.cubre_cantidad);
+                    $('#kg').val(row.kg);
+                    $('#cubre_id').val(row.cubre_id).trigger('chosen:updated');
+                    $('#cubre_cantidad').val(row.cubre_cantidad);
+                    $('#euro_cantidad').val(row.euro_cantidad);
+                    $('#grand_cantidad').val(row.grand_cantidad);
 
                     var opciones = '<a href="javascript:void(0);" class="text-danger mr-2 delete">\n' +
                         '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
@@ -649,7 +531,7 @@
                         var auxiliar = row.auxiliares[i];
                         var tipo = "Auxiliar";
                         tarrinas_auxiliares_table.row.add([
-                            tipo+auxiliar.auxiliar_id,
+                            tipo + auxiliar.auxiliar_id,
                             tipo,
                             auxiliar.auxiliar.modelo,
                             auxiliar.cantidad,
@@ -664,7 +546,7 @@
                         var tarrina = row.tarrinas[i];
                         var tipo = "Tarrina";
                         tarrinas_auxiliares_table.row.add([
-                            tipo+tarrina.tarrina_id,
+                            tipo + tarrina.tarrina_id,
                             tipo,
                             tarrina.tarrina.modelo,
                             tarrina.cantidad,
@@ -731,10 +613,18 @@
                 info: false,
                 paging: false,
                 searching: false,
-                columnDefs: [
-                    {targets: [1, 2, 3, 4], orderable: false},
-                    {targets: [0], visible: false},
-                    {targets: [3], className: 'text-right'}
+                columnDefs: [{
+                    targets: [1, 2, 3, 4],
+                    orderable: false
+                },
+                    {
+                        targets: [0],
+                        visible: false
+                    },
+                    {
+                        targets: [3],
+                        className: 'text-right'
+                    }
                 ],
                 ordering: [
                     [1, 'asc'],

@@ -13,16 +13,6 @@ class ProductoCompuesto_det extends Model
         return $this->belongsTo(Caja::class);
     }
 
-    public function euro_cubre()
-    {
-        return $this->belongsTo(Cubre::class, 'euro_cubre_id');
-    }
-
-    public function grand_cubre()
-    {
-        return $this->belongsTo(Cubre::class, 'grand_cubre_id');
-    }
-
     public function tarrinas()
     {
         return $this->hasMany(ProductoCompuesto_tarrinas::class, 'det_id');
