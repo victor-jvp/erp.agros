@@ -76,7 +76,7 @@
 
                     <div class="row">
                         <div class="col-md-12 table-responsive">
-                            <table id="productos_table" class="display table table-striped"
+                            <table id="productos_table" class="display table table-striped table-sm"
                                    style="width:100%">
                                 <thead>
                                 <tr>

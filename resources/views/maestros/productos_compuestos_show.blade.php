@@ -113,33 +113,6 @@
 
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <label for="tarrina_modelo">Tarrina</label>
-                                                <select id="tarrina_modelo" class="form-control chosen"
-                                                        data-placeholder="Seleccione...">
-                                                    <option value=""></option>
-                                                    @if (isset($tarrinas))
-                                                        @foreach ($tarrinas as $tarrina)
-                                                            <option value="{{ $tarrina->id }}">{{ $tarrina->modelo }}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="tarrina_cantidad">Cantidad</label>
-                                                <input type="number" class="form-control" id="tarrina_cantidad"
-                                                       placeholder="Cantidad" step="0.01" min="0.00">
-                                            </div>
-                                            <div class="col-md-2 mb-3">
-                                                <br>
-                                                <button id="btnAddTarrina" type="button" data-index=""
-                                                        class="btn btn-success btn-icon">
-                                                    <i class="i-Add"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
                                                 <label for="auxiliar_modelo">Auxiliar</label>
                                                 <select id="auxiliar_modelo" class="form-control chosen"
                                                         data-placeholder="Seleccione...">
@@ -159,6 +132,33 @@
                                             <div class="col-md-2 mb-3">
                                                 <br>
                                                 <button id="btnAddAuxiliar" type="button" data-index=""
+                                                        class="btn btn-success btn-icon">
+                                                    <i class="i-Add"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="tarrina_modelo">Tarrina</label>
+                                                <select id="tarrina_modelo" class="form-control chosen"
+                                                        data-placeholder="Seleccione...">
+                                                    <option value=""></option>
+                                                    @if (isset($tarrinas))
+                                                        @foreach ($tarrinas as $tarrina)
+                                                            <option value="{{ $tarrina->id }}">{{ $tarrina->modelo }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="tarrina_cantidad">Cantidad</label>
+                                                <input type="number" class="form-control" id="tarrina_cantidad"
+                                                       placeholder="Cantidad" step="0.01" min="0.00">
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <br>
+                                                <button id="btnAddTarrina" type="button" data-index=""
                                                         class="btn btn-success btn-icon">
                                                     <i class="i-Add"></i>
                                                 </button>
