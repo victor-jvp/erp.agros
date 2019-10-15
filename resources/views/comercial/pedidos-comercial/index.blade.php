@@ -136,15 +136,14 @@
                                             <div class="col-md-4 mb-3">
                                                 <label for="variedad">Variedad</label>
                                                 <select class="form-control chosen" id="variedad" name="variedad">
-                                                    <option value=""></option>
                                                 @foreach($variedades as $variedad)
                                                     <option value="{{ $variedad->id }}">{{ $variedad->variable }}</option>
                                                 @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="cantidad">Kilogramos</label>
-                                                <input type="number" class="form-control" name="kilos" id="kilos"
+                                                <label for="cantidad">Cantidad de Cajas</label>
+                                                <input type="number" class="form-control" name="cantidad" id="cantidad"
                                                        step="0.01" min="0.00" placeholder="0.00">
                                             </div>
                                             <div class="col-md-4 mb-3">
@@ -200,413 +199,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-md-12 mb-3">
-                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                    <li class="nav-item EuroPallet">
-                                                        <a class="nav-link" id="EuroPallet-tab"
-                                                           data-toggle="tab" href="#EuroPallet" role="tab"
-                                                           aria-controls="EuroPallet" aria-selected="false">Euro
-                                                            Palet</a>
-                                                    </li>
-                                                    <li class="nav-item PalletGrande">
-                                                        <a class="nav-link" id="PalletGrande-tab" data-toggle="tab"
-                                                           href="#PalletGrande" role="tab" aria-controls="PalletGrande"
-                                                           aria-selected="false">Palet Grande</a>
-                                                    </li>
-                                                </ul>
-                                                <div class="tab-content" id="myTabContent">
-                                                    <div class="tab-pane fade EuroPallet" id="EuroPallet"
-                                                         role="tabpanel"
-                                                         aria-labelledby="EuroPallet-tab">
-                                                        <div class="row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_pallet_id">Cantidad</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="euro_cantidad"
-                                                                       placeholder="Cantidad" name="euro_cantidad">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_pallet_id">Kilogramos</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="euro_kg"
-                                                                       placeholder="Kg" name="euro_kg">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="euro_cantoneras">Cantoneras</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="euro_cantoneras"
-                                                                       placeholder="Cantoneras" name="euro_cantoneras">
-                                                            </div>
-                                                        </div>
+                                        <div class="row mb-3" id="div_palets">
 
-
-                                                        <div class="row">
-                                                            <div class="col-md-12 mb-3">
-                                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link active show"
-                                                                           id="euro_tarrinas-tab"
-                                                                           data-toggle="tab" href="#euro_tarrinas"
-                                                                           role="tab"
-                                                                           aria-controls="euro_tarrinas"
-                                                                           aria-selected="true">Tarrinas</a>
-                                                                    </li>
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" id="euro_auxiliares-tab"
-                                                                           data-toggle="tab"
-                                                                           href="#euro_auxiliares" role="tab"
-                                                                           aria-controls="euro_auxiliares"
-                                                                           aria-selected="false">Auxiliares</a>
-                                                                    </li>
-                                                                </ul>
-                                                                <div class="tab-content" id="myTabContent">
-                                                                    <div class="tab-pane fade active show"
-                                                                         id="euro_tarrinas"
-                                                                         role="tabpanel"
-                                                                         aria-labelledby="euro_tarrinas-tab">
-
-                                                                        <div class="row">
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label for="euro_tarrina_modelo">Tarrina</label>
-                                                                                <select id="euro_tarrina_modelo"
-                                                                                        class="form-control chosen"
-                                                                                        data-placeholder="Seleccione...">
-                                                                                    <option value=""></option>
-                                                                                    @if (isset($tarrinas))
-                                                                                        @foreach ($tarrinas as $tarrina)
-                                                                                            <option value="{{ $tarrina->id }}">{{ $tarrina->modelo }}</option>
-                                                                                        @endforeach
-                                                                                    @endif
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-md-4 mb-3">
-                                                                                <label for="euro_tarrina_cantidad">Cantidad</label>
-                                                                                <input type="number"
-                                                                                       class="form-control"
-                                                                                       id="euro_tarrina_cantidad"
-                                                                                       placeholder="Cantidad"
-                                                                                       step="0.01">
-                                                                            </div>
-                                                                            <div class="col-md-2 mb-3">
-                                                                                <br>
-                                                                                <button id="btnAddEuroTarrina"
-                                                                                        type="button"
-                                                                                        class="btn btn-success btn-icon">
-                                                                                    <i class="i-Add"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="row">
-                                                                            <div class="col-md-12 mb-3">
-                                                                                <div class="table-responsive">
-                                                                                    <table id="euro_tarrinas_table"
-                                                                                           class="display table table-striped table-bordered"
-                                                                                           style="width:100%">
-                                                                                        <thead>
-                                                                                        <tr>
-                                                                                            <th>modelo_id</th>
-                                                                                            <th scope="col">Tarrina</th>
-                                                                                            <th scope="col">Cantidad
-                                                                                            </th>
-                                                                                            <th scope="col">Acción</th>
-                                                                                            <th>Cantidad Default</th>
-                                                                                        </tr>
-                                                                                        </thead>
-                                                                                        <tbody></tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div class="tab-pane fade" id="euro_auxiliares"
-                                                                         role="tabpanel"
-                                                                         aria-labelledby="euro_auxiliares-tab">
-
-                                                                        <div class="row">
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label for="euro_cubre_id">Cubres</label>
-                                                                                <select name="euro_cubre_id"
-                                                                                        id="euro_cubre_id"
-                                                                                        class="form-control chosen"
-                                                                                        data-placeholder="Seleccione...">
-                                                                                    <option value=""></option>
-                                                                                    @if (isset($cubres))
-                                                                                        @foreach ($cubres as $cubre)
-                                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
-                                                                                        @endforeach
-                                                                                    @endif
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-md-4 mb-3">
-                                                                                <label for="euro_cubre_cantidad">Cantidad
-                                                                                    Cubres</label>
-                                                                                <input type="number"
-                                                                                       class="form-control"
-                                                                                       id="euro_cubre_cantidad"
-                                                                                       placeholder="Cantidad Cubres"
-                                                                                       name="euro_cubre_cantidad">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="row">
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label for="euro_auxiliar_modelo">Auxiliar</label>
-                                                                                <select id="euro_auxiliar_modelo"
-                                                                                        class="form-control chosen"
-                                                                                        data-placeholder="Seleccione...">
-                                                                                    <option value=""></option>
-                                                                                    @if (isset($auxiliares))
-                                                                                        @foreach ($auxiliares as $auxiliar)
-                                                                                            <option value="{{ $auxiliar->id }}">{{ $auxiliar->modelo }}</option>
-                                                                                        @endforeach
-                                                                                    @endif
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-md-4 mb-3">
-                                                                                <label for="euro_auxiliar_cantidad">Cantidad</label>
-                                                                                <input type="number"
-                                                                                       class="form-control"
-                                                                                       id="euro_auxiliar_cantidad"
-                                                                                       placeholder="Cantidad"
-                                                                                       step="0.01">
-                                                                            </div>
-                                                                            <div class="col-md-2 mb-3">
-                                                                                <br>
-                                                                                <button id="btnAddEuroAuxiliar"
-                                                                                        type="button" data-index=""
-                                                                                        class="btn btn-success btn-icon">
-                                                                                    <i class="i-Add"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="row">
-                                                                            <div class="col-md-12 mb-3">
-                                                                                <div class="table-responsive">
-                                                                                    <table id="euro_auxiliares_table"
-                                                                                           class="display table table-striped table-bordered"
-                                                                                           style="width:100%">
-                                                                                        <thead>
-                                                                                        <tr>
-                                                                                            <th>modelo_id</th>
-                                                                                            <th scope="col">Auxiliar
-                                                                                            </th>
-                                                                                            <th scope="col">Cantidad
-                                                                                            </th>
-                                                                                            <th scope="col">Acción</th>
-                                                                                            <th>Cantidad Default</th>
-                                                                                        </tr>
-                                                                                        </thead>
-                                                                                        <tbody></tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane fade PalletGrande" id="PalletGrande"
-                                                         role="tabpanel"
-                                                         aria-labelledby="PalletGrande-tab">
-                                                        <div class="row">
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_cantidad">Cantidad</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="grand_cantidad"
-                                                                       placeholder="Cantidad" name="grand_cantidad">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_kg">Kilogramos</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="grand_kg"
-                                                                       placeholder="Kg" name="grand_kg">
-                                                            </div>
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="grand_cantoneras">Cantoneras</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="grand_cantoneras"
-                                                                       placeholder="Cantoneras" name="grand_cantoneras">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="row">
-                                                            <div class="col-md-12 mb-3">
-                                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link active show"
-                                                                           id="tarrinas-tab"
-                                                                           data-toggle="tab" href="#tarrinas" role="tab"
-                                                                           aria-controls="tarrinas"
-                                                                           aria-selected="true">Tarrinas</a>
-                                                                    </li>
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link" id="auxiliares-tab"
-                                                                           data-toggle="tab"
-                                                                           href="#auxiliares" role="tab"
-                                                                           aria-controls="auxiliares"
-                                                                           aria-selected="false">Auxiliares</a>
-                                                                    </li>
-                                                                </ul>
-                                                                <div class="tab-content" id="myTabContent">
-                                                                    <div class="tab-pane fade active show" id="tarrinas"
-                                                                         role="tabpanel"
-                                                                         aria-labelledby="tarrinas-tab">
-
-
-                                                                        <div class="row">
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label for="grand_tarrina_modelo">Tarrina</label>
-                                                                                <select id="grand_tarrina_modelo"
-                                                                                        class="form-control chosen"
-                                                                                        data-placeholder="Seleccione...">
-                                                                                    <option value=""></option>
-                                                                                    @if (isset($tarrinas))
-                                                                                        @foreach ($tarrinas as $tarrina)
-                                                                                            <option value="{{ $tarrina->id }}">{{ $tarrina->modelo }}</option>
-                                                                                        @endforeach
-                                                                                    @endif
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-md-4 mb-3">
-                                                                                <label for="grand_tarrina_cantidad">Cantidad</label>
-                                                                                <input type="number"
-                                                                                       class="form-control"
-                                                                                       id="grand_tarrina_cantidad"
-                                                                                       placeholder="Cantidad"
-                                                                                       step="0.01">
-                                                                            </div>
-                                                                            <div class="col-md-2 mb-3">
-                                                                                <br>
-                                                                                <button id="btnAddGrandTarrina"
-                                                                                        type="button"
-                                                                                        class="btn btn-success btn-icon">
-                                                                                    <i class="i-Add"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="row">
-                                                                            <div class="col-md-12 mb-3">
-                                                                                <div class="table-responsive">
-                                                                                    <table id="grand_tarrinas_table"
-                                                                                           class="display table table-striped table-bordered"
-                                                                                           style="width:100%">
-                                                                                        <thead>
-                                                                                        <tr>
-                                                                                            <th>modelo_id</th>
-                                                                                            <th scope="col">Tarrina</th>
-                                                                                            <th scope="col">Cantidad
-                                                                                            </th>
-                                                                                            <th scope="col">Acción</th>
-                                                                                            <th>Cantidad Default</th>
-                                                                                        </tr>
-                                                                                        </thead>
-                                                                                        <tbody></tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div class="tab-pane fade" id="auxiliares"
-                                                                         role="tabpanel"
-                                                                         aria-labelledby="auxiliares-tab">
-
-                                                                        <div class="row">
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label for="grand_cubre_id">Cubres</label>
-                                                                                <select name="grand_cubre_id"
-                                                                                        id="grand_cubre_id"
-                                                                                        class="form-control chosen"
-                                                                                        data-placeholder="Seleccione...">
-                                                                                    <option value=""></option>
-                                                                                    @if (isset($cubres))
-                                                                                        @foreach ($cubres as $cubre)
-                                                                                            <option value="{{ $cubre->id }}">{{ $cubre->formato }}</option>
-                                                                                        @endforeach
-                                                                                    @endif
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-md-4 mb-3">
-                                                                                <label for="grand_cubre_cantidad">Cantidad
-                                                                                    Cubres</label>
-                                                                                <input type="number"
-                                                                                       class="form-control"
-                                                                                       id="grand_cubre_cantidad"
-                                                                                       placeholder="Cantidad Cubres"
-                                                                                       name="grand_cubre_cantidad">
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="row">
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label for="grand_auxiliar_modelo">Auxiliar</label>
-                                                                                <select id="grand_auxiliar_modelo"
-                                                                                        class="form-control chosen"
-                                                                                        data-placeholder="Seleccione...">
-                                                                                    <option value=""></option>
-                                                                                    @if (isset($auxiliares))
-                                                                                        @foreach ($auxiliares as $auxiliar)
-                                                                                            <option value="{{ $auxiliar->id }}">{{ $auxiliar->modelo }}</option>
-                                                                                        @endforeach
-                                                                                    @endif
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="col-md-4 mb-3">
-                                                                                <label for="grand_auxiliar_cantidad">Cantidad</label>
-                                                                                <input type="number"
-                                                                                       class="form-control"
-                                                                                       id="grand_auxiliar_cantidad"
-                                                                                       placeholder="Cantidad"
-                                                                                       step="0.01">
-                                                                            </div>
-                                                                            <div class="col-md-2 mb-3">
-                                                                                <br>
-                                                                                <button id="btnAddGrandAuxiliar"
-                                                                                        type="button" data-index=""
-                                                                                        class="btn btn-success btn-icon">
-                                                                                    <i class="i-Add"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="row">
-                                                                            <div class="col-md-12 mb-3">
-                                                                                <div class="table-responsive">
-                                                                                    <table id="grand_auxiliares_table"
-                                                                                           class="display table table-striped table-bordered"
-                                                                                           style="width:100%">
-                                                                                        <thead>
-                                                                                        <tr>
-                                                                                            <th>modelo_id</th>
-                                                                                            <th scope="col">Auxiliar
-                                                                                            </th>
-                                                                                            <th scope="col">Cantidad
-                                                                                            </th>
-                                                                                            <th scope="col">Acción</th>
-                                                                                            <th>Cantidad Default</th>
-                                                                                        </tr>
-                                                                                        </thead>
-                                                                                        <tbody></tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
 
                                         <div class="row">
@@ -660,9 +254,7 @@
                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-destino_comercial-title">Destinos Comerciales
-                                            del
-                                            Cliente</h5>
+                                        <h5 class="modal-title" id="modal-destino_comercial-title">Destinos Comerciales del Cliente</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -1180,7 +772,7 @@
         }
 
         function limpiarCamposPedido() {
-            $('#nro_orden, #cliente, #destino_comercial, #cultivo, #formato, #etiqueta, #transporte, #precio, #kilos, #comentario')
+            $('#nro_orden, #cliente, #destino_comercial, #cultivo, #formato, #etiqueta, #transporte, #precio, #kilos, #comentario, #variedad')
                 .val(null);
             $('#producto, #producto_compuesto, #modelo_palet, #formato_palet, #cantidad').val(null);
             $(".dias").prop("checked", false).prop('disabled', false);
@@ -1370,18 +962,22 @@
                 return;
             }
 
-            var myUrl = "{{ url('maestros/productos-compuestos/details') }}" + '/' + id;
+            var myUrl = "{{ route('pedidos-comercial.ajaxLoadPaletsForCaja') }}"
             $.ajax({
-                type: 'GET', //THIS NEEDS TO BE GET
+                type: 'POST', //THIS NEEDS TO BE GET
                 url: myUrl,
+                data: { id: id },
                 dataType: 'json',
                 success: function (data) {
+                    $("#div_palets").html(null);
+                    if(data.html != null){
+                        $("#div_palets").html(data.html);
+                    }
 
-                    var row = data.detalle;
+                    /*var row = data.detalle;
 
                     if (erow != null) {
                         if (erow.modelo_id == 1) {
-                            row.euro_tarrinas = erow.tarrinas;
                             row.euro_auxiliares = erow.auxiliares;
                         } else if (erow.modelo_id == 2) {
                             row.grand_tarrinas = erow.tarrinas;
@@ -1462,7 +1058,7 @@
                         ]).draw();
                     }
 
-                    calcularCantidades();
+                    calcularCantidades();*/
                 },
                 error: function () {
                     console.log("Error");

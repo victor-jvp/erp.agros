@@ -294,4 +294,18 @@ class PedidosComercialController extends Controller
 
         return response()->json($data);
     }
+
+    public function ajaxLoadPaletsForCaja(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (is_null($id)) return response()->json(null);
+
+        $data             = array();
+        $data['variedad'] = ProductoCompuesto_det::find($id);
+
+        $data['html'] = view('comercial.pedidos-comercial.palets')->render();
+
+        return response()->json($data);
+    }
 }
