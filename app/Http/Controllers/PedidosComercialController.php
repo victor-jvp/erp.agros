@@ -93,7 +93,7 @@ class PedidosComercialController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request);
+        //        dd($request);
         $data = array();
         foreach ($request->dias as $dia) {
             $pedido = new PedidoComercial();
@@ -315,7 +315,6 @@ class PedidosComercialController extends Controller
             } else {
                 $cantidad_palets = 1;
             }
-
         } else { // si es un pallet grande
             if ($variedad->grand_cantidad > 0) {
                 $cantidad_palets = $cantidad_cajas / $variedad->grand_cantidad;
