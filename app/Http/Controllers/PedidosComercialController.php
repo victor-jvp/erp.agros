@@ -14,8 +14,10 @@ use App\PedidoComercial;
 use App\PedidoComercialAuxiliar;
 use App\PedidoComercialEstado;
 use App\PedidoComercialTarrina;
+use App\ProductoCompuesto_auxiliares;
 use App\ProductoCompuesto_cab;
 use App\ProductoCompuesto_det;
+use App\ProductoCompuesto_tarrinas;
 use App\Tarrina;
 use App\Transporte;
 use Illuminate\Http\Request;
@@ -297,15 +299,58 @@ class PedidosComercialController extends Controller
 
     public function ajaxLoadPaletsForCaja(Request $request)
     {
-        $id = $request->input('id');
+        $id             = $request->input('id');
+        $cantidad_cajas = $request->input('cantidad');
+        $tipo_palet     = $request->input('tipo_palet');
 
         if (is_null($id)) return response()->json(null);
 
-        $data             = array();
-        $data['variedad'] = ProductoCompuesto_det::find($id);
+        $data     = array();
+        $variedad = ProductoCompuesto_det::with('tarrinas')->with('auxiliares')->find($id);
 
-        $data['html'] = view('comercial.pedidos-comercial.palets')->render();
+        if ($tipo_palet == 1) // si es un euro pallet
+        {
+            if ($variedad->euro_cantidad > 0) {
+                $cantidad_palets = $cantidad_cajas / $variedad->euro_cantidad;
+            } else {
+                $cantidad_palets = 1;
+            }
 
-        return response()->json($data);
+        } else { // si es un pallet grande
+            if ($variedad->grand_cantidad > 0) {
+                $cantidad_palets = $cantidad_cajas / $variedad->grand_cantidad;
+            } else {
+                $cantidad_palets = 1;
+            }
+        }
+
+        $tarrinas   = ProductoCompuesto_tarrinas::with('tarrina')->where('det_id', $variedad->id)->get();
+        $auxiliares = ProductoCompuesto_auxiliares::with('auxiliar')->where('det_id', $variedad->id)->get();
+        $compuestos = array();
+
+        foreach ($auxiliares as $auxiliar) {
+            $sub['tipo']        = "Auxiliar";
+            $sub['id']          = $auxiliar->auxiliar_id;
+            $sub['cantidad']    = $auxiliar->cantidad;
+            $sub['descripcion'] = $auxiliar->auxiliar->modelo;
+            $compuestos[]       = $sub;
+        }
+
+        foreach ($tarrinas as $tarrina) {
+            $sub['tipo']        = "Tarrina";
+            $sub['id']          = $tarrina->tarrina_id;
+            $sub['cantidad']    = $tarrina->cantidad;
+            $sub['descripcion'] = $tarrina->tarrina->modelo;
+            $compuestos[]       = $sub;
+        }
+
+        $data = array(
+            'palets'     => $cantidad_palets,
+            'compuestos' => $compuestos,
+        );
+
+        $view['html'] = view('comercial.pedidos-comercial.palets')->with($data)->render();
+
+        return response()->json($view);
     }
 }
