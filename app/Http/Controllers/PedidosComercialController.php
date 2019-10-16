@@ -49,7 +49,14 @@ class PedidosComercialController extends Controller
         $tarrinas    = Tarrina::all();
         $auxiliares  = Auxiliar::all();
         $cubres      = Cubre::all();
-        $variedades  = ProductoCompuesto_det::all();
+        $variedades  = ProductoCompuesto_det::with('compuesto.cultivo')->get();
+
+        $compuestos = array();
+        foreach ($variedades as $v => $variedad) {
+            $compuestos[$v]['id']          = $variedad->id;
+            $cultivo =  (!is_null($variedad->compuesto->cultivo )) ? $variedad->compuesto->cultivo->cultivo." - " : "";
+            $compuestos[$v]['descripcion'] = $cultivo.$variedad->variable;
+        }
 
         foreach ($cultivos as $c => $cultivo) {
             $pedidos               = PedidoComercial::where('cultivo_id', $cultivo->id)->where('anio', $data['anio_act'])->where('semana', $data['semana_act'])->get();
@@ -72,6 +79,7 @@ class PedidosComercialController extends Controller
         $data['cubres']      = $cubres;
         $data['variedades']  = $variedades;
         $data['nro_orden']   = date('dmY') . "-" . $nro_orden;
+        $data['compuestos']  = $compuestos;
 
         return view("comercial.pedidos-comercial.index")->with($data);
     }

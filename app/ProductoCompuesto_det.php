@@ -27,4 +27,9 @@ class ProductoCompuesto_det extends Model
     {
         return $this->hasMany(ProductoCompuesto_palets_auxiliares::class, 'det_id');
     }
+
+    public function compuesto()
+    {
+        return $this->belongsTo(ProductoCompuesto_cab::class, 'compuesto_id');
+    }
 }
