@@ -571,9 +571,9 @@
                             auxiliar.auxiliar_id,
                             auxiliar.auxiliar.modelo,
                             auxiliar.cantidad,
-                            '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar
+                            '<input type="hidden" name="euro_auxiliares_id[]" value="' + auxiliar
                                 .auxiliar_id + '">' +
-                            '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar
+                            '<input type="hidden" name="euro_auxiliares_cantidad[]" value="' + auxiliar
                                 .cantidad + '"> ' +
                             opciones
                         ]).draw();
@@ -586,9 +586,9 @@
                             auxiliar.auxiliar_id,
                             auxiliar.auxiliar.modelo,
                             auxiliar.cantidad,
-                            '<input type="hidden" name="auxiliares_id[]" value="' + auxiliar
+                            '<input type="hidden" name="grand_auxiliares_id[]" value="' + auxiliar
                                 .auxiliar_id + '">' +
-                            '<input type="hidden" name="auxiliares_cantidad[]" value="' + auxiliar
+                            '<input type="hidden" name="grand_auxiliares_cantidad[]" value="' + auxiliar
                                 .cantidad + '"> ' +
                             opciones
                         ]).draw();
