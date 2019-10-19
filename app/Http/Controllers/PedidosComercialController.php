@@ -43,7 +43,7 @@ class PedidosComercialController extends Controller
         $clientes    = Cliente::all();
         $transportes = Transporte::all();
         $estados     = PedidoComercialEstado::all();
-        $productos   = ProductoCompuesto_cab::with('det')->get();
+        $productos   = ProductoCompuesto_det::with('compuesto')->get();
         $modelos     = PalletModel::all();
         $nro_orden   = Contador::Next_nro_pedido_comercial();
         $tarrinas    = Tarrina::all();

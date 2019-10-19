@@ -190,11 +190,7 @@ class ProductosCompuestosController extends Controller
 
     public function ajaxGetCompuesto(Request $request)
     {
-        $id = $request->input('id');
-
-        if (is_null($id)) return response()->json(null);
-
-        $data = ProductoCompuesto_cab::where('cultivo_id', $id)->get();
+        $data = ProductoCompuesto_det::with('compuesto')->get();
 
         return response()->json($data);
     }

@@ -15,6 +15,6 @@ class ProductoCompuesto_cab extends Model
 
     public function det()
     {
-        return $this->belongsTo(ProductoCompuesto_cab::class, 'compuesto_id');
+        return $this->hasMany(ProductoCompuesto_det::class, 'compuesto_id');
     }
 }

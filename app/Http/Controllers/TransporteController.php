@@ -187,4 +187,12 @@ class TransporteController extends Controller
 
         return response()->json($response);
     }
+
+    public function ajaxGetTransporte(Request $request)
+    {
+        $data = array();
+        $data = Transporte::all();
+
+        return response()->json($data);
+    }
 }

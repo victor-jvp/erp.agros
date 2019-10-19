@@ -68,6 +68,7 @@ Route::get('comercial/transportes/delete-contacto/{contacto}', 'TransporteContro
 Route::post('comercial/transportes/{transporte}/destinos', 'TransporteController@destinos')->name('transportes.destinos');
 Route::get('comercial/transportes/delete-destino/{destino}', 'TransporteController@delete_destino');
 Route::post('comercial/transportes/ajaxSendEmail', 'TransporteController@ajaxSendEmail')->name('transportes.ajaxSendEmail');
+Route::post('comercial/transportes/ajaxGetTransporte', 'TransporteController@ajaxGetTransporte')->name('transportes.ajaxGetTransporte');
 
 #endregion
 
@@ -133,7 +134,7 @@ Route::get('maestros/cubres/delete/{cubre}', 'CubresController@delete')->name('c
 Route::get('maestros/auxiliares/delete/{auxiliar}', 'AuxiliaresController@delete')->name('auxiliares.delete');
 Route::get('maestros/tarrinas/delete/{tarrina}', 'TarrinasController@delete')->name('auxiliares.delete');
 
-Route::post('maestros/pallets/ajaxGetPalletByModelo', 'PalletsController@ajaxGetPalletByModelo')->name('pallets.ajaxGetPalletByModelo');
+Route::post('maestros/pallets/ajaxGetPallets', 'PalletsController@ajaxGetPallets')->name('pallets.ajaxGetPallets');
 #endregion
 
 #region Familias y Marcas
