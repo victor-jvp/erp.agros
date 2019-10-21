@@ -456,7 +456,34 @@
                 .toLowerCase()
                 .split(',')
                 .indexOf(value.toString().toLowerCase()) > -1
-        })
+        });
+
+        $.extend(true, $.fn.dataTable.defaults, {
+            language: {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
 
         $.ajaxSetup({
             headers: {
@@ -487,9 +514,6 @@
         $(document).ready(function () {
             // Configuracion de Datatable
             table_pedidos = $('.table_pedidos').DataTable({
-                language: {
-                    url: "{{ asset('assets/Spanish.json')}}"
-                },
                 responsive: true,
                 info: false,
                 paging: false,
@@ -497,9 +521,6 @@
             });
 
             table_destinos = $('#table_destinos_comerciales').DataTable({
-                language: {
-                    url: "{{ asset('assets/Spanish.json')}}"
-                },
                 // columnDefs: [
                 //     {targets: [0], visible: false}
                 // ],
@@ -524,15 +545,15 @@
                     $("#table_nuevo_pedido").find('#td_' + data_dia).attr('rowspan', (_rowspan));
                 }
 
-                var html = '<tr id="tr_'+data_dia+'">' +
+                var html = '<tr id="tr_' + data_dia + '">' +
                     td_rowspan +
                     '<td><select name="compuesto[]" class="form-control compuesto" onmouseover="loadCompuesto(this)"></td> ' +
                     '<td><input type="text" name="cajas[]" class="form-control cajas"></td> ' +
                     '<td><input type="text" name="kilos[]" class="form-control" readonly value="0"></td> ' +
                     '<td><input type="number" name="precio[]" class="form-control" value="0" step="0.01"></td> ' +
-                    '<td><select name="palet_model[]" class="form-control" onmouseover="loadPalet(this)"></select></td> ' +
-                    '<td><input type="text" name="palet_cantidad[]" class="form-control"></td> ' +
-                    '<td><select name="destino[]" class="form-control" onmouseover="loadDestinosForCliente(this)"></select</td> ' +
+                    '<td><select name="palet_model[]" class="form-control palet_model" onmouseover="loadPalet(this)"></select></td> ' +
+                    '<td><input type="number" name="palet_cantidad[]" class="form-control" step="1"></td> ' +
+                    '<td><select name="destino[]" class="form-control destino" onmouseover="loadDestinosForCliente(this)"></select</td> ' +
                     '<td><select name="transporte[]" class="form-control" onmouseover="loadTransporte(this)"></select></td> ' +
                     '<td><input type="text" name="etiqueta[]" class="form-control"></td> ' +
                     '<td><textarea rows="1" name="comentario[]" class="form-control"></textarea></td> ' +
@@ -557,6 +578,15 @@
                     var cajas = $(this).val();
                     $(this).parent().next().find('input').val(kg * cajas);
                 });
+
+                $(".palet_model").change(function (e) {
+                    var palet_model = $(this).find('option:selected').attr('data-modelo');
+                    var cant_palet = $(this).parent().prev().prev().prev().prev().find('select').find('option:selected').attr(palet_model);
+                    var cajas = $(this).parent().prev().prev().prev().find('input').val();
+                    $(this).parent().next().find('input').val(cajas / cant_palet);
+                });
+
+
             });
 
             $("#table_nuevo_pedido").on('click', '.delete', function () {
@@ -758,7 +788,9 @@
                         var value = data[i].id;
                         var text = data[i].compuesto.compuesto + " - " + data[i].variable;
                         var kg = data[i].kg;
-                        var option = "<option data-kg='" + kg + "' value='" + value + "'>" + text + "</option>";
+                        var euro_palet = data[i].euro_cantidad;
+                        var grand_palet = data[i].grand_cantidad;
+                        var option = "<option data-kg='" + kg + "' data-euro='" + euro_palet + "' data-grand='" + grand_palet + "' value='" + value + "'>" + text + "</option>";
                         $(elem).append(option);
                     }
                 },
@@ -822,7 +854,12 @@
                     for (i = 0; i < data.length; i++) {
                         var value = data[i].id;
                         var text = data[i].modelo.modelo + " - " + data[i].formato;
-                        var option = "<option value='" + value + "'>" + text + "</option>";
+                        var modelo = "data-grand";
+                        if(data[i].modelo_id == 1)
+                            modelo = "data-euro";
+                        else
+                            modelo = "data-grand";
+                        var option = "<option data-modelo='" + modelo + "' value='" + value + "'>" + text + "</option>";
                         $(elem).append(option);
                     }
                 },
