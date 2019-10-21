@@ -77,7 +77,7 @@
                                                         <th width="7%">Kilos</th>
                                                         <th width="7%">€/Kg</th>
                                                         <th width="10%">Palet</th>
-                                                        <th width="5%">Cantidad Palet</th>
+                                                        <th width="10%">Cantidad Palet</th>
                                                         <th width="10%">Destino</th>
                                                         <th width="10%">Transporte</th>
                                                         <th width="9%">Etiqueta</th>
@@ -293,6 +293,32 @@
                             </div>
                         </div>
                         {{--FIN Modal Destino Comercial--}}
+
+                        {{--Modal Distribucion de cajas en palet--}}
+                        <div class="modal fade" id="modal-cantidad_palet" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modal-title">Cantidad de Palets</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row body-fill">
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                                id="btnCloseModalCantidadPalet">Cerrar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{--FIN Modal Distribucion de cajas en palet--}}
                     </form>
 
                     <form action="/comercial/pedidos-comercial" method="GET" id="form_fecha_act">
@@ -552,8 +578,8 @@
                     '<td><input type="text" name="kilos[]" class="form-control" readonly value="0"></td> ' +
                     '<td><input type="number" name="precio[]" class="form-control" value="0" step="0.01"></td> ' +
                     '<td><select name="palet_model[]" class="form-control palet_model" onmouseover="loadPalet(this)"></select></td> ' +
-                    '<td><input type="number" name="palet_cantidad[]" class="form-control" step="1"></td> ' +
-                    '<td><select name="destino[]" class="form-control destino" onmouseover="loadDestinosForCliente(this)"></select</td> ' +
+                    '<td><div class="input-group"><div class="input-group-prepend"><a href="javascript:void(0);" class="input-group-text btnOpenModalPaletCantidad"><i class="i-Information"></i></a></div><input type="number" name="palet_cantidad[]" class="form-control" step="1"></div></td> ' +
+                    '<td><div class="input-group"><div class="input-group-prepend"><a href="javascript:void(0);" class="input-group-text btnOpenModalDestinos"><i class="i-Information"></i></a></div><select name="destino[]" class="form-control destino" onmouseover="loadDestinosForCliente(this)" aria-describedby="basic-addon1"></select></div></td> ' +
                     '<td><select name="transporte[]" class="form-control" onmouseover="loadTransporte(this)"></select></td> ' +
                     '<td><input type="text" name="etiqueta[]" class="form-control"></td> ' +
                     '<td><textarea rows="1" name="comentario[]" class="form-control"></textarea></td> ' +
@@ -586,7 +612,18 @@
                     $(this).parent().next().find('input').val(cajas / cant_palet);
                 });
 
+                $(".btnOpenModalDestinos").click(function (e) {
+                    var id = $("#cliente").val();
+                    loadDestinosComerciales(id);
+                    $("#modal-destino_comercial").modal('show');
+                });
 
+                $(".btnOpenModalPaletCantidad").click(function (e) {
+                    var unit = $(this).parent().next().val();
+                    var cajas = $(this).closest('td').prev().prev().prev().prev().find('input').val();
+                    fillModalPaletCantidad(unit, cajas);
+                    //$("#modal-destino_comercial").modal('show');
+                });
             });
 
             $("#table_nuevo_pedido").on('click', '.delete', function () {
@@ -656,6 +693,11 @@
                 $('#modal-pedido').css('overflow-y', 'auto');
             });
 
+            $("#btnCloseModalCantidadPalet").click(function (e) {
+                $("#modal-cantidad_palet").modal('toggle');
+                $('#modal-pedido').css('overflow-y', 'auto');
+            });
+
             //Carga de nro de palets en base a cantidad, tipo de palet y variedad de producto compuesto.
             $("#variedad, #modelo_palet, #cantidad").change(function () {
                 loadVariedadDetails();
@@ -664,7 +706,33 @@
             $("#euro_kg, #grand_kg, #precio").change(function () {
                 calcularKilos();
             });
+
+            $("#cliente").change(function () {
+                var id = $(this).val();
+                if (id != null)
+                    loadDestinosComerciales(id);
+            });
         });
+
+        function fillModalPaletCantidad(unit, cajas) {
+            $("#modal-cantidad_palet .body-fill").html(null);
+            var html = "";
+            var step = cajas / unit;
+            for (var i = 1; i <= unit; i++) {
+
+                html = '<div class="col-md-4">\n' +
+                    '                                            <div class="card card-icon mb-4">\n' +
+                    '                                                <div class="card-body text-center">\n' +
+                    '                                                    <p class="text-muted mt-2 mb-2">Palet ' + i + '</p>\n' +
+                    '                                                    <p class="lead text-22 m-0">' + step + ' Cajas</p>\n' +
+                    '                                                </div>\n' +
+                    '                                            </div>\n' +
+                    '                                        </div>';
+                $("#modal-cantidad_palet .body-fill").append(html);
+            }
+
+            $("#modal-cantidad_palet").modal('show');
+        }
 
         function calcularCantidades() {
             calcularKilos();
@@ -703,13 +771,13 @@
             $(".chosen").trigger("chosen:updated");
         }
 
-        function LoadDestinosComerciales(valor, selected) {
+        function loadDestinosComerciales(valor) {
             $.ajax({
                 type: 'POST',
                 url: "{{ route('pedidos-comercial.ajaxGetDestinosComerciales') }}",
                 dataType: 'JSON',
                 data: {
-                    "id": valor
+                    id: valor
                 },
                 success: function (data) {
                     ClearDestinosComerciales();
@@ -855,7 +923,7 @@
                         var value = data[i].id;
                         var text = data[i].modelo.modelo + " - " + data[i].formato;
                         var modelo = "data-grand";
-                        if(data[i].modelo_id == 1)
+                        if (data[i].modelo_id == 1)
                             modelo = "data-euro";
                         else
                             modelo = "data-grand";
