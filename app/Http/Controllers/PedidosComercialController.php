@@ -60,7 +60,7 @@ class PedidosComercialController extends Controller
         }
 
         foreach ($cultivos as $c => $cultivo) {
-            $pedidos               = PedidoComercial::with(['cliente','destino','palet','transporte'])
+            $pedidos               = PedidoComercial::with(['cliente','destino','palet.modelo','transporte'])
                                                     ->WithCultivos($data['semana_act'], $data['anio_act'], $cultivo->id)
                                                     ->get();
             $cultivos[$c]->pedidos = $pedidos;

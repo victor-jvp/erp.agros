@@ -409,7 +409,7 @@
                                                                 <td>{{ $pedido->cajas }}</td>
                                                                 <td>{{ $pedido->kilos }}</td>
                                                                 <td>{{ $pedido->precio }}</td>
-                                                                <td>{{ (is_null($pedido->pallet_id)) ? "" : $pedido->palet->formato }}</td>
+                                                                <td>{{ (is_null($pedido->pallet_id)) ? "" : $pedido->palet->modelo->modelo." - ".$pedido->palet->formato }}</td>
                                                                 <td>{{ $pedido->pallet_cantidad }}</td>
                                                                 <td>{{ (is_null($pedido->destino_id)) ? "" : $pedido->destino->descripcion }}</td>
                                                                 <td>{{ (is_null($pedido->transporte_id)) ? "" : $pedido->transporte->razon_social }}</td>
