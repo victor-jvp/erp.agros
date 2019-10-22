@@ -120,6 +120,9 @@
                         </div>
                         {{-- Fin modal Pedido --}}
 
+                    </form>
+
+                    <form action="/comercial/pedidos-comercial" method="POST" id="pedido_form">
                     <!-- Modal Editar Pedido-->
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                              aria-hidden="true" id="modal_edit_pedido">
@@ -253,6 +256,8 @@
                             </div>
                         </div>
                         {{-- Fin modal Pedido --}}
+
+                    </form>
 
                         {{--Modal Destino Comercial--}}
                         <div class="modal fade" id="modal-destino_comercial" tabindex="-1" role="dialog"
@@ -396,21 +401,20 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        @forelse ($cultivo->pedidos as $pedido)
-
-                                                        @empty
+                                                        @foreach ($cultivo->pedidos as $pedido)
+                                                            @if($pedido->dia_id == $dia->id)
                                                             <tr>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <td>{{ $pedido->nro_orden }}</td>
+                                                                <td>{{ $pedido->compuesto }}</td>
+                                                                <td>{{ $pedido->cajas }}</td>
+                                                                <td>{{ $pedido->kilos }}</td>
+                                                                <td>{{ $pedido->precio }}</td>
+                                                                <td>{{ (is_null($pedido->pallet_id)) ? "" : $pedido->palet->formato }}</td>
+                                                                <td>{{ $pedido->pallet_cantidad }}</td>
+                                                                <td>{{ (is_null($pedido->destino_id)) ? "" : $pedido->destino->descripcion }}</td>
+                                                                <td>{{ (is_null($pedido->transporte_id)) ? "" : $pedido->transporte->razon_social }}</td>
+                                                                <td>{{ $pedido->etiqueta }}</td>
+                                                                <td>{{ $pedido->comentarios }}</td>
                                                                 <td>
                                                                     <a href="javascript:void(0);"
                                                                        class="text-info mr-2 add"
@@ -435,7 +439,8 @@
                                                                     </a>
                                                                 </td>
                                                             </tr>
-                                                        @endforelse
+                                                            @endif
+                                                        @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -590,6 +595,7 @@
                     '<a href="javascript:void(0);" class="text-danger mr-2 delete" data-toggle="tooltip" data-placement="top" title="" data-original-title="Borrar" data-dia="' + data_dia + '"> ' +
                     '<i class="nav-icon i-Close-Window font-weight-bold"></i> ' +
                     '</a> ' +
+                    '<input type="hidden" name="dia[]" value="' + data_dia + '">' +
                     '</td></tr>';
                 $(tr).after(html);
 
@@ -604,7 +610,7 @@
                     if (palet_model != null) {
                         por_palet = $(this).closest('tr').find('select.compuesto').find('option:selected').attr(palet_model);
                     }
-                    if (total_cajas != null && por_palet != null) {
+                    if (total_cajas != null && por_palet != null && total_cajas != "" && por_palet != "") {
                         var cant = fillModalPaletCantidad(total_cajas, por_palet);
                         $(this).closest('tr').find('input.palet_cantidad').val(cant);
                     } else {
@@ -619,10 +625,11 @@
                     if (palet_model != null) {
                         por_palet = $(this).closest('tr').find('select.compuesto').find('option:selected').attr(palet_model);
                     }
-                    if (total_cajas != null && por_palet != null) {
+                    if (total_cajas != null && por_palet != null && total_cajas != "" && por_palet != "") {
                         var cant = fillModalPaletCantidad(total_cajas, por_palet);
                         $(this).closest('tr').find('input.palet_cantidad').val(cant);
                     } else {
+                        ClearModalPaletCantidad();
                         $(this).closest('tr').find('input.palet_cantidad').val(null);
                     }
                 });
@@ -734,7 +741,7 @@
             var palet = parseInt(por_palet);
             var total = parseInt(total_cajas);
 
-            if( palet <= 0 || total <= 0){
+            if (palet <= 0 || total <= 0) {
                 return null;
             }
 
@@ -756,6 +763,10 @@
                 total = total - palet;
             }
             return i;
+        }
+
+        function ClearModalPaletCantidad() {
+            $("#modal-cantidad_palet .body-fill").html(null);
         }
 
         function calcularCantidades() {

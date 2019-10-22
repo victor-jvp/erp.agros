@@ -21,17 +21,11 @@ class CreatePedidosComercialesTable extends Migration
             $table->unsignedInteger('dia_id')->nullable();
             $table->unsignedInteger('cliente_id')->nullable();
             $table->unsignedInteger('destino_id')->nullable();
-            $table->unsignedInteger('cultivo_id')->nullable();
             $table->unsignedInteger('producto_id')->nullable();
-            $table->unsignedInteger('modelo_id')->nullable();
             $table->unsignedInteger('pallet_id')->nullable();
+            $table->integer('pallet_cantidad')->default(0)->nullable();
             $table->unsignedInteger('transporte_id')->nullable();
-            $table->double('formato_cantidad')->default(0);
-            $table->double('formato_kilos')->default(0);
-            $table->double('formato_cantoneras')->nullable();
-            $table->double('cubre_id')->nullable();
-            $table->double('cubre_cantidad')->nullable();
-            $table->double('cantidad')->default(0);
+            $table->double('cajas')->default(0);
             $table->string('etiqueta')->nullable();
             $table->double('precio')->default(0);
             $table->double('kilos')->default(0);
@@ -46,7 +40,6 @@ class CreatePedidosComercialesTable extends Migration
             $table->foreign('producto_id')->references('id')->on('productoscompuestos_det');
             $table->foreign('estado_id')->references('id')->on('pedidos_comerciales_estados');
             $table->foreign('cancelado_id')->references('id')->on('pedidos_comerciales_cat_cancelados');
-            $table->foreign('modelo_id')->references('id')->on('pallets_models');
             $table->foreign('pallet_id')->references('id')->on('pallets');
             $table->foreign('transporte_id')->references('id')->on('transportes');
             $table->softDeletes();

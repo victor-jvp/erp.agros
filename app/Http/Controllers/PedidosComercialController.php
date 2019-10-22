@@ -22,6 +22,7 @@ use App\Tarrina;
 use App\Transporte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Builder;
 
 class PedidosComercialController extends Controller
 {
@@ -54,14 +55,18 @@ class PedidosComercialController extends Controller
         $compuestos = array();
         foreach ($variedades as $v => $variedad) {
             $compuestos[$v]['id']          = $variedad->id;
-            $cultivo =  (!is_null($variedad->compuesto->cultivo )) ? $variedad->compuesto->cultivo->cultivo." - " : "";
-            $compuestos[$v]['descripcion'] = $cultivo.$variedad->variable;
+            $cultivo                       = (!is_null($variedad->compuesto->cultivo)) ? $variedad->compuesto->cultivo->cultivo . " - " : "";
+            $compuestos[$v]['descripcion'] = $cultivo . $variedad->variable;
         }
 
         foreach ($cultivos as $c => $cultivo) {
-            $pedidos               = PedidoComercial::where('cultivo_id', $cultivo->id)->where('anio', $data['anio_act'])->where('semana', $data['semana_act'])->get();
+            $pedidos               = PedidoComercial::with(['cliente','destino','palet','transporte'])
+                                                    ->WithCultivos($data['semana_act'], $data['anio_act'], $cultivo->id)
+                                                    ->get();
             $cultivos[$c]->pedidos = $pedidos;
         }
+
+//        dd($cultivos);
 
         $data['semana']      = CatDiasSemana::orderBy('order', 'ASC')->get();
         $data['semana_ini']  = 1;
@@ -101,91 +106,31 @@ class PedidosComercialController extends Controller
 
     public function store(Request $request)
     {
-        //        dd($request);
+        //dd($request);
         $data = array();
-        foreach ($request->dias as $dia) {
+        foreach ($request->dia as $i => $dia) {
             $pedido = new PedidoComercial();
 
-            $pedido->nro_orden   = date('dmY') . "-" . Contador::Save_nro_pedido_comercial();
-            $pedido->anio        = $request->anio;
-            $pedido->semana      = $request->semana;
-            $pedido->dia_id      = $dia;
-            $pedido->cliente_id  = $request->cliente;
-            $pedido->destino_id  = $request->destino_comercial;
-            $pedido->cultivo_id  = $request->cultivo;
-            $pedido->producto_id = $request->producto_compuesto;
-            $pedido->pallet_id   = $request->formato_palet;
-            $pedido->cantidad    = $request->cantidad;
-            $pedido->etiqueta    = $request->etiqueta;
-            $pedido->precio      = $request->precio;
-            $pedido->kilos       = $request->kilos;
-            $pedido->comentarios = $request->comentario;
-            $pedido->estado_id   = $request->estado;
-            $pedido->modelo_id   = $request->modelo_palet;
+            $pedido->nro_orden       = date('dmY') . "-" . Contador::Save_nro_pedido_comercial();
+            $pedido->anio            = $request->anio;
+            $pedido->semana          = $request->semana;
+            $pedido->dia_id          = $dia;
+            $pedido->cliente_id      = $request->cliente;
+            $pedido->destino_id      = $request->destino[$i];
+            $pedido->producto_id     = $request->compuesto[$i];
+            $pedido->pallet_id       = $request->palet_model[$i];
+            $pedido->pallet_cantidad = $request->palet_cantidad[$i];
+            $pedido->cajas           = $request->cajas[$i];
+            $pedido->etiqueta        = $request->etiqueta[$i];
+            $pedido->precio          = $request->precio[$i];
+            $pedido->kilos           = $request->kilos[$i];
+            $pedido->transporte_id   = $request->transporte[$i];
+            $pedido->comentarios     = $request->comentario[$i];
+            $pedido->estado_id       = 1;
 
             $pedido->save();
             $data['anio_act']   = $request->anio;
             $data['semana_act'] = $request->semana;
-
-            if ($request->modelo_palet == "1") { // Es un Europalet
-                $pedido->formato_cantidad = $request->euro_cantidad;
-                $pedido->formato_kilos    = $request->euro_kg;
-                $pedido->cubre_id         = null;
-                $pedido->cubre_cantidad   = null;
-
-                $pedido->save();
-
-                if (count($request->euro_tarrinas_id) > 0) {
-                    foreach ($request->euro_tarrinas_id as $e => $euro_tarrina) {
-                        $tarrina                   = new PedidoComercialTarrina();
-                        $tarrina->tarrina_id       = $euro_tarrina;
-                        $tarrina->cantidad         = $request->euro_tarrinas_cantidad[$e];
-                        $tarrina->cantidad_inicial = $request->euro_tarrinas_inicial[$e];
-
-                        $pedido->tarrinas()->save($tarrina);
-                    }
-                }
-
-                if (count($request->euro_auxiliares_id) > 0) {
-                    foreach ($request->euro_auxiliares_id as $e => $euro_auxiliar) {
-                        $auxiliar                   = new PedidoComercialAuxiliar();
-                        $auxiliar->auxiliar_id      = $euro_auxiliar;
-                        $auxiliar->cantidad         = $request->euro_auxiliares_cantidad[$e];
-                        $auxiliar->cantidad_inicial = $request->euro_auxiliares_inicial[$e];
-
-                        $pedido->auxiliares()->save($auxiliar);
-                    }
-                }
-            } else { // Es un palet Grande
-                $pedido->formato_cantidad = $request->grand_cantidad;
-                $pedido->formato_kilos    = $request->grand_kg;
-                $pedido->cubre_id         = $request->grand_cubre_id;
-                $pedido->cubre_cantidad   = $request->grand_cubre_cantidad;
-
-                $pedido->save();
-
-                if (count($request->grand_tarrinas_id) > 0) {
-                    foreach ($request->grand_tarrinas_id as $e => $grand_tarrina) {
-                        $tarrina                   = new PedidoComercialTarrina();
-                        $tarrina->tarrina_id       = $grand_tarrina;
-                        $tarrina->cantidad         = $request->grand_tarrinas_cantidad[$e];
-                        $tarrina->cantidad_inicial = $request->grand_tarrinas_inicial[$e];
-
-                        $pedido->tarrinas()->save($tarrina);
-                    }
-                }
-
-                if (count($request->grand_auxiliares_id) > 0) {
-                    foreach ($request->grand_auxiliares_id as $e => $grand_auxiliar) {
-                        $auxiliar                   = new PedidoComercialAuxiliar();
-                        $auxiliar->auxiliar_id      = $grand_auxiliar;
-                        $auxiliar->cantidad         = $request->grand_auxiliares_cantidad[$e];
-                        $auxiliar->cantidad_inicial = $request->grand_auxiliares_inicial[$e];
-
-                        $pedido->auxiliares()->save($auxiliar);
-                    }
-                }
-            }
         }
 
         return redirect()->route('pedidos-comercial.index')->with($data);
