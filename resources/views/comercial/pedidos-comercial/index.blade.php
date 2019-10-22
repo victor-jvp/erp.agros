@@ -574,11 +574,11 @@
                 var html = '<tr id="tr_' + data_dia + '">' +
                     td_rowspan +
                     '<td><select name="compuesto[]" class="form-control compuesto" onmouseover="loadCompuesto(this)"></td> ' +
-                    '<td><input type="text" name="cajas[]" class="form-control cajas"></td> ' +
-                    '<td><input type="text" name="kilos[]" class="form-control" readonly value="0"></td> ' +
+                    '<td><input type="number" name="cajas[]" class="form-control cajas" step="1"></td> ' +
+                    '<td><input type="text" name="kilos[]" class="form-control kilos" readonly value="0"></td> ' +
                     '<td><input type="number" name="precio[]" class="form-control" value="0" step="0.01"></td> ' +
                     '<td><select name="palet_model[]" class="form-control palet_model" onmouseover="loadPalet(this)"></select></td> ' +
-                    '<td><div class="input-group"><div class="input-group-prepend"><a href="javascript:void(0);" class="input-group-text btnOpenModalPaletCantidad"><i class="i-Information"></i></a></div><input type="number" name="palet_cantidad[]" class="form-control" step="1"></div></td> ' +
+                    '<td><div class="input-group"><div class="input-group-prepend"><a href="javascript:void(0);" class="input-group-text btnOpenModalPaletCantidad"><i class="i-Information"></i></a></div><input type="number" name="palet_cantidad[]" readonly class="form-control palet_cantidad" step="1"></div></td> ' +
                     '<td><div class="input-group"><div class="input-group-prepend"><a href="javascript:void(0);" class="input-group-text btnOpenModalDestinos"><i class="i-Information"></i></a></div><select name="destino[]" class="form-control destino" onmouseover="loadDestinosForCliente(this)" aria-describedby="basic-addon1"></select></div></td> ' +
                     '<td><select name="transporte[]" class="form-control" onmouseover="loadTransporte(this)"></select></td> ' +
                     '<td><input type="text" name="etiqueta[]" class="form-control"></td> ' +
@@ -593,23 +593,38 @@
                     '</td></tr>';
                 $(tr).after(html);
 
-                $(".compuesto").change(function (e) {
-                    var kg = $(this).find('option:selected').attr('data-kg');
-                    var cajas = $(this).parent().next().find('input').val();
-                    $(this).parent().next().next().find('input').val(kg * cajas);
-                });
+                $(".compuesto, .cajas").change(function (e) {
+                    var kg = $(this).closest('tr').find('select.compuesto').find('option:selected').attr('data-kg');
+                    var cajas = $(this).closest('tr').find('input.cajas').val();
+                    $(this).closest('tr').find('input.kilos').val(kg * cajas);
 
-                $(".cajas").change(function (e) {
-                    var kg = $(this).parent().prev().find('select').find('option:selected').attr('data-kg');
-                    var cajas = $(this).val();
-                    $(this).parent().next().find('input').val(kg * cajas);
+                    var total_cajas = $(this).closest('tr').find('input.cajas').val();
+                    var palet_model = $(this).closest('tr').find('select.palet_model').find('option:selected').attr('data-modelo');
+                    var por_palet = null;
+                    if (palet_model != null) {
+                        por_palet = $(this).closest('tr').find('select.compuesto').find('option:selected').attr(palet_model);
+                    }
+                    if (total_cajas != null && por_palet != null) {
+                        var cant = fillModalPaletCantidad(total_cajas, por_palet);
+                        $(this).closest('tr').find('input.palet_cantidad').val(cant);
+                    } else {
+                        $(this).closest('tr').find('input.palet_cantidad').val(null);
+                    }
                 });
 
                 $(".palet_model").change(function (e) {
-                    var palet_model = $(this).find('option:selected').attr('data-modelo');
-                    var cant_palet = $(this).parent().prev().prev().prev().prev().find('select').find('option:selected').attr(palet_model);
-                    var cajas = $(this).parent().prev().prev().prev().find('input').val();
-                    $(this).parent().next().find('input').val(cajas / cant_palet);
+                    var total_cajas = $(this).closest('tr').find('input.cajas').val();
+                    var palet_model = $(this).closest('tr').find('select.palet_model').find('option:selected').attr('data-modelo');
+                    var por_palet = null;
+                    if (palet_model != null) {
+                        por_palet = $(this).closest('tr').find('select.compuesto').find('option:selected').attr(palet_model);
+                    }
+                    if (total_cajas != null && por_palet != null) {
+                        var cant = fillModalPaletCantidad(total_cajas, por_palet);
+                        $(this).closest('tr').find('input.palet_cantidad').val(cant);
+                    } else {
+                        $(this).closest('tr').find('input.palet_cantidad').val(null);
+                    }
                 });
 
                 $(".btnOpenModalDestinos").click(function (e) {
@@ -619,10 +634,7 @@
                 });
 
                 $(".btnOpenModalPaletCantidad").click(function (e) {
-                    var unit = $(this).parent().next().val();
-                    var cajas = $(this).closest('td').prev().prev().prev().prev().find('input').val();
-                    fillModalPaletCantidad(unit, cajas);
-                    //$("#modal-destino_comercial").modal('show');
+                    $("#modal-cantidad_palet").modal('show');
                 });
             });
 
@@ -714,24 +726,36 @@
             });
         });
 
-        function fillModalPaletCantidad(unit, cajas) {
+        function fillModalPaletCantidad(total_cajas, por_palet) {
             $("#modal-cantidad_palet .body-fill").html(null);
             var html = "";
-            var step = cajas / unit;
-            for (var i = 1; i <= unit; i++) {
+            var n = true;
+            var i = 0;
+            var palet = parseInt(por_palet);
+            var total = parseInt(total_cajas);
 
-                html = '<div class="col-md-4">\n' +
-                    '                                            <div class="card card-icon mb-4">\n' +
-                    '                                                <div class="card-body text-center">\n' +
-                    '                                                    <p class="text-muted mt-2 mb-2">Palet ' + i + '</p>\n' +
-                    '                                                    <p class="lead text-22 m-0">' + step + ' Cajas</p>\n' +
-                    '                                                </div>\n' +
-                    '                                            </div>\n' +
-                    '                                        </div>';
-                $("#modal-cantidad_palet .body-fill").append(html);
+            if( palet <= 0 || total <= 0){
+                return null;
             }
 
-            $("#modal-cantidad_palet").modal('show');
+            while (n == true) {
+                i++;
+                if (palet >= total) {
+                    n = false;
+                    palet = total;
+                }
+                html = '<div class="col-md-4">\n' +
+                    '<div class="card card-icon mb-4">\n' +
+                    '        <div class="card-body text-center">\n' +
+                    '            <p class="text-muted mt-2 mb-2">Palet ' + i + '</p>\n' +
+                    '            <p class="lead text-22 m-0">' + palet + ' Cajas</p>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '</div>';
+                $("#modal-cantidad_palet .body-fill").append(html);
+                total = total - palet;
+            }
+            return i;
         }
 
         function calcularCantidades() {
