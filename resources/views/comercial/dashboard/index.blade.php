@@ -47,11 +47,11 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6  text-right form-group mb-3">
-                            <br>
-                            <button class="btn btn-outline-primary" type="button" id="btnAddPedido">Añadir Pedido
-                            </button>
-                        </div>
+{{--                        <div class="col-md-6  text-right form-group mb-3">--}}
+{{--                            <br>--}}
+{{--                            <button class="btn btn-outline-primary" type="button" id="btnAddPedido">Añadir Pedido--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
                     </div>
 
                     <div class="row">
@@ -69,6 +69,8 @@
                                 @endforeach
                             </ul>
                             <div class="tab-content" id="myPillTabContent">
+
+
                                 {{--@foreach ($cultivos as $c => $cultivo)
                                     <div class="tab-pane fade {{ ($c==0) ? 'active show' : '' }}"
                                          id="cultivo_{{ $cultivo->id }}_pill" role="tabpanel"
