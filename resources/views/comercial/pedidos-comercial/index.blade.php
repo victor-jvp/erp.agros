@@ -424,14 +424,14 @@
                                                                     <td>{{ $pedido->etiqueta }}</td>
                                                                     <td>{{ $pedido->comentarios }}</td>
                                                                     <td>
-                                                                        <a href="javascript:void(0);"
-                                                                           onclick="AddPedidoComercial({{ $pedido->id }})"
-                                                                           class="text-info mr-2"
-                                                                           data-toggle="tooltip" data-placement="top"
-                                                                           title=""
-                                                                           data-original-title="Agregar">
-                                                                            <i class="nav-icon i-Add font-weight-bold"></i>
-                                                                        </a>
+{{--                                                                        <a href="javascript:void(0);"--}}
+{{--                                                                           onclick="AddPedidoComercial({{ $pedido->id }})"--}}
+{{--                                                                           class="text-info mr-2"--}}
+{{--                                                                           data-toggle="tooltip" data-placement="top"--}}
+{{--                                                                           title=""--}}
+{{--                                                                           data-original-title="Agregar">--}}
+{{--                                                                            <i class="nav-icon i-Add font-weight-bold"></i>--}}
+{{--                                                                        </a>--}}
                                                                         <a href="javascript:void(0);"
                                                                            onclick="EditPedidoComercial({{ $pedido->id }})"
                                                                            class="text-success mr-2"
@@ -775,7 +775,8 @@
         }
 
         function ClearModalEditPedidoComercial() {
-
+            $("#modal_edit_pedido > input").val(null);
+            $("#modal_edit_pedido > select").val(null).find('.chosen').trigger("chosen:updated");
         }
 
         function fillModalPaletCantidad(total_cajas, por_palet) {
