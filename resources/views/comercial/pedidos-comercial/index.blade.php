@@ -20,9 +20,8 @@
 
                     <form action="/comercial/pedidos-comercial" method="POST" id="pedido_form">
                         {{ csrf_field() }}
-                        <input type="hidden" name="_method" id="pedido_method" value="">
 
-                        <!-- Modal Nuevo Pedido-->
+                        {{--Modal Nuevo Pedido--}}
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                              aria-hidden="true" id="modal-pedido">
                             <div class="modal-dialog modal-lg mw-100 w-75">
@@ -72,7 +71,7 @@
                                                     <thead>
                                                     <tr>
                                                         <th width="5%" class="text-center">Dias</th>
-                                                        <th width="15%">Compuesto</th>
+                                                        <th width="15%">Producto Compuesto</th>
                                                         <th width="7%">Cajas</th>
                                                         <th width="7%">Kilos</th>
                                                         <th width="7%">€/Kg</th>
@@ -119,11 +118,12 @@
                             </div>
                         </div>
                         {{-- Fin modal Pedido --}}
-
                     </form>
 
-                    <form action="/comercial/pedidos-comercial" method="POST" id="pedido_form">
-                    <!-- Modal Editar Pedido-->
+                    <form action="/comercial/pedidos-comercial/update" method="POST" id="edit_pedido_form">
+                        {{ csrf_field('PUT') }}
+
+                        {{-- Modal Editar Pedido --}}
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                              aria-hidden="true" id="modal_edit_pedido">
                             <div class="modal-dialog modal-lg">
@@ -140,17 +140,19 @@
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="nro_orden">Nº Orden</label>
-                                                <input type="text" name="nro_orden" id="nro_orden" class="form-control">
+                                                <input type="text" name="nro_orden" id="edit_nro_orden"
+                                                       class="form-control">
                                             </div>
 
                                             <div class="col-md-4 mb-3">
                                                 <label for="anio">Año</label>
-                                                <input type="text" name="anio" id="anio" class="form-control" readonly>
+                                                <input type="text" name="anio" id="edit_anio" class="form-control"
+                                                       readonly>
                                             </div>
 
                                             <div class="col-md-4 mb-3">
                                                 <label for="semana">Semana</label>
-                                                <input type="text" name="semana" id="semana" class="form-control"
+                                                <input type="text" name="semana" id="edit_semana" class="form-control"
                                                        readonly>
                                             </div>
                                         </div>
@@ -158,7 +160,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-3">
                                                 <label for="cliente">Cliente</label>
-                                                <select class="form-control" id="cliente" name="cliente"
+                                                <select class="form-control chosen" id="edit_cliente" name="cliente"
                                                         required>
                                                     @foreach ($clientes as $cliente)
                                                         <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
@@ -170,10 +172,11 @@
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="anio">Dia</label>
-                                                <input type="text" name="dia" id="dia" class="form-control" readonly>
+                                                <input type="text" name="dia" id="edit_dia" class="form-control"
+                                                       readonly>
                                             </div>
                                             <div class="col-md-8 mb-3">
-                                                <label for="anio">Compuesto</label>
+                                                <label for="anio">Producto Compuesto</label>
                                                 <select class="form-control" name="" id="">
                                                     @foreach ($compuestos as $compuesto)
                                                         <option value="{{ $compuesto['id'] }}">{{ $compuesto['descripcion'] }}</option>
@@ -185,37 +188,42 @@
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="cajas">Cajas</label>
-                                                <input type="number" id="cajas" class="form-control">
+                                                <input type="number" id="edit_cajas" class="form-control" step="1">
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="kilos">Kilos</label>
-                                                <input type="number" id="kilos" class="form-control">
+                                                <input type="number" id="edit_kilos" class="form-control" readonly
+                                                       step="0.01">
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="precio">€/Kg</label>
-                                                <input type="number" id="precio" class="form-control">
+                                                <input type="number" id="edit_precio" class="form-control" step="0.01">
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="palet">Palet</label>
-                                                <input type="number" id="palet" class="form-control">
+                                                <select name="palet_id" id="edit_palet_id" class="form-control">
+                                                    @foreach ($palets as $palet)
+                                                        <option value="{{ $palet->id }}">{{ $palet->modelo->modelo." - ".$palet->formato }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="cantidad_palet">Cant. Palet</label>
-                                                <input type="number" id="cantidad_palet" class="form-control">
+                                                <input type="number" id="edit_cantidad_palet" class="form-control">
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="destino">Destino</label>
-                                                <input type="text" id="destino" class="form-control">
+                                                <select class="form-control" name="destino" id="edit_destino"></select>
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="transporte">Transporte</label>
-                                                <select class="form-control" id="transporte" name="transporte_id">
+                                                <select class="form-control" id="edit_transporte" name="transporte_id">
                                                     @foreach ($transportes as $transporte)
                                                         <option value="{{ $transporte->id }}">{{ $transporte->razon_social }}
                                                             | {{ $transporte->cif }}</option>
@@ -224,19 +232,19 @@
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="etiqueta">Etiqueta</label>
-                                                <input type="number" id="etiqueta" class="form-control">
+                                                <input type="number" id="edit_etiqueta" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-8 mb-3">
                                                 <label for="transporte">Comentario</label>
-                                                <textarea class="form-control" name="comentario" id="comentario"
+                                                <textarea class="form-control" name="comentario" id="edit_comentario"
                                                           rows="4"></textarea>
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="estado">Estado</label>
-                                                <select name="" id="" class="form-control">
+                                                <select name="" id="edit_estado_id" class="form-control">
                                                     <option value="1">EN ESPERA</option>
                                                     <option value="2">COMPLETADO</option>
                                                     <option value="3">CANCELADO</option>
@@ -255,75 +263,75 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- Fin modal Pedido --}}
+                        {{-- Fin modal Editar Pedido --}}
 
                     </form>
 
-                        {{--Modal Destino Comercial--}}
-                        <div class="modal fade" id="modal-destino_comercial" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-destino_comercial-title">Destinos Comerciales
-                                            del Cliente</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-12 mb-3 table-responsive">
-                                                <table class="table table-striped table-sm" width="100%"
-                                                       id="table_destinos_comerciales">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Pais</th>
-                                                        <th>Cliente</th>
-                                                        <th>Cantidad</th>
-                                                        <th>Precio</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody></tbody>
-                                                </table>
-                                            </div>
+                    {{--Modal Destino Comercial--}}
+                    <div class="modal fade" id="modal-destino_comercial" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-destino_comercial-title">Destinos Comerciales
+                                        del Cliente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3 table-responsive">
+                                            <table class="table table-striped table-sm" width="100%"
+                                                   id="table_destinos_comerciales">
+                                                <thead>
+                                                <tr>
+                                                    <th>Pais</th>
+                                                    <th>Cliente</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Precio</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                id="btnCloseModalDestinoComercial">Cerrar
-                                        </button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            id="btnCloseModalDestinoComercial">Cerrar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        {{--FIN Modal Destino Comercial--}}
+                    </div>
+                    {{--FIN Modal Destino Comercial--}}
 
-                        {{--Modal Distribucion de cajas en palet--}}
-                        <div class="modal fade" id="modal-cantidad_palet" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-title">Cantidad de Palets</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row body-fill">
+                    {{--Modal Distribucion de cajas en palet--}}
+                    <div class="modal fade" id="modal-cantidad_palet" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-title">Cantidad de Palets</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row body-fill">
 
-                                        </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                id="btnCloseModalCantidadPalet">Cerrar
-                                        </button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            id="btnCloseModalCantidadPalet">Cerrar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        {{--FIN Modal Distribucion de cajas en palet--}}
+                    </div>
+                    {{--FIN Modal Distribucion de cajas en palet--}}
                     </form>
 
                     <form action="/comercial/pedidos-comercial" method="GET" id="form_fecha_act">
@@ -387,7 +395,7 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Nº Orden</th>
-                                                            <th>Compuesto</th>
+                                                            <th>Producto Compuesto</th>
                                                             <th>Cajas</th>
                                                             <th>Kilos</th>
                                                             <th>€/Kg</th>
@@ -403,42 +411,45 @@
                                                         <tbody>
                                                         @foreach ($cultivo->pedidos as $pedido)
                                                             @if($pedido->dia_id == $dia->id)
-                                                            <tr>
-                                                                <td>{{ $pedido->nro_orden }}</td>
-                                                                <td>{{ $pedido->compuesto }}</td>
-                                                                <td>{{ $pedido->cajas }}</td>
-                                                                <td>{{ $pedido->kilos }}</td>
-                                                                <td>{{ $pedido->precio }}</td>
-                                                                <td>{{ (is_null($pedido->pallet_id)) ? "" : $pedido->palet->modelo->modelo." - ".$pedido->palet->formato }}</td>
-                                                                <td>{{ $pedido->pallet_cantidad }}</td>
-                                                                <td>{{ (is_null($pedido->destino_id)) ? "" : $pedido->destino->descripcion }}</td>
-                                                                <td>{{ (is_null($pedido->transporte_id)) ? "" : $pedido->transporte->razon_social }}</td>
-                                                                <td>{{ $pedido->etiqueta }}</td>
-                                                                <td>{{ $pedido->comentarios }}</td>
-                                                                <td>
-                                                                    <a href="javascript:void(0);"
-                                                                       class="text-info mr-2 add"
-                                                                       data-toggle="tooltip" data-placement="top"
-                                                                       title=""
-                                                                       data-original-title="Agregar">
-                                                                        <i class="nav-icon i-Add font-weight-bold"></i>
-                                                                    </a>
-                                                                    <a href="javascript:void(0);"
-                                                                       class="text-success mr-2 edit"
-                                                                       data-toggle="tooltip" data-placement="top"
-                                                                       title=""
-                                                                       data-original-title="Editar">
-                                                                        <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                                                    </a>
-                                                                    <a href="javascript:void(0);"
-                                                                       class="text-danger mr-2 delete"
-                                                                       data-toggle="tooltip" data-placement="top"
-                                                                       title=""
-                                                                       data-original-title="Borrar">
-                                                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
+                                                                <tr>
+                                                                    <td>{{ $pedido->nro_orden }}</td>
+                                                                    <td>{{ $pedido->variable->variable. " - ". $pedido->variable->caja->formato. " - " .$pedido->variable->caja->modelo }}</td>
+                                                                    <td>{{ $pedido->cajas }}</td>
+                                                                    <td>{{ $pedido->kilos }}</td>
+                                                                    <td>{{ $pedido->precio }}</td>
+                                                                    <td>{{ (is_null($pedido->pallet_id)) ? "" : $pedido->palet->modelo->modelo." - ".$pedido->palet->formato }}</td>
+                                                                    <td>{{ $pedido->pallet_cantidad }}</td>
+                                                                    <td>{{ (is_null($pedido->destino_id)) ? "" : $pedido->destino->descripcion }}</td>
+                                                                    <td>{{ (is_null($pedido->transporte_id)) ? "" : $pedido->transporte->razon_social }}</td>
+                                                                    <td>{{ $pedido->etiqueta }}</td>
+                                                                    <td>{{ $pedido->comentarios }}</td>
+                                                                    <td>
+                                                                        <a href="javascript:void(0);"
+                                                                           onclick="AddPedidoComercial({{ $pedido->id }})"
+                                                                           class="text-info mr-2"
+                                                                           data-toggle="tooltip" data-placement="top"
+                                                                           title=""
+                                                                           data-original-title="Agregar">
+                                                                            <i class="nav-icon i-Add font-weight-bold"></i>
+                                                                        </a>
+                                                                        <a href="javascript:void(0);"
+                                                                           onclick="EditPedidoComercial({{ $pedido->id }})"
+                                                                           class="text-success mr-2"
+                                                                           data-toggle="tooltip" data-placement="top"
+                                                                           title=""
+                                                                           data-original-title="Editar">
+                                                                            <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                                                        </a>
+                                                                        <a href="javascript:void(0);"
+                                                                           onclick="DeletePedidoComercial({{ $pedido->id }})"
+                                                                           class="text-danger mr-2"
+                                                                           data-toggle="tooltip" data-placement="top"
+                                                                           title=""
+                                                                           data-original-title="Borrar">
+                                                                            <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
                                                             @endif
                                                         @endforeach
                                                         </tbody>
@@ -531,7 +542,6 @@
 
             $("#pedido_form").one('submit', function (f) {
                 f.preventDefault();
-
                 $(this).submit();
             });
         })
@@ -660,6 +670,9 @@
             });
 
             $('.table_pedidos').on('click', '.delete', function () {
+            });
+
+            $('.table_pedidos').on('click', '.delete', function () {
                 var current_row = $(this).parents('tr');
                 if (current_row.hasClass('child')) {
                     current_row = current_row.prev();
@@ -717,21 +730,53 @@
                 $('#modal-pedido').css('overflow-y', 'auto');
             });
 
-            //Carga de nro de palets en base a cantidad, tipo de palet y variedad de producto compuesto.
-            $("#variedad, #modelo_palet, #cantidad").change(function () {
-                loadVariedadDetails();
-            });
-
-            $("#euro_kg, #grand_kg, #precio").change(function () {
-                calcularKilos();
-            });
-
             $("#cliente").change(function () {
                 var id = $(this).val();
                 if (id != null)
                     loadDestinosComerciales(id);
             });
         });
+
+        function EditPedidoComercial(id) {
+            if (id == null) return;
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('pedidos-comercial.details') }}",
+                dataType: 'JSON',
+                data: {id: id},
+                success: function (data) {
+                    ClearModalEditPedidoComercial();
+                    if (data == null) return;
+
+                    $("#edit_nro_orden").val(data.nro_orden);
+                    $("#edit_anio").val(data.anio);
+                    $("#edit_semana").val(data.semana);
+                    $("#edit_cliente").val(data.cliente_id).trigger('chosen:updated');
+                    $("#edit_dia").val(data.dia.dia);
+                    $("#edit_cajas").val(data.cajas);
+                    $("#edit_kilos").val(data.kilos);
+                    $("#edit_precio").val(data.precio);
+                    $("#edit_palet_id").val(data.pallet_id);
+                    $("#edit_cantidad_palet").val(data.pallet_cantidad);
+                    $("#edit_destino").val(data.destino_id);
+                    $("#edit_transporte").val(data.transporte_id);
+                    $("#edit_etiqueta").val(data.etiqueta);
+                    $("#edit_comentario").val(data.comentarios);
+                    $("#edit_estado_id").val(data.estado_id);
+
+                    $("#modal_edit_pedido").modal('show');
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('Error. Check Console Log');
+                },
+            });
+        }
+
+        function ClearModalEditPedidoComercial() {
+
+        }
 
         function fillModalPaletCantidad(total_cajas, por_palet) {
             $("#modal-cantidad_palet .body-fill").html(null);
@@ -843,6 +888,8 @@
         function loadDestinosForCliente(elem) {
             var id = $("#cliente").val();
             if (id == null) return;
+            var count = $(elem).find('option').length;
+            if (count > 0) return;
             $.ajax({
                 type: 'POST',
                 url: "{{ route('pedidos-comercial.ajaxGetDestinosComercialesForCliente') }}",
@@ -889,7 +936,7 @@
 
                     for (i = 0; i < data.length; i++) {
                         var value = data[i].id;
-                        var text = data[i].compuesto.compuesto + " - " + data[i].variable;
+                        var text = data[i].variable + " - " + data[i].caja.formato + " - " + data[i].caja.modelo;
                         var kg = data[i].kg;
                         var euro_palet = data[i].euro_cantidad;
                         var grand_palet = data[i].grand_cantidad;

@@ -9,6 +9,7 @@ use App\ClienteDestinos;
 use App\Contador;
 use App\Cubre;
 use App\Cultivo;
+use App\Pallet;
 use App\PalletModel;
 use App\PedidoComercial;
 use App\PedidoComercialAuxiliar;
@@ -45,7 +46,7 @@ class PedidosComercialController extends Controller
         $transportes = Transporte::all();
         $estados     = PedidoComercialEstado::all();
         $productos   = ProductoCompuesto_det::with('compuesto')->get();
-        $modelos     = PalletModel::all();
+        $palets      = Pallet::with('modelo')->get();
         $nro_orden   = Contador::Next_nro_pedido_comercial();
         $tarrinas    = Tarrina::all();
         $auxiliares  = Auxiliar::all();
@@ -60,9 +61,14 @@ class PedidosComercialController extends Controller
         }
 
         foreach ($cultivos as $c => $cultivo) {
-            $pedidos               = PedidoComercial::with(['cliente','destino','palet.modelo','transporte'])
-                                                    ->WithCultivos($data['semana_act'], $data['anio_act'], $cultivo->id)
-                                                    ->get();
+            $pedidos = PedidoComercial::select(['pedidos_comerciales.*'])->with([
+                'cliente',
+                'destino',
+                'palet.modelo',
+                'transporte',
+                'variable.compuesto',
+            ])->WithCultivos($data['semana_act'], $data['anio_act'], $cultivo->id)->get();
+
             $cultivos[$c]->pedidos = $pedidos;
         }
 
@@ -78,7 +84,7 @@ class PedidosComercialController extends Controller
         $data['transportes'] = $transportes;
         $data['estados']     = $estados;
         $data['productos']   = $productos;
-        $data['modelos']     = $modelos;
+        $data['palets']     = $palets;
         $data['tarrinas']    = $tarrinas;
         $data['auxiliares']  = $auxiliares;
         $data['cubres']      = $cubres;
@@ -96,9 +102,12 @@ class PedidosComercialController extends Controller
         if (is_null($id)) return response()->json(null);
 
         $data = PedidoComercial::with([
-            'compuesto',
-            'tarrinas.tarrina',
-            'auxiliares.auxiliar'
+            'cliente',
+            'destino',
+            'palet.modelo',
+            'transporte',
+            'variable.compuesto',
+            'dia'
         ])->find($id);
 
         return response()->json($data);

@@ -190,7 +190,7 @@ class ProductosCompuestosController extends Controller
 
     public function ajaxGetCompuesto(Request $request)
     {
-        $data = ProductoCompuesto_det::with('compuesto')->get();
+        $data = ProductoCompuesto_det::with(['compuesto', 'caja'])->get();
 
         return response()->json($data);
     }
