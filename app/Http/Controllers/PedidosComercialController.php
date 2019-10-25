@@ -84,7 +84,7 @@ class PedidosComercialController extends Controller
         $data['transportes'] = $transportes;
         $data['estados']     = $estados;
         $data['productos']   = $productos;
-        $data['palets']     = $palets;
+        $data['palets']      = $palets;
         $data['tarrinas']    = $tarrinas;
         $data['auxiliares']  = $auxiliares;
         $data['cubres']      = $cubres;
