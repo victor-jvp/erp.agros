@@ -48,6 +48,7 @@ Route::post('comercial/pedidos-comercial/details', 'PedidosComercialController@d
 Route::post('comercial/pedidos-comercial/ajaxGetDestinosComerciales', 'PedidosComercialController@ajaxGetDestinosComerciales')->name('pedidos-comercial.ajaxGetDestinosComerciales');
 Route::post('comercial/pedidos-comercial/ajaxGetDestinosComercialesForCliente', 'PedidosComercialController@ajaxGetDestinosComercialesForCliente')->name('pedidos-comercial.ajaxGetDestinosComercialesForCliente');
 Route::post('comercial/pedidos-comercial/ajaxLoadPaletsForCaja', 'PedidosComercialController@ajaxLoadPaletsForCaja')->name('pedidos-comercial.ajaxLoadPaletsForCaja');
+Route::get('comercial/pedidos-comercial/delete/{pedido}', 'PedidosComercialController@delete')->name('pedidos-comercial.delete');
 
 Route::resource('comercial/clientes', 'ClientesController');
 Route::get('comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');

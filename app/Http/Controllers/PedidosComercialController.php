@@ -113,6 +113,17 @@ class PedidosComercialController extends Controller
         return response()->json($data);
     }
 
+    public function delete($id)
+    {
+        $pedido = PedidoComercial::find($id);
+
+        if(!is_null($pedido)){
+            $pedido->delete();
+        }
+
+        return redirect()->route('pedidos-comercial.index');
+    }
+
     public function store(Request $request)
     {
         //dd($request);

@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PedidoComercial extends Model
 {
     //
     protected $table = "pedidos_comerciales";
+    use SoftDeletes;
 
     public function estado()
     {
@@ -29,7 +31,7 @@ class PedidoComercial extends Model
         return $this->belongsTo(ClienteDestinos::class, 'destino_id');
     }
 
-        public function palet()
+    public function palet()
     {
         return $this->belongsTo(Pallet::class, 'pallet_id');
     }
@@ -61,11 +63,6 @@ class PedidoComercial extends Model
 
     public function scopeWithCultivos($query, $semana, $anio, $cultivo_id)
     {
-        return $query->where('semana', $semana)
-                    ->where('anio', $anio)
-                    ->where('cultivos.id', $cultivo_id)
-                    ->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')
-                    ->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')
-                    ->join('cultivos', 'cultivos.id', '=', 'productoscompuestos_cab.cultivo_id');
+        return $query->where('semana', $semana)->where('anio', $anio)->where('cultivos.id', $cultivo_id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->join('cultivos', 'cultivos.id', '=', 'productoscompuestos_cab.cultivo_id');
     }
 }

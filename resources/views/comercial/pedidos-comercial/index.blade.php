@@ -177,7 +177,8 @@
                                             </div>
                                             <div class="col-md-8 mb-3">
                                                 <label for="edit_producto_id">Producto Compuesto</label>
-                                                <select class="form-control chosen" name="producto_id" id="edit_producto_id">
+                                                <select class="form-control chosen" name="producto_id"
+                                                        id="edit_producto_id">
                                                     @foreach ($compuestos as $compuesto)
                                                         <option value="{{ $compuesto['id'] }}">{{ $compuesto['descripcion'] }}</option>
                                                     @endforeach
@@ -417,6 +418,7 @@
                                                             <th>Etiqueta</th>
                                                             <th>Comentario</th>
                                                             <th>Acciones</th>
+                                                            <th>id</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -452,14 +454,14 @@
                                                                             <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                         </a>
                                                                         <a href="javascript:void(0);"
-                                                                           onclick="DeletePedidoComercial({{ $pedido->id }})"
-                                                                           class="text-danger mr-2"
+                                                                           class="text-danger mr-2 delete"
                                                                            data-toggle="tooltip" data-placement="top"
                                                                            title=""
                                                                            data-original-title="Borrar">
                                                                             <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                                         </a>
                                                                     </td>
+                                                                    <td>{{ $pedido->id }}</td>
                                                                 </tr>
                                                             @endif
                                                         @endforeach
@@ -571,7 +573,10 @@
                 info: false,
                 paging: false,
                 searching: true,
-                dom: 'ltipr'
+                dom: 'ltipr',
+                columnDefs: [
+                    {targets: 12, visible: false}
+                ]
             });
 
             table_destinos = $('#table_destinos_comerciales').DataTable({
@@ -583,7 +588,7 @@
                 paging: false
             });
 
-            $("#buscar").on('change',function(e){
+            $("#buscar").on('change', function (e) {
                 var valor = $(this).val();
                 console.log(valor);
                 table_pedidos.search(valor).draw();
@@ -693,7 +698,8 @@
                 if (current_row.hasClass('child')) {
                     current_row = current_row.prev();
                 }
-                var row = table_pedidos.row(current_row).data();
+
+                var row = $(this).parents('table').DataTable().row(current_row).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -708,8 +714,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('comercial/pedidos-comercial/delete') }}" + "/" +
-                        row[0]
+                    window.location.href = "{{ url('comercial/pedidos-comercial/delete') }}" + "/" + row[12]
                 })
             });
 
