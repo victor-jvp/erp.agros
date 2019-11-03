@@ -139,19 +139,19 @@
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
-                                                <label for="nro_orden">Nº Orden</label>
+                                                <label for="edit_nro_orden">Nº Orden</label>
                                                 <input type="text" name="nro_orden" id="edit_nro_orden"
                                                        class="form-control">
                                             </div>
 
                                             <div class="col-md-4 mb-3">
-                                                <label for="anio">Año</label>
+                                                <label for="edit_anio">Año</label>
                                                 <input type="text" name="anio" id="edit_anio" class="form-control"
                                                        readonly>
                                             </div>
 
                                             <div class="col-md-4 mb-3">
-                                                <label for="semana">Semana</label>
+                                                <label for="edit_semana">Semana</label>
                                                 <input type="text" name="semana" id="edit_semana" class="form-control"
                                                        readonly>
                                             </div>
@@ -159,7 +159,7 @@
 
                                         <div class="row">
                                             <div class="col-md-12 mb-3">
-                                                <label for="cliente">Cliente</label>
+                                                <label for="edit_cliente">Cliente</label>
                                                 <select class="form-control chosen" id="edit_cliente" name="cliente"
                                                         required>
                                                     @foreach ($clientes as $cliente)
@@ -176,8 +176,8 @@
                                                        readonly>
                                             </div>
                                             <div class="col-md-8 mb-3">
-                                                <label for="anio">Producto Compuesto</label>
-                                                <select class="form-control" name="" id="">
+                                                <label for="edit_producto_id">Producto Compuesto</label>
+                                                <select class="form-control chosen" name="producto_id" id="edit_producto_id">
                                                     @foreach ($compuestos as $compuesto)
                                                         <option value="{{ $compuesto['id'] }}">{{ $compuesto['descripcion'] }}</option>
                                                     @endforeach
@@ -187,17 +187,20 @@
 
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
-                                                <label for="cajas">Cajas</label>
-                                                <input type="number" id="edit_cajas" class="form-control" step="1">
+                                                <label for="edit_cajas">Cajas</label>
+                                                <input type="number" id="edit_cajas" class="form-control" step="1"
+                                                       name="cajas">
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="kilos">Kilos</label>
+                                                <label for="edit_kilos">Kilos</label>
                                                 <input type="number" id="edit_kilos" class="form-control" readonly
+                                                       name="kilos"
                                                        step="0.01">
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="precio">€/Kg</label>
-                                                <input type="number" id="edit_precio" class="form-control" step="0.01">
+                                                <label for="edit_precio">€/Kg</label>
+                                                <input type="number" id="edit_precio" class="form-control" step="0.01"
+                                                       name="precio">
                                             </div>
                                         </div>
 
@@ -359,14 +362,22 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6  text-right form-group mb-3">
-                                <br>
-                                <button class="btn btn-outline-primary" type="button" id="btnAddPedido">Añadir Pedido
-                                </button>
-                            </div>
+
                         </div>
 
                     </form>
+
+                    <div class="row">
+                        <div class="col-md-3 form-group mb-3">
+                            <label>Buscar</label>
+                            <input type="text" class="form-control" id="buscar">
+                        </div>
+                        <div class="col-md-9 text-right form-group mb-3">
+                            <br>
+                            <button class="btn btn-outline-primary" type="button" id="btnAddPedido">Añadir Pedido
+                            </button>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col-md-12 mb-3">
@@ -472,7 +483,7 @@
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/datatables.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/sweetalert2.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen-bootstrap-4.css')}}">
-{{--    <link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen.css')}}">--}}
+    {{--    <link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen.css')}}">--}}
 @endsection
 
 @section('bottom-js')
@@ -559,7 +570,8 @@
                 responsive: true,
                 info: false,
                 paging: false,
-                searching: true
+                searching: true,
+                dom: 'ltipr'
             });
 
             table_destinos = $('#table_destinos_comerciales').DataTable({
@@ -569,6 +581,12 @@
                 responsive: true,
                 info: false,
                 paging: false
+            });
+
+            $("#buscar").on('change',function(e){
+                var valor = $(this).val();
+                console.log(valor);
+                table_pedidos.search(valor).draw();
             });
 
             $("#table_nuevo_pedido").on('click', '.add', function () {
@@ -671,9 +689,6 @@
             });
 
             $('.table_pedidos').on('click', '.delete', function () {
-            });
-
-            $('.table_pedidos').on('click', '.delete', function () {
                 var current_row = $(this).parents('tr');
                 if (current_row.hasClass('child')) {
                     current_row = current_row.prev();
@@ -754,13 +769,14 @@
                     $("#edit_anio").val(data.anio);
                     $("#edit_semana").val(data.semana);
                     $("#edit_cliente").val(data.cliente_id).trigger('chosen:updated');
+                    $("#edit_producto_id").val(data.producto_id).trigger('chosen:updated');
                     $("#edit_dia").val(data.dia.dia);
                     $("#edit_cajas").val(data.cajas);
                     $("#edit_kilos").val(data.kilos);
                     $("#edit_precio").val(data.precio);
                     $("#edit_palet_id").val(data.pallet_id);
                     $("#edit_cantidad_palet").val(data.pallet_cantidad);
-                    $("#edit_destino").val(data.destino_id);
+                    loadDestinosForEditCliente($("#edit_destino"), data.destino_id, data.cliente_id);
                     $("#edit_transporte").val(data.transporte_id);
                     $("#edit_etiqueta").val(data.etiqueta);
                     $("#edit_comentario").val(data.comentarios);
@@ -892,6 +908,7 @@
             if (id == null) return;
             var count = $(elem).find('option').length;
             if (count > 0) return;
+
             $.ajax({
                 type: 'POST',
                 url: "{{ route('pedidos-comercial.ajaxGetDestinosComercialesForCliente') }}",
@@ -916,6 +933,38 @@
         }
 
         function ClearDestinosForCliente(elem) {
+            $(elem).html(null).append('<option value="">Seleccione...</option>');
+        }
+
+        function loadDestinosForEditCliente(elem, selected, id_cliente) {
+            if (id_cliente == null) return;
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('pedidos-comercial.ajaxGetDestinosComercialesForCliente') }}",
+                dataType: 'JSON',
+                data: {id: id_cliente},
+                success: function (data) {
+                    ClearDestinosForEditCliente(elem);
+                    if (data == null) return;
+
+                    for (i = 0; i < data.length; i++) {
+                        var value = data[i].id;
+                        var text = data[i].descripcion;
+                        var option = "<option value='" + value + "'>" + text + "</option>";
+                        $(elem).append(option);
+                    }
+
+                    $(elem).val(selected).trigger('chosen:updated');
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('Error. Check Console Log');
+                },
+            });
+        }
+
+        function ClearDestinosForEditCliente(elem) {
             $(elem).html(null).append('<option value="">Seleccione...</option>');
         }
 
