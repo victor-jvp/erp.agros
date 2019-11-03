@@ -71,7 +71,7 @@
                                                     <thead>
                                                     <tr>
                                                         <th width="5%" class="text-center">Dias</th>
-                                                        <th width="15%">Producto Compuesto</th>
+                                                        <th width="20%">Producto Compuesto</th>
                                                         <th width="7%">Cajas</th>
                                                         <th width="7%">Kilos</th>
                                                         <th width="7%">€/Kg</th>
@@ -80,7 +80,7 @@
                                                         <th width="10%">Destino</th>
                                                         <th width="10%">Transporte</th>
                                                         <th width="9%">Etiqueta</th>
-                                                        <th width="10%">Comentario</th>
+                                                        <th width="5%">Comentario</th>
                                                         <th width="5%">Opciones</th>
                                                     </tr>
                                                     </thead>
@@ -424,14 +424,14 @@
                                                                     <td>{{ $pedido->etiqueta }}</td>
                                                                     <td>{{ $pedido->comentarios }}</td>
                                                                     <td>
-{{--                                                                        <a href="javascript:void(0);"--}}
-{{--                                                                           onclick="AddPedidoComercial({{ $pedido->id }})"--}}
-{{--                                                                           class="text-info mr-2"--}}
-{{--                                                                           data-toggle="tooltip" data-placement="top"--}}
-{{--                                                                           title=""--}}
-{{--                                                                           data-original-title="Agregar">--}}
-{{--                                                                            <i class="nav-icon i-Add font-weight-bold"></i>--}}
-{{--                                                                        </a>--}}
+                                                                        {{--                                                                        <a href="javascript:void(0);"--}}
+                                                                        {{--                                                                           onclick="AddPedidoComercial({{ $pedido->id }})"--}}
+                                                                        {{--                                                                           class="text-info mr-2"--}}
+                                                                        {{--                                                                           data-toggle="tooltip" data-placement="top"--}}
+                                                                        {{--                                                                           title=""--}}
+                                                                        {{--                                                                           data-original-title="Agregar">--}}
+                                                                        {{--                                                                            <i class="nav-icon i-Add font-weight-bold"></i>--}}
+                                                                        {{--                                                                        </a>--}}
                                                                         <a href="javascript:void(0);"
                                                                            onclick="EditPedidoComercial({{ $pedido->id }})"
                                                                            class="text-success mr-2"
@@ -472,6 +472,7 @@
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/datatables.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/sweetalert2.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen-bootstrap-4.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('assets/styles/vendor/chosen.css')}}">--}}
 @endsection
 
 @section('bottom-js')
@@ -944,6 +945,15 @@
                         var option = "<option data-kg='" + kg + "' data-euro='" + euro_palet + "' data-grand='" + grand_palet + "' value='" + value + "'>" + text + "</option>";
                         $(elem).append(option);
                     }
+
+                    $(elem).chosen({
+                        width: "100%",
+                        no_results_text: "No se encontraron resultados... ",
+                        placeholder_text_single: "Seleccione...",
+                        allow_single_deselect: true,
+                        //max_shown_results: 4,
+                        //width: "80%",
+                    });
                 },
                 error: function (error) {
                     console.log(error)

@@ -241,8 +241,11 @@ class PedidosComercialController extends Controller
 
         $data           = array();
         $clienteDestino = ClienteDestinos::find($id);
-        $pais           = $clienteDestino->pais;
-        $data           = DB::table('pedidos_comerciales')->join('clientes_destinos', 'clientes_destinos.id', '=', 'pedidos_comerciales.destino_id')->join('clientes', 'clientes.id', '=', 'clientes_destinos.cliente_id')->where('clientes_destinos.pais', 'like', '%' . $pais . '%')->select('precio', 'kilos', 'clientes.razon_social as cliente', 'clientes_destinos.pais')->get();
+        if (!is_null($clienteDestino)) {
+            $data = DB::table('pedidos_comerciales')->join('clientes_destinos', 'clientes_destinos.id', '=', 'pedidos_comerciales.destino_id')->join('clientes', 'clientes.id', '=', 'clientes_destinos.cliente_id')->where('clientes_destinos.pais', 'like', '%' . $clienteDestino->pais . '%')->select('precio', 'kilos', 'clientes.razon_social as cliente', 'clientes_destinos.pais')->get();
+        } else {
+            $data = null;
+        }
 
         return response()->json($data);
     }

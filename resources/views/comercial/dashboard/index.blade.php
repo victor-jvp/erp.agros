@@ -434,7 +434,7 @@
                                                                         <tr class="text-center">
                                                                             <th></th>
                                                                             @for($i = 1; $i <= 50; $i++ )
-                                                                            <th>{{ $i }}</th>
+                                                                                <th>{{ $i }}</th>
                                                                             @endfor
                                                                         </tr>
                                                                         </thead>
