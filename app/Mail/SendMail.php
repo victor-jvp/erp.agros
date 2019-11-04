@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Especiales;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -14,7 +15,6 @@ class SendMail extends Mailable
 
     /**
      * Create a new message instance.
-     *
      * @return void
      */
     public function __construct($data)
@@ -24,11 +24,11 @@ class SendMail extends Mailable
 
     /**
      * Build the message.
-     *
      * @return $this
      */
     public function build()
     {
-        return $this->from('no-reply@agros.jgcloud.es')->subject('Notificación')->view('dynamic_email_template')->with('data', $this->data);
+        $especiales = Especiales::all()->first();
+        return $this->from($especiales->mail_username)->subject('Notificación')->view('dynamic_email_template')->with('data', $this->data);
     }
 }

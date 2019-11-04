@@ -9,6 +9,7 @@ use App\ClienteDestinos;
 use App\Contador;
 use App\Cubre;
 use App\Cultivo;
+use App\Especiales;
 use App\Pallet;
 use App\PalletModel;
 use App\PedidoComercial;
@@ -75,9 +76,10 @@ class PedidosComercialController extends Controller
 //        dd($cultivos);
 
         $data['semana']      = CatDiasSemana::orderBy('order', 'ASC')->get();
-        $data['semana_ini']  = 1;
-        $data['semana_fin']  = 50;
-        $data['anio_ini']    = 2019;
+        $especiales = Especiales::all()->first();
+        $data['semana_ini']  = $especiales->semana_ini;
+        $data['semana_fin']  = $especiales->semana_fin;
+        $data['anio_ini']    = date('Y', strtotime($especiales->created_at));
         $data['anio_fin']    = Date('Y');
         $data["cultivos"]    = $cultivos;
         $data['clientes']    = $clientes;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cultivo;
 use App\CatDiasSemana;
+use App\Especiales;
 use Illuminate\Http\Request;
 
 class ComercialController extends Controller
@@ -24,9 +25,10 @@ class ComercialController extends Controller
         }
 
         $data['semana']      = CatDiasSemana::orderBy('order', 'ASC')->get();
-        $data['semana_ini']  = 1;
-        $data['semana_fin']  = 50;
-        $data['anio_ini']    = 2019;
+        $especiales = Especiales::all()->first();
+        $data['semana_ini']  = $especiales->semana_ini;
+        $data['semana_fin']  = $especiales->semana_fin;
+        $data['anio_ini']    = date('Y', strtotime($especiales->created_at));
         $data['anio_fin']    = Date('Y');
 
         $data['cultivos'] = Cultivo::all();
