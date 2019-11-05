@@ -73,7 +73,7 @@ class PedidosComercialController extends Controller
             $cultivos[$c]->pedidos = $pedidos;
         }
 
-//        dd($cultivos);
+        //        dd($cultivos);
 
         $data['semana']      = CatDiasSemana::orderBy('order', 'ASC')->get();
         $especiales = Especiales::all()->first();
@@ -119,7 +119,7 @@ class PedidosComercialController extends Controller
     {
         $pedido = PedidoComercial::find($id);
 
-        if(!is_null($pedido)){
+        if (!is_null($pedido)) {
             $pedido->delete();
         }
 

@@ -88,9 +88,10 @@ class ProductosCompuestosController extends Controller
     //Agrega los detalles a productos compuestos
     public function store(Request $request)
     {
-//         dd($request);
+        //         dd($request);
 
-        if ($request->id == "") $detalle = new ProductoCompuesto_det(); else
+        if ($request->id == "") $detalle = new ProductoCompuesto_det();
+        else
             $detalle = ProductoCompuesto_det::find($request->id);
 
         $detalle->compuesto_id   = $request->compuesto_id;

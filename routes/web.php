@@ -137,9 +137,9 @@ Route::get('maestros/tarrinas/delete/{tarrina}', 'TarrinasController@delete')->n
 
 Route::post('maestros/pallets/ajaxGetPallets', 'PalletsController@ajaxGetPallets')->name('pallets.ajaxGetPallets');
 
-Route::get('maestros/especiales', 'EspecialesController@index')->name('especiales.index');
-Route::post('maestros/especiales/semanas', 'EspecialesController@semanas')->name('especiales.semanas');
-Route::post('maestros/especiales/email', 'EspecialesController@email')->name('especiales.email');
+Route::get('configuracion/especiales', 'EspecialesController@index')->name('especiales.index');
+Route::post('configuracion/especiales/semanas', 'EspecialesController@semanas')->name('especiales.semanas');
+Route::post('configuracion/especiales/email', 'EspecialesController@email')->name('especiales.email');
 #endregion
 
 #region Familias y Marcas

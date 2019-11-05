@@ -19,7 +19,7 @@ class EspecialesController extends Controller
         $especiales = Especiales::all()->first();
         if (is_null($especiales)) $especiales = new Especiales();
         $data['especiales'] = $especiales;
-        return view('maestros.especiales')->with($data);
+        return view('configuracion.especiales')->with($data);
     }
 
     public function semanas(Request $request)

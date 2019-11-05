@@ -181,13 +181,6 @@
                     <span class="item-name">Trazabilidad</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='especiales' ? 'open' : '' }}"
-                   href="{{ url('maestros/especiales') }}">
-                    <i class="nav-icon i-Settings-Window"></i>
-                    <span class="item-name">Especiales</span>
-                </a>
-            </li>
         </ul>
         <ul class="childNav" data-parent="configuracion">
             <li class="nav-item">
@@ -224,6 +217,13 @@
                 <a href="#">
                     <i class="nav-icon i-Find-User"></i>
                     <span class="item-name">Campañas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="{{ Route::currentRouteName()=='especiales' ? 'open' : '' }}"
+                   href="{{ url('configuracion/especiales') }}">
+                    <i class="nav-icon i-Settings-Window"></i>
+                    <span class="item-name">Especiales</span>
                 </a>
             </li>
         </ul>
