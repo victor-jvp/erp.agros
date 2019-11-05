@@ -11,6 +11,7 @@ use App\ProductoCompuesto_auxiliares;
 use App\ProductoCompuesto_palets_auxiliares;
 use Illuminate\Http\Request;
 use App\ProductoCompuesto_cab;
+use App\ProductoCompuesto_cajas;
 use App\ProductoCompuesto_det;
 use App\ProductoCompuesto_tarrinas;
 
@@ -132,6 +133,19 @@ class ProductosCompuestosController extends Controller
             }
         }
 
+        ProductoCompuesto_cajas::where('det_id', $detalle->id)->delete();
+
+        if (isset($request->cajas_id)) {
+            foreach ($request->cajas_id as $i => $item) {
+                $caja = new ProductoCompuesto_cajas();
+
+                $caja->det_id      = $detalle->id;
+                $caja->caja_id = $request->cajas_id[$i];
+                $caja->cantidad    = $request->cajas_cantidad[$i];
+                $caja->save();
+            }
+        }
+
         ProductoCompuesto_palets_auxiliares::where('det_id', $detalle->id)->delete();
 
         if (isset($request->euro_auxiliares_id)) {
@@ -169,6 +183,7 @@ class ProductosCompuestosController extends Controller
         $detalle                   = ProductoCompuesto_det::find($id);
         $detalle->tarrinas         = ProductoCompuesto_tarrinas::with('tarrina')->where('det_id', $id)->get();
         $detalle->auxiliares       = ProductoCompuesto_auxiliares::with('auxiliar')->where('det_id', $id)->get();
+        $detalle->cajas            = ProductoCompuesto_cajas::with('caja')->where('det_id', $id)->get();
         $detalle->euro_auxiliares  = ProductoCompuesto_palets_auxiliares::with('auxiliar')->where('palet_model_id', '=', 1)->where('det_id', $id)->get();
         $detalle->grand_auxiliares = ProductoCompuesto_palets_auxiliares::with('auxiliar')->where('palet_model_id', '=', 2)->where('det_id', $id)->get();
 
@@ -183,6 +198,7 @@ class ProductosCompuestosController extends Controller
         $compuesto_id = $detalle->compuesto_id;
         $detalle->auxiliares()->delete();
         $detalle->tarrinas()->delete();
+        $detalle->cajas()->delete();
         $detalle->palets_auxiliares()->delete();
         $detalle->delete();
 

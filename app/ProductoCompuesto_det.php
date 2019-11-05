@@ -32,4 +32,9 @@ class ProductoCompuesto_det extends Model
     {
         return $this->belongsTo(ProductoCompuesto_cab::class, 'compuesto_id');
     }
+
+    public function cajas()
+    {
+        return $this->hasMany(ProductoCompuesto_cajas::class, 'det_id');
+    }
 }
