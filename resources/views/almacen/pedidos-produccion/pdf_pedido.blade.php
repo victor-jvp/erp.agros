@@ -15,17 +15,18 @@
                 <tbody>
                 <tr>
                     @php
-                        if(file_exists( './assets/images/logo_emp.jpg' ))
-                            $file =  './assets/images/logo_emp.jpg';
-                        elseif(file_exists( './assets/images/logo_emp.png' ))
-                            $file =  './assets/images/logo_emp.png';
-                        elseif(file_exists( './assets/images/logo_emp.gif' ))
-                            $file =  './assets/images/logo_emp.gif';
+                        if(file_exists( './logos/logo_emp.jpg' ))
+                            $file =  './logos/logo_emp.jpg';
+                        elseif(file_exists( './logos/logo_emp.png' ))
+                            $file =  './logos/logo_emp.png';
+                        elseif(file_exists( './logos/logo_emp.gif' ))
+                            $file =  './logos/logo_emp.gif';
                         else
                             $file = "javascript:void(0)"
                     @endphp
 
-                    <td><img src="{{ $file }}" alt="Logo Empresa" height="75px"><h4>{{ $empresa->razon_social }}</h4></td>
+                    <td><img src="{{ $file }}" alt="Logo Empresa" height="75px"><h4>{{ $empresa->razon_social }}</h4>
+                    </td>
                     <td><h6><b>Nro. Orden:</b> {{ $pedido->nro_orden }}</h6></td>
                 </tr>
                 <tr>
@@ -65,7 +66,7 @@
                 <tr style="font-size: 10pt">
                     <td><b>Cultivo:</b> {{ $pedido->variable->compuesto->cultivo->cultivo }}</td>
                     <td><b>Cantidad Kg.:</b> {{ $pedido->kilos }}</td>
-                    <td></td>
+                    <td><b>Cantidad Cajas:</b> {{ $pedido->cajas }}</td>
                 </tr>
                 </tbody>
             </table>

@@ -37,7 +37,7 @@ class DatosFiscalesController extends Controller
 //        dd($request->file('file'));
 
         if (!is_null($request->file('file'))) {
-            $request->file('file')->move('assets/images', 'logo_emp.'. strtolower($request->file('file')->getClientOriginalExtension()));
+            $request->file('file')->move('logos/', 'logo_emp.'. strtolower($request->file('file')->getClientOriginalExtension()));
         }
 
         $empresa->save();

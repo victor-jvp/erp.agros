@@ -115,7 +115,8 @@
                                                 <select class="form-control chosen" id="cliente" name="cliente"
                                                         required>
                                                     @foreach ($clientes as $cliente)
-                                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                                        <option
+                                                            value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -217,7 +218,8 @@
                                                 <select class="form-control chosen" id="edit_cliente" name="cliente_id"
                                                         required>
                                                     @foreach ($clientes as $cliente)
-                                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                                        <option
+                                                            value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -263,8 +265,8 @@
                                                 <select name="palet_id" id="edit_palet_id" class="form-control">
                                                     @foreach ($palets as $palet)
                                                         <option
-                                                                data-modelo="{{ ($palet->modelo_id == 1) ? 'data-euro' : 'data-grand' }}"
-                                                                value="{{ $palet->id }}">
+                                                            data-modelo="{{ ($palet->modelo_id == 1) ? 'data-euro' : 'data-grand' }}"
+                                                            value="{{ $palet->id }}">
                                                             {{ $palet->modelo->modelo." - ".$palet->formato }}</option>
                                                     @endforeach
                                                 </select>
@@ -299,7 +301,8 @@
                                                 <label for="transporte">Transporte</label>
                                                 <select class="form-control" id="edit_transporte" name="transporte_id">
                                                     @foreach ($transportes as $transporte)
-                                                        <option value="{{ $transporte->id }}">{{ $transporte->razon_social }}
+                                                        <option
+                                                            value="{{ $transporte->id }}">{{ $transporte->razon_social }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -334,7 +337,8 @@
                                                         <select name="estado_id" id="edit_estado_id"
                                                                 class="form-control">
                                                             @foreach($estados as $estado)
-                                                                <option value="{{ $estado->id }}">{{ $estado->estado }}</option>
+                                                                <option
+                                                                    value="{{ $estado->id }}">{{ $estado->estado }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -345,7 +349,7 @@
                                                                 class="btn btn-outline-info m-1 mb-3 btn-block"
                                                                 id="btnCheckStock">
                                                             <span class="ul-btn__icon"><i
-                                                                        class="i-Information"></i></span>
+                                                                    class="i-Information"></i></span>
                                                             <span class="ul-btn__text">Verificar Stock</span>
                                                         </button>
                                                     </div>
