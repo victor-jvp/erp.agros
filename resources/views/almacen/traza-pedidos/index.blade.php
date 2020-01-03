@@ -94,6 +94,21 @@
                                     </div>
 
                                     <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="cajas">Cajas</label>
+                                            <input type="number" class="form-control" id="cajas" readonly>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="kilos">Kilos</label>
+                                            <input type="number" class="form-control" id="kilos" readonly>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="palets">Palets</label>
+                                            <input type="number" class="form-control" id="palets" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-md-12 mb-3">
                                             <div class="table-responsive">
                                                 <table id="traza_pedido_table"
@@ -379,6 +394,9 @@
 
                     $("#nro_orden").val(data.nro_orden);
                     $("#cliente").val(data.cliente.razon_social);
+                    $("#cajas").val(data.cajas);
+                    $("#kilos").val(data.kilos);
+                    $("#palets").val(data.pallet_cantidad);
 
                     for (var i = 0; i < data.materiales.length; i++) {
                         traza_pedido_table.row.add([
