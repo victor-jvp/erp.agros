@@ -60,6 +60,7 @@ Route::post('almacen/pedidos-produccion/ajaxLoadPaletsForCaja', 'PedidosProducci
 Route::post('almacen/pedidos-produccion/ajaxCheckStock', 'PedidosProduccionController@ajaxCheckStock')->name('pedidos-produccion.ajaxCheckStock');
 Route::post('almacen/pedidos-produccion/ajaxSaveStock', 'PedidosProduccionController@ajaxSaveStock')->name('pedidos-produccion.ajaxSaveStock');
 Route::post('almacen/pedidos-produccion/ajaxGetInventarioForPart', 'PedidosProduccionController@ajaxGetInventarioForPart')->name('pedidos-produccion.ajaxGetInventarioForPart');
+Route::post('almacen/pedidos-produccion/ajaxShowMaterialesDia', 'PedidosProduccionController@ajaxShowMaterialesDia')->name('pedidos-produccion.ajaxShowMaterialesDia');
 Route::get('almacen/pedidos-produccion/delete/{pedido}', 'PedidosProduccionController@delete')->name('pedidos-produccion.delete');
 Route::post('almacen/pedidos-produccion/update/{pedido}', 'PedidosProduccionController@update')->name('pedidos-produccion.update');
 Route::get('almacen/pedidos-produccion/pdf/{pedido}', 'PedidosProduccionController@pdf')->name('pedidos-produccion.pdf');

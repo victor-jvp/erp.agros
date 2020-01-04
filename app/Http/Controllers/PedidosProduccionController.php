@@ -734,4 +734,25 @@ class PedidosProduccionController extends Controller
 
         return $pdf->stream('pedido ' . $id . '.pdf');
     }
+
+    public function ajaxShowMaterialesDia(Request $request)
+    {
+        $anio    = $request->input('anio');
+        $semana  = $request->input('semana');
+        $dia     = $request->input('dia');
+        $cultivo = $request->input('cultivo');
+
+        //if (is_null($anio)) return response()->json(null);
+        $data = PedidoProduccion::whereHas('variable', function(Builder $query){
+            $query->whereHas('compusesto', function( Builder $query){
+                $query->where('cultivo_id', $cultivo);
+            });
+        })->where([
+            ['anio', '=', $anio],
+            ['semana', '=', $semana],
+            ['dia_id', '=', $dia],
+        ])->get();
+
+        return response()->json($data);
+    }
 }

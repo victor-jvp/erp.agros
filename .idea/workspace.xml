@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/public/logos/logo_emp.png" afterDir="false" />
+    <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="- Fix para subir a github">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/almacen/pedidos-produccion/pdf_pedido.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/almacen/pedidos-produccion/pdf_pedido.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PedidosProduccionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PedidosProduccionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/almacen/pedidos-produccion/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/almacen/pedidos-produccion/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +142,12 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="Remotes&#9;ACTION&#9;RemoteServersViewToolbar" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -187,7 +191,10 @@
       <workItem from="1577819683346" duration="1762000" />
       <workItem from="1577823100474" duration="558000" />
       <workItem from="1577825513584" duration="2907000" />
-      <workItem from="1577928627163" duration="3346000" />
+      <workItem from="1577928627163" duration="3400000" />
+      <workItem from="1578021295909" duration="621000" />
+      <workItem from="1578023031968" duration="462000" />
+      <workItem from="1578026330784" duration="484000" />
     </task>
     <task id="LOCAL-00001" summary="- Actualizacion para subida a github">
       <created>1577825716882</created>
@@ -196,7 +203,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577825716882</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- Fix para subir a github">
+      <created>1577932913156</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1577932913156</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -218,9 +232,14 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="- Actualizacion para subida a github" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Actualizacion para subida a github" />
+    <MESSAGE value="- Fix para subir a github" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Fix para subir a github" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="605" y="110" key="CommitChangelistDialog2" timestamp="1577932910125">
+      <screen x="0" y="0" width="1900" height="1028" />
+    </state>
+    <state x="605" y="110" key="CommitChangelistDialog2/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932910125" />
     <state x="92" y="92" width="1716" height="844" key="DirDiffDialog" timestamp="1577932496077">
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
@@ -233,25 +252,33 @@
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
     <state x="741" y="226" key="RollbackChangesDialog/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932873009" />
-    <state x="451" y="157" key="SettingsEditor" timestamp="1577932404205">
+    <state x="451" y="157" key="SettingsEditor" timestamp="1578021605474">
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
-    <state x="451" y="157" key="SettingsEditor/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932404205" />
+    <state x="451" y="157" key="SettingsEditor/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578021605474" />
     <state x="797" y="432" key="VCS.ChangelistChooser" timestamp="1577932831562">
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
     <state x="797" y="432" key="VCS.ChangelistChooser/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932831562" />
-    <state x="314" y="282" key="com.intellij.ide.util.TipDialog" timestamp="1577928663543">
+    <state x="542" y="236" key="Vcs.Push.Dialog.v2" timestamp="1577932915641">
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
-    <state x="314" y="282" key="com.intellij.ide.util.TipDialog/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577928663543" />
+    <state x="542" y="236" key="Vcs.Push.Dialog.v2/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932915641" />
+    <state x="314" y="282" key="com.intellij.ide.util.TipDialog" timestamp="1578026341201">
+      <screen x="0" y="0" width="1900" height="1028" />
+    </state>
+    <state x="314" y="282" key="com.intellij.ide.util.TipDialog/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578026341201" />
     <state x="770" y="245" width="377" height="537" key="ftp.server.browser" timestamp="1577932383593">
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
     <state x="770" y="245" width="377" height="537" key="ftp.server.browser/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932383593" />
-    <state x="613" y="222" width="672" height="678" key="search.everywhere.popup" timestamp="1577932136275">
+    <state x="675" y="306" key="git4idea.merge.GitPullDialog" timestamp="1578021898945">
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
-    <state x="613" y="222" width="672" height="678" key="search.everywhere.popup/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932136275" />
+    <state x="675" y="306" key="git4idea.merge.GitPullDialog/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578021898945" />
+    <state x="613" y="222" width="672" height="678" key="search.everywhere.popup" timestamp="1578026707387">
+      <screen x="0" y="0" width="1900" height="1028" />
+    </state>
+    <state x="613" y="222" width="672" height="678" key="search.everywhere.popup/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578026707387" />
   </component>
 </project>
