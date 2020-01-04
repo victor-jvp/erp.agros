@@ -40,13 +40,15 @@ class PedidosProduccionController extends Controller
 
         if (!is_null($request->semana_act)) {
             $data['semana_act'] = intval($request->semana_act);
-        } else {
+        }
+        else {
             $data['semana_act'] = intval(date("W"));
         }
 
         if (!is_null($request->anio_act)) {
             $data['anio_act'] = intval($request->anio_act);
-        } else {
+        }
+        else {
             $data['anio_act'] = intval(date("Y"));
         }
 
@@ -319,7 +321,8 @@ class PedidosProduccionController extends Controller
 
                         if ($dispEntrada >= $porSalir) {
                             $isCompleted = true;
-                        } else {
+                        }
+                        else {
                             $porSalir = $porSalir - $dispEntrada;
                         }
 
@@ -373,7 +376,8 @@ class PedidosProduccionController extends Controller
 
                         if ($dispEntrada >= $porSalir) {
                             $isCompleted = true;
-                        } else {
+                        }
+                        else {
                             $porSalir = $porSalir - $dispEntrada;
                         }
 
@@ -427,7 +431,8 @@ class PedidosProduccionController extends Controller
 
                         if ($dispEntrada >= $porSalir) {
                             $isCompleted = true;
-                        } else {
+                        }
+                        else {
                             $porSalir = $porSalir - $dispEntrada;
                         }
 
@@ -586,14 +591,16 @@ class PedidosProduccionController extends Controller
                     $detalle->cantidad         = $cantidades[$i];
                     $detalle->cantidad_inicial = $inicial[$i];
                     $detalle->save();
-                } elseif (strtolower($tipos[$i]) == "auxiliar") {
+                }
+                elseif (strtolower($tipos[$i]) == "auxiliar") {
                     $detalle                   = new PedidoProduccionPaletAuxiliar();
                     $detalle->pedido_id        = $id;
                     $detalle->auxiliar_id      = $parte[$i];
                     $detalle->cantidad         = $cantidades[$i];
                     $detalle->cantidad_inicial = $inicial[$i];
                     $detalle->save();
-                } else { //auxiliar palet
+                }
+                else { //auxiliar palet
                     $detalle                   = new PedidoProduccionAuxiliar();
                     $detalle->pedido_id        = $id;
                     $detalle->auxiliar_id      = $parte[$i];
@@ -622,7 +629,8 @@ class PedidosProduccionController extends Controller
         $clienteDestino = ClienteDestinos::find($id);
         if (!is_null($clienteDestino)) {
             $data = DB::table('pedidos_produccion')->join('clientes_destinos', 'clientes_destinos.id', '=', 'pedidos_produccion.destino_id')->join('clientes', 'clientes.id', '=', 'clientes_destinos.cliente_id')->where('clientes_destinos.pais', 'like', '%' . $clienteDestino->pais . '%')->select('kilos', 'clientes.razon_social as cliente', 'clientes_destinos.pais')->get();
-        } else {
+        }
+        else {
             $data = null;
         }
 
@@ -651,7 +659,8 @@ class PedidosProduccionController extends Controller
 
         if ($tipo == "tarrina") {
             $data = Tarrina::Disponibles()->find($id);
-        } else {
+        }
+        else {
             $data = Auxiliar::Disponibles()->find($id);
         }
 
@@ -673,13 +682,16 @@ class PedidosProduccionController extends Controller
         {
             if ($variedad->euro_cantidad > 0) {
                 $cantidad_palets = $cantidad_cajas / $variedad->euro_cantidad;
-            } else {
+            }
+            else {
                 $cantidad_palets = 1;
             }
-        } else { // si es un pallet grande
+        }
+        else { // si es un pallet grande
             if ($variedad->grand_cantidad > 0) {
                 $cantidad_palets = $cantidad_cajas / $variedad->grand_cantidad;
-            } else {
+            }
+            else {
                 $cantidad_palets = 1;
             }
         }
@@ -735,24 +747,43 @@ class PedidosProduccionController extends Controller
         return $pdf->stream('pedido ' . $id . '.pdf');
     }
 
-    public function ajaxShowMaterialesDia(Request $request)
+    public function MaterialesDia(Request $request)
     {
-        $anio    = $request->input('anio');
-        $semana  = $request->input('semana');
-        $dia     = $request->input('dia');
-        $cultivo = $request->input('cultivo');
+        $anio    = $request->get('anio');
+        $semana  = $request->get('semana');
+        $dia     = $request->get('dia');
+        $cultivo = $request->get('cultivo');
 
-        //if (is_null($anio)) return response()->json(null);
-        $data = PedidoProduccion::whereHas('variable', function(Builder $query){
-            $query->whereHas('compusesto', function( Builder $query){
-                $query->where('cultivo_id', $cultivo);
-            });
-        })->where([
-            ['anio', '=', $anio],
-            ['semana', '=', $semana],
-            ['dia_id', '=', $dia],
-        ])->get();
+        $data['empresa'] = DatosFiscales::first();
+        $data['pedidos'] = PedidoProduccion::with([
+            'dia',
+            'cliente',
+            'tarrinas.tarrina',
+            'auxiliares.auxiliar',
+            'palet_auxiliares.auxiliar'
+        ])->withCultivos($semana, $anio, $cultivo)->where('dia_id', '=', $dia)->get();
 
-        return response()->json($data);
+        /*$pedidos         = PedidoProduccion::withCultivos($semana, $anio, $cultivo)->where('dia_id', '=', $dia)->get();
+
+        foreach ($pedidos as $p => $pedido)
+        {
+            $materiales = array();
+
+            $tarrinas         = PedidoProduccionTarrina::with('tarrina')->where('pedido_id', $pedido->id)->get();
+            $auxiliares       = PedidoProduccionAuxiliar::with('auxiliar')->where('pedido_id', $pedido->id)->get();
+            $palet_auxiliares = PedidoProduccionPaletAuxiliar::with('auxiliar')->where('pedido_id', $pedido->id)->get();
+
+            $pedidos[$p]->tarrinas         = $tarrinas;
+            $pedidos[$p]->auxiliares       = $auxiliares;
+            $pedidos[$p]->palet_auxiliares = $palet_auxiliares;
+        }*/
+
+//        dd($data);
+
+        $pdf = \PDF::loadView('almacen.pedidos-produccion.pdf_materiales_dia', $data)->setPaper('a4', 'landscape');
+
+        //return view('almacen.pedidos-produccion.pdf_pedido', $data);
+
+        return $pdf->stream('materiales ' . $anio . $semana . $dia . $cultivo . '.pdf');
     }
 }

@@ -78,6 +78,12 @@ class PedidoProduccion extends Model
 
     public function scopeWithCultivos($query, $semana, $anio, $cultivo_id)
     {
-        return $query->where('semana', $semana)->where('anio', $anio)->where('cultivos.id', $cultivo_id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_produccion.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->join('cultivos', 'cultivos.id', '=', 'productoscompuestos_cab.cultivo_id');
+        return $query->select('pedidos_produccion.*')
+                     ->where('semana', $semana)
+                     ->where('anio', $anio)
+                     ->where('cultivos.id', $cultivo_id)
+                     ->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_produccion.producto_id')
+                     ->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')
+                     ->join('cultivos', 'cultivos.id', '=', 'productoscompuestos_cab.cultivo_id');
     }
 }

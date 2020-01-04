@@ -52,7 +52,8 @@ Route::post('comercial/pedidos-comercial/ajaxCheckStock', 'PedidosComercialContr
 Route::get('comercial/pedidos-comercial/delete/{pedido}', 'PedidosComercialController@delete')->name('pedidos-comercial.delete');
 Route::post('comercial/pedidos-comercial/update/{pedido}', 'PedidosComercialController@update')->name('pedidos-comercial.update');
 
-Route::resource('almacen/pedidos-produccion', 'PedidosProduccionController');
+Route::get('almacen/pedidos-produccion', 'PedidosProduccionController@index')->name('pedidos-produccion.index');
+Route::post('almacen/pedidos-produccion', 'PedidosProduccionController@store')->name('pedidos-produccion.store');
 Route::post('almacen/pedidos-produccion/details', 'PedidosProduccionController@details')->name('pedidos-produccion.details');
 Route::post('almacen/pedidos-produccion/ajaxGetDestinosComerciales', 'PedidosProduccionController@ajaxGetDestinosComerciales')->name('pedidos-produccion.ajaxGetDestinosComerciales');
 Route::post('almacen/pedidos-produccion/ajaxGetDestinosComercialesForCliente', 'PedidosProduccionController@ajaxGetDestinosComercialesForCliente')->name('pedidos-produccion.ajaxGetDestinosComercialesForCliente');
@@ -60,7 +61,7 @@ Route::post('almacen/pedidos-produccion/ajaxLoadPaletsForCaja', 'PedidosProducci
 Route::post('almacen/pedidos-produccion/ajaxCheckStock', 'PedidosProduccionController@ajaxCheckStock')->name('pedidos-produccion.ajaxCheckStock');
 Route::post('almacen/pedidos-produccion/ajaxSaveStock', 'PedidosProduccionController@ajaxSaveStock')->name('pedidos-produccion.ajaxSaveStock');
 Route::post('almacen/pedidos-produccion/ajaxGetInventarioForPart', 'PedidosProduccionController@ajaxGetInventarioForPart')->name('pedidos-produccion.ajaxGetInventarioForPart');
-Route::post('almacen/pedidos-produccion/ajaxShowMaterialesDia', 'PedidosProduccionController@ajaxShowMaterialesDia')->name('pedidos-produccion.ajaxShowMaterialesDia');
+Route::get('almacen/pedidos-produccion/MaterialesDia', 'PedidosProduccionController@MaterialesDia')->name('pedidos-produccion.MaterialesDia');
 Route::get('almacen/pedidos-produccion/delete/{pedido}', 'PedidosProduccionController@delete')->name('pedidos-produccion.delete');
 Route::post('almacen/pedidos-produccion/update/{pedido}', 'PedidosProduccionController@update')->name('pedidos-produccion.update');
 Route::get('almacen/pedidos-produccion/pdf/{pedido}', 'PedidosProduccionController@pdf')->name('pedidos-produccion.pdf');

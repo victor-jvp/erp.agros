@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="- Fix para subir a github">
+      <change afterPath="$PROJECT_DIR$/resources/views/almacen/pedidos-produccion/pdf_materiales_dia.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PedidosProduccionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PedidosProduccionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/PedidoProduccion.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/PedidoProduccion.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/almacen/pedidos-produccion/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/almacen/pedidos-produccion/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +40,13 @@
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
       </map>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/victor-jvp/erp.agros.git" />
+      </set>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
@@ -195,6 +205,7 @@
       <workItem from="1578021295909" duration="621000" />
       <workItem from="1578023031968" duration="462000" />
       <workItem from="1578026330784" duration="484000" />
+      <workItem from="1578142940821" duration="3151000" />
     </task>
     <task id="LOCAL-00001" summary="- Actualizacion para subida a github">
       <created>1577825716882</created>
@@ -248,6 +259,10 @@
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
     <state x="730" y="269" key="FileChooserDialogImpl/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932361922" />
+    <state x="637" y="571" width="315" height="150" key="NewPhpFileDialog" timestamp="1578137526613">
+      <screen x="0" y="210" width="1600" height="870" />
+    </state>
+    <state x="637" y="571" width="315" height="150" key="NewPhpFileDialog/0.210.1600.870/1600.0.1920.1080@0.210.1600.870" timestamp="1578137526613" />
     <state x="741" y="226" key="RollbackChangesDialog" timestamp="1577932873009">
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
@@ -264,10 +279,11 @@
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
     <state x="542" y="236" key="Vcs.Push.Dialog.v2/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932915641" />
-    <state x="314" y="282" key="com.intellij.ide.util.TipDialog" timestamp="1578026341201">
-      <screen x="0" y="0" width="1900" height="1028" />
+    <state x="264" y="449" key="com.intellij.ide.util.TipDialog" timestamp="1578142940709">
+      <screen x="0" y="210" width="1600" height="870" />
     </state>
     <state x="314" y="282" key="com.intellij.ide.util.TipDialog/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578026341201" />
+    <state x="264" y="449" key="com.intellij.ide.util.TipDialog/0.210.1600.870/1600.0.1920.1080@0.210.1600.870" timestamp="1578142940709" />
     <state x="770" y="245" width="377" height="537" key="ftp.server.browser" timestamp="1577932383593">
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
@@ -276,6 +292,10 @@
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
     <state x="675" y="306" key="git4idea.merge.GitPullDialog/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578021898945" />
+    <state x="456" y="283" key="run.anything.popup" timestamp="1578144607902">
+      <screen x="0" y="210" width="1600" height="870" />
+    </state>
+    <state x="456" y="283" key="run.anything.popup/0.210.1600.870/1600.0.1920.1080@0.210.1600.870" timestamp="1578144607902" />
     <state x="613" y="222" width="672" height="678" key="search.everywhere.popup" timestamp="1578026707387">
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
