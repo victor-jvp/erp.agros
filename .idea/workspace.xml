@@ -1,86 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="- Agregado reporte de listado de materiales por dia.">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/EmailController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_07_26_013211_create_auxiliares_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_07_26_014454_create_pallets_models_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_07_26_014455_create_pallets_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_07_26_014458_create_cubres_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_07_26_014534_create_cajas_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_07_30_005143_create_cultivos_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_07_30_005640_create_variedades_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_07_31_023454_create_marcas_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_07_31_025458_create_fincas_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_07_31_025845_create_parcelas_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_02_030532_create_productosCompuestos_cab_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_02_031747_create_productosCompuestos_det_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_04_034039_create_tarrinas_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_05_023208_create_productosCompuestos_tarrinas_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_06_023036_create_productosCompuestos_auxiliares_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_09_034615_create_proveedores_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_15_001521_create_trazabilidad_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_15_033338_create_clientes_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_16_030934_create_contadores_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_22_045738_create_clientes_contactos_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_22_055414_create_proveedores_contactos_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_24_103552_create_inventario_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_26_051926_create_cat_dias_semana_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_26_163845_create_previsiones_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_08_29_082022_create_previsiones_comentarios_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_02_073241_create_pedidos_campo_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_07_085114_create_proveedores_adjuntos_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_07_100144_create_clientes_adjuntos_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_13_141223_create_clientes_destinos_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_14_141223_create_pedidos_comerciales_cat_cancelados_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_15_141223_create_pedidos_comerciales_estados_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_18_023900_create_transportes_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_18_024118_create_transportes_contactos_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_18_024246_create_transportes_adjuntos_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_19_141223_create_pedidos_comerciales_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_24_081636_create_pedidos_comerciales_auxiliares_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_09_24_085833_create_pedidos_comerciales_tarrinas_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_10_08_022148_add_cultivo_id_to_productoscompuesto_cab_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_10_13_020703_create_productoscompuestos_palets_auxiliares_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_11_04_042623_create_especiales_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_11_05_090731_create_productoscompuestos_cajas_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_04_092419_add_cnvFact_to_inventario_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_04_185128_create_pedidos_produccion_cat_cancelados_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_04_185200_create_pedidos_produccion_estados_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_04_193853_create_pedidos_produccion_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_04_194552_create_pedidos_produccion_tarrinas_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_04_194627_create_pedidos_produccion_auxiliares_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_08_033652_create_pedidos_produccion_palets_auxiliares_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_15_074928_add_comercial_id_to_pedidos_produccion_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_25_184551_create_inventario_rel_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_26_093429_add_isDisp_to_inventario_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_28_044752_create_config_datos_fiscales_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_01_05_173625_create_config_email_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_01_05_181740_remove_email_columns_from_especiales_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/AuxiliaresTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/CajasTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/CatDiasSemanaSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/ContadoresTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/CubresTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/CultivosTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/FincasTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/MarcasTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/PalletsModelTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/PalletsTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/ParcelasTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/ProductosCompuestos_cabTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/ProductosCompuestos_detTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/TarrinasTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/VariedadesTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/configuracion/email/index.blade.php" afterDir="false" />
+    <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="- Agregados migraciones y seeds a nueva rama 5.8&#10;- Fix de menu sidebar para email y especiales.blade.php&#10;- Agregada vista de email para configuracion">
+      <change afterPath="$PROJECT_DIR$/app/ConfigEmail.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EspecialesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EspecialesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/configuracion/especiales.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/configuracion/especiales.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EmailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EmailController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/configuracion/email/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/configuracion/email/index.blade.php" afterDir="false" />
     </list>
-    <list id="fd0f3e29-c5c2-4524-9617-5a8bed2d250d" name="ignored" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -265,7 +191,6 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="" />
-      <changelist id="fd0f3e29-c5c2-4524-9617-5a8bed2d250d" name="ignored" comment="" />
       <created>1577816088034</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -282,7 +207,8 @@
       <workItem from="1578142940821" duration="3151000" />
       <workItem from="1578161022981" duration="10000" />
       <workItem from="1578161203672" duration="9358000" />
-      <workItem from="1578243580110" duration="4700000" />
+      <workItem from="1578243580110" duration="4884000" />
+      <workItem from="1578250699533" duration="2201000" />
     </task>
     <task id="LOCAL-00001" summary="- Actualizacion para subida a github">
       <created>1577825716882</created>
@@ -305,7 +231,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578240090194</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="- Agregados migraciones y seeds a nueva rama 5.8&#10;- Fix de menu sidebar para email y especiales.blade.php&#10;- Agregada vista de email para configuracion">
+      <created>1578249133232</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1578249133232</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -360,18 +293,20 @@
     <MESSAGE value="- Actualizacion para subida a github" />
     <MESSAGE value="- Fix para subir a github" />
     <MESSAGE value="- Agregado reporte de listado de materiales por dia." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Agregado reporte de listado de materiales por dia." />
+    <MESSAGE value="- Agregados migraciones y seeds a nueva rama 5.8&#10;- Fix de menu sidebar para email y especiales.blade.php&#10;- Agregada vista de email para configuracion" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Agregados migraciones y seeds a nueva rama 5.8&#10;- Fix de menu sidebar para email y especiales.blade.php&#10;- Agregada vista de email para configuracion" />
   </component>
   <component name="WindowStateProjectService">
     <state x="536" y="198" width="524" height="487" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578245654790">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="536" y="198" width="524" height="487" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.30.1600.870@0.30.1600.870" timestamp="1578245654790" />
-    <state x="480" y="210" width="759" height="747" key="CommitChangelistDialog2" timestamp="1578240089398">
-      <screen x="0" y="210" width="3520" height="870" />
+    <state x="381" y="30" width="847" height="747" key="CommitChangelistDialog2" timestamp="1578249132753">
+      <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="605" y="110" key="CommitChangelistDialog2/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932910125" />
     <state x="480" y="210" width="759" height="747" key="CommitChangelistDialog2/0.210.3520.870@0.210.3520.870" timestamp="1578240089398" />
+    <state x="381" y="30" width="847" height="747" key="CommitChangelistDialog2/0.30.1600.870@0.30.1600.870" timestamp="1578249132753" />
     <state x="116" y="234" width="1445" height="715" key="DirDiffDialog" timestamp="1578240049930">
       <screen x="0" y="210" width="3520" height="870" />
     </state>
@@ -400,17 +335,18 @@
     </state>
     <state x="797" y="432" key="VCS.ChangelistChooser/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932831562" />
     <state x="1600" y="576" width="371" height="165" key="VCS.ChangelistChooser/0.210.3520.870@0.210.3520.870" timestamp="1578240165237" />
-    <state x="432" y="358" width="800" height="554" key="Vcs.Push.Dialog.v2" timestamp="1578240094435">
-      <screen x="0" y="210" width="3520" height="870" />
+    <state x="196" y="178" width="1006" height="554" key="Vcs.Push.Dialog.v2" timestamp="1578249139465">
+      <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="542" y="236" key="Vcs.Push.Dialog.v2/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932915641" />
     <state x="432" y="358" width="800" height="554" key="Vcs.Push.Dialog.v2/0.210.3520.870@0.210.3520.870" timestamp="1578240094435" />
-    <state x="264" y="269" key="com.intellij.ide.util.TipDialog" timestamp="1578243715507">
+    <state x="196" y="178" width="1006" height="554" key="Vcs.Push.Dialog.v2/0.30.1600.870@0.30.1600.870" timestamp="1578249139465" />
+    <state x="264" y="269" key="com.intellij.ide.util.TipDialog" timestamp="1578250699441">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="314" y="282" key="com.intellij.ide.util.TipDialog/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578026341201" />
     <state x="264" y="449" key="com.intellij.ide.util.TipDialog/0.210.1600.870/1600.0.1920.1080@0.210.1600.870" timestamp="1578142940709" />
-    <state x="264" y="269" key="com.intellij.ide.util.TipDialog/0.30.1600.870@0.30.1600.870" timestamp="1578243715507" />
+    <state x="264" y="269" key="com.intellij.ide.util.TipDialog/0.30.1600.870@0.30.1600.870" timestamp="1578250699441" />
     <state x="317" y="318" key="com.intellij.ide.util.TipDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1578161216823" />
     <state x="521" y="333" width="506" height="536" key="ftp.server.browser" timestamp="1578240006948">
       <screen x="0" y="210" width="3520" height="870" />

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ConfigEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -12,30 +13,42 @@ class EmailController extends Controller
 
     public function index()
     {
-        return view('configuracion.email.index');
+        $email = ConfigEmail::first();
+
+        if (is_null($email)) {
+            $email = new ConfigEmail();
+        }
+
+        $data['config'] = $email;
+
+        return view('configuracion.email.index')->with($data);
     }
 
     public function store(Request $request)
     {
-        $especiales = DB::table('especiales')->count();
-        if ($especiales == 0) {
-            DB::table('especiales')->insert([
-                'mail_driver'   => $request->mail_driver,
-                'mail_host'     => $request->mail_host,
-                'mail_port'     => $request->mail_port,
-                'mail_username' => $request->mail_username,
-                'mail_password' => Hash::make($request->mail_password)
-            ]);
-        } else {
-            DB::table('especiales')->where('company', '=', 'default')->update([
-                'mail_driver'   => $request->mail_driver,
-                'mail_host'     => $request->mail_host,
-                'mail_port'     => $request->mail_port,
-                'mail_username' => $request->mail_username,
-                'mail_password' => Hash::make($request->mail_password)
-            ]);
+
+//        dd($request);
+        $email = ConfigEmail::first();
+        if (is_null($email)) {
+            $email = new ConfigEmail();
+            $email->mail_driver   = $request->mail_driver;
+            $email->mail_host     = $request->mail_host;
+            $email->mail_port     = $request->mail_port;
+            $email->mail_username = $request->mail_username;
+            $email->mail_password = Hash::make($request->mail_password);
+
+            $email->save();
+        }
+        else {
+            $email->mail_driver   = $request->mail_driver;
+            $email->mail_host     = $request->mail_host;
+            $email->mail_port     = $request->mail_port;
+            $email->mail_username = $request->mail_username;
+            $email->mail_password = Hash::make($request->mail_password);
+
+            $email->save();
         }
 
-        return redirect()->route('especiales.index');
+        return redirect()->route('email.index');
     }
 }
