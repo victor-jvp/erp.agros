@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="- Agregada clase y libreria email">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/permission.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_01_05_211135_create_permission_tables.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/verify.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+    <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="- Agregada integracion con make:auth">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/header-menu.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/header-menu.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -228,7 +218,8 @@
       <workItem from="1578161203672" duration="9358000" />
       <workItem from="1578243580110" duration="4884000" />
       <workItem from="1578250699533" duration="2428000" />
-      <workItem from="1578254554652" duration="4765000" />
+      <workItem from="1578254554652" duration="4788000" />
+      <workItem from="1578259894438" duration="3412000" />
     </task>
     <task id="LOCAL-00001" summary="- Actualizacion para subida a github">
       <created>1577825716882</created>
@@ -272,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578256044290</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="- Agregada integracion con make:auth">
+      <created>1578259588052</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1578259588052</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -330,19 +328,20 @@
     <MESSAGE value="- Agregados migraciones y seeds a nueva rama 5.8&#10;- Fix de menu sidebar para email y especiales.blade.php&#10;- Agregada vista de email para configuracion" />
     <MESSAGE value="- Funcion de configuracion de email funcional" />
     <MESSAGE value="- Agregada clase y libreria email" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Agregada clase y libreria email" />
+    <MESSAGE value="- Agregada integracion con make:auth" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Agregada integracion con make:auth" />
   </component>
   <component name="WindowStateProjectService">
     <state x="536" y="198" width="524" height="487" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578245654790">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="536" y="198" width="524" height="487" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.30.1600.870@0.30.1600.870" timestamp="1578245654790" />
-    <state x="381" y="30" width="847" height="747" key="CommitChangelistDialog2" timestamp="1578256043787">
+    <state x="381" y="30" width="847" height="747" key="CommitChangelistDialog2" timestamp="1578259587792">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="605" y="110" key="CommitChangelistDialog2/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932910125" />
     <state x="480" y="210" width="759" height="747" key="CommitChangelistDialog2/0.210.3520.870@0.210.3520.870" timestamp="1578240089398" />
-    <state x="381" y="30" width="847" height="747" key="CommitChangelistDialog2/0.30.1600.870@0.30.1600.870" timestamp="1578256043787" />
+    <state x="381" y="30" width="847" height="747" key="CommitChangelistDialog2/0.30.1600.870@0.30.1600.870" timestamp="1578259587792" />
     <state x="342" y="47" width="985" height="715" key="DirDiffDialog" timestamp="1578257713392">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
@@ -373,18 +372,18 @@
     </state>
     <state x="797" y="432" key="VCS.ChangelistChooser/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932831562" />
     <state x="1600" y="576" width="371" height="165" key="VCS.ChangelistChooser/0.210.3520.870@0.210.3520.870" timestamp="1578240165237" />
-    <state x="196" y="178" width="1006" height="554" key="Vcs.Push.Dialog.v2" timestamp="1578256046330">
+    <state x="196" y="178" width="1006" height="554" key="Vcs.Push.Dialog.v2" timestamp="1578259589810">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="542" y="236" key="Vcs.Push.Dialog.v2/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932915641" />
     <state x="432" y="358" width="800" height="554" key="Vcs.Push.Dialog.v2/0.210.3520.870@0.210.3520.870" timestamp="1578240094435" />
-    <state x="196" y="178" width="1006" height="554" key="Vcs.Push.Dialog.v2/0.30.1600.870@0.30.1600.870" timestamp="1578256046330" />
-    <state x="264" y="269" key="com.intellij.ide.util.TipDialog" timestamp="1578254649306">
+    <state x="196" y="178" width="1006" height="554" key="Vcs.Push.Dialog.v2/0.30.1600.870@0.30.1600.870" timestamp="1578259589810" />
+    <state x="264" y="269" key="com.intellij.ide.util.TipDialog" timestamp="1578259893997">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="314" y="282" key="com.intellij.ide.util.TipDialog/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578026341201" />
     <state x="264" y="449" key="com.intellij.ide.util.TipDialog/0.210.1600.870/1600.0.1920.1080@0.210.1600.870" timestamp="1578142940709" />
-    <state x="264" y="269" key="com.intellij.ide.util.TipDialog/0.30.1600.870@0.30.1600.870" timestamp="1578254649306" />
+    <state x="264" y="269" key="com.intellij.ide.util.TipDialog/0.30.1600.870@0.30.1600.870" timestamp="1578259893997" />
     <state x="317" y="318" key="com.intellij.ide.util.TipDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1578161216823" />
     <state x="521" y="333" width="506" height="536" key="ftp.server.browser" timestamp="1578240006948">
       <screen x="0" y="210" width="3520" height="870" />
@@ -399,11 +398,11 @@
       <screen x="0" y="210" width="1600" height="870" />
     </state>
     <state x="456" y="283" key="run.anything.popup/0.210.1600.870/1600.0.1920.1080@0.210.1600.870" timestamp="1578144607902" />
-    <state x="516" y="218" width="672" height="575" key="search.everywhere.popup" timestamp="1578259188590">
+    <state x="516" y="218" width="672" height="575" key="search.everywhere.popup" timestamp="1578260440065">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="613" y="222" width="672" height="678" key="search.everywhere.popup/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578026707387" />
-    <state x="516" y="218" width="672" height="575" key="search.everywhere.popup/0.30.1600.870@0.30.1600.870" timestamp="1578259188590" />
+    <state x="516" y="218" width="672" height="575" key="search.everywhere.popup/0.30.1600.870@0.30.1600.870" timestamp="1578260440065" />
     <state x="619" y="257" width="680" height="693" key="search.everywhere.popup/0.30.1920.1050@0.30.1920.1050" timestamp="1578161334662" />
   </component>
 </project>
