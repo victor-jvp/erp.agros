@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="- Agregados migraciones y seeds a nueva rama 5.8&#10;- Fix de menu sidebar para email y especiales.blade.php&#10;- Agregada vista de email para configuracion">
-      <change afterPath="$PROJECT_DIR$/app/ConfigEmail.php" afterDir="false" />
+    <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="- Funcion de configuracion de email funcional">
+      <change afterPath="$PROJECT_DIR$/app/Mail/SendMail.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EmailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EmailController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/configuracion/email/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/configuracion/email/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,6 +136,11 @@
       <path value="$PROJECT_DIR$/vendor/dompdf/dompdf" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-dompdf" />
       <path value="$PROJECT_DIR$/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
     </include_path>
   </component>
   <component name="ProjectId" id="1Voo02G35IUxfsqMendkZsUscPF" />
@@ -208,7 +213,8 @@
       <workItem from="1578161022981" duration="10000" />
       <workItem from="1578161203672" duration="9358000" />
       <workItem from="1578243580110" duration="4884000" />
-      <workItem from="1578250699533" duration="2201000" />
+      <workItem from="1578250699533" duration="2428000" />
+      <workItem from="1578254554652" duration="1197000" />
     </task>
     <task id="LOCAL-00001" summary="- Actualizacion para subida a github">
       <created>1577825716882</created>
@@ -238,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578249133232</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="- Funcion de configuracion de email funcional">
+      <created>1578254244491</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1578254244491</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,19 +307,20 @@
     <MESSAGE value="- Fix para subir a github" />
     <MESSAGE value="- Agregado reporte de listado de materiales por dia." />
     <MESSAGE value="- Agregados migraciones y seeds a nueva rama 5.8&#10;- Fix de menu sidebar para email y especiales.blade.php&#10;- Agregada vista de email para configuracion" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Agregados migraciones y seeds a nueva rama 5.8&#10;- Fix de menu sidebar para email y especiales.blade.php&#10;- Agregada vista de email para configuracion" />
+    <MESSAGE value="- Funcion de configuracion de email funcional" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Funcion de configuracion de email funcional" />
   </component>
   <component name="WindowStateProjectService">
     <state x="536" y="198" width="524" height="487" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578245654790">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="536" y="198" width="524" height="487" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.30.1600.870@0.30.1600.870" timestamp="1578245654790" />
-    <state x="381" y="30" width="847" height="747" key="CommitChangelistDialog2" timestamp="1578249132753">
+    <state x="381" y="30" width="847" height="747" key="CommitChangelistDialog2" timestamp="1578254244010">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="605" y="110" key="CommitChangelistDialog2/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932910125" />
     <state x="480" y="210" width="759" height="747" key="CommitChangelistDialog2/0.210.3520.870@0.210.3520.870" timestamp="1578240089398" />
-    <state x="381" y="30" width="847" height="747" key="CommitChangelistDialog2/0.30.1600.870@0.30.1600.870" timestamp="1578249132753" />
+    <state x="381" y="30" width="847" height="747" key="CommitChangelistDialog2/0.30.1600.870@0.30.1600.870" timestamp="1578254244010" />
     <state x="116" y="234" width="1445" height="715" key="DirDiffDialog" timestamp="1578240049930">
       <screen x="0" y="210" width="3520" height="870" />
     </state>
@@ -335,18 +349,18 @@
     </state>
     <state x="797" y="432" key="VCS.ChangelistChooser/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932831562" />
     <state x="1600" y="576" width="371" height="165" key="VCS.ChangelistChooser/0.210.3520.870@0.210.3520.870" timestamp="1578240165237" />
-    <state x="196" y="178" width="1006" height="554" key="Vcs.Push.Dialog.v2" timestamp="1578249139465">
+    <state x="196" y="178" width="1006" height="554" key="Vcs.Push.Dialog.v2" timestamp="1578254248014">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="542" y="236" key="Vcs.Push.Dialog.v2/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932915641" />
     <state x="432" y="358" width="800" height="554" key="Vcs.Push.Dialog.v2/0.210.3520.870@0.210.3520.870" timestamp="1578240094435" />
-    <state x="196" y="178" width="1006" height="554" key="Vcs.Push.Dialog.v2/0.30.1600.870@0.30.1600.870" timestamp="1578249139465" />
-    <state x="264" y="269" key="com.intellij.ide.util.TipDialog" timestamp="1578250699441">
+    <state x="196" y="178" width="1006" height="554" key="Vcs.Push.Dialog.v2/0.30.1600.870@0.30.1600.870" timestamp="1578254248014" />
+    <state x="264" y="269" key="com.intellij.ide.util.TipDialog" timestamp="1578254649306">
       <screen x="0" y="30" width="1600" height="870" />
     </state>
     <state x="314" y="282" key="com.intellij.ide.util.TipDialog/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578026341201" />
     <state x="264" y="449" key="com.intellij.ide.util.TipDialog/0.210.1600.870/1600.0.1920.1080@0.210.1600.870" timestamp="1578142940709" />
-    <state x="264" y="269" key="com.intellij.ide.util.TipDialog/0.30.1600.870@0.30.1600.870" timestamp="1578250699441" />
+    <state x="264" y="269" key="com.intellij.ide.util.TipDialog/0.30.1600.870@0.30.1600.870" timestamp="1578254649306" />
     <state x="317" y="318" key="com.intellij.ide.util.TipDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1578161216823" />
     <state x="521" y="333" width="506" height="536" key="ftp.server.browser" timestamp="1578240006948">
       <screen x="0" y="210" width="3520" height="870" />
