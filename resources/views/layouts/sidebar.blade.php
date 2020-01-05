@@ -208,7 +208,7 @@
             <li class="nav-item">
                 <a href="#">
                     <i class="nav-icon i-Find-User"></i>
-                    <span class="item-name">Usuarios de la Aplicación</span>
+                    <span class="item-name">Usuarios</span>
                 </a>
             </li>
             <li class="nav-item">

@@ -247,3 +247,7 @@ Route::get('configuracion/email', 'EmailController@index')->name('email.index');
 Route::post('configuracion/email', 'EmailController@store')->name('email.store');
 
 #endregion
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
