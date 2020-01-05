@@ -3,6 +3,7 @@
 <head>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset('assets/styles/vendor/perfect-scrollbar.css')}}">
 
     <title>Listado de Materiales</title>
 </head>
@@ -40,9 +41,9 @@
 
     <div class="row">
         <div class="col-md-12 table-responsive">
-            <table class="table table-bordered table-sm" style="font-size: 10pt;">
+            <table class="table table-bordered table-sm table-condensed" style="font-size: 10pt;">
                 <thead>
-                <tr class="text-center bg-dark text-white">
+                <tr class="text-center">
                     <th>Material</th>
                     <th>Descripcion</th>
                     <th>Cantidad</th>
@@ -61,30 +62,78 @@
                     <tr>
                         <td>Tarrina</td>
                         <td>{{ $tarrina->tarrina->modelo }}</td>
-                        <td class="text-right">{{ $tarrina->cantidad }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="text-right">
+                            @foreach ($tarrina->salidas as $salida)
+                                <p style="padding: 0px;">{{ $salida->cantidad }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($tarrina->entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->nro_lote }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($tarrina->salidas as $salida)
+                                <p style="padding: 0px;">{{ $salida->nro_lote }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($tarrina->entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
+                            @endforeach
+                        </td>
                     </tr>
                     @endforeach
                     @foreach($pedido->auxiliares as $auxiliar)
                     <tr>
                         <td>Auxiliar</td>
                         <td>{{ $auxiliar->auxiliar->modelo }}</td>
-                        <td class="text-right">{{ $auxiliar->cantidad }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="text-right">
+                            @foreach ($auxiliar->salidas as $salida)
+                                <p style="padding: 0px;">{{ $salida->cantidad }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($auxiliar->entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->nro_lote }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($auxiliar->salidas as $salida)
+                                <p style="padding: 0px;">{{ $salida->nro_lote }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($auxiliar->entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
+                            @endforeach
+                        </td>
                     </tr>
                     @endforeach
                     @foreach($pedido->palet_auxiliares as $auxiliar)
                     <tr>
                         <td>Auxiliar Palet</td>
                         <td>{{ $auxiliar->auxiliar->modelo }}</td>
-                        <td class="text-right">{{ $auxiliar->cantidad }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="text-right">
+                            @foreach ($auxiliar->salidas as $salida)
+                                <p style="padding: 0px;">{{ $salida->cantidad }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($auxiliar->entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->nro_lote }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($auxiliar->salidas as $salida)
+                                <p style="padding: 0px;">{{ $salida->nro_lote }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($auxiliar->entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
+                            @endforeach
+                        </td>
                     </tr>
                     @endforeach
                 @endforeach

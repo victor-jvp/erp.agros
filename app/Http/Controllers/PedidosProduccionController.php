@@ -755,7 +755,7 @@ class PedidosProduccionController extends Controller
         $cultivo = $request->get('cultivo');
 
         $data['empresa'] = DatosFiscales::first();
-        $data['pedidos'] = PedidoProduccion::with([
+        $pedidos = PedidoProduccion::with([
             'dia',
             'cliente',
             'tarrinas.tarrina',
@@ -763,22 +763,64 @@ class PedidosProduccionController extends Controller
             'palet_auxiliares.auxiliar'
         ])->withCultivos($semana, $anio, $cultivo)->where('dia_id', '=', $dia)->get();
 
-        /*$pedidos         = PedidoProduccion::withCultivos($semana, $anio, $cultivo)->where('dia_id', '=', $dia)->get();
 
         foreach ($pedidos as $p => $pedido)
         {
-            $materiales = array();
+            foreach ($pedido->tarrinas as $i => $row)
+            {
+                $entrada = InventarioRel::entrada()
+                                     ->where('pedido_id', $pedido->id)
+                                     ->where('entrada.categoria', '=', 'Tarrina')
+                                     ->where('entrada.categoria_id', $row->tarrina_id)
+                                     ->get();
+                $pedidos{$p}->tarrinas{$i}->entradas = $entrada;
 
-            $tarrinas         = PedidoProduccionTarrina::with('tarrina')->where('pedido_id', $pedido->id)->get();
-            $auxiliares       = PedidoProduccionAuxiliar::with('auxiliar')->where('pedido_id', $pedido->id)->get();
-            $palet_auxiliares = PedidoProduccionPaletAuxiliar::with('auxiliar')->where('pedido_id', $pedido->id)->get();
+                $salida = InventarioRel::salida()
+                                     ->where('pedido_id', $pedido->id)
+                                     ->where('salida.categoria', '=', 'Tarrina')
+                                     ->where('salida.categoria_id', $row->tarrina_id)
+                                     ->get();
+                $pedidos{$p}->tarrinas{$i}->salidas = $salida;
+            }
 
-            $pedidos[$p]->tarrinas         = $tarrinas;
-            $pedidos[$p]->auxiliares       = $auxiliares;
-            $pedidos[$p]->palet_auxiliares = $palet_auxiliares;
-        }*/
+            foreach ($pedido->auxiliares as $i => $row)
+            {
+                $entrada = InventarioRel::entrada()
+                                        ->where('pedido_id', $pedido->id)
+                                        ->where('entrada.categoria', '=', 'Auxiliar')
+                                        ->where('entrada.categoria_id', $row->auxiliar_id)
+                                        ->get();
+                $pedidos{$p}->auxiliares{$i}->entradas = $entrada;
 
-//        dd($data);
+                $salida = InventarioRel::salida()
+                                       ->where('pedido_id', $pedido->id)
+                                       ->where('salida.categoria', '=', 'Auxiliar')
+                                       ->where('salida.categoria_id', $row->auxiliar_id)
+                                       ->get();
+                $pedidos{$p}->auxiliares{$i}->salidas = $salida;
+            }
+
+            foreach ($pedido->palet_auxiliares as $i => $row)
+            {
+                $entrada = InventarioRel::entrada()
+                                        ->where('pedido_id', $pedido->id)
+                                        ->where('entrada.categoria', '=', 'Auxiliar')
+                                        ->where('entrada.categoria_id', $row->auxiliar_id)
+                                        ->get();
+                $pedidos{$p}->palet_auxiliares{$i}->entradas = $entrada;
+
+                $salida = InventarioRel::salida()
+                                       ->where('pedido_id', $pedido->id)
+                                       ->where('salida.categoria', '=', 'Auxiliar')
+                                       ->where('salida.categoria_id', $row->auxiliar_id)
+                                       ->get();
+                $pedidos{$p}->palet_auxiliares{$i}->salidas = $salida;
+            }
+        }
+
+        //dd($pedidos);
+
+        $data['pedidos'] = $pedidos;
 
         $pdf = \PDF::loadView('almacen.pedidos-produccion.pdf_materiales_dia', $data)->setPaper('a4', 'landscape');
 
