@@ -242,5 +242,8 @@ Route::post('configuracion/datos-fiscales', 'DatosFiscalesController@update')->n
 
 Route::get('configuracion/especiales', 'EspecialesController@index')->name('especiales.index');
 Route::post('configuracion/especiales/semanas', 'EspecialesController@semanas')->name('especiales.semanas');
-Route::post('configuracion/especiales/email', 'EspecialesController@email')->name('especiales.email');
+
+Route::get('configuracion/email', 'EmailController@index')->name('email.index');
+Route::post('configuracion/email', 'EmailController@store')->name('email.store');
+
 #endregion

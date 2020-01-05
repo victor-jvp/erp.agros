@@ -207,12 +207,6 @@
             </li>
             <li class="nav-item">
                 <a href="#">
-                    <i class="nav-icon i-Add-User"></i>
-                    <span class="item-name">Datos Comerciales</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#">
                     <i class="nav-icon i-Find-User"></i>
                     <span class="item-name">Usuarios de la Aplicación</span>
                 </a>
@@ -224,9 +218,10 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#">
-                    <i class="nav-icon i-Find-User"></i>
-                    <span class="item-name">Configuración de Email</span>
+                <a class="{{ Route::currentRouteName()=='email.index' ? 'open' : '' }}"
+                   href="{{ route('email.index') }}">
+                    <i class="nav-icon i-Email"></i>
+                    <span class="item-name">Email</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -236,7 +231,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='especiales' ? 'open' : '' }}"
+                <a class="{{ Route::currentRouteName()=='especiales.index' ? 'open' : '' }}"
                    href="{{ url('configuracion/especiales') }}">
                     <i class="nav-icon i-Settings-Window"></i>
                     <span class="item-name">Especiales</span>
