@@ -206,7 +206,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#">
+                <a class="{{ Route::currentRouteName()=='usuarios.index' ? 'open' : '' }}"
+                   href="{{ route('usuarios.index') }}">
                     <i class="nav-icon i-Find-User"></i>
                     <span class="item-name">Usuarios</span>
                 </a>

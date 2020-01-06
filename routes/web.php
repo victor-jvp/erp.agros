@@ -244,6 +244,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('configuracion/email', 'EmailController@index')->name('email.index');
     Route::post('configuracion/email', 'EmailController@store')->name('email.store');
 
+    //Usuarios
+    Route::get('configuracion/usuarios', 'UsuariosController@index')->name('usuarios.index');
+    Route::get('configuracion/usuarios/create', 'UsuariosController@create')->name('usuarios.create');
+    Route::get('configuracion/usuarios/show/{usuario}', 'UsuariosController@show')->name('usuarios.show');
+    Route::post('configuracion/usuarios', 'UsuariosController@store')->name('usuarios.store');
+    Route::post('configuracion/usuarios/update/{usuario}', 'UsuariosController@update')->name('usuarios.update');
+
 #endregion
 });
 
