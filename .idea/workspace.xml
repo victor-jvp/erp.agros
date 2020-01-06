@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="- Configuracion de enlaces para autenticacion de usuarios en todo el sistema">
+    <list default="true" id="8dbe83ba-c1be-4f90-beef-fdc16a8237e5" name="Default" comment="- Fix para subir a github">
+      <change afterPath="$PROJECT_DIR$/resources/views/auth_default/login.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/auth_default/passwords/email.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/auth_default/passwords/reset.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/auth_default/register.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/auth_default/verify.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/header-menu.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/header-menu.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,13 +170,14 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/auth2" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="web.server" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Repos\erp.agros\resources\views\auth2" />
       <recent name="C:\Repos\erp.agros" />
     </key>
   </component>
@@ -356,9 +366,10 @@
       <screen x="0" y="0" width="1900" height="1028" />
     </state>
     <state x="730" y="269" key="FileChooserDialogImpl/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1577932361922" />
-    <state x="637" y="391" width="315" height="150" key="NewPhpFileDialog" timestamp="1578248780946">
-      <screen x="0" y="30" width="1600" height="870" />
+    <state x="756" y="427" width="315" height="150" key="NewPhpFileDialog" timestamp="1578278623227">
+      <screen x="0" y="0" width="1900" height="1028" />
     </state>
+    <state x="756" y="427" key="NewPhpFileDialog/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578278623227" />
     <state x="637" y="571" width="315" height="150" key="NewPhpFileDialog/0.210.1600.870/1600.0.1920.1080@0.210.1600.870" timestamp="1578137526613" />
     <state x="637" y="391" key="NewPhpFileDialog/0.30.1600.870@0.30.1600.870" timestamp="1578248780946" />
     <state x="624" y="221" width="296" height="568" key="RollbackChangesDialog" timestamp="1578257423198">
@@ -402,10 +413,10 @@
       <screen x="0" y="210" width="1600" height="870" />
     </state>
     <state x="456" y="283" key="run.anything.popup/0.210.1600.870/1600.0.1920.1080@0.210.1600.870" timestamp="1578144607902" />
-    <state x="516" y="218" width="672" height="575" key="search.everywhere.popup" timestamp="1578260440065">
-      <screen x="0" y="30" width="1600" height="870" />
+    <state x="613" y="222" width="672" height="678" key="search.everywhere.popup" timestamp="1578280376892">
+      <screen x="0" y="0" width="1900" height="1028" />
     </state>
-    <state x="613" y="222" width="672" height="678" key="search.everywhere.popup/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578026707387" />
+    <state x="613" y="222" width="672" height="678" key="search.everywhere.popup/0.0.1900.1028/1900.0.1280.984@0.0.1900.1028" timestamp="1578280376892" />
     <state x="516" y="218" width="672" height="575" key="search.everywhere.popup/0.30.1600.870@0.30.1600.870" timestamp="1578260440065" />
     <state x="619" y="257" width="680" height="693" key="search.everywhere.popup/0.30.1920.1050@0.30.1920.1050" timestamp="1578161334662" />
   </component>
