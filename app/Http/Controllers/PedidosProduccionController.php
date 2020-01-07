@@ -207,7 +207,7 @@ class PedidosProduccionController extends Controller
             }
         }
 
-        return redirect('comercial/pedidos-produccion?anio_act=' . $request->anio . '&semana_act=' . $request->semana);
+        return redirect('almacen/pedidos-produccion?anio_act=' . $request->anio . '&semana_act=' . $request->semana);
     }
 
     public function update(Request $request, $id)
@@ -243,7 +243,7 @@ class PedidosProduccionController extends Controller
             $request->session()->flash('error', $ex->getMessage());
         }
 
-        return redirect('comercial/pedidos-produccion?anio_act=' . $request->anio . '&semana_act=' . $request->semana);
+        return redirect('almacen/pedidos-produccion?anio_act=' . $request->anio . '&semana_act=' . $request->semana);
     }
 
     private function StoreInventario($id = null)
