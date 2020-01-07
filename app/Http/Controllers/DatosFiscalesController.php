@@ -23,7 +23,7 @@ class DatosFiscalesController extends Controller
 
     public function update(Request $request)
     {
-        if(DatosFiscales::count() > 0){
+        if (DatosFiscales::count() > 0) {
             DatosFiscales::truncate();
         }
         $empresa                   = new DatosFiscales();
@@ -37,7 +37,20 @@ class DatosFiscalesController extends Controller
 //        dd($request->file('file'));
 
         if (!is_null($request->file('file'))) {
-            $request->file('file')->move('logos/', 'logo_emp.'. strtolower($request->file('file')->getClientOriginalExtension()));
+
+            if (file_exists('./logos/logo_emp.jpg')) {
+                unlink('./logos/logo_emp.jpg');
+            }
+
+            if (file_exists('./logos/logo_emp.png')) {
+                unlink('./logos/logo_emp.png');
+            }
+
+            if (file_exists('./logos/logo_emp.gif')) {
+                unlink('./logos/logo_emp.gif');
+            }
+
+            $request->file('file')->move('logos/', 'logo_emp.' . strtolower($request->file('file')->getClientOriginalExtension()));
         }
 
         $empresa->save();

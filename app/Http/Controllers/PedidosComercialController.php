@@ -169,7 +169,7 @@ class PedidosComercialController extends Controller
 
         }
 
-        return redirect('comercial/pedidos-comercial?anio_act=' . $request->anio . '&semana_act=' . $request->semana);
+        return redirect('almacen/pedidos-comercial?anio_act=' . $request->anio . '&semana_act=' . $request->semana);
     }
 
     public function update(Request $request, $id)
@@ -252,7 +252,7 @@ class PedidosComercialController extends Controller
                     }
                 }
 
-                return redirect('comercial/pedidos-produccion?anio_act=' . $request->anio . '&semana_act=' . $request->semana);
+                return redirect('almacen/pedidos-produccion?anio_act=' . $request->anio . '&semana_act=' . $request->semana);
             }
         }
 
