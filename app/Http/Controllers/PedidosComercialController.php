@@ -252,7 +252,7 @@ class PedidosComercialController extends Controller
                     }
                 }
 
-                return redirect('almacen/pedidos-produccion?anio_act=' . $request->anio . '&semana_act=' . $request->semana);
+                return redirect('comercial/pedidos-comercial?anio_act=' . $request->anio . '&semana_act=' . $request->semana);
             }
         }
 
