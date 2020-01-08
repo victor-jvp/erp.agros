@@ -42,7 +42,7 @@ class Entrada extends Model
         if ($this->categoria == "Caja") {
             $material = DB::table('cajas')->where('id', $this->categoria_id)->first()->formato;
         } elseif ($this->categoria == "Palet") {
-            $material = DB::table('palets')->where('id', $this->categoria_id)->first()->formato;
+            $material = DB::table('pallets')->where('id', $this->categoria_id)->first()->formato;
         } elseif ($this->categoria == "Cubre") {
             $material = DB::table('cubres')->where('id', $this->categoria_id)->first()->formato;
         } elseif ($this->categoria == "Auxiliar") {

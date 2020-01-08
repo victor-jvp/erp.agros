@@ -271,6 +271,53 @@ class PedidosProduccionController extends Controller
             $salida->cnv_fact     = -1;
             $salida->cantidad     = $pedido->cajas;
             $salida->save();
+
+            $isCompleted = false;
+
+            $porSalir = $salida->cantidad;
+
+            /*do {
+                $entrada = Inventario::where('categoria', '=', 'Caja')->where('tipo_mov', '=', 'E')->where('isDisp', '=', true)->where('categoria_id', $pedido->variable->caja_id)->orderBy('id', 'asc')->first();
+
+                if (is_null($entrada)) {
+                    $isCompleted = true;
+                    break;
+                }
+
+                $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
+
+                $dispEntrada = $entrada->cantidad - $entradasRel;
+
+                if ($dispEntrada > 0) {
+
+                    if ($dispEntrada >= $porSalir) {
+                        $isCompleted = true;
+                    }
+                    else {
+                        $porSalir = $porSalir - $dispEntrada;
+                    }
+
+                    $rel             = new InventarioRel();
+                    $rel->entrada_id = $entrada->id;
+                    $rel->salida_id  = $salida->id;
+                    $rel->pedido_id  = $pedido->id;
+                    $rel->cantidad   = $porSalir;
+                    $rel->save();
+                }
+
+                if ($entrada->cantidad <= $entradasRel) {
+                    $entrada->isDisp = false;
+                    $entrada->save();
+                }
+
+            } while (!$isCompleted);*/
+
+            $rel             = new InventarioRel();
+            $rel->entrada_id = null;
+            $rel->salida_id  = $salida->id;
+            $rel->pedido_id  = $pedido->id;
+            $rel->cantidad   = $porSalir;
+            $rel->save();
         }
 
         /* Salida de Palets */
@@ -284,6 +331,56 @@ class PedidosProduccionController extends Controller
             $salida->cnv_fact     = -1;
             $salida->cantidad     = $pedido->pallet_cantidad;
             $salida->save();
+
+            $isCompleted = false;
+
+            $porSalir = $salida->cantidad;
+
+            //TODO: Incluir rutina de guardado y verificacion de que si no hay entradas, dejar null el campo entrada_id
+
+
+            /*do {
+                $entrada = Inventario::where('categoria', '=', 'Palet')->where('tipo_mov', '=', 'E')->where('isDisp', '=', true)->where('categoria_id', $pedido->pallet_id)->orderBy('id', 'asc')->first();
+
+                if (is_null($entrada)) {
+                    $isCompleted = true;
+                    break;
+                }
+
+                $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
+
+                $dispEntrada = $entrada->cantidad - $entradasRel;
+
+                if ($dispEntrada > 0) {
+
+                    if ($dispEntrada >= $porSalir) {
+                        $isCompleted = true;
+                    }
+                    else {
+                        $porSalir = $porSalir - $dispEntrada;
+                    }
+
+                    $rel             = new InventarioRel();
+                    $rel->entrada_id = $entrada->id;
+                    $rel->salida_id  = $salida->id;
+                    $rel->pedido_id  = $pedido->id;
+                    $rel->cantidad   = $porSalir;
+                    $rel->save();
+                }
+
+                if ($entrada->cantidad <= $entradasRel) {
+                    $entrada->isDisp = false;
+                    $entrada->save();
+                }
+
+            } while (!$isCompleted);*/
+
+            $rel             = new InventarioRel();
+            $rel->entrada_id = null;
+            $rel->salida_id  = $salida->id;
+            $rel->pedido_id  = $pedido->id;
+            $rel->cantidad   = $porSalir;
+            $rel->save();
         }
 
         /* Salida de materiales del producto compuesto */
@@ -452,17 +549,6 @@ class PedidosProduccionController extends Controller
                 } while (!$isCompleted);
             }
         }
-
-        /*        $salida = new Inventario([
-                    'tipo_mov'     => 'S',
-                    'fecha'        => date('Y-m-d H:i:s'),
-                    'nro_lote'     => Contador::save_nro_salida(),
-                    'categoria'    => 'Caja',
-                    'categoria_id' => $auxiliar->auxiliar_id,
-                    'cnv_fact'     => -1,
-                    'cantidad'     => $auxiliar->cantidad
-                ]);
-                $salida->save();*/
     }
 
     public function ajaxCheckStock(Request $request)

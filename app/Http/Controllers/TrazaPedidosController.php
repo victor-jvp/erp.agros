@@ -30,12 +30,46 @@ class TrazaPedidosController extends Controller
 
         $data = PedidoProduccion::with([
             'cliente',
+            'variable.caja',
             'auxiliares.auxiliar',
             'palet_auxiliares.auxiliar',
-            'tarrinas.tarrina'
+            'tarrinas.tarrina',
+            'palet.modelo'
         ])->find($id);
 
         $materiales = array();
+
+        // Palets
+        $material['material'] = $data->palet->modelo->modelo . " - " . $data->palet->formato;
+        $material['cantidad'] = "";
+        $entradas             = $this->movimiento_inventario("entrada_id", $id, "Palet", $data->pallet_id);
+        $material['entradas'] = "";
+        foreach ($entradas as $entrada) {
+            $material['entradas'] .= $entrada->nro_lote . "<br>";
+        }
+        $salidas             = $this->movimiento_inventario("salida_id", $id, "Palet", $data->pallet_id);
+        $material['salidas'] = "";
+        foreach ($salidas as $salida) {
+            $material['salidas']  .= $salida->nro_lote . "<br>";
+            $material['cantidad'] .= $salida->cantidad . "<br>";
+        }
+        $materiales[] = $material;
+
+        // Cajas
+        $material['material'] = $data->variable->caja->formato . " - " . $data->variable->caja->modelo;
+        $material['cantidad'] = "";
+        $entradas             = $this->movimiento_inventario("entrada_id", $id, "Caja", $data->variable->caja_id);
+        $material['entradas'] = "";
+        foreach ($entradas as $entrada) {
+            $material['entradas'] .= $entrada->nro_lote . "<br>";
+        }
+        $salidas             = $this->movimiento_inventario("salida_id", $id, "Caja", $data->variable->caja_id);
+        $material['salidas'] = "";
+        foreach ($salidas as $salida) {
+            $material['salidas']  .= $salida->nro_lote . "<br>";
+            $material['cantidad'] .= $salida->cantidad . "<br>";
+        }
+        $materiales[] = $material;
 
         if (count($data->tarrinas) > 0) {
             foreach ($data->tarrinas as $detalle) {
