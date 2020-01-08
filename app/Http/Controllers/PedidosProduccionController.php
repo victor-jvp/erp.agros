@@ -846,12 +846,42 @@ class PedidosProduccionController extends Controller
             'cliente',
             'tarrinas.tarrina',
             'auxiliares.auxiliar',
-            'palet_auxiliares.auxiliar'
+            'palet_auxiliares.auxiliar',
+            'palet.modelo',
+            'variable.caja'
         ])->withCultivos($semana, $anio, $cultivo)->where('dia_id', '=', $dia)->get();
 
 
         foreach ($pedidos as $p => $pedido)
         {
+            $entrada = InventarioRel::entrada()
+                                    ->where('pedido_id', $pedido->id)
+                                    ->where('entrada.categoria', '=', 'Palet')
+                                    ->where('entrada.categoria_id', $pedido->pallet_id)
+                                    ->get();
+            $pedidos{$p}->palets_entradas = $entrada;
+
+            $salida = InventarioRel::salida()
+                                   ->where('pedido_id', $pedido->id)
+                                   ->where('salida.categoria', '=', 'Palet')
+                                   ->where('salida.categoria_id', $pedido->pallet_id)
+                                   ->get();
+            $pedidos{$p}->palets_salidas = $salida;
+
+            $entrada = InventarioRel::entrada()
+                                    ->where('pedido_id', $pedido->id)
+                                    ->where('entrada.categoria', '=', 'Palet')
+                                    ->where('entrada.categoria_id', $pedido->variable->caja_id)
+                                    ->get();
+            $pedidos{$p}->cajas_entradas = $entrada;
+
+            $salida = InventarioRel::salida()
+                                   ->where('pedido_id', $pedido->id)
+                                   ->where('salida.categoria', '=', 'Palet')
+                                   ->where('salida.categoria_id', $pedido->variable->caja_id)
+                                   ->get();
+            $pedidos{$p}->cajas_salidas = $salida;
+
             foreach ($pedido->tarrinas as $i => $row)
             {
                 $entrada = InventarioRel::entrada()

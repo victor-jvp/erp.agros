@@ -58,6 +58,59 @@
                         <th class="text-right">Nº de Orden: {{ $pedido->nro_orden }}</th>
                         <th colspan="5">Cliente: {{ $pedido->cliente->razon_social }}</th>
                     </tr>
+
+
+                    <tr>
+                        <td>Palet</td>
+                        <td>{{ $pedido->palet->modelo->modelo." - ".$pedido->palet->formato }}</td>
+                        <td class="text-right">
+                            @foreach ($pedido->palets_salidas as $salida)
+                                <p style="padding: 0px;">{{ $salida->cantidad }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($pedido->palets_entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->nro_lote }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($pedido->palets_salidas as $salida)
+                                <p style="padding: 0px;">{{ $salida->nro_lote }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($pedido->palets_entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
+                            @endforeach
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Caja</td>
+                        <td>{{ $pedido->variable->caja->formato." - ".$pedido->variable->caja->modelo }}</td>
+                        <td class="text-right">
+                            @foreach ($pedido->cajas_salidas as $salida)
+                                <p style="padding: 0px;">{{ $salida->cantidad }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($pedido->cajas_entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->nro_lote }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($pedido->cajas_salidas as $salida)
+                                <p style="padding: 0px;">{{ $salida->nro_lote }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($pedido->cajas_entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
+                            @endforeach
+                        </td>
+                    </tr>
+
+
                     @foreach($pedido->tarrinas as $tarrina)
                         <tr>
                             <td>Tarrina</td>
@@ -84,6 +137,7 @@
                             </td>
                         </tr>
                     @endforeach
+
                     @foreach($pedido->auxiliares as $auxiliar)
                         <tr>
                             <td>Auxiliar</td>
