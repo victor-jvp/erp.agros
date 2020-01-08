@@ -57,20 +57,20 @@
                             <div class="col-md-2 mb-3">
                                 <br>
 
-                                @if(file_exists( './logos/logo_emp.jpg' ))
-                                    <a href="{{ asset('logos/logo_emp.jpg') }}"
+                                @if(file_exists('storage/logo_emp.jpg' ))
+                                    <a target="_blank" href="{{ asset('storage/logo_emp.jpg') }}"
                                        class="btn btn-outline-primary btn-icon m-1">
                                         <span class="ul-btn__icon"><i class="i-File-Text--Image"></i></span>
                                         <span class="ul-btn__text">Ver Logo</span>
                                     </a>
-                                @elseif(file_exists( './logos/logo_emp.png' ))
-                                    <a href="{{ asset('logos/logo_emp.png') }}"
+                                @elseif(file_exists( 'storage/logo_emp.png' ))
+                                    <a target="_blank" href="{{ asset('storage/logo_emp.png') }}"
                                        class="btn btn-outline-primary btn-icon m-1">
                                         <span class="ul-btn__icon"><i class="i-File-Text--Image"></i></span>
                                         <span class="ul-btn__text">Ver Logo</span>
                                     </a>
-                                @elseif(file_exists( './logos/logo_emp.gif' ))
-                                    <a href="{{ asset('logos/logo_emp.gif') }}"
+                                @elseif(file_exists( 'storage/logo_emp.gif' ))
+                                    <a target="_blank" href="{{ asset('storage/logo_emp.gif') }}"
                                        class="btn btn-outline-primary btn-icon m-1">
                                         <span class="ul-btn__icon"><i class="i-File-Text--Image"></i></span>
                                         <span class="ul-btn__text">Ver Logo</span>

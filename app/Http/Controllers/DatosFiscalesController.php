@@ -38,19 +38,19 @@ class DatosFiscalesController extends Controller
 
         if (!is_null($request->file('file'))) {
 
-            if (file_exists('./logos/logo_emp.jpg')) {
-                unlink('./logos/logo_emp.jpg');
+            if (file_exists('storage/logo_emp.jpg')) {
+                unlink('storage/logo_emp.jpg');
             }
 
-            if (file_exists('./logos/logo_emp.png')) {
-                unlink('./logos/logo_emp.png');
+            if (file_exists('storage/logo_emp.png')) {
+                unlink('storage/logo_emp.png');
             }
 
-            if (file_exists('./logos/logo_emp.gif')) {
-                unlink('./logos/logo_emp.gif');
+            if (file_exists('storage/logo_emp.gif')) {
+                unlink('storage/logo_emp.gif');
             }
 
-            $request->file('file')->move('logos/', 'logo_emp.' . strtolower($request->file('file')->getClientOriginalExtension()));
+            $request->file('file')->move('storage/', 'logo_emp.' . strtolower($request->file('file')->getClientOriginalExtension()));
         }
 
         $empresa->save();

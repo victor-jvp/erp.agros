@@ -16,12 +16,12 @@
                 <tbody>
                 <tr>
                     @php
-                        if(file_exists( './logos/logo_emp.jpg' ))
-                        $file =  './logos/logo_emp.jpg';
-                        elseif(file_exists( './logos/logo_emp.png' ))
-                        $file =  './logos/logo_emp.png';
-                        elseif(file_exists( './logos/logo_emp.gif' ))
-                        $file =  './logos/logo_emp.gif';
+                        if(file_exists( 'storage/logo_emp.jpg' ))
+                        $file =  'storage/logo_emp.jpg';
+                        elseif(file_exists( 'storage/logo_emp.png' ))
+                        $file =  'storage/logo_emp.png';
+                        elseif(file_exists( 'storage/logo_emp.gif' ))
+                        $file =  'storage/logo_emp.gif';
                         else
                         $file = "javascript:void(0)"
                     @endphp
