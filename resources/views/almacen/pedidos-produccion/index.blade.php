@@ -454,6 +454,42 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
+
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <label for="stock_caja">Caja</label>
+                                                <input type="text" id="stock_caja" class="form-control" readonly>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="">Stock por Palet</label>
+                                                <input type="number" class="form-control" readonly>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="">Stock Real</label>
+                                                <input type="number" class="form-control" readonly>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="">Total Salida</label>
+                                                <input type="number" class="form-control" readonly>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <label for="stock_palet">Palet</label>
+                                                <input type="text" id="stock_palet" class="form-control" readonly>
+                                            </div>
+                                            <div class="col-md-3 mb-3 push-md-3">
+                                                <label for="">Stock Real</label>
+                                                <input type="number" class="form-control" readonly>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="">Total Salida</label>
+                                                <input type="number" class="form-control" readonly>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
                                             <div class="col-md-2 text-right">
                                                 <button type="button" class="btn btn-primary" id="btnAddNewStock">
@@ -1545,6 +1581,7 @@
                         }
 
                         table_inventario_disponible.rows().remove();
+
                         for (i = 0; i < json.data.length; i++) {
                             var row = json.data[i];
                             var descripcion =
@@ -1565,12 +1602,11 @@
                             }
                             descripcion += "</select>";
                             var options = '<a href="javascript:void(0);"\n' +
-                                '                                                                           class="text-danger mr-2 delete"\n' +
-                                '                                                                           data-toggle="tooltip" data-placement="top"\n' +
-                                '                                                                           title=""\n' +
-                                '                                                                           data-original-title="Borrar">\n' +
-                                '                                                                            <i class="nav-icon i-Close-Window font-weight-bold"></i>\n' +
-                                '                                                                        </a>';
+                                'class="text-danger mr-2 delete"\n' +
+                                'data-toggle="tooltip" data-placement="top"\n' +
+                                'title="" data-original-title="Borrar">\n' +
+                                '<i class="nav-icon i-Close-Window font-weight-bold"></i>\n' +
+                                '</a>';
                             var total_salida = cajas * row.necesarios;
                             if (row.categoria == "Auxiliar Palet") {
                                 total_salida = palets * row.necesarios;
