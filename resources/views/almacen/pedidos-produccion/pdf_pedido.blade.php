@@ -83,6 +83,16 @@
                 </tr>
                 </thead>
                 <tbody>
+                <tr>
+                    <td>Palet</td>
+                    <td>{{ $pedido->palet->modelo->modelo.' - '.$pedido->palet->formato }}</td>
+                    <td class="text-right">{{ $pedido->pallet_cantidad }}</td>
+                </tr>
+                <tr>
+                    <td>Caja</td>
+                    <td>{{ $pedido->variable->caja->formato.' - '.$pedido->variable->caja->modelo }}</td>
+                    <td class="text-right">{{ $pedido->cajas }}</td>
+                </tr>
                 @foreach($pedido->tarrinas as $tarrina)
                     <tr>
                         <td>Tarrina</td>

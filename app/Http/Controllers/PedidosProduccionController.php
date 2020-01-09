@@ -855,6 +855,8 @@ class PedidosProduccionController extends Controller
             'transporte',
             'destino',
             'variable.compuesto.cultivo',
+            'variable.caja',
+            'palet.modelo',
             'tarrinas.tarrina',
             'auxiliares.auxiliar',
             'palet_auxiliares.auxiliar'
