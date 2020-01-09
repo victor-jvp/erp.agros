@@ -77,7 +77,6 @@
 
                     <form action="/almacen/pedidos-produccion" method="POST" id="pedido_form">
                         {{ csrf_field() }}
-
                         {{--Modal Nuevo Pedido--}}
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                              aria-hidden="true" id="modal-pedido">
@@ -179,6 +178,7 @@
 
                     <form action="/almacen/pedidos-produccion/update" method="POST" id="edit_pedido_form">
                         {{ csrf_field('PUT') }}
+                        <input type="hidden" id="edit_pedido_id" name="pedido_id">
 
                         {{-- Modal Editar Pedido --}}
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -950,6 +950,7 @@
                     $('#edit_cantidad_palet').val(null);
                 }
             });
+
             $("#edit_cajas").change(function (e) {
                 var kg = $('#edit_producto_id').find('option:selected').attr('data-kg');
                 var cajas = $('#edit_cajas').val();
@@ -969,6 +970,9 @@
                 } else {
                     $('#edit_cantidad_palet').val(null);
                 }
+
+                var pedido_id = $("#edit_pedido_id").val();
+                fillModalInventarioDisponible(pedido_id);
             });
             $("#edit_palet_id").change(function (e) {
                 var total_cajas = $('#edit_cajas').val();
@@ -1161,6 +1165,7 @@
                     ClearModalEditPedidoProduccion();
                     if (data == null) return;
 
+                    $("#edit_pedido_id").val(id);
                     $("#edit_nro_orden").val(data.nro_orden);
                     $("#edit_anio").val(data.anio);
                     $("#edit_semana").val(data.semana);
@@ -1558,10 +1563,18 @@
                             if (row.categoria == "Auxiliar Palet") {
                                 total_salida = palets * row.necesarios;
                             }
+                            total_salida = total_salida.toFixed(2);
 
                             if (row.categoria == "Caja" || row.categoria == "Palet") {
                                 descripcion = "<input class='form-control' disabled type='text' value='" + row.descripcion + "'>";
-                                total_salida = row.necesarios;
+                                if (row.categoria == "Caja") {
+                                    total_salida = cajas;
+                                    row.necesarios = cajas;
+                                } else {
+                                    total_salida = palets;
+                                    row.necesarios = palets;
+                                }
+
                                 var options = "";
                                 rowDisabled = "readonly";
                             } else {
@@ -1597,7 +1610,7 @@
                                 '<input type="number" class="form-control cantidad" name="cantidad[]" value="' +
                                 row.necesarios + '" step="0.01" min="0.01" ' + rowDisabled + '/>',
                                 '<input type="number" name="total[]" class="form-control total" value="' +
-                                total_salida.toFixed(2) + '" step="0.01" min="0.01" max="' + row
+                                total_salida + '" step="0.01" min="0.01" max="' + row
                                     .disponible + '"/>',
                                 options
                             ]);
