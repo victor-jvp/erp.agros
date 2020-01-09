@@ -456,41 +456,6 @@
                                     <div class="modal-body">
 
                                         <div class="row">
-                                            <div class="col-md-3 mb-3">
-                                                <label for="stock_caja">Caja</label>
-                                                <input type="text" id="stock_caja" class="form-control" readonly>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Stock por Palet</label>
-                                                <input type="number" class="form-control" readonly>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Stock Real</label>
-                                                <input type="number" class="form-control" readonly>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Total Salida</label>
-                                                <input type="number" class="form-control" readonly>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row">
-                                            <div class="col-md-3 mb-3">
-                                                <label for="stock_palet">Palet</label>
-                                                <input type="text" id="stock_palet" class="form-control" readonly>
-                                            </div>
-                                            <div class="col-md-3 mb-3 push-md-3">
-                                                <label for="">Stock Real</label>
-                                                <input type="number" class="form-control" readonly>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Total Salida</label>
-                                                <input type="number" class="form-control" readonly>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
                                             <div class="col-md-2 text-right">
                                                 <button type="button" class="btn btn-primary" id="btnAddNewStock">
                                                     Agregar
@@ -1587,29 +1552,39 @@
                             var descripcion =
                                 "<select name='parte[]' class='form-control chosen_table' required>";
                             var arreglo;
-                            if (row.categoria == "Tarrina") {
-                                arreglo = json.tarrinas;
-                            } else {
-                                arreglo = json.auxiliares;
-                            }
-                            for (a = 0; a < arreglo.length; a++) {
-                                var selected = "";
-                                if (arreglo[a].id == row.item_id) {
-                                    selected = "selected";
-                                }
-                                descripcion += '<option ' + selected + ' value="' + arreglo[a].id + '">' +
-                                    arreglo[a].modelo + '</option>';
-                            }
-                            descripcion += "</select>";
-                            var options = '<a href="javascript:void(0);"\n' +
-                                'class="text-danger mr-2 delete"\n' +
-                                'data-toggle="tooltip" data-placement="top"\n' +
-                                'title="" data-original-title="Borrar">\n' +
-                                '<i class="nav-icon i-Close-Window font-weight-bold"></i>\n' +
-                                '</a>';
+                            var rowDisabled = "";
+
                             var total_salida = cajas * row.necesarios;
                             if (row.categoria == "Auxiliar Palet") {
                                 total_salida = palets * row.necesarios;
+                            }
+
+                            if (row.categoria == "Caja" || row.categoria == "Palet") {
+                                descripcion = "<input class='form-control' disabled type='text' value='" + row.descripcion + "'>";
+                                total_salida = row.necesarios;
+                                var options = "";
+                                rowDisabled = "readonly";
+                            } else {
+                                if (row.categoria == "Tarrina") {
+                                    arreglo = json.tarrinas;
+                                } else {
+                                    arreglo = json.auxiliares;
+                                }
+                                for (a = 0; a < arreglo.length; a++) {
+                                    var selected = "";
+                                    if (arreglo[a].id == row.item_id) {
+                                        selected = "selected";
+                                    }
+                                    descripcion += '<option ' + selected + ' value="' + arreglo[a].id + '">' +
+                                        arreglo[a].modelo + '</option>';
+                                }
+                                descripcion += "</select>";
+                                var options = '<a href="javascript:void(0);"\n' +
+                                    'class="text-danger mr-2 delete"\n' +
+                                    'data-toggle="tooltip" data-placement="top"\n' +
+                                    'title="" data-original-title="Borrar">\n' +
+                                    '<i class="nav-icon i-Close-Window font-weight-bold"></i>\n' +
+                                    '</a>';
                             }
 
                             table_inventario_disponible.row.add([
@@ -1620,7 +1595,7 @@
                                 row.default + '" step="0.01" placeholder="0.00" min="0.01" readonly/>',
                                 '<label class="disponible">' + row.disponible + '</label>',
                                 '<input type="number" class="form-control cantidad" name="cantidad[]" value="' +
-                                row.necesarios + '" step="0.01" min="0.01"/>',
+                                row.necesarios + '" step="0.01" min="0.01" ' + rowDisabled + '/>',
                                 '<input type="number" name="total[]" class="form-control total" value="' +
                                 total_salida.toFixed(2) + '" step="0.01" min="0.01" max="' + row
                                     .disponible + '"/>',
