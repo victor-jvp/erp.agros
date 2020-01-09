@@ -39,10 +39,26 @@
                     </td>
                     <td style="font-size: 10pt" width="50%">
                         <ul>
-                            <li><b>Destino:</b> {{ (isset($pedido->destino )) ? $pedido->destino->descripcion : "" }}
+                            <li>
+                                <b>Destino:</b>
+                                {{ (isset($pedido->destino )) ? $pedido->destino->descripcion : "" }}
+                                <ul>
+                                    {!! (isset($pedido->destino) && !is_null($pedido->destino->direccion)) ? "<li><b>Dirección:</b> ".$pedido->destino->direccion."</li>" : "" !!}
+                                    {!! (isset($pedido->destino) && !is_null($pedido->destino->poblacion)) ? "<li><b>Población:</b> ".$pedido->destino->poblacion."</li>" : ""  !!}
+                                    {!! (isset($pedido->destino) && !is_null($pedido->destino->ciudad)) ? "<li><b>Ciudad:</b> ".$pedido->destino->ciudad."</li>" : ""  !!}
+                                    {!! (isset($pedido->destino) && !is_null($pedido->destino->pais)) ? "<li><b>País:</b> ".$pedido->destino->pais."</li>" : ""  !!}
+                                </ul>
                             </li>
                             <li>
                                 <b>Transporte:</b> {{ (isset($pedido->transporte)) ? $pedido->transporte->razon_social : "" }}
+                                <ul>
+                                    {!! (isset($pedido->transporte) && !is_null($pedido->transporte->direccion)) ? "<li><b>Dirección:</b> ".$pedido->transporte->direccion."</li>" : "" !!}
+                                    {!! (isset($pedido->transporte) && !is_null($pedido->transporte->poblacion)) ? "<li><b>Localidad:</b> ".$pedido->transporte->localidad."</li>" : ""  !!}
+                                    {!! (isset($pedido->transporte) && !is_null($pedido->transporte->ciudad)) ? "<li><b>Ciudad:</b> ".$pedido->transporte->ciudad."</li>" : ""  !!}
+                                    {!! (isset($pedido->transporte) && !is_null($pedido->transporte->pais)) ? "<li><b>País:</b> ".$pedido->transporte->pais."</li>" : ""  !!}
+                                    {!! (isset($pedido->transporte) && !is_null($pedido->transporte->telefono)) ? "<li><b>Teléfono:</b> ".$pedido->transporte->telefono."</li>" : ""  !!}
+                                    {!! (isset($pedido->transporte) && !is_null($pedido->transporte->email)) ? "<li><b>Email:</b> ".$pedido->transporte->email."</li>" : ""  !!}
+                                </ul>
                             </li>
                         </ul>
                     </td>
