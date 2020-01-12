@@ -251,6 +251,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('configuracion/usuarios', 'UsuariosController@store')->name('usuarios.store');
     Route::post('configuracion/usuarios/update/{usuario}', 'UsuariosController@update')->name('usuarios.update');
 
+    //Roles de Usuarios
+    Route::get('configuracion/roles', 'RolesController@index')->name('roles.index');
+    Route::get('configuracion/roles/create', 'RolesController@create')->name('roles.create');
+    Route::get('configuracion/roles/show/{rol}', 'RolesController@show')->name('roles.show');
+    Route::post('configuracion/roles', 'RolesController@store')->name('roles.store');
+    Route::post('configuracion/roles/update/{rol}', 'RolesController@update')->name('roles.update');
+
 #endregion
 });
 

@@ -213,7 +213,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#">
+                <a class="{{ Route::currentRouteName()=='roles.index' ? 'open' : '' }}"
+                   href="{{ route('roles.index') }}">
                     <i class="nav-icon i-Find-User"></i>
                     <span class="item-name">Roles de Usuarios</span>
                 </a>
