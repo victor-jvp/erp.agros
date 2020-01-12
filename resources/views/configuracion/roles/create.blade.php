@@ -28,10 +28,10 @@
                                 <label for="rol">Rol</label>
                                 <input type="text" class="form-control" id="rol" required name="rol">
                             </div>
-                            <div class="col-md-8 mb-3">
-                                <label for="descripcion">Descripción</label>
-                                <input type="text" class="form-control" id="descripcion" name="descripcion">
-                            </div>
+{{--                            <div class="col-md-8 mb-3">--}}
+{{--                                <label for="descripcion">Descripción</label>--}}
+{{--                                <input type="text" class="form-control" id="descripcion" name="descripcion">--}}
+{{--                            </div>--}}
                         </div>
 
                         <div class="row">
