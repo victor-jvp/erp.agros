@@ -276,48 +276,63 @@ class PedidosProduccionController extends Controller
 
             $porSalir = $salida->cantidad;
 
-            /*do {
-                $entrada = Inventario::where('categoria', '=', 'Caja')->where('tipo_mov', '=', 'E')->where('isDisp', '=', true)->where('categoria_id', $pedido->variable->caja_id)->orderBy('id', 'asc')->first();
+            // Validar si existe alguna entrada de Caja
+            $hasEntries = Inventario::where('categoria', '=', 'Caja')
+                                   ->where('tipo_mov', '=', 'E')
+                                   ->where('isDisp', '=', true)
+                                   ->where('categoria_id', $pedido->variable->caja_id)
+                                   ->count();
 
-                if (is_null($entrada)) {
-                    $isCompleted = true;
-                    break;
-                }
+            if ($hasEntries > 0)
+            {
+                do {
+                    $entrada = Inventario::where('categoria', '=', 'Caja')
+                                         ->where('tipo_mov', '=', 'E')
+                                         ->where('isDisp', '=', true)
+                                         ->where('categoria_id', $pedido->variable->caja_id)
+                                         ->orderBy('id', 'asc')->first();
 
-                $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
-
-                $dispEntrada = $entrada->cantidad - $entradasRel;
-
-                if ($dispEntrada > 0) {
-
-                    if ($dispEntrada >= $porSalir) {
+                    if (is_null($entrada)) {
                         $isCompleted = true;
-                    }
-                    else {
-                        $porSalir = $porSalir - $dispEntrada;
+                        break;
                     }
 
-                    $rel             = new InventarioRel();
-                    $rel->entrada_id = $entrada->id;
-                    $rel->salida_id  = $salida->id;
-                    $rel->pedido_id  = $pedido->id;
-                    $rel->cantidad   = $porSalir;
-                    $rel->save();
-                }
+                    $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
 
-                if ($entrada->cantidad <= $entradasRel) {
-                    $entrada->isDisp = false;
-                    $entrada->save();
-                }
+                    $dispEntrada = $entrada->cantidad - $entradasRel;
 
-            } while (!$isCompleted);*/
+                    if ($dispEntrada > 0) {
 
-            $rel             = new InventarioRel();
-            $rel->entrada_id = null;
-            $rel->salida_id  = $salida->id;
-            $rel->pedido_id  = $pedido->id;
-            $rel->cantidad   = $porSalir;
-            $rel->save();
+                        if ($dispEntrada >= $porSalir) {
+                            $isCompleted = true;
+                        }
+                        else {
+                            $porSalir = $porSalir - $dispEntrada;
+                        }
+
+                        $rel             = new InventarioRel();
+                        $rel->entrada_id = $entrada->id;
+                        $rel->salida_id  = $salida->id;
+                        $rel->pedido_id  = $pedido->id;
+                        $rel->cantidad   = $porSalir;
+                        $rel->save();
+                    }
+
+                    if ($entrada->cantidad <= $entradasRel) {
+                        $entrada->isDisp = false;
+                        $entrada->save();
+                    }
+
+                } while (!$isCompleted);
+            }
+            else{
+                $rel             = new InventarioRel();
+                $rel->entrada_id = null;
+                $rel->salida_id  = $salida->id;
+                $rel->pedido_id  = $pedido->id;
+                $rel->cantidad   = $porSalir;
+                $rel->save();
+            }
         }
 
         /* Salida de Palets */
@@ -336,51 +351,64 @@ class PedidosProduccionController extends Controller
 
             $porSalir = $salida->cantidad;
 
-            //TODO: Incluir rutina de guardado y verificacion de que si no hay entradas, dejar null el campo entrada_id
+            // Validar si existe alguna entrada
+            $hasEntries = Inventario::where('categoria', '=', 'Palet')
+                                 ->where('tipo_mov', '=', 'E')
+                                 ->where('isDisp', '=', true)
+                                 ->where('categoria_id', $pedido->pallet_id)
+                                 ->count();
 
+            if ($hasEntries > 0) {
 
-            /*do {
-                $entrada = Inventario::where('categoria', '=', 'Palet')->where('tipo_mov', '=', 'E')->where('isDisp', '=', true)->where('categoria_id', $pedido->pallet_id)->orderBy('id', 'asc')->first();
+                do {
+                    $entrada = Inventario::where('categoria', '=', 'Palet')
+                                         ->where('tipo_mov', '=', 'E')
+                                         ->where('isDisp', '=', true)
+                                         ->where('categoria_id', $pedido->pallet_id)
+                                         ->orderBy('id', 'asc')
+                                         ->first();
 
-                if (is_null($entrada)) {
-                    $isCompleted = true;
-                    break;
-                }
-
-                $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
-
-                $dispEntrada = $entrada->cantidad - $entradasRel;
-
-                if ($dispEntrada > 0) {
-
-                    if ($dispEntrada >= $porSalir) {
+                    if (is_null($entrada)) {
                         $isCompleted = true;
-                    }
-                    else {
-                        $porSalir = $porSalir - $dispEntrada;
+                        break;
                     }
 
-                    $rel             = new InventarioRel();
-                    $rel->entrada_id = $entrada->id;
-                    $rel->salida_id  = $salida->id;
-                    $rel->pedido_id  = $pedido->id;
-                    $rel->cantidad   = $porSalir;
-                    $rel->save();
-                }
+                    $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
 
-                if ($entrada->cantidad <= $entradasRel) {
-                    $entrada->isDisp = false;
-                    $entrada->save();
-                }
+                    $dispEntrada = $entrada->cantidad - $entradasRel;
 
-            } while (!$isCompleted);*/
+                    if ($dispEntrada > 0) {
 
-            $rel             = new InventarioRel();
-            $rel->entrada_id = null;
-            $rel->salida_id  = $salida->id;
-            $rel->pedido_id  = $pedido->id;
-            $rel->cantidad   = $porSalir;
-            $rel->save();
+                        if ($dispEntrada >= $porSalir) {
+                            $isCompleted = true;
+                        }
+                        else {
+                            $porSalir = $porSalir - $dispEntrada;
+                        }
+
+                        $rel             = new InventarioRel();
+                        $rel->entrada_id = $entrada->id;
+                        $rel->salida_id  = $salida->id;
+                        $rel->pedido_id  = $pedido->id;
+                        $rel->cantidad   = $porSalir;
+                        $rel->save();
+                    }
+
+                    if ($entrada->cantidad <= $entradasRel) {
+                        $entrada->isDisp = false;
+                        $entrada->save();
+                    }
+
+                } while (!$isCompleted);
+            }
+            else{
+                $rel             = new InventarioRel();
+                $rel->entrada_id = null;
+                $rel->salida_id  = $salida->id;
+                $rel->pedido_id  = $pedido->id;
+                $rel->cantidad   = $porSalir;
+                $rel->save();
+            }
         }
 
         /* Salida de materiales del producto compuesto */
@@ -402,41 +430,57 @@ class PedidosProduccionController extends Controller
 
                 $porSalir = $salida->cantidad;
 
-                do {
-                    $entrada = Inventario::where('categoria', '=', 'Tarrina')->where('tipo_mov', '=', 'E')->where('isDisp', '=', true)->where('categoria_id', $tarrina->tarrina_id)->orderBy('id', 'asc')->first();
+                $hasEntries = Inventario::where('categoria', '=', 'Tarrina')
+                                        ->where('tipo_mov', '=', 'E')
+                                        ->where('isDisp', '=', true)
+                                        ->where('categoria_id', $tarrina->tarrina_id)
+                                        ->count();
 
-                    if (is_null($entrada)) {
-                        $isCompleted = true;
-                        break;
-                    }
+                if ($hasEntries > 0)
+                {
+                    do {
+                        $entrada = Inventario::where('categoria', '=', 'Tarrina')->where('tipo_mov', '=', 'E')->where('isDisp', '=', true)->where('categoria_id', $tarrina->tarrina_id)->orderBy('id', 'asc')->first();
 
-                    $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
-
-                    $dispEntrada = $entrada->cantidad - $entradasRel;
-
-                    if ($dispEntrada > 0) {
-
-                        if ($dispEntrada >= $porSalir) {
+                        if (is_null($entrada)) {
                             $isCompleted = true;
-                        }
-                        else {
-                            $porSalir = $porSalir - $dispEntrada;
+                            break;
                         }
 
-                        $rel             = new InventarioRel();
-                        $rel->entrada_id = $entrada->id;
-                        $rel->salida_id  = $salida->id;
-                        $rel->pedido_id  = $pedido->id;
-                        $rel->cantidad   = $porSalir;
-                        $rel->save();
-                    }
+                        $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
 
-                    if ($entrada->cantidad <= $entradasRel) {
-                        $entrada->isDisp = false;
-                        $entrada->save();
-                    }
+                        $dispEntrada = $entrada->cantidad - $entradasRel;
 
-                } while (!$isCompleted);
+                        if ($dispEntrada > 0) {
+
+                            if ($dispEntrada >= $porSalir) {
+                                $isCompleted = true;
+                            }
+                            else {
+                                $porSalir = $porSalir - $dispEntrada;
+                            }
+
+                            $rel             = new InventarioRel();
+                            $rel->entrada_id = $entrada->id;
+                            $rel->salida_id  = $salida->id;
+                            $rel->pedido_id  = $pedido->id;
+                            $rel->cantidad   = $porSalir;
+                            $rel->save();
+                        }
+
+                        if ($entrada->cantidad <= $entradasRel) {
+                            $entrada->isDisp = false;
+                            $entrada->save();
+                        }
+
+                    } while (!$isCompleted);
+                }else{
+                    $rel             = new InventarioRel();
+                    $rel->entrada_id = null;
+                    $rel->salida_id  = $salida->id;
+                    $rel->pedido_id  = $pedido->id;
+                    $rel->cantidad   = $porSalir;
+                    $rel->save();
+                }
             }
         }
         if (count($pedido->auxiliares) > 0) {
@@ -457,41 +501,59 @@ class PedidosProduccionController extends Controller
 
                 $porSalir = $salida->cantidad;
 
-                do {
-                    $entrada = Inventario::where('categoria', '=', 'Auxiliar')->where('tipo_mov', '=', 'E')->where('isDisp', '=', true)->where('categoria_id', $auxiliar->auxiliar_id)->orderBy('id', 'asc')->first();
+                $hasEntries = Inventario::where('categoria', '=', 'Auxiliar')
+                                        ->where('tipo_mov', '=', 'E')
+                                        ->where('isDisp', '=', true)
+                                        ->where('categoria_id', $auxiliar->auxiliar_id)
+                                        ->count();
 
-                    if (is_null($entrada)) {
-                        $isCompleted = true;
-                        break;
-                    }
+                if ($hasEntries > 0)
+                {
+                    do {
+                        $entrada = Inventario::where('categoria', '=', 'Auxiliar')->where('tipo_mov', '=', 'E')->where('isDisp', '=', true)->where('categoria_id', $auxiliar->auxiliar_id)->orderBy('id', 'asc')->first();
 
-                    $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
-
-                    $dispEntrada = $entrada->cantidad - $entradasRel;
-
-                    if ($dispEntrada > 0) {
-
-                        if ($dispEntrada >= $porSalir) {
+                        if (is_null($entrada)) {
                             $isCompleted = true;
-                        }
-                        else {
-                            $porSalir = $porSalir - $dispEntrada;
+                            break;
                         }
 
-                        $rel             = new InventarioRel();
-                        $rel->entrada_id = $entrada->id;
-                        $rel->salida_id  = $salida->id;
-                        $rel->pedido_id  = $pedido->id;
-                        $rel->cantidad   = $porSalir;
-                        $rel->save();
-                    }
+                        $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
 
-                    if ($entrada->cantidad <= $entradasRel) {
-                        $entrada->isDisp = false;
-                        $entrada->save();
-                    }
+                        $dispEntrada = $entrada->cantidad - $entradasRel;
 
-                } while (!$isCompleted);
+                        if ($dispEntrada > 0) {
+
+                            if ($dispEntrada >= $porSalir) {
+                                $isCompleted = true;
+                            }
+                            else {
+                                $porSalir = $porSalir - $dispEntrada;
+                            }
+
+                            $rel             = new InventarioRel();
+                            $rel->entrada_id = $entrada->id;
+                            $rel->salida_id  = $salida->id;
+                            $rel->pedido_id  = $pedido->id;
+                            $rel->cantidad   = $porSalir;
+                            $rel->save();
+                        }
+
+                        if ($entrada->cantidad <= $entradasRel) {
+                            $entrada->isDisp = false;
+                            $entrada->save();
+                        }
+
+                    } while (!$isCompleted);
+                }
+                else{
+                    $rel             = new InventarioRel();
+                    $rel->entrada_id = null;
+                    $rel->salida_id  = $salida->id;
+                    $rel->pedido_id  = $pedido->id;
+                    $rel->cantidad   = $porSalir;
+                    $rel->save();
+                }
+
             }
         }
         if (count($pedido->palet_auxiliares) > 0) {
@@ -512,41 +574,57 @@ class PedidosProduccionController extends Controller
 
                 $porSalir = $salida->cantidad;
 
-                do {
-                    $entrada = Inventario::where('categoria', '=', 'Auxiliar')->where('tipo_mov', '=', 'E')->where('isDisp', '=', true)->where('categoria_id', $auxiliar->auxiliar_id)->orderBy('id', 'asc')->first();
+                $hasEntries = Inventario::where('categoria', '=', 'Auxiliar')
+                                        ->where('tipo_mov', '=', 'E')
+                                        ->where('isDisp', '=', true)
+                                        ->where('categoria_id', $auxiliar->auxiliar_id)
+                                        ->count();
 
-                    if (is_null($entrada)) {
-                        $isCompleted = true;
-                        break;
-                    }
+                if($hasEntries > 0)
+                {
+                    do {
+                        $entrada = Inventario::where('categoria', '=', 'Auxiliar')->where('tipo_mov', '=', 'E')->where('isDisp', '=', true)->where('categoria_id', $auxiliar->auxiliar_id)->orderBy('id', 'asc')->first();
 
-                    $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
-
-                    $dispEntrada = $entrada->cantidad - $entradasRel;
-
-                    if ($dispEntrada > 0) {
-
-                        if ($dispEntrada >= $porSalir) {
+                        if (is_null($entrada)) {
                             $isCompleted = true;
-                        }
-                        else {
-                            $porSalir = $porSalir - $dispEntrada;
+                            break;
                         }
 
-                        $rel             = new InventarioRel();
-                        $rel->entrada_id = $entrada->id;
-                        $rel->salida_id  = $salida->id;
-                        $rel->pedido_id  = $pedido->id;
-                        $rel->cantidad   = $porSalir;
-                        $rel->save();
-                    }
+                        $entradasRel = InventarioRel::where('entrada_id', $entrada->id)->sum('cantidad');
 
-                    if ($entrada->cantidad <= $entradasRel) {
-                        $entrada->isDisp = false;
-                        $entrada->save();
-                    }
+                        $dispEntrada = $entrada->cantidad - $entradasRel;
 
-                } while (!$isCompleted);
+                        if ($dispEntrada > 0) {
+
+                            if ($dispEntrada >= $porSalir) {
+                                $isCompleted = true;
+                            }
+                            else {
+                                $porSalir = $porSalir - $dispEntrada;
+                            }
+
+                            $rel             = new InventarioRel();
+                            $rel->entrada_id = $entrada->id;
+                            $rel->salida_id  = $salida->id;
+                            $rel->pedido_id  = $pedido->id;
+                            $rel->cantidad   = $porSalir;
+                            $rel->save();
+                        }
+
+                        if ($entrada->cantidad <= $entradasRel) {
+                            $entrada->isDisp = false;
+                            $entrada->save();
+                        }
+
+                    } while (!$isCompleted);
+                }else{
+                    $rel             = new InventarioRel();
+                    $rel->entrada_id = null;
+                    $rel->salida_id  = $salida->id;
+                    $rel->pedido_id  = $pedido->id;
+                    $rel->cantidad   = $porSalir;
+                    $rel->save();
+                }
             }
         }
     }
