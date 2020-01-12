@@ -30,11 +30,18 @@
                             </div>
                             <div class="col-md-8 mb-3">
                                 <label for="descripcion">Descripción</label>
-                                <input type="text" class="form-control" id="descripcion" required name="descripcion">
+                                <input type="text" class="form-control" id="descripcion" name="descripcion">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button class="btn btn-primary" type="submit">Guardar</button>
                             </div>
                         </div>
 
                         <hr>
+
                         <h4 class="card-title mb-3">Permisos del Rol</h4>
 
                         <div class="row">
@@ -45,9 +52,8 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th scope="col">Leer</th>
-                                        <th scope="col">Escribir</th>
-                                        <th scope="col">Eliminar</th>
+                                        <th scope="col">Permiso</th>
+                                        <th scope="col" class="text-center">Asignado</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -55,8 +61,13 @@
                                         @foreach ($permisos as $item)
                                             <tr>
                                                 <td>{{ $item->id }}</td>
-                                                <td>{{ $item->rol }}</td>
-                                                <td>{{ $item->descripcion }}</td>
+                                                <td>{{ ucfirst($item->name) }}</td>
+                                                <td class="text-center">
+                                                    <label class="switch switch-success">
+                                                        <input type="checkbox" name="permisos[{{ $item->name }}]">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -64,13 +75,6 @@
                                 </table>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-3">
-                                <button class="btn btn-primary" type="submit">Guardar</button>
-                            </div>
-                        </div>
-
                     </form>
                 </div>
             </div>
@@ -100,7 +104,11 @@
                 columnDefs: [
                     {targets: [0], visible: false},
                 ],
-                order: [[0, 'desc']]
+                order: [[0, 'asc']],
+                ordering: false,
+                searching: false,
+                paging: false,
+                info: false,
             });
 
             $("#btnNuevo").click(function (e) {

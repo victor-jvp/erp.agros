@@ -27,59 +27,19 @@
                         </div>
                     </div>
 
-                    <!-- Modal Agregar Proveedor-->
-                    <div class="modal fade" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal-cliente">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                                <form action="{{ route('roles.store') }}" method="POST">
-                                    @csrf
-
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-cliente-title"></h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-row">
-                                            <div class="col-md-12 mb-3">
-                                                <label for="cif">CIF</label>
-                                                <input type="text" class="form-control" id="cif"
-                                                       placeholder="CIF" required="" name="cif">
-                                            </div>
-                                            <div class="col-md-12 mb-3">
-                                                <label for="razon_social">Razón Social</label>
-                                                <input type="text" class="form-control" id="razon_social"
-                                                       placeholder="Razón Social" required="" name="razon_social">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Cerrar
-                                        </button>
-                                        <button type="submit" class="btn btn-primary">Continuar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
                     <hr>
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table id="table_roles" class="display table table-striped table-bordered"
+                                <table id="table_roles"
+                                       class="table table-striped table-bordered table-sm table-condensed"
                                        style="width:100%">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th scope="col">Rol</th>
-                                        <th scope="col">Descripcion</th>
-                                        <th scope="col">Acciones</th>
+                                        <th scope="col" class="text-center">Acciones</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -87,21 +47,18 @@
                                         @foreach ($roles as $item)
                                             <tr>
                                                 <td>{{ $item->id }}</td>
-                                                <td>{{ $item->rol }}</td>
-                                                <td>{{ $item->descripcion }}</td>
-                                                <td>
-                                                    @if($item->id != 1)
-                                                        <a href="{{ route('roles.show', $item->id) }}"
-                                                           data-toggle="tooltip" data-placement="top" title=""
-                                                           data-original-title="Editar" class="text-success mr-2 edit">
-                                                            <i class="nav-icon i-Pen-2 font-weight-bold "></i>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="text-danger mr-2 delete"
-                                                           data-toggle="tooltip" data-placement="top" title=""
-                                                           data-original-title="Borrar">
-                                                            <i class="nav-icon i-Close-Window font-weight-bold "></i>
-                                                        </a>
-                                                    @endif
+                                                <td>{{ $item->name }}</td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('roles.show', $item->id) }}"
+                                                       data-toggle="tooltip" data-placement="top" title=""
+                                                       data-original-title="Editar" class="text-success mr-2 edit">
+                                                        <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="text-danger mr-2 delete"
+                                                       data-toggle="tooltip" data-placement="top" title=""
+                                                       data-original-title="Borrar">
+                                                        <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach

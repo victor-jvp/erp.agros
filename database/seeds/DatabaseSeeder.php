@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductosCompuestos_cabTableSeeder::class);
         $this->call(ContadoresTableSeeder::class);
         $this->call(CatDiasSemanaSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
     }
 }
