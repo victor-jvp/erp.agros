@@ -79,8 +79,10 @@
                                         <th>ID</th>
                                         <th scope="col">Usuario</th>
                                         <th scope="col">Email</th>
+                                        <th scope="col">Cargo</th>
                                         <th scope="col">Fecha Alta</th>
-                                        <th scope="col">Acciones</th>
+                                        <th scope="col">Ultima Modif.</th>
+                                        <th scope="col" class="text-center">Acciones</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -89,8 +91,10 @@
                                             <td>{{ $usuario->id }}</td>
                                             <td>{{ $usuario->name }}</td>
                                             <td>{{ $usuario->email }}</td>
+                                            <td>{{ $usuario->cargo }}</td>
                                             <td>{{ $usuario->created_at->format('d/m/Y h:i:s a')}}</td>
-                                            <td>
+                                            <td>{{ $usuario->updated_at->format('d/m/Y h:i:s a')}}</td>
+                                            <td class="text-center">
                                             @if($usuario->id != 1)
                                                 <a href="{{ route('usuarios.show', $usuario->id) }}"
                                                    data-toggle="tooltip" data-placement="top" title=""

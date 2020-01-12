@@ -44,9 +44,12 @@ class UsuariosController extends Controller
         //
         $usuario = new User();
 
-        $usuario->name     = $request->name;
-        $usuario->email    = $request->email;
-        $usuario->password = Hash::make($request->password);
+        $usuario->name      = $request->name;
+        $usuario->email     = $request->email;
+        $usuario->cargo     = $request->cargo;
+        $usuario->telefono1 = $request->telefono1;
+        $usuario->telefono2 = $request->telefono2;
+        $usuario->password  = Hash::make($request->password);
 
         $usuario->save();
 
@@ -87,10 +90,14 @@ class UsuariosController extends Controller
         //
         $usuario = User::find($id);
 
-        $usuario->name     = $request->name;
-        $usuario->email    = $request->email;
-        $usuario->password = Hash::make($request->password);
-
+        $usuario->name      = $request->name;
+        $usuario->email     = $request->email;
+        $usuario->cargo     = $request->cargo;
+        $usuario->telefono1 = $request->telefono1;
+        $usuario->telefono2 = $request->telefono2;
+        if ($request->password != ""){
+            $usuario->password = Hash::make($request->password);
+        }
         $usuario->save();
 
         return redirect()->route('usuarios.index');
