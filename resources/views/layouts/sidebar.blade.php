@@ -56,33 +56,36 @@
 
     <div class="sidebar-left-secondary rtl-ps-none" data-perfect-scrollbar data-suppress-scroll-x="true">
         <!-- Submenu Dashboards -->
+        @can('Prevision Acceso')
         <ul class="childNav" data-parent="prevision">
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='prevision.index' ? 'open' : '' }}"
-                   href="{{ route('prevision.index') }}">
+                    href="{{ route('prevision.index') }}">
                     <i class="nav-icon i-Clock-3"></i>
                     <span class="item-name">Panel de control</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='pedidos-campo.index' ? 'open' : '' }}"
-                   href="{{ route('pedidos-campo.index')  }}">
+                    href="{{ route('pedidos-campo.index')  }}">
                     <i class="nav-icon i-Clock-4"></i>
                     <span class="item-name">Pedido Campo</span>
                 </a>
             </li>
         </ul>
+        @endcan
+        @can('Comercial Acceso')
         <ul class="childNav" data-parent="comercial">
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='comercial.dashboard' ? 'open' : '' }}"
-                   href="{{ route('comercial.dashboard') }}">
+                    href="{{ route('comercial.dashboard') }}">
                     <i class="nav-icon i-Dashboard"></i>
                     <span class="item-name">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='pedidos-comercial.index' ? 'open' : '' }}"
-                   href="{{ route('pedidos-comercial.index') }}">
+                    href="{{ route('pedidos-comercial.index') }}">
                     <i class="nav-icon i-File-Clipboard-Text--Image"></i>
                     <span class="item-name">Pedidos Comerciales</span>
                 </a>
@@ -90,63 +93,69 @@
 
             <li class="nav-item">
                 <a class="{{ (Route::currentRouteName()=='clientes.index' || Request::is('comercial/clientes/*')) ? 'open' : '' }}"
-                   href="{{ route('clientes.index') }}">
+                    href="{{ route('clientes.index') }}">
                     <i class="nav-icon i-Receipt"></i>
                     <span class="item-name">Clientes</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ (Route::currentRouteName()=='transportes.index' || Request::is('comercial/transportes/*')) ? 'open' : '' }}"
-                   href="{{ route('transportes.index') }}">
+                    href="{{ route('transportes.index') }}">
                     <i class="nav-icon i-Receipt"></i>
                     <span class="item-name">Transportes</span>
                 </a>
             </li>
         </ul>
+        @endcan
+
+        @can('Almacen Acceso')
         <ul class="childNav" data-parent="almacen">
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='listado-inventario.index' ? 'open' : '' }}"
-                   href="{{ url('almacen/listado-inventario') }}">
+                    href="{{ url('almacen/listado-inventario') }}">
                     <i class="nav-icon i-Receipt-4"></i>
                     <span class="item-name">Listado de Inventario</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='entrada-productos.index' ? 'open' : '' }}"
-                   href="{{ url('almacen/entrada-productos') }}">
+                    href="{{ url('almacen/entrada-productos') }}">
                     <i class="nav-icon i-Arrow-Inside"></i>
                     <span class="item-name">Entrada de Productos</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='salida-productos.index' ? 'open' : '' }}"
-                   href="{{ url('almacen/salida-productos') }}">
+                    href="{{ url('almacen/salida-productos') }}">
                     <i class="nav-icon i-Arrow-Outside"></i>
                     <span class="item-name">Salida de Productos</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='proveedores.index' ? 'open' : '' }}"
-                   href="{{ route('proveedores.index') }}">
+                    href="{{ route('proveedores.index') }}">
                     <i class="nav-icon i-Receipt"></i>
                     <span class="item-name">Proveedores</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='pedidos-produccion.index' ? 'open' : '' }}"
-                   href="{{ route('pedidos-produccion.index') }}">
+                    href="{{ route('pedidos-produccion.index') }}">
                     <i class="nav-icon i-File-Clipboard-Text--Image"></i>
                     <span class="item-name">Pedidos Producción</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='traza-pedidos.index' ? 'open' : '' }}"
-                   href="{{ route('traza-pedidos.index') }}">
+                    href="{{ route('traza-pedidos.index') }}">
                     <i class="nav-icon i-Windows-2"></i>
                     <span class="item-name">Traza de Pedidos</span>
                 </a>
             </li>
         </ul>
+        @endcan
+
+        @can('Departamento Tecnico Acceso')
         <ul class="childNav" data-parent="dpto_tecnico">
             <li class="nav-item">
                 <a href="#imageCroper">
@@ -161,17 +170,20 @@
                 </a>
             </li>
         </ul>
+        @endcan
+
+        @can('Maestros Acceso')
         <ul class="childNav" data-parent="maestros">
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='materiales' ? 'open' : '' }}"
-                   href="{{ url('maestros/materiales') }}">
+                    href="{{ url('maestros/materiales') }}">
                     <i class="nav-icon i-Box-Full"></i>
                     <span class="item-name">Materiales</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='familias-marcas' ? 'open' : '' }}"
-                   href="{{ url('maestros/familias-marcas') }}">
+                    href="{{ url('maestros/familias-marcas') }}">
                     <i class="nav-icon i-Handshake"></i>
                     <span class="item-name">Familias y Marcas</span>
                 </a>
@@ -184,44 +196,47 @@
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='productos-compuestos.index' ? 'open' : '' }}"
-                   href="{{ route('productos-compuestos.index') }}">
+                    href="{{ route('productos-compuestos.index') }}">
                     <i class="nav-icon i-Split-Horizontal-2-Window"></i>
                     <span class="item-name">Productos Compuestos</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='trazabilidad' ? 'open' : '' }}"
-                   href="{{ url('maestros/trazabilidad') }}">
+                    href="{{ url('maestros/trazabilidad') }}">
                     <i class="nav-icon i-Medal-2"></i>
                     <span class="item-name">Trazabilidad</span>
                 </a>
             </li>
         </ul>
+        @endcan
+
+        @can('Configuracion Acceso')
         <ul class="childNav" data-parent="configuracion">
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='datos-fiscales.show' ? 'open' : '' }}"
-                   href="{{ route('datos-fiscales.show') }}">
+                    href="{{ route('datos-fiscales.show') }}">
                     <i class="nav-icon i-Checked-User"></i>
                     <span class="item-name">Datos Fiscales Empresa</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='usuarios.index' ? 'open' : '' }}"
-                   href="{{ route('usuarios.index') }}">
+                    href="{{ route('usuarios.index') }}">
                     <i class="nav-icon i-Find-User"></i>
                     <span class="item-name">Usuarios</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='roles.index' ? 'open' : '' }}"
-                   href="{{ route('roles.index') }}">
+                    href="{{ route('roles.index') }}">
                     <i class="nav-icon i-Find-User"></i>
                     <span class="item-name">Roles de Usuarios</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='email.index' ? 'open' : '' }}"
-                   href="{{ route('email.index') }}">
+                    href="{{ route('email.index') }}">
                     <i class="nav-icon i-Email"></i>
                     <span class="item-name">Email</span>
                 </a>
@@ -234,12 +249,13 @@
             </li>
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='especiales.index' ? 'open' : '' }}"
-                   href="{{ url('configuracion/especiales') }}">
+                    href="{{ url('configuracion/especiales') }}">
                     <i class="nav-icon i-Settings-Window"></i>
                     <span class="item-name">Especiales</span>
                 </a>
             </li>
         </ul>
+        @endcan
     </div>
     <div class="sidebar-overlay"></div>
 </div>

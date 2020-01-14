@@ -106,22 +106,28 @@
                         <hr>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 offset-md-2 mb-3">
                                 <label for="rol">Roles</label>
-                                <select class="form-control chosen" id="rol" name="rol" required>
+                                <select class="form-control chosen" id="rol" name="rol">
                                     @if(isset($roles))
                                         @forelse($roles as $rol)
-                                            <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                            <option value=""></option>
+                                            <option value="{{ $rol->id }}">{{ $rol->name }}</option>
                                         @empty
                                             <option value="">Sin resulrados</option>
                                         @endforelse
                                     @endif
                                 </select>
                             </div>
+
+                            <div class="col-md-2 mb-3">
+                                <br>
+                                <button type="button" class="btn btn-outline-primary m-1" id="btnAddRol">Agregar</button>
+                            </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12 table-responsive">
+                            <div class="col-md-8 offset-md-2 table-responsive">
                                 <table id="table_roles"
                                        class="table table-striped table-bordered table-sm table-condensed"
                                        style="width:100%">
@@ -129,26 +135,16 @@
                                     <tr>
                                         <th>ID</th>
                                         <th scope="col">Rol</th>
-                                        <th scope="col">Permiso</th>
+                                        <th scope="col">Permisos</th>
+                                        <th scope="col">Opciones</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    @if(isset($roles))
-                                        @foreach ($roles as $item)
-                                            <tr>
-                                                <td>{{ $item->id }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td></td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
@@ -223,6 +219,7 @@
                 },
                 columnDefs: [
                     {targets: [0], visible: false},
+                    {targets: [3], className: 'text-center'},
                 ],
                 order: [[0, 'desc']],
                 searching: false,
@@ -230,6 +227,54 @@
                 paging: false,
                 info: false,
             });
+
+            //Agregar rol a tabla
+            $("#btnAddRol").on('click', function (e) {
+                var id = $("#rol").val();
+                if (id != "")
+                {
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ route('roles.details') }}",
+                        dataType: 'JSON',
+                        data: {
+                            id: id
+                        },
+                        success: function (data) {
+                            if (data == null) return;
+
+                            var permisos = "";
+                            var opciones = '<a href="javascript:void(0);" class="text-danger mr-2"\n' +
+                                'data-toggle="tooltip" data-placement="top" title="" data-original-title="Borrar">\n' +
+                                ' <i class="nav-icon i-Close-Window font-weight-bold"></i>\n' +
+                                '</a>';
+                            for (var i = 0; i < data.permissions.length; i++)
+                            {
+                                var permiso = data.permissions[i];
+
+                                permisos = permisos + permiso.name + "<br>";
+                            }
+
+                            table_roles.row.add([
+                                data.id,
+                                data.name + '<input type="hidden" name="roles[]" value="'+data.name+'"/>',
+                                permisos,
+                                opciones,
+                            ]).draw();
+                        },
+                        error: function (error) {
+                            console.log(error);
+                            alert('Error. Check Console Log');
+                        },
+                    });
+                }
+            });
+
+            $('#table_roles .delete').on('click', function () {
+                var tr = $(this).closest('tr');
+                var row = table_roles.row(tr).remove().draw();
+            });
+
         });
     </script>
 @endsection

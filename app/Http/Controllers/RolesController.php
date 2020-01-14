@@ -124,4 +124,19 @@ class RolesController extends Controller
 
         return redirect()->route('roles.index');
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function details(Request $request)
+    {
+        //
+        $id = $request->get('id');
+
+        $role = Role::with('permissions')->find($id);
+
+        return response()->json($role);
+    }
 }

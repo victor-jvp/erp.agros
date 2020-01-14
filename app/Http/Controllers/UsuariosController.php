@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UsuariosController extends Controller
 {
@@ -31,7 +32,9 @@ class UsuariosController extends Controller
     public function create()
     {
         //
-        return view('configuracion.usuarios.create');
+        $data['roles'] = Role::all();
+
+        return view('configuracion.usuarios.create', $data);
     }
 
     /**
@@ -41,7 +44,6 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $usuario = new User();
 
         $usuario->name      = $request->name;
@@ -50,6 +52,13 @@ class UsuariosController extends Controller
         $usuario->telefono1 = $request->telefono1;
         $usuario->telefono2 = $request->telefono2;
         $usuario->password  = Hash::make($request->password);
+
+        if (isset($request->roles))
+        {
+            foreach ($request->roles as $r => $rol) {
+                $usuario->assignRole($rol);
+            }
+        }
 
         $usuario->save();
 
@@ -64,19 +73,10 @@ class UsuariosController extends Controller
     public function show($id)
     {
         //
-        $data['usuario'] = User::find($id);
+        $data['usuario'] = User::with('roles')->find($id);
+        $data['roles']   = Role::all();
 
         return view('configuracion.usuarios.show')->with($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -95,9 +95,17 @@ class UsuariosController extends Controller
         $usuario->cargo     = $request->cargo;
         $usuario->telefono1 = $request->telefono1;
         $usuario->telefono2 = $request->telefono2;
-        if ($request->password != ""){
+
+        if ($request->password != "") {
             $usuario->password = Hash::make($request->password);
         }
+
+
+        $usuario->syncRoles($request->roles);
+        // foreach ($request->roles as $r => $rol) {
+        //     $usuario->assignRole($rol);
+        // }
+
         $usuario->save();
 
         return redirect()->route('usuarios.index');

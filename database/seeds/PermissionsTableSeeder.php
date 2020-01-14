@@ -12,39 +12,36 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         //
-        Permission::create(['name' => 'prevision_acceso']);
-        Permission::create(['name' => 'prevision_crear']);
-        Permission::create(['name' => 'prevision_editar']);
-        Permission::create(['name' => 'prevision_borrar']);
+        Permission::create(['name' => 'Prevision Acceso']);
+        Permission::create(['name' => 'Prevision Crear']);
+        Permission::create(['name' => 'Prevision Modificar']);
+        Permission::create(['name' => 'Prevision Borrar']);
 
-        Permission::create(['name' => 'comercial_acceso']);
-        Permission::create(['name' => 'comercial_crear']);
-        Permission::create(['name' => 'comercial_editar']);
-        Permission::create(['name' => 'comercial_borrar']);
+        Permission::create(['name' => 'Comercial Acceso']);
+        Permission::create(['name' => 'Comercial Crear']);
+        Permission::create(['name' => 'Comercial Modificar']);
+        Permission::create(['name' => 'Comercial Borrar']);
 
-        Permission::create(['name' => 'almacen_acceso']);
-        Permission::create(['name' => 'almacen_crear']);
-        Permission::create(['name' => 'almacen_editar']);
-        Permission::create(['name' => 'almacen_borrar']);
+        Permission::create(['name' => 'Almacen Acceso']);
+        Permission::create(['name' => 'Almacen Crear']);
+        Permission::create(['name' => 'Almacen Modificar']);
+        Permission::create(['name' => 'Almacen Borrar']);
 
-        Permission::create(['name' => 'dptoTecnico_acceso']);
-        Permission::create(['name' => 'dptoTecnico_crear']);
-        Permission::create(['name' => 'dptoTecnico_editar']);
-        Permission::create(['name' => 'dptoTecnico_borrar']);
+        Permission::create(['name' => 'Departamento Tecnico Acceso']);
+        Permission::create(['name' => 'Departamento Tecnico Crear']);
+        Permission::create(['name' => 'Departamento Tecnico Modificar']);
+        Permission::create(['name' => 'Departamento Tecnico Borrar']);
 
-        Permission::create(['name' => 'costes_acceso']);
-        Permission::create(['name' => 'costes_crear']);
-        Permission::create(['name' => 'costes_editar']);
-        Permission::create(['name' => 'costes_borrar']);
+        Permission::create(['name' => 'Costes Acceso']);
+        Permission::create(['name' => 'Costes Crear']);
+        Permission::create(['name' => 'Costes Modificar']);
+        Permission::create(['name' => 'Costes Borrar']);
 
-        Permission::create(['name' => 'maestros_acceso']);
-        Permission::create(['name' => 'maestros_crear']);
-        Permission::create(['name' => 'maestros_editar']);
-        Permission::create(['name' => 'maestros_borrar']);
+        Permission::create(['name' => 'Maestros Acceso']);
+        Permission::create(['name' => 'Maestros Crear']);
+        Permission::create(['name' => 'Maestros Modificar']);
+        Permission::create(['name' => 'Maestros Borrar']);
 
-        Permission::create(['name' => 'configuracion_acceso']);
-        Permission::create(['name' => 'configuracion_crear']);
-        Permission::create(['name' => 'configuracion_editar']);
-        Permission::create(['name' => 'configuracion_borrar']);
+        Permission::create(['name' => 'Configuracion Acceso']);
     }
 }
