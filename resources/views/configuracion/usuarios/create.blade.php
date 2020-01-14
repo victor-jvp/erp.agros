@@ -51,6 +51,9 @@
                     <div class="tab-pane fade active show" id="personales" role="tabpanel"
                          aria-labelledby="timeline-tab">
 
+                        <h4>Datos Personales</h4>
+
+                        <hr>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -98,90 +101,49 @@
                     </div>
 
                     <div class="tab-pane fade" id="roles" role="tabpanel" aria-labelledby="about-tab">
-                        <h4>Personal Information</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, commodi quam! Provident
-                            quis
-                            voluptate asperiores ullam, quidem odio pariatur. Lorem ipsum, dolor sit amet consectetur
-                            adipisicing elit. Voluptatem, nulla eos?
-                            Cum non ex voluptate corporis id asperiores doloribus dignissimos blanditiis iusto qui
-                            repellendus deleniti aliquam, vel quae eligendi explicabo.
-                        </p>
+                        <h4>Asignar Roles</h4>
+
                         <hr>
+
                         <div class="row">
-                            <div class="col-md-4 col-6">
-                                <div class="mb-4">
-                                    <p class="text-primary mb-1"><i class="i-Calendar text-16 mr-1"></i> Birth Date</p>
-                                    <span>1 Jan, 1994</span>
-                                </div>
-                                <div class="mb-4">
-                                    <p class="text-primary mb-1"><i class="i-Edit-Map text-16 mr-1"></i> Birth Place</p>
-                                    <span>Dhaka, DB</span>
-                                </div>
-                                <div class="mb-4">
-                                    <p class="text-primary mb-1"><i class="i-Globe text-16 mr-1"></i> Lives In</p>
-                                    <span>Dhaka, DB</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-6">
-                                <div class="mb-4">
-                                    <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Gender</p>
-                                    <span>1 Jan, 1994</span>
-                                </div>
-                                <div class="mb-4">
-                                    <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Email</p>
-                                    <span>example@ui-lib.com</span>
-                                </div>
-                                <div class="mb-4">
-                                    <p class="text-primary mb-1"><i class="i-Cloud-Weather text-16 mr-1"></i> Website
-                                    </p>
-                                    <span>www.ui-lib.com</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-6">
-                                <div class="mb-4">
-                                    <p class="text-primary mb-1"><i class="i-Face-Style-4 text-16 mr-1"></i> Profession
-                                    </p>
-                                    <span>Digital Marketer</span>
-                                </div>
-                                <div class="mb-4">
-                                    <p class="text-primary mb-1"><i class="i-Professor text-16 mr-1"></i> Experience</p>
-                                    <span>8 Years</span>
-                                </div>
-                                <div class="mb-4">
-                                    <p class="text-primary mb-1"><i class="i-Home1 text-16 mr-1"></i> School</p>
-                                    <span>School of Digital Marketing</span>
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="rol">Roles</label>
+                                <select class="form-control chosen" id="rol" name="rol" required>
+                                    @if(isset($roles))
+                                        @forelse($roles as $rol)
+                                            <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                        @empty
+                                            <option value="">Sin resulrados</option>
+                                        @endforelse
+                                    @endif
+                                </select>
                             </div>
                         </div>
-                        <hr>
-                        <h4>Other Info</h4>
-                        <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum dolore labore
-                            reiciendis ab quo ducimus reprehenderit natus debitis, provident ad iure sed aut animi dolor
-                            incidunt voluptatem. Blanditiis, nobis aut.</p>
+
                         <div class="row">
-                            <div class="col-md-2 col-sm-4 col-6 text-center">
-                                <i class="i-Plane text-32 text-primary"></i>
-                                <p class="text-16 mt-1">Travelling</p>
-                            </div>
-                            <div class="col-md-2 col-sm-4 col-6 text-center">
-                                <i class="i-Camera text-32 text-primary"></i>
-                                <p class="text-16 mt-1">Photography</p>
-                            </div>
-                            <div class="col-md-2 col-sm-4 col-6 text-center">
-                                <i class="i-Car-3 text-32 text-primary"></i>
-                                <p class="text-16 mt-1">Driving</p>
-                            </div>
-                            <div class="col-md-2 col-sm-4 col-6 text-center">
-                                <i class="i-Gamepad-2 text-32 text-primary"></i>
-                                <p class="text-16 mt-1">Gaming</p>
-                            </div>
-                            <div class="col-md-2 col-sm-4 col-6 text-center">
-                                <i class="i-Music-Note-2 text-32 text-primary"></i>
-                                <p class="text-16 mt-1">Music</p>
-                            </div>
-                            <div class="col-md-2 col-sm-4 col-6 text-center">
-                                <i class="i-Shopping-Bag text-32 text-primary"></i>
-                                <p class="text-16 mt-1">Shopping</p>
+                            <div class="col-md-12 table-responsive">
+                                <table id="table_roles"
+                                       class="table table-striped table-bordered table-sm table-condensed"
+                                       style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th scope="col">Rol</th>
+                                        <th scope="col">Permiso</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if(isset($roles))
+                                        @foreach ($roles as $item)
+                                            <tr>
+                                                <td>{{ $item->id }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -193,17 +155,27 @@
 @endsection
 
 @section('page-css')
+    <link rel="stylesheet" href="{{asset('assets/styles/vendor/datatables.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/sweetalert2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/styles/vendor/bootstrap-select.min.css')}}">
 @endsection
 
 @section('bottom-js')
+    <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
     <script src="{{ asset('assets/js/vendor/jquery.validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/js/vendor/jquery.validation/additional-methods.min.js') }}"></script>
     <script src="{{ asset('assets/js/vendor/jquery.validation/messages_es.js') }}"></script>
+    <script src="{{asset('assets/js/vendor/bootstrap-select/bootstrap-select.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/bootstrap-select/i18n/defaults-es_ES.min.js')}}"></script>
 
     <script>
         $(document).ready(function () {
+
+            $(".chosen").selectpicker({
+                liveSearch: true
+            });
+
             $('#form').validate({
                 ignore: "",
                 rules: {
@@ -243,6 +215,20 @@
                     }
                     $("#full_invalids").html(html);
                 }
+            });
+
+            table_roles = $('#table_roles').DataTable({
+                language: {
+                    url: "{{ asset('assets/Spanish.json')}}"
+                },
+                columnDefs: [
+                    {targets: [0], visible: false},
+                ],
+                order: [[0, 'desc']],
+                searching: false,
+                ordering: false,
+                paging: false,
+                info: false,
             });
         });
     </script>

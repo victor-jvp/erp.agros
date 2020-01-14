@@ -257,6 +257,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('configuracion/roles/show/{rol}', 'RolesController@show')->name('roles.show');
     Route::post('configuracion/roles', 'RolesController@store')->name('roles.store');
     Route::post('configuracion/roles/update/{rol}', 'RolesController@update')->name('roles.update');
+    Route::get('configuracion/roles/delete/{rol}', 'RolesController@delete')->name('roles.delete');
 
 #endregion
 });

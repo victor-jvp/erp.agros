@@ -13,7 +13,7 @@
     {{-- end of breadcrumb --}}
 
     <div class="row">
-        <div class="col-md-12 mb-4">
+        <div class="col-md-8  offset-md-2 mb-4">
             <div class="card text-left">
 
                 <div class="card-body">
@@ -100,26 +100,26 @@
                 order: [[0, 'desc']]
             });
 
-            {{--$('#clientes_table .delete').on('click', function () {--}}
-            {{--    var tr = $(this).closest('tr');--}}
-            {{--    var row = table_clientes.row(tr).data();--}}
+            $('#table_roles .delete').on('click', function () {
+                var tr = $(this).closest('tr');
+                var row = table_roles.row(tr).data();
 
-            {{--    swal({--}}
-            {{--        title: 'Confirmar Proceso',--}}
-            {{--        text: "Confirme eliminar el registro seleccionado",--}}
-            {{--        type: 'warning',--}}
-            {{--        showCancelButton: true,--}}
-            {{--        confirmButtonColor: '#0CC27E',--}}
-            {{--        cancelButtonColor: '#FF586B',--}}
-            {{--        confirmButtonText: 'Confirmar',--}}
-            {{--        cancelButtonText: 'Cancelar',--}}
-            {{--        confirmButtonClass: 'btn btn-success mr-5',--}}
-            {{--        cancelButtonClass: 'btn btn-danger',--}}
-            {{--        buttonsStyling: false--}}
-            {{--    }).then(function () {--}}
-            {{--        window.location.href = "{{ url('comercial/clientes/delete') }}" + "/" + row[0]--}}
-            {{--    })--}}
-            {{--});--}}
+                swal({
+                    title: 'Confirmar Proceso',
+                    text: "Confirme eliminar el registro seleccionado",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0CC27E',
+                    cancelButtonColor: '#FF586B',
+                    confirmButtonText: 'Confirmar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonClass: 'btn btn-success mr-5',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function () {
+                    window.location.href = "{{ url('configuracion/roles/delete') }}" + "/" + row[0]
+                })
+            });
 
             $("#btnNuevo").click(function (e) {
                 limpiarCamposProveedor();

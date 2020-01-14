@@ -20,7 +20,7 @@
                     <h4 class="card-title mb-3">Datos del Rol</h4>
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
 
-                    <form action="{{ route('roles.store') }}" method="POST">
+                    <form action="{{ route('roles.store') }}" method="POST" id="form">
                         @csrf
 
                         <div class="row">
@@ -28,10 +28,10 @@
                                 <label for="rol">Rol</label>
                                 <input type="text" class="form-control" id="rol" required name="rol">
                             </div>
-{{--                            <div class="col-md-8 mb-3">--}}
-{{--                                <label for="descripcion">Descripción</label>--}}
-{{--                                <input type="text" class="form-control" id="descripcion" name="descripcion">--}}
-{{--                            </div>--}}
+                            {{--                            <div class="col-md-8 mb-3">--}}
+                            {{--                                <label for="descripcion">Descripción</label>--}}
+                            {{--                                <input type="text" class="form-control" id="descripcion" name="descripcion">--}}
+                            {{--                            </div>--}}
                         </div>
 
                         <div class="row">
@@ -45,7 +45,7 @@
                         <h4 class="card-title mb-3">Permisos del Rol</h4>
 
                         <div class="row">
-                            <div class="col-md-12 table-responsive">
+                            <div class="col-md-6 mr-3 table-responsive">
 
                                 <table id="table_roles" class="display table table-striped table-bordered"
                                        style="width:100%">
@@ -61,7 +61,7 @@
                                         @foreach ($permisos as $item)
                                             <tr>
                                                 <td>{{ $item->id }}</td>
-                                                <td>{{ ucfirst($item->name) }}</td>
+                                                <td>{{ ucwords(str_replace('_', ' ', $item->name)) }}</td>
                                                 <td class="text-center">
                                                     <label class="switch switch-success">
                                                         <input type="checkbox" name="permisos[{{ $item->name }}]">
@@ -91,6 +91,9 @@
 @section('bottom-js')
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery.validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery.validation/additional-methods.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/jquery.validation/messages_es.js') }}"></script>
 
     <script !src="">
         var table_roles;
@@ -106,16 +109,18 @@
                 ],
                 order: [[0, 'asc']],
                 ordering: false,
-                searching: false,
                 paging: false,
-                info: false,
             });
 
-            $("#btnNuevo").click(function (e) {
-                limpiarCamposProveedor();
-                $("#modal-cliente-title").html("Nuevo Cliente");
-                $("#modal-cliente").modal('show');
-            })
+            $('#form').validate({
+                ignore: "",
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback ');
+                    error.insertAfter(element);
+                    $("#form").addClass('needs-validation');
+                },
+            });
         });
     </script>
 @endsection

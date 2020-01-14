@@ -94,7 +94,7 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
         $rol = Role::findById($id);
 
         $rol->name = $request->rol;
@@ -116,8 +116,12 @@ class RolesController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         //
+        $role = Role::findById($id);
+        $role->delete();
+
+        return redirect()->route('roles.index');
     }
 }
