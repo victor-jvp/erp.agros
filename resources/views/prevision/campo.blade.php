@@ -240,8 +240,8 @@
                                                                             <a href="{{ url('pedidos-campo/'.$pedido->id.'/down?fecha_act='.$fecha_act) }}"
                                                                                class="text-primary mr-2" title="Bajar">
                                                                                 <i class="nav-icon i-Arrow-Down-3 font-weight-bold"></i>
-                                                                            </a>    
-                                                                            @endif                                                                            
+                                                                            </a>
+                                                                            @endif
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -314,7 +314,7 @@
                 $("#modal-pedido").modal('show');
             });
 
-            $("#fecha_act").change(function () {
+            $("#fecha_act").focusout(function () {
                 $("#form_fecha_act").submit();
             });
         });

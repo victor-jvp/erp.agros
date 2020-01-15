@@ -55,6 +55,7 @@ class PrevisionController extends Controller
         $data['fincas']      = Finca::all();
         $data['cultivos']    = Cultivo::all();
         $data['comentarios'] = PrevisionComentarios::where("semana", $data['semana_act'])->where('anio', $data['anio_act'])->get();
+
         foreach ($data['fincas'] as $f => $finca) {
             $data['resumen'][$f]['finca'] = $finca->id;
             $totalFinca = 0;

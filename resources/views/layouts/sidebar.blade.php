@@ -1,6 +1,7 @@
 <div class="side-content-wrap">
     <div class="sidebar-left open rtl-ps-none" data-perfect-scrollbar data-suppress-scroll-x="true">
         <ul class="navigation-left">
+            @can('Prevision Acceso')
             <li class="nav-item {{ request()->is('prevision/*') ? 'active' : '' }}" data-item="prevision">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-Bar-Chart"></i>
@@ -8,6 +9,8 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            @endcan
+            @can('Comercial Acceso')
             <li class="nav-item {{ request()->is('comercial/*') ? 'active' : '' }}" data-item="comercial">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-Library"></i>
@@ -15,6 +18,8 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            @endcan
+            @can('Almacen Acceso')
             <li class="nav-item {{ request()->is('almacen/*') ? 'active' : '' }}" data-item="almacen">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-Suitcase"></i>
@@ -22,6 +27,8 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            @endcan
+            @can('Departamento Tecnico Acceso')
             <li class="nav-item" data-item="dpto_tecnico">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-Computer-Secure"></i>
@@ -29,7 +36,8 @@
                 </a>
                 <div class="triangle"></div>
             </li>
-            {{-- Costes --}}
+            @endcan
+            @can('Costes Acceso')
             <li class="nav-item">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-File-Clipboard-File--Text"></i>
@@ -37,6 +45,8 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            @endcan
+            @can('Maestros Acceso')
             <li class="nav-item {{ request()->is('maestros/*') ? 'active' : '' }}" data-item="maestros">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-File-Horizontal-Text"></i>
@@ -44,6 +54,8 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            @endcan
+            @can('Configuracion Acceso')
             <li class="nav-item" data-item="configuracion">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-Administrator"></i>
@@ -51,6 +63,7 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            @endcan
         </ul>
     </div>
 

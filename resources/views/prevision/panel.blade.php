@@ -521,6 +521,7 @@
                                                                 $totalSemana = 0;
                                                                 $totalSemanaAnt = 0;
                                                                 $porcSemana = 0;
+                                                                $signo = "";
                                                             @endphp
                                                             <tr>
                                                                 <td>{{ $cultivo->cultivo }}</td>
@@ -538,8 +539,10 @@
                                                                             @if($finca_['finca'] == $finca->id)
                                                                                 @foreach ($finca_['cultivos'] as $cultivo_)
                                                                                     @if ($cultivo_['id'] == $cultivo->id)
-                                                                                        @php($totalSemana = $cultivo_['totalSemana'])
-                                                                                        @php($totalSemanaAnt = $cultivo_['totalSemanaAnt'])
+                                                                                        @php
+                                                                                            $totalSemana = $cultivo_['totalSemana'];
+                                                                                            $totalSemanaAnt = $cultivo_['totalSemanaAnt'];
+                                                                                        @endphp
                                                                                         <tr>
                                                                                             @foreach ($cultivo_['total'] as $item)
                                                                                                 <td>{{ $item }}</td>
@@ -547,15 +550,16 @@
                                                                                         </tr>
                                                                                     @endif
                                                                                 @endforeach
+
                                                                                 @php
                                                                                     if($totalSemanaAnt == 0 && $totalSemana == 0) {
                                                                                         $porcSemana = 0;
                                                                                     }else if($totalSemanaAnt > 0){
-                                                                                        $porcSemana = 100-(($totalSemana/$totalSemanaAnt) * 100);
+                                                                                        $porcSemana = 100 - ( ($totalSemana/$totalSemanaAnt) * 100);
                                                                                     }else{
                                                                                         $porcSemana = 100;
                                                                                     }
-                                                                                    $signo = "";
+
                                                                                     if($totalSemana > $totalSemanaAnt){
                                                                                         $signo = '<span class="badge badge-success"><i class="i-Triangle-Arrow-Up"></i></span>';
                                                                                     }else if($totalSemana < $totalSemanaAnt){
@@ -586,29 +590,19 @@
                                                                     <input type="hidden" name="cultivo_id"
                                                                            value="{{ $cultivo->id  }}">
                                                                     <td>
-                                                                        @php
-                                                                            $seccionComentario = "";
-                                                                            foreach ($comentarios as $comentario) {
-                                                                            if ($comentario->finca_id == $finca->id &&
-                                                                            $comentario->cultivo_id == $cultivo->id) {
-                                                                            $seccionComentario = '<input type="hidden"
-                                                                                name="comentario_id" id="comentario_id"
-                                                                                value="'. $comentario->id .'">
-                                                                            <textarea class="form-control" name="comentario"
-                                                                                id="comentario" cols="" rows="2"
-                                                                                placeholder="Comentarios...">'. $comentario->comentario .'</textarea>';
-                                                                            }
-                                                                            }
-                                                                            if($seccionComentario == ""){
-                                                                            echo '<input type="hidden" name="comentario_id"
-                                                                                id="comentario_id" value="">
-                                                                            <textarea class="form-control" name="comentario"
-                                                                                id="comentario" cols="" rows="2"
-                                                                                placeholder="Comentarios..."></textarea>';
-                                                                            }else{
-                                                                            echo $seccionComentario;
-                                                                            }
-                                                                        @endphp
+                                                                        @php($seccionComentario = "")
+                                                                        @foreach ($comentarios as $comentario)
+                                                                            @if ($comentario->finca_id == $finca->id && $comentario->cultivo_id == $cultivo->id)
+                                                                                @php($seccionComentario = '<input type="hidden" name="comentario_id" id="comentario_id" value="'. $comentario->id .'">
+                                                                            <textarea class="form-control" name="comentario" id="comentario" cols="" rows="2" placeholder="Comentarios...">'. $comentario->comentario .'</textarea>')
+                                                                            @endif
+                                                                        @endforeach
+                                                                        @if ($seccionComentario == "")
+                                                                            <input type="hidden" name="comentario_id" id="comentario_id" value="">
+                                                                            <textarea class="form-control" name="comentario" id="comentario" cols="" rows="2" placeholder="Comentarios..."></textarea>
+                                                                        @else
+                                                                            {!! $seccionComentario !!}
+                                                                        @endif
                                                                     </td>
                                                                     <td>
                                                                         <button type="submit"
