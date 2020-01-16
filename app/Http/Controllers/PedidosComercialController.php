@@ -369,7 +369,56 @@ class PedidosComercialController extends Controller
         ])->find($id);
         if (is_null($producto)) return response()->json($data);
 
+        $pedido    = PedidoProduccion::with([
+            'tarrinas.tarrina',
+            'auxiliares.auxiliar',
+            'palet_auxiliares.auxiliar',
+            'palet.modelo',
+            'variable.caja'
+        ])->find($id);
+        if (is_null($pedido)) return response()->json($data);
+
         $resultado = true;
+
+        //Agregar disponibilidad de PALET.
+        $stock = DB::table('inventario')
+                   ->where('categoria', '=', 'Palet')
+                   ->where('categoria_id', $producto ->pallet_id)
+                   ->sum(DB::raw('cantidad * cnv_fact'));
+        $row['categoria']   = "Palet";
+        $row['descripcion'] = $pedido->palet->modelo->modelo.' - '.$pedido->palet->formato;
+        $row['id']          = null;
+        $row['item_id']     = $pedido->pallet_id;
+        $row['default']     = null;
+        $row['disponible']  = $stock;
+        $row['necesarios']  = $pedido->pallet_cantidad;
+        $row['restantes']   = $row['disponible'] - $row['necesarios'];
+
+        if ($row['restantes'] < 0 && $resultado == true) {
+            $resultado = false;
+        }
+        $row['resultado'] = $resultado;
+        $data['data'][]   = $row;
+
+        //Agregar disponibilidad de CAJA.
+        $stock = DB::table('inventario')
+                   ->where('categoria', '=', 'Caja')
+                   ->where('categoria_id', $pedido->variable->caja_id)
+                   ->sum(DB::raw('cantidad * cnv_fact'));
+        $row['categoria']   = "Caja";
+        $row['descripcion'] = $pedido->variable->caja->formato . " - " . $pedido->variable->caja->modelo;
+        $row['id']          = null;
+        $row['item_id']     = $pedido->variable->caja_id;
+        $row['default']     = null;
+        $row['disponible']  = $stock;
+        $row['necesarios']  = $pedido->cajas;
+        $row['restantes']   = $row['disponible'] - $row['necesarios'];
+
+        if ($row['restantes'] < 0 && $resultado == true) {
+            $resultado = false;
+        }
+        $row['resultado'] = $resultado;
+        $data['data'][]   = $row;
 
         if (count($producto->auxiliares) > 0) {
             foreach ($producto->auxiliares as $a => $auxiliar) {

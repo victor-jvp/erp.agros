@@ -18,10 +18,9 @@
                 <div class="card-body">
                     <div class="card-title mb-3">Pedidos Comerciales</div>
 
+                    {{--Modal Nuevo Pedido--}}
                     <form action="/comercial/pedidos-comercial" method="POST" id="pedido_form">
                         {{ csrf_field() }}
-
-                        {{--Modal Nuevo Pedido--}}
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                              aria-hidden="true" id="modal-pedido">
                             <div class="modal-dialog modal-lg mw-100 w-100">
@@ -117,13 +116,13 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- Fin modal Pedido --}}
                     </form>
+                    {{-- Fin modal Pedido --}}
 
+
+                    {{-- Modal Editar Pedido --}}
                     <form action="/comercial/pedidos-comercial/update" method="POST" id="edit_pedido_form">
                         {{ csrf_field('PUT') }}
-
-                        {{-- Modal Editar Pedido --}}
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                              aria-hidden="true" id="modal_edit_pedido">
                             <div class="modal-dialog modal-lg">
@@ -320,8 +319,8 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- Fin modal Editar Pedido --}}
                     </form>
+                    {{-- Fin modal Editar Pedido --}}
 
                     {{--Modal Destino Comercial--}}
                     <div class="modal fade" id="modal-destino_comercial" tabindex="-1" role="dialog"

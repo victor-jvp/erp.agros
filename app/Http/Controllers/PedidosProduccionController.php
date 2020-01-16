@@ -637,6 +637,7 @@ class PedidosProduccionController extends Controller
         if (is_null($id)) return response()->json($data);
 
         $resultado = null;
+
         $pedido    = PedidoProduccion::with([
             'tarrinas.tarrina',
             'auxiliares.auxiliar',
