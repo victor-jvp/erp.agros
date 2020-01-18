@@ -143,7 +143,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('Almacen - Listado de Entrada de Productos | Acceso')
+                @can('Almacen - Entrada de Productos | Acceso')
                     <li class="nav-item">
                         <a class="{{ Route::currentRouteName()=='entrada-productos.index' ? 'open' : '' }}"
                            href="{{ url('almacen/entrada-productos') }}">

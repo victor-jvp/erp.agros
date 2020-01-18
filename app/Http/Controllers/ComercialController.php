@@ -20,13 +20,15 @@ class ComercialController extends Controller
     {
         if (!is_null($request->semana_act)) {
             $data['semana_act'] = intval($request->semana_act);
-        } else {
+        }
+        else {
             $data['semana_act'] = intval(date("W"));
         }
 
         if (!is_null($request->anio_act)) {
             $data['anio_act'] = intval($request->anio_act);
-        } else {
+        }
+        else {
             $data['anio_act'] = intval(date("Y"));
         }
 
@@ -81,11 +83,11 @@ class ComercialController extends Controller
 
             for ($i = $data['semana_ini']; $i <= $data['semana_fin']; $i++) {
 
-                $resumenVenta     = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('semana', $i)->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->sum('pedidos_comerciales.kilos');
-                $resumenPrecio    = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('semana', $i)->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg('pedidos_comerciales.precio');
+                $resumenVenta  = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('semana', $i)->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->sum('pedidos_comerciales.kilos');
+                $resumenPrecio = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('semana', $i)->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg('pedidos_comerciales.precio');
 
-                $resumen['venta'][$i]     = number_format($resumenVenta, 2, ',', '.');
-                $resumen['precio'][$i]    = number_format($resumenPrecio, 2, ',', '.');
+                $resumen['venta'][$i]  = number_format($resumenVenta, 2, ',', '.');
+                $resumen['precio'][$i] = number_format($resumenPrecio, 2, ',', '.');
             }
 
             $cultivos[$c]->resumen = $resumen;
@@ -114,8 +116,8 @@ class ComercialController extends Controller
         $data['hasta_semana'] = date('W', strtotime($hasta));
         $data['hasta_anio']   = date('Y', strtotime($hasta));
 
-        $data['desde'] = $data['desde_anio'] . $data['desde_semana'] . $data['desde_dia'];
-        $data['hasta'] = $data['hasta_anio'] . $data['hasta_semana'] . $data['hasta_dia'];
+        $data['desde'] = intval($data['desde_anio']) . intval($data['desde_semana']) . intval($data['desde_dia']);
+        $data['hasta'] = intval($data['hasta_anio']) . intval($data['hasta_semana']) . intval($data['hasta_dia']);
 
         $rows = DB::table('pedidos_comerciales')->select('kilos', 'precio')->where('cliente_id', "=", $cliente_id)->whereRaw('CONCAT(anio,semana,valor) >= ' . $data['desde'])->whereRaw('CONCAT(anio,semana,valor) <= ' . $data['hasta'])->join('cat_dias_semana', 'cat_dias_semana.id', 'pedidos_comerciales.dia_id')->orderBy('pedidos_comerciales.id', 'desc')->take(5)->get();
 
@@ -146,8 +148,8 @@ class ComercialController extends Controller
         $data['hasta_semana'] = date('W', strtotime($hasta));
         $data['hasta_anio']   = date('Y', strtotime($hasta));
 
-        $data['desde'] = $data['desde_anio'] . $data['desde_semana'] . $data['desde_dia'];
-        $data['hasta'] = $data['hasta_anio'] . $data['hasta_semana'] . $data['hasta_dia'];
+        $data['desde'] = intval($data['desde_anio']) . intval($data['desde_semana']) . intval($data['desde_dia']);
+        $data['hasta'] = intval($data['hasta_anio']) . intval($data['hasta_semana']) . intval($data['hasta_dia']);
 
         $rows = DB::table('pedidos_comerciales')->select('precio')->selectRaw('CONCAT(productoscompuestos_det.variable," - ", cajas.formato, " - ", cajas.modelo) as formato')->whereRaw('CONCAT(anio,semana,valor) >= ' . $data['desde'])->whereRaw('CONCAT(anio,semana,valor) <= ' . $data['hasta'])->join('cat_dias_semana', 'cat_dias_semana.id', 'pedidos_comerciales.dia_id')->join('productoscompuestos_det', 'productoscompuestos_det.id', 'pedidos_comerciales.producto_id')->join('cajas', 'cajas.id', 'productoscompuestos_det.caja_id')->orderBy('pedidos_comerciales.id', 'desc')->take(5)->get();
 
@@ -182,7 +184,7 @@ class ComercialController extends Controller
         }
 
         for ($i = $semana_ini; $i <= $semana_fin; $i++) {
-            $totalKilos = DB::table('pedidos_comerciales')->where('anio', $anio_act)->where('semana', $i)->where('productoscompuestos_cab.cultivo_id', $cultivo_id)->where('cliente_id', $proveedor_id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->sum('pedidos_comerciales.kilos');
+            $totalKilos  = DB::table('pedidos_comerciales')->where('anio', $anio_act)->where('semana', $i)->where('productoscompuestos_cab.cultivo_id', $cultivo_id)->where('cliente_id', $proveedor_id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->sum('pedidos_comerciales.kilos');
             $totalPrecio = DB::table('pedidos_comerciales')->where('anio', $anio_act)->where('semana', $i)->where('productoscompuestos_cab.cultivo_id', $cultivo_id)->where('cliente_id', $proveedor_id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg('pedidos_comerciales.precio');
 
             $data['data'][0][$i] = ($totalKilos > 0) ? number_format($totalKilos, 2, ',', '.') : "-";
@@ -194,7 +196,7 @@ class ComercialController extends Controller
 
     public function ajaxEstadoPedidosProduccion(Request $request)
     {
-        $fecha = $request->input('fecha');
+        $fecha        = $request->input('fecha');
         $data['data'] = array();
         if (is_null($fecha)) return response()->json($data);
 
@@ -202,18 +204,13 @@ class ComercialController extends Controller
         $data['semana'] = date('W', strtotime($fecha));
         $data['anio']   = date('Y', strtotime($fecha));
 
-        $fecha = $data['anio'] . $data['semana'] . $data['dia'];
+        $fecha = intval($data['anio']) . intval($data['semana']) . intval($data['dia']);
 
-        $data['data'] = DB::table('pedidos_produccion')
-            ->select(['nro_orden', 'razon_social as cliente', 'estado'])
-            ->selectRaw('CONCAT(productoscompuestos_det.variable," - ", cajas.formato, " - ", cajas.modelo) as formato')
-            ->whereRaw('CONCAT(anio,semana,valor) = ' . $fecha)
-            ->join('cat_dias_semana', 'cat_dias_semana.id', 'pedidos_produccion.dia_id')
-            ->join('productoscompuestos_det', 'productoscompuestos_det.id', 'pedidos_produccion.producto_id')
-            ->join('cajas', 'cajas.id', 'productoscompuestos_det.caja_id')
-            ->join('clientes', 'clientes.id', 'pedidos_produccion.cliente_id')
-            ->join('pedidos_produccion_estados', 'pedidos_produccion_estados.id', 'pedidos_produccion.estado_id')
-            ->orderBy('pedidos_produccion.id', 'desc')->get();
+        $data['data'] = DB::table('pedidos_produccion')->select([
+                'nro_orden',
+                'razon_social as cliente',
+                'estado'
+            ])->selectRaw('CONCAT(productoscompuestos_det.variable," - ", cajas.formato, " - ", cajas.modelo) as formato')->whereRaw('CONCAT(anio,semana,valor) = ' . $fecha)->join('cat_dias_semana', 'cat_dias_semana.id', 'pedidos_produccion.dia_id')->join('productoscompuestos_det', 'productoscompuestos_det.id', 'pedidos_produccion.producto_id')->join('cajas', 'cajas.id', 'productoscompuestos_det.caja_id')->join('clientes', 'clientes.id', 'pedidos_produccion.cliente_id')->join('pedidos_produccion_estados', 'pedidos_produccion_estados.id', 'pedidos_produccion.estado_id')->orderBy('pedidos_produccion.id', 'desc')->get();
 
         return response()->json($data);
     }
