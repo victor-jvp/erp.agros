@@ -243,12 +243,15 @@ class PedidosComercialController extends Controller
                 }
                 if (!is_null($producto->palets_auxiliares())) {
                     foreach ($producto->palets_auxiliares as $auxiliar) {
-                        $new_auxiliar = new PedidoProduccionPaletAuxiliar();
 
-                        $new_auxiliar->auxiliar_id      = $auxiliar->auxiliar_id;
-                        $new_auxiliar->cantidad         = $auxiliar->cantidad;
-                        $new_auxiliar->cantidad_inicial = $auxiliar->cantidad;
-                        $pedido_p->palet_auxiliares()->save($new_auxiliar);
+                        if ($auxiliar->palet_model_id == $pedido_p->palet->modelo_id){
+                            $new_auxiliar = new PedidoProduccionPaletAuxiliar();
+
+                            $new_auxiliar->auxiliar_id      = $auxiliar->auxiliar_id;
+                            $new_auxiliar->cantidad         = $auxiliar->cantidad;
+                            $new_auxiliar->cantidad_inicial = $auxiliar->cantidad;
+                            $pedido_p->palet_auxiliares()->save($new_auxiliar);
+                        }
                     }
                 }
 
@@ -462,21 +465,23 @@ class PedidosComercialController extends Controller
 
         if (count($producto->palets_auxiliares) > 0) {
             foreach ($producto->palets_auxiliares as $a => $auxiliar) {
-                $stock = DB::table('inventario')->where('categoria', '=', 'Auxiliar')->where('categoria_id', $auxiliar->auxiliar->id)->sum(DB::raw('cantidad * cnv_fact'));
+                if($auxiliar->palet_model_id == $pedido->palet->modelo_id){
+                    $stock = DB::table('inventario')->where('categoria', '=', 'Auxiliar')->where('categoria_id', $auxiliar->auxiliar->id)->sum(DB::raw('cantidad * cnv_fact'));
 
-                $row['descripcion'] = $auxiliar->auxiliar->modelo;
-                $row['categoria']   = "Auxiliar Palet";
-                $row['id']          = $auxiliar->auxiliar->id;
-                $row['default']     = $auxiliar->cantidad;
-                $row['disponible']  = $stock;
-                $row['necesarios']  = $auxiliar->cantidad * $cantidad;
-                $row['restantes']   = $row['disponible'] - $row['necesarios'];
+                    $row['descripcion'] = $auxiliar->auxiliar->modelo;
+                    $row['categoria']   = "Auxiliar Palet";
+                    $row['id']          = $auxiliar->auxiliar->id;
+                    $row['default']     = $auxiliar->cantidad;
+                    $row['disponible']  = $stock;
+                    $row['necesarios']  = $auxiliar->cantidad * $cantidad;
+                    $row['restantes']   = $row['disponible'] - $row['necesarios'];
 
-                if ($row['restantes'] < 0 && $resultado == true) {
-                    $resultado = false;
+                    if ($row['restantes'] < 0 && $resultado == true) {
+                        $resultado = false;
+                    }
+                    $row['resultado'] = $resultado;
+                    $data['data'][]   = $row;
                 }
-                $row['resultado'] = $resultado;
-                $data['data'][]   = $row;
             }
         }
         $data['result'] = $resultado;
