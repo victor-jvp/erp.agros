@@ -120,4 +120,38 @@ class UsuariosController extends Controller
     {
         //
     }
+
+    /**
+    * Display the specified resource.
+    * @param int $id
+    * @return \Illuminate\Http\Response
+    */
+    public function perfil($id)
+    {
+        //
+        $data['usuario'] = User::with('roles')->find($id);
+        $data['roles']   = Role::all();
+
+        return view('configuracion.usuarios.perfil')->with($data);
+    }
+
+    public function update_perfil(Request $request, $id)
+    {
+        //
+        $usuario = User::find($id);
+
+        $usuario->name      = $request->name;
+        $usuario->email     = $request->email;
+        $usuario->cargo     = $request->cargo;
+        $usuario->telefono1 = $request->telefono1;
+        $usuario->telefono2 = $request->telefono2;
+
+        if ($request->password != "") {
+            $usuario->password = Hash::make($request->password);
+        }
+
+        $usuario->save();
+
+        return back();
+    }
 }

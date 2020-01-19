@@ -156,7 +156,9 @@
                             <div class="dropdown-header">
                                 <i class="i-Lock-User mr-1"></i> {{ Auth::user()->name }}
                             </div>
-                            <a class="dropdown-item">Account settings</a>
+                            <a href="{{ route('usuarios.perfil', \Illuminate\Support\Facades\Auth::id()) }}" class="dropdown-item">
+                                Perfil de Usuario
+                            </a>
                             <a class="dropdown-item">Billing history</a>
 {{--                            <a class="dropdown-item" href="#">Sign out</a>--}}
                             <a class="dropdown-item" href="{{ route('logout') }}"

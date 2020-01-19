@@ -248,6 +248,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('configuracion/usuarios', 'UsuariosController@index')->name('usuarios.index');
     Route::get('configuracion/usuarios/create', 'UsuariosController@create')->name('usuarios.create');
     Route::get('configuracion/usuarios/show/{usuario}', 'UsuariosController@show')->name('usuarios.show');
+    Route::get('configuracion/usuarios/perfil/{usuario}', 'UsuariosController@perfil')->name('usuarios.perfil');
+    Route::post('configuracion/usuarios/update-perfil/{usuario}', 'UsuariosController@update_perfil')->name('usuarios.update_perfil');
     Route::post('configuracion/usuarios', 'UsuariosController@store')->name('usuarios.store');
     Route::post('configuracion/usuarios/update/{usuario}', 'UsuariosController@update')->name('usuarios.update');
 
