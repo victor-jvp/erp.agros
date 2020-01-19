@@ -63,6 +63,8 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'Almacen - Salida de Productos | Modificar']);
         Permission::create(['name' => 'Almacen - Salida de Productos | Borrar']);
 
+        Permission::create(['name' => 'Almacen - Histórico | Acceso']);
+
         Permission::create(['name' => 'Almacen - Proveedores | Acceso']);
         Permission::create(['name' => 'Almacen - Proveedores | Crear']);
         Permission::create(['name' => 'Almacen - Proveedores | Modificar']);

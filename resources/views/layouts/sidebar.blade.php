@@ -161,6 +161,15 @@
                         </a>
                     </li>
                 @endcan
+                @can('Almacen - Histórico | Acceso')
+                    <li class="nav-item">
+                        <a class="{{ Route::currentRouteName()=='historico_entradas.index' ? 'open' : '' }}"
+                           href="{{ route('historico_entradas.index') }}">
+                            <i class="nav-icon i-Folder-Archive"></i>
+                            <span class="item-name">Histórico</span>
+                        </a>
+                    </li>
+                @endcan
                 @can('Almacen - Proveedores | Acceso')
                     <li class="nav-item">
                         <a class="{{ Route::currentRouteName()=='proveedores.index' ? 'open' : '' }}"

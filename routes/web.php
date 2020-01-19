@@ -50,19 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('comercial/pedidos-comercial/delete/{pedido}', 'PedidosComercialController@delete')->name('pedidos-comercial.delete');
     Route::post('comercial/pedidos-comercial/update/{pedido}', 'PedidosComercialController@update')->name('pedidos-comercial.update');
 
-    Route::get('almacen/pedidos-produccion', 'PedidosProduccionController@index')->name('pedidos-produccion.index');
-    Route::post('almacen/pedidos-produccion', 'PedidosProduccionController@store')->name('pedidos-produccion.store');
-    Route::post('almacen/pedidos-produccion/details', 'PedidosProduccionController@details')->name('pedidos-produccion.details');
-    Route::post('almacen/pedidos-produccion/ajaxGetDestinosComerciales', 'PedidosProduccionController@ajaxGetDestinosComerciales')->name('pedidos-produccion.ajaxGetDestinosComerciales');
-    Route::post('almacen/pedidos-produccion/ajaxGetDestinosComercialesForCliente', 'PedidosProduccionController@ajaxGetDestinosComercialesForCliente')->name('pedidos-produccion.ajaxGetDestinosComercialesForCliente');
-    Route::post('almacen/pedidos-produccion/ajaxLoadPaletsForCaja', 'PedidosProduccionController@ajaxLoadPaletsForCaja')->name('pedidos-produccion.ajaxLoadPaletsForCaja');
-    Route::post('almacen/pedidos-produccion/ajaxCheckStock', 'PedidosProduccionController@ajaxCheckStock')->name('pedidos-produccion.ajaxCheckStock');
-    Route::post('almacen/pedidos-produccion/ajaxSaveStock', 'PedidosProduccionController@ajaxSaveStock')->name('pedidos-produccion.ajaxSaveStock');
-    Route::post('almacen/pedidos-produccion/ajaxGetInventarioForPart', 'PedidosProduccionController@ajaxGetInventarioForPart')->name('pedidos-produccion.ajaxGetInventarioForPart');
-    Route::get('almacen/pedidos-produccion/MaterialesDia', 'PedidosProduccionController@MaterialesDia')->name('pedidos-produccion.MaterialesDia');
-    Route::get('almacen/pedidos-produccion/delete/{pedido}', 'PedidosProduccionController@delete')->name('pedidos-produccion.delete');
-    Route::post('almacen/pedidos-produccion/update/{pedido}', 'PedidosProduccionController@update')->name('pedidos-produccion.update');
-    Route::get('almacen/pedidos-produccion/pdf/{pedido}', 'PedidosProduccionController@pdf')->name('pedidos-produccion.pdf');
+
 
     Route::resource('comercial/clientes', 'ClientesController');
     Route::get('comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
@@ -106,6 +94,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('almacen/salida-productos/selectMaterial', 'SalidaProductosController@selectMaterial')->name('salida-productos.selectMaterial');
 #endregion
 
+#region Histórico
+Route::get('almacen/historico-entradas', 'HistoricoEntradasController@index')->name('historico_entradas.index');
+#endregion
+
 #region Proveedores
     Route::resource('almacen/proveedores', 'ProveedoresController');
     Route::get('almacen/proveedores/delete/{proveedor}', 'ProveedoresController@delete')->name('proveedores.delete');
@@ -114,6 +106,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('almacen/proveedores/{id}/contactos', 'ProveedoresController@contactos')->name('proveedores.contactos');
     Route::post('almacen/proveedores/{id}/adjuntos', 'ProveedoresController@adjuntos')->name('proveedores.adjuntos');
     Route::post('almacen/proveedores/ajaxSendEmail', 'ProveedoresController@ajaxSendEmail')->name('proveedores.ajaxSendEmail');
+#endregion
+
+#region Pedidos Produccion
+    Route::get('almacen/pedidos-produccion', 'PedidosProduccionController@index')->name('pedidos-produccion.index');
+    Route::post('almacen/pedidos-produccion', 'PedidosProduccionController@store')->name('pedidos-produccion.store');
+    Route::post('almacen/pedidos-produccion/details', 'PedidosProduccionController@details')->name('pedidos-produccion.details');
+    Route::post('almacen/pedidos-produccion/ajaxGetDestinosComerciales', 'PedidosProduccionController@ajaxGetDestinosComerciales')->name('pedidos-produccion.ajaxGetDestinosComerciales');
+    Route::post('almacen/pedidos-produccion/ajaxGetDestinosComercialesForCliente', 'PedidosProduccionController@ajaxGetDestinosComercialesForCliente')->name('pedidos-produccion.ajaxGetDestinosComercialesForCliente');
+    Route::post('almacen/pedidos-produccion/ajaxLoadPaletsForCaja', 'PedidosProduccionController@ajaxLoadPaletsForCaja')->name('pedidos-produccion.ajaxLoadPaletsForCaja');
+    Route::post('almacen/pedidos-produccion/ajaxCheckStock', 'PedidosProduccionController@ajaxCheckStock')->name('pedidos-produccion.ajaxCheckStock');
+    Route::post('almacen/pedidos-produccion/ajaxSaveStock', 'PedidosProduccionController@ajaxSaveStock')->name('pedidos-produccion.ajaxSaveStock');
+    Route::post('almacen/pedidos-produccion/ajaxGetInventarioForPart', 'PedidosProduccionController@ajaxGetInventarioForPart')->name('pedidos-produccion.ajaxGetInventarioForPart');
+    Route::get('almacen/pedidos-produccion/MaterialesDia', 'PedidosProduccionController@MaterialesDia')->name('pedidos-produccion.MaterialesDia');
+    Route::get('almacen/pedidos-produccion/delete/{pedido}', 'PedidosProduccionController@delete')->name('pedidos-produccion.delete');
+    Route::post('almacen/pedidos-produccion/update/{pedido}', 'PedidosProduccionController@update')->name('pedidos-produccion.update');
+    Route::get('almacen/pedidos-produccion/pdf/{pedido}', 'PedidosProduccionController@pdf')->name('pedidos-produccion.pdf');
 #endregion
 
 #region Trazabilidad de Pedidos

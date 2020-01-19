@@ -118,8 +118,7 @@
                 columnDefs: [
                     {targets: [0], visible: false},
                 ],
-                order: [[0, 'asc']],
-                ordering: false,
+                order: [[1, 'asc']],
                 paging: false,
             });
 
