@@ -118,6 +118,9 @@
                                                     <tr>
                                                         <th scope="col">Material</th>
                                                         <th scope="col">Nro. Entrada</th>
+                                                        <th scope="col">Nro. Albaran</th>
+                                                        <th scope="col">Fecha Albaran</th>
+                                                        <th scope="col">Proveedor</th>
                                                         <th scope="col">Nro. Salida</th>
                                                         <th scope="col">Cantidad</th>
                                                     </tr>
@@ -366,9 +369,7 @@
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
-                columnDefs: [
-                    {targets: [1, 2, 3], orderable: false}
-                ]
+                sorting: false
             });
 
         });
@@ -402,6 +403,9 @@
                         traza_pedido_table.row.add([
                             data.materiales[i].material,
                             data.materiales[i].entradas,
+                            data.materiales[i].nro_albaran,
+                            data.materiales[i].fecha_albaran,
+                            data.materiales[i].proveedor,
                             data.materiales[i].salidas,
                             data.materiales[i].cantidad,
                         ]).draw();

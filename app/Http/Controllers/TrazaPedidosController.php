@@ -40,12 +40,18 @@ class TrazaPedidosController extends Controller
         $materiales = array();
 
         // Palets
-        $material['material'] = $data->palet->modelo->modelo . " - " . $data->palet->formato;
-        $material['cantidad'] = "";
-        $entradas             = $this->movimiento_inventario("entrada_id", $id, "Palet", $data->pallet_id);
-        $material['entradas'] = "";
+        $material['material']      = $data->palet->modelo->modelo . " - " . $data->palet->formato;
+        $material['cantidad']      = "";
+        $entradas                  = $this->movimiento_inventario("entrada_id", $id, "Palet", $data->pallet_id);
+        $material['entradas']      = "";
+        $material['proveedor']    = "";
+        $material['nro_albaran']   = "";
+        $material['fecha_albaran'] = "";
         foreach ($entradas as $entrada) {
-            $material['entradas'] .= $entrada->nro_lote . "<br>";
+            $material['entradas']      .= $entrada->nro_lote . "<br>";
+            $material['proveedor']    .= $entrada->razon_social . "<br>";
+            $material['nro_albaran']   .= $entrada->nro_albaran . "<br>";
+            $material['fecha_albaran'] .= (!is_null($entrada->fecha_albaran)) ? date('d/m/Y', strtotime($entrada->fecha_albaran)) . "<br>" : "";
         }
         $salidas             = $this->movimiento_inventario("salida_id", $id, "Palet", $data->pallet_id);
         $material['salidas'] = "";
@@ -56,12 +62,18 @@ class TrazaPedidosController extends Controller
         $materiales[] = $material;
 
         // Cajas
-        $material['material'] = $data->variable->caja->formato . " - " . $data->variable->caja->modelo;
-        $material['cantidad'] = "";
-        $entradas             = $this->movimiento_inventario("entrada_id", $id, "Caja", $data->variable->caja_id);
-        $material['entradas'] = "";
+        $material['material']      = $data->variable->caja->formato . " - " . $data->variable->caja->modelo;
+        $material['cantidad']      = "";
+        $entradas                  = $this->movimiento_inventario("entrada_id", $id, "Caja", $data->variable->caja_id);
+        $material['entradas']      = "";
+        $material['proveedor']    = "";
+        $material['nro_albaran']   = "";
+        $material['fecha_albaran'] = "";
         foreach ($entradas as $entrada) {
-            $material['entradas'] .= $entrada->nro_lote . "<br>";
+            $material['entradas']      .= $entrada->nro_lote . "<br>";
+            $material['proveedor']    .= $entrada->razon_social . "<br>";
+            $material['nro_albaran']   .= $entrada->nro_albaran . "<br>";
+            $material['fecha_albaran'] .= (!is_null($entrada->fecha_albaran)) ? date('d/m/Y', strtotime($entrada->fecha_albaran)) . "<br>" : "";
         }
         $salidas             = $this->movimiento_inventario("salida_id", $id, "Caja", $data->variable->caja_id);
         $material['salidas'] = "";
@@ -78,19 +90,23 @@ class TrazaPedidosController extends Controller
 
                 $entradas = $this->movimiento_inventario("entrada_id", $id, "Tarrina", $detalle->tarrina_id);
 
-                $material['entradas'] = "";
-                foreach ($entradas as $entrada)
-                {
-                    $material['entradas'] .= $entrada->nro_lote."<br>";
+                $material['entradas']      = "";
+                $material['proveedor']    = "";
+                $material['nro_albaran']   = "";
+                $material['fecha_albaran'] = "";
+                foreach ($entradas as $entrada) {
+                    $material['entradas']      .= $entrada->nro_lote . "<br>";
+                    $material['proveedor']    .= $entrada->razon_social . "<br>";
+                    $material['nro_albaran']   .= $entrada->nro_albaran . "<br>";
+                    $material['fecha_albaran'] .= (!is_null($entrada->fecha_albaran)) ? date('d/m/Y', strtotime($entrada->fecha_albaran)) . "<br>" : "";
                 }
 
                 $salidas = $this->movimiento_inventario("salida_id", $id, "Tarrina", $detalle->tarrina_id);
 
-                $material['salidas']  = "";
-                foreach ($salidas as $salida)
-                {
-                    $material['salidas'] .= $salida->nro_lote."<br>";
-                    $material['cantidad'] .= $salida->cantidad."<br>";
+                $material['salidas'] = "";
+                foreach ($salidas as $salida) {
+                    $material['salidas']  .= $salida->nro_lote . "<br>";
+                    $material['cantidad'] .= $salida->cantidad . "<br>";
                 }
 
                 $materiales[] = $material;
@@ -101,22 +117,26 @@ class TrazaPedidosController extends Controller
             foreach ($data->auxiliares as $detalle) {
                 $material['material'] = $detalle->auxiliar->modelo;
                 $material['cantidad'] = "";
-                $entradas = $this->movimiento_inventario("entrada_id", $id, "Auxiliar", $detalle->auxiliar_id);
+                $entradas             = $this->movimiento_inventario("entrada_id", $id, "Auxiliar", $detalle->auxiliar_id);
 
-                $material['entradas'] = "";
-                foreach ($entradas as $entrada)
-                {
-                    $material['entradas'] .= $entrada->nro_lote."<br>";
+                $material['entradas']      = "";
+                $material['proveedor']    = "";
+                $material['nro_albaran']   = "";
+                $material['fecha_albaran'] = "";
+                foreach ($entradas as $entrada) {
+                    $material['entradas']      .= $entrada->nro_lote . "<br>";
+                    $material['proveedor']    .= $entrada->razon_social . "<br>";
+                    $material['nro_albaran']   .= $entrada->nro_albaran . "<br>";
+                    $material['fecha_albaran'] .= (!is_null($entrada->fecha_albaran)) ? date('d/m/Y', strtotime($entrada->fecha_albaran)) . "<br>" : "";
                 }
 
                 $salidas = $this->movimiento_inventario("salida_id", $id, "Auxiliar", $detalle->auxiliar_id);
 
-                $material['salidas']  = "";
+                $material['salidas'] = "";
 
-                foreach ($salidas as $salida)
-                {
-                    $material['salidas'] .= $salida->nro_lote."<br>";
-                    $material['cantidad'] .= $salida->cantidad."<br>";
+                foreach ($salidas as $salida) {
+                    $material['salidas']  .= $salida->nro_lote . "<br>";
+                    $material['cantidad'] .= $salida->cantidad . "<br>";
                 }
 
                 $materiales[] = $material;
@@ -127,21 +147,25 @@ class TrazaPedidosController extends Controller
             foreach ($data->palet_auxiliares as $detalle) {
                 $material['material'] = $detalle->auxiliar->modelo;
                 $material['cantidad'] = "";
-                $entradas = $this->movimiento_inventario("entrada_id", $id, "Auxiliar", $detalle->auxiliar_id);
+                $entradas             = $this->movimiento_inventario("entrada_id", $id, "Auxiliar", $detalle->auxiliar_id);
 
-                $material['entradas'] = "";
-                foreach ($entradas as $entrada)
-                {
-                    $material['entradas'] .= $entrada->nro_lote."<br>";
+                $material['entradas']      = "";
+                $material['proveedor']    = "";
+                $material['nro_albaran']   = "";
+                $material['fecha_albaran'] = "";
+                foreach ($entradas as $entrada) {
+                    $material['entradas']      .= $entrada->nro_lote . "<br>";
+                    $material['proveedor']    .= $entrada->razon_social . "<br>";
+                    $material['nro_albaran']   .= $entrada->nro_albaran . "<br>";
+                    $material['fecha_albaran'] .= (!is_null($entrada->fecha_albaran)) ? date('d/m/Y', strtotime($entrada->fecha_albaran)) . "<br>" : "";
                 }
 
-                $salidas = $this->movimiento_inventario("salida_id", $id, "Auxiliar", $detalle->auxiliar_id);
-                $material['salidas']  = "";
+                $salidas             = $this->movimiento_inventario("salida_id", $id, "Auxiliar", $detalle->auxiliar_id);
+                $material['salidas'] = "";
 
-                foreach ($salidas as $salida)
-                {
-                    $material['salidas'] .= $salida->nro_lote."<br>";
-                    $material['cantidad'] .= $salida->cantidad."<br>";
+                foreach ($salidas as $salida) {
+                    $material['salidas']  .= $salida->nro_lote . "<br>";
+                    $material['cantidad'] .= $salida->cantidad . "<br>";
                 }
 
                 $materiales[] = $material;
@@ -153,14 +177,8 @@ class TrazaPedidosController extends Controller
         return response()->json($data);
     }
 
-    private  function movimiento_inventario($rel_id, $pedido_id, $categoria, $categoria_id)
+    private function movimiento_inventario($rel_id, $pedido_id, $categoria, $categoria_id)
     {
-        return DB::table('inventario_rel')
-          ->select('inventario.nro_lote', 'inventario_rel.cantidad')
-          ->join('inventario', 'inventario.id', '=', 'inventario_rel.'.$rel_id)
-          ->where('pedido_id', $pedido_id)
-          ->where('categoria', $categoria)
-          ->where('categoria_id', $categoria_id)
-          ->get();
+        return DB::table('inventario_rel')->select('inventario.nro_lote', 'inventario_rel.cantidad', 'proveedores.razon_social', 'inventario.nro_albaran', 'inventario.fecha_albaran')->join('inventario', 'inventario.id', '=', 'inventario_rel.' . $rel_id)->leftJoin('proveedores', 'proveedores.id', '=', 'inventario.proveedor_id')->where('pedido_id', $pedido_id)->where('categoria', $categoria)->where('categoria_id', $categoria_id)->get();
     }
 }
