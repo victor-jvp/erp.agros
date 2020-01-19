@@ -1051,7 +1051,7 @@ class PedidosProduccionController extends Controller
             }
         }
 
-        //dd($pedidos);
+//        dd($pedidos);
 
         $data['pedidos'] = $pedidos;
 

@@ -48,12 +48,6 @@
                                     @endfor
                                 </select>
                             </div>
-
-                            {{--                        <div class="col-md-6  text-right form-group mb-3">--}}
-                            {{--                            <br>--}}
-                            {{--                            <button class="btn btn-outline-primary" type="button" id="btnAddPedido">Añadir Pedido--}}
-                            {{--                            </button>--}}
-                            {{--                        </div>--}}
                         </div>
 
                     </form>

@@ -50,13 +50,14 @@
                     <th>Nº Entrada</th>
                     <th>Nº Salida</th>
                     <th>Nº Albaran</th>
+                    <th>Proveedor</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($pedidos as $pedido)
                     <tr class="">
                         <th class="text-right">Nº de Orden: {{ $pedido->nro_orden }}</th>
-                        <th colspan="5">Cliente: {{ $pedido->cliente->razon_social }}</th>
+                        <th colspan="6">Cliente: {{ $pedido->cliente->razon_social }}</th>
                     </tr>
 
 
@@ -83,6 +84,11 @@
                                 <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
                             @endforeach
                         </td>
+                        <td>
+                            @foreach ($pedido->palets_entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->razon_social }}</p>
+                            @endforeach
+                        </td>
                     </tr>
 
                     <tr>
@@ -106,6 +112,11 @@
                         <td>
                             @foreach ($pedido->cajas_entradas as $entrada)
                                 <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($pedido->cajas_entradas as $entrada)
+                                <p style="padding: 0px;">{{ $entrada->razon_social }}</p>
                             @endforeach
                         </td>
                     </tr>
@@ -135,6 +146,11 @@
                                     <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
                                 @endforeach
                             </td>
+                            <td>
+                                @foreach ($tarrina->entradas as $entrada)
+                                    <p style="padding: 0px;">{{ $entrada->razon_social }}</p>
+                                @endforeach
+                            </td>
                         </tr>
                     @endforeach
 
@@ -162,6 +178,11 @@
                                     <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
                                 @endforeach
                             </td>
+                            <td>
+                                @foreach ($auxiliar->entradas as $entrada)
+                                    <p style="padding: 0px;">{{ $entrada->razon_social }}</p>
+                                @endforeach
+                            </td>
                         </tr>
                     @endforeach
                     @foreach($pedido->palet_auxiliares as $auxiliar)
@@ -186,6 +207,11 @@
                             <td>
                                 @foreach ($auxiliar->entradas as $entrada)
                                     <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach ($auxiliar->entradas as $entrada)
+                                    <p style="padding: 0px;">{{ $entrada->razon_social }}</p>
                                 @endforeach
                             </td>
                         </tr>
