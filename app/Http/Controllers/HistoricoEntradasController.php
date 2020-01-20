@@ -20,7 +20,7 @@ class HistoricoEntradasController extends Controller
         $data = array(
             'entradas'    => $entradas,
             "proveedores" => Proveedor::all('id', 'razon_social'),
-            "nro_lote"    => Contador::next_nro_lote(),
+            "nro_lote"    => Contador ::next_nro_lote(),
         );
 
         return view('almacen.historico.index', $data);
