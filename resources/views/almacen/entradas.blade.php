@@ -55,6 +55,11 @@
                                                        required=""
                                                        name="fecha">
                                             </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="costo_unit">Costo</label>
+                                                <input type="number" class="form-control" id="costo_unit"
+                                                       name="costo_unit" min="0" step="0.01" value="0">
+                                            </div>
                                         </div>
 
                                         <div class="row">
@@ -104,7 +109,8 @@
                                                     <option value=""></option>
                                                     @if (isset($proveedores))
                                                         @foreach ($proveedores as $proveedor)
-                                                            <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }}</option>
+                                                            <option
+                                                                value="{{ $proveedor->id }}">{{ $proveedor->razon_social }}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -198,6 +204,7 @@
                                     <th scope="col">Categoria</th>
                                     <th scope="col">Material</th>
                                     <th scope="col">Cantidad</th>
+                                    <th scope="col">Costo</th>
                                     <th scope="col">Nº Albaran</th>
                                     <th scope="col">Fecha Albaran</th>
                                     <th scope="col">Transporte Adecuado</th>
@@ -222,6 +229,7 @@
                                             <td>{{ $entrada->categoria }}</td>
                                             <td>{{ $entrada->material }}</td>
                                             <td>{{ $entrada->cantidad }}</td>
+                                            <td>{{ $entrada->costo_unit }}</td>
                                             <td>{{ $entrada->nro_albaran }}</td>
                                             <td>{{ (is_null($entrada->fecha_albaran)) ? "" : date('d/m/Y',strtotime($entrada->fecha_albaran)) }}</td>
                                             <td class="text-center">
@@ -385,6 +393,7 @@
                     $('#categoria').val(data.categoria).trigger('chosen:updated');
                     loadMaterial(data.categoria, data.categoria_id);
                     $("#cantidad").val(data.cantidad);
+                    $("#costo_unit").val(data.costo_unit);
                     $("#nro_albaran").val(data.nro_albaran);
                     $("#fecha_albaran").val(moment(data.fecha_albaran).format("YYYY-MM-DD"));
                     $("input[name='transporte_adecuado']").prop('checked', (data.transporte_adecuado == 1));

@@ -47,8 +47,10 @@ class EntradaProductosController extends Controller
         $entrada->nro_lote     = Contador::save_nro_lote();
         $entrada->fecha        = $request->fecha;
         $entrada->cantidad     = $request->cantidad;
+        $entrada->costo_unit   = $request->costo_unit;
         $entrada->categoria    = $request->categoria;
         $entrada->categoria_id = $request->material;
+
 
         $entrada->nro_albaran         = $request->nro_albaran;
         $entrada->fecha_albaran       = Carbon::parse($request->fecha_albaran)->toDateTimeString();
@@ -75,11 +77,12 @@ class EntradaProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $entrada           = Entrada::find($id);
-        $entrada->tipo_mov = "E";
-        $entrada->cnv_fact = 1;
-        $entrada->fecha    = $request->fecha;
-        $entrada->cantidad = $request->cantidad;
+        $entrada             = Entrada::find($id);
+        $entrada->tipo_mov   = "E";
+        $entrada->cnv_fact   = 1;
+        $entrada->fecha      = $request->fecha;
+        $entrada->cantidad   = $request->cantidad;
+        $entrada->costo_unit = $request->costo_unit;
 
         $entrada->categoria    = $request->categoria;
         $entrada->categoria_id = $request->material;
