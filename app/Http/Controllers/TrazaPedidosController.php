@@ -6,6 +6,7 @@ use App\Inventario;
 use App\InventarioRel;
 use App\PedidoProduccion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TrazaPedidosController extends Controller
@@ -13,6 +14,10 @@ class TrazaPedidosController extends Controller
     //
     public function index()
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Almacen | Acceso') || !Auth::user()->can('Almacen - Traza de Pedidos | Acceso')) {
+            return redirect()->route('home');
+        }
 
         $data['pedidos'] = PedidoProduccion::with([
             'cliente'

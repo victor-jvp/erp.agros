@@ -57,7 +57,8 @@
                                                 <select class="form-control chosen" id="cliente" name="cliente"
                                                         required>
                                                     @foreach ($clientes as $cliente)
-                                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                                        <option
+                                                            value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -111,7 +112,9 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @can('Comercial - Pedidos Comerciales | Crear')
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +164,8 @@
                                                 <select class="form-control chosen" id="edit_cliente" name="cliente_id"
                                                         required>
                                                     @foreach ($clientes as $cliente)
-                                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                                        <option
+                                                            value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -212,8 +216,8 @@
                                                 <select name="palet_id" id="edit_palet_id" class="form-control">
                                                     @foreach ($palets as $palet)
                                                         <option
-                                                                data-modelo="{{ ($palet->modelo_id == 1) ? 'data-euro' : 'data-grand' }}"
-                                                                value="{{ $palet->id }}">
+                                                            data-modelo="{{ ($palet->modelo_id == 1) ? 'data-euro' : 'data-grand' }}"
+                                                            value="{{ $palet->id }}">
                                                             {{ $palet->modelo->modelo." - ".$palet->formato }}</option>
                                                     @endforeach
                                                 </select>
@@ -248,7 +252,8 @@
                                                 <label for="transporte">Transporte</label>
                                                 <select class="form-control" id="edit_transporte" name="transporte_id">
                                                     @foreach ($transportes as $transporte)
-                                                        <option value="{{ $transporte->id }}">{{ $transporte->razon_social }}
+                                                        <option
+                                                            value="{{ $transporte->id }}">{{ $transporte->razon_social }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -273,7 +278,8 @@
                                                         <select name="estado_id" id="edit_estado_id"
                                                                 class="form-control">
                                                             @foreach($estados as $estado)
-                                                                <option value="{{ $estado->id }}">{{ $estado->estado }}</option>
+                                                                <option
+                                                                    value="{{ $estado->id }}">{{ $estado->estado }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -284,7 +290,7 @@
                                                                 class="btn btn-outline-info m-1 mb-3 btn-block"
                                                                 id="btnCheckStock">
                                                             <span class="ul-btn__icon"><i
-                                                                        class="i-Information"></i></span>
+                                                                    class="i-Information"></i></span>
                                                             <span class="ul-btn__text">Verificar Stock</span>
                                                         </button>
                                                     </div>
@@ -302,7 +308,8 @@
                                                 <label for="cancelado_id">Motivo de Cancelación</label>
                                                 <select name="cancelado_id" id="edit_cancelado_id" class="form-control">
                                                     @foreach($motivos_cancelados as $motivo)
-                                                        <option value="{{ $motivo->id }}">{{ $motivo->descripcion }}</option>
+                                                        <option
+                                                            value="{{ $motivo->id }}">{{ $motivo->descripcion }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -313,8 +320,10 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        <button type="submit" class="btn btn-primary" id="btnSavePedido">Guardar
-                                        </button>
+                                        @can('Comercial - Pedidos Comerciales | Modificar')
+                                            <button type="submit" class="btn btn-primary" id="btnSavePedido">Guardar
+                                            </button>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
@@ -457,8 +466,11 @@
 
                             <div class="col-md-6 text-right form-group mb-3">
                                 <br>
-                                <button class="btn btn-outline-primary" type="button" id="btnAddPedido">Añadir Pedido
-                                </button>
+                                @can('Comercial - Pedidos Comerciales | Crear')
+                                    <button class="btn btn-outline-primary" type="button" id="btnAddPedido">
+                                        Añadir Pedido
+                                    </button>
+                                @endcan
                             </div>
                         </div>
                     </form>
@@ -597,6 +609,7 @@
                                                                             <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                         </a>
                                                                         @if ($pedido->estado_id != 2)
+                                                                            @can('Comercial - Pedidos Comerciales | Borrar')
                                                                             <a href="javascript:void(0);"
                                                                                class="text-danger mr-2 delete"
                                                                                data-toggle="tooltip"
@@ -604,6 +617,7 @@
                                                                                data-original-title="Borrar">
                                                                                 <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                                             </a>
+                                                                            @endcan
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $pedido->id }}</td>
@@ -739,7 +753,7 @@
                 searching: true,
                 dom: 'ltipr',
                 columnDefs: [{
-                    targets: [13,14],
+                    targets: [13, 14],
                     visible: false
                 }]
             });

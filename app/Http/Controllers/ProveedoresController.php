@@ -7,6 +7,7 @@ use App\ProveedorContactos;
 use App\Mail\SendMail;
 use App\ProveedorAdjunto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -18,7 +19,11 @@ class ProveedoresController extends Controller
      */
     public function index()
     {
-        //
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Almacen | Acceso') || !Auth::user()->can('Almacen - Proveedores | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $proveedores = Proveedor::all();
         return view('almacen.proveedores.index', ['proveedores' => $proveedores]);
     }
@@ -73,7 +78,8 @@ class ProveedoresController extends Controller
                 'email'       => $request->email
             ));
             $proveedor->contactos()->save($contacto);
-        } else {
+        }
+        else {
             $contacto              = ProveedorContactos::find($request->contacto_id);
             $contacto->descripcion = $request->descripcion;
             $contacto->telefono    = $request->telefono;
@@ -123,6 +129,11 @@ class ProveedoresController extends Controller
      */
     public function show(Request $request, $id)
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Almacen | Acceso') || !Auth::user()->can('Almacen - Proveedores | Modificar')) {
+            return redirect()->route('home');
+        }
+
         $proveedor = Proveedor::with('entradas')->find($id);
 
         $data = array(
@@ -213,7 +224,8 @@ class ProveedoresController extends Controller
                 "message" => "Error al enviar email. Intente nuevamente",
                 "type"    => "error"
             );
-        } else {
+        }
+        else {
             $response = array(
                 "title"   => "Éxito",
                 "message" => "Email enviado con éxito",

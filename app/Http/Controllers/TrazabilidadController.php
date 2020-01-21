@@ -8,6 +8,7 @@ use App\Parcela;
 use App\Trazabilidad;
 use App\Variedad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrazabilidadController extends Controller
 {
@@ -17,7 +18,11 @@ class TrazabilidadController extends Controller
      */
     public function index()
     {
-        //
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Maestros | Acceso') || !Auth::user()->can('Maestros - Trazabilidad | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $data = array(
             'fincas'         => Finca::all(),
             'cultivos'       => Cultivo::all(),

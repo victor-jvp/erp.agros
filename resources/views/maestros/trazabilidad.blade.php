@@ -20,9 +20,11 @@
                     <h4 class="card-title mb-3">Trazabilidad</h4>
 
                     <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <button class="btn btn-primary" type="button" id="btnNuevaTrazabilidad">Nuevo</button>
-                        </div>
+                        @can('Maestros - Trazabilidad | Crear')
+                            <div class="col-md-3 mb-3">
+                                <button class="btn btn-primary" type="button" id="btnNuevaTrazabilidad">Nuevo</button>
+                            </div>
+                        @endcan
                     </div>
 
                     {{--Modal Producto Compuesto--}}
@@ -85,7 +87,9 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @canany(['Maestros - Trazabilidad | Crear', 'Maestros - Trazabilidad | Modificar'])
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @endcanany
                                     </div>
                                 </form>
                             </div>
@@ -123,12 +127,16 @@
                                                 <td>{{ $trazabilidad->variedad->variedad }}</td>
                                                 <td>{{ $trazabilidad->parcela->parcela }}</td>
                                                 <td>
-                                                    <a href="javascript:void(0);" class="text-success mr-2 edit">
-                                                        <i class="nav-icon i-Pen-2 font-weight-bold "></i>
-                                                    </a>
-                                                    <a href="javascript:void(0);" class="text-danger mr-2 delete">
-                                                        <i class="nav-icon i-Close-Window font-weight-bold "></i>
-                                                    </a>
+                                                    @can('Maestros - Trazabilidad | Modificar')
+                                                        <a href="javascript:void(0);" class="text-success mr-2 edit">
+                                                            <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('Maestros - Trazabilidad | Borrar')
+                                                        <a href="javascript:void(0);" class="text-danger mr-2 delete">
+                                                            <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                        </a>
+                                                    @endcan
                                                 </td>
                                                 <td>{{ $trazabilidad->parcela->finca->id }}</td>
                                                 <td>{{ $trazabilidad->variedad->cultivo->id }}</td>
@@ -260,7 +268,7 @@
 
             $("#trazabilidad_form").submit(function (e) {
                 e.preventDefault();
-                
+
                 var variedad_id = $("#variedad_id").val();
                 var parcela_id = $("#parcela_id").val();
 
@@ -272,10 +280,10 @@
                         variedad_id: variedad_id,
                         parcela_id: parcela_id
                     },
-                    success: function (data) {                        
-                        if (data.IsValid != true){
+                    success: function (data) {
+                        if (data.IsValid != true) {
                             swal('Atención', 'La Trazabilidad ya está registrada.', 'warning')
-                        }else{
+                        } else {
                             e.currentTarget.submit();
                         }
                     },

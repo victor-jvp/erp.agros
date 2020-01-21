@@ -28,15 +28,15 @@
                     <div class="triangle"></div>
                 </li>
             @endcan
-            @can('Departamento Tecnico | Acceso')
-                <li class="nav-item" data-item="dpto_tecnico">
-                    <a class="nav-item-hold" href="#">
-                        <i class="nav-icon i-Computer-Secure"></i>
-                        <span class="nav-text">Dpto. Técnico</span>
-                    </a>
-                    <div class="triangle"></div>
-                </li>
-            @endcan
+{{--            @can('Departamento Tecnico | Acceso')--}}
+{{--                <li class="nav-item" data-item="dpto_tecnico">--}}
+{{--                    <a class="nav-item-hold" href="#">--}}
+{{--                        <i class="nav-icon i-Computer-Secure"></i>--}}
+{{--                        <span class="nav-text">Dpto. Técnico</span>--}}
+{{--                    </a>--}}
+{{--                    <div class="triangle"></div>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
             @can('Costes | Acceso')
                 <li class="nav-item">
                     <a class="nav-item-hold" href="#">
@@ -273,7 +273,7 @@
 
         @can('Configuracion | Acceso')
             <ul class="childNav" data-parent="configuracion">
-                @can('Configuracion - Datos Fiscales Empresa | Acceso')
+                @can('Configuracion - Datos Fiscales de la Empresa | Acceso')
                     <li class="nav-item">
                         <a class="{{ Route::currentRouteName()=='datos-fiscales.show' ? 'open' : '' }}"
                            href="{{ route('datos-fiscales.show') }}">

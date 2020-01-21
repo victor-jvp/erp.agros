@@ -21,9 +21,11 @@
                 {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
 
                 <div class="row">
+                    @can('Almacen - Proveedores | Crear')
                     <div class="col-md-3">
                         <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
                     </div>
+                    @endcan
                 </div>
 
                 <!-- Modal Agregar Proveedor-->
@@ -58,7 +60,9 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                         Cerrar
                                     </button>
+                                    @can('Almacen - Proveedores | Crear')
                                     <button type="submit" class="btn btn-primary">Continuar</button>
+                                    @endcan
                                 </div>
                             </form>
                         </div>
@@ -96,9 +100,11 @@
                                                 class="text-success mr-2 edit">
                                                 <i class="nav-icon i-Pen-2 font-weight-bold "></i>
                                             </a>
+                                            @can('Almacen - Proveedores | Borrar')
                                             <a href="javascript:void(0);" class="text-danger mr-2 delete">
                                                 <i class="nav-icon i-Close-Window font-weight-bold "></i>
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                     @endforeach

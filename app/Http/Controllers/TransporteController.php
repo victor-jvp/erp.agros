@@ -7,6 +7,7 @@ use App\TransporteAdjunto;
 use App\TransporteContacto;
 use Illuminate\Http\Request;
 use App\Mail\SendMail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class TransporteController extends Controller
@@ -15,6 +16,11 @@ class TransporteController extends Controller
 
     public function index()
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Comercial | Acceso') || !Auth::user()->can('Comercial - Transportes | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $transportes = Transporte::all();
         return view('comercial.transportes.index', ['transportes' => $transportes]);
     }
@@ -32,6 +38,11 @@ class TransporteController extends Controller
 
     public function show(Request $request, $id)
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Comercial | Acceso') || !Auth::user()->can('Comercial - Transportes | Modificar')) {
+            return redirect()->route('home');
+        }
+
         $transporte = Transporte::with([
             'pedidos' => function($p){
                 $p->where("estado_id", "=", 3);

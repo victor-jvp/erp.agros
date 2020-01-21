@@ -25,10 +25,6 @@
                                role="tab"
                                aria-controls="general" aria-selected="false">General</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="email-tab" data-toggle="tab" href="#email" role="tab"
-                               aria-controls="email" aria-selected="false">Email</a>
-                        </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="general" role="tabpanel"
@@ -62,8 +58,10 @@
                                                         </div>
 
                                                         <div class="col-md-12">
-                                                            <button class="btn btn-primary" type="submit">Guardar
-                                                            </button>
+                                                            @can('Configuracion - Especiales | Acceso')
+                                                                <button class="btn btn-primary" type="submit">Guardar
+                                                                </button>
+                                                            @endcan
                                                         </div>
                                                     </div>
                                                 </form>
@@ -73,72 +71,6 @@
                                 </div>
 
                             </form>
-
-                        </div>
-                        <div class="tab-pane fade" id="email" role="tabpanel" aria-labelledby="email-tab">
-
-                            <form action="" method="POST">
-
-                                {{ csrf_field() }}
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="card mb-4">
-                                            <div class="card-body">
-                                                <div class="card-title mb-3">Email</div>
-                                                <form>
-                                                    <div class="row">
-                                                        <div class="col-md-6 form-group mb-3">
-                                                            <label for="mail_username">Email</label>
-                                                            <input type="email" class="form-control"
-                                                                   name="mail_username"
-                                                                   value="{{ $especiales->mail_username }}">
-                                                        </div>
-
-                                                        <div class="col-md-6 form-group mb-3">
-                                                            <label for="mail_password">Contraseña</label>
-                                                            <input type="password" class="form-control"
-                                                                   name="mail_password">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-md-6 form-group mb-3">
-                                                            <label for="mail_host">Host</label>
-                                                            <input type="text" class="form-control" name="mail_host"
-                                                                   value="{{ $especiales->mail_host }}">
-                                                        </div>
-
-                                                        <div class="col-md-6 form-group mb-3">
-                                                            <label for="mail_port">Puerto</label>
-                                                            <input type="number" class="form-control" name="mail_port"
-                                                                   value="{{ $especiales->mail_port }}">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-md-6 form-group mb-3">
-                                                            <label for="mail_driver">Email Driver</label>
-                                                            <select name="mail_driver" id="mail_driver" class="form-control">
-                                                                <option value="smtp">SMTP</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <button class="btn btn-primary" type="submit">Guardar
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </form>
-
                         </div>
                     </div>
                 </div>

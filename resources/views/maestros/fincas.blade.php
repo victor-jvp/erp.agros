@@ -35,9 +35,11 @@
                              aria-labelledby="fincas-tab">
 
                             <div class="row">
-                                <div class="col-md-3">
-                                    <button class="btn btn-primary" type="button" id="btnNuevaFinca">Nuevo</button>
-                                </div>
+                                @can('Maestros - Fincas | Crear')
+                                    <div class="col-md-3">
+                                        <button class="btn btn-primary" type="button" id="btnNuevaFinca">Nuevo</button>
+                                    </div>
+                                @endcan
                             </div>
 
                             <!-- Modal Fincas-->
@@ -64,13 +66,15 @@
                                                         <input type="text" class="form-control" id="finca"
                                                                placeholder="Finca" required="" name="finca">
                                                     </div>
-                                                </div>  
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cerrar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @canany(['Maestros - Fincas | Crear', 'Maestros - Fincas | Modificar'])
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @endcanany
                                             </div>
                                         </form>
                                     </div>
@@ -98,12 +102,16 @@
                                                         <td>{{ $finca->id }}</td>
                                                         <td scope="row">{{ $finca->finca }}</td>
                                                         <td>
-                                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                            </a>
+                                                            @can('Maestros - Fincas | Modificar')
+                                                                <a href="javascript:void(0);" class="text-success mr-2">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('Maestros - Fincas | Borrar')
+                                                                <a href="javascript:void(0);" class="text-danger mr-2">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -153,7 +161,8 @@
                                                                 id="parcela_finca_id">
                                                             <option value="" hidden>Finca...</option>
                                                             @foreach ($fincas as $finca)
-                                                                <option value="{{ $finca->id }}">{{ $finca->finca }}</option>
+                                                                <option
+                                                                    value="{{ $finca->id }}">{{ $finca->finca }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -163,7 +172,9 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cerrar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @canany(['Maestros - Fincas | Crear', 'Maestros - Fincas | Modificar'])
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @endcan
                                             </div>
                                         </form>
                                     </div>
@@ -195,12 +206,18 @@
                                                         <td>{{ $parcela->finca_id }}</td>
                                                         <td>{{ $parcela->finca->finca }}</td>
                                                         <td>
-                                                            <a href="javascript:void(0);" class="text-success mr-2 edit">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold "></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2 delete">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold "></i>
-                                                            </a>
+                                                            @can('Maestros - Fincas | Modificar')
+                                                                <a href="javascript:void(0);"
+                                                                   class="text-success mr-2 edit">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('Maestros - Fincas | Borrar')
+                                                                <a href="javascript:void(0);"
+                                                                   class="text-danger mr-2 delete">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -314,7 +331,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    {targets: [0,2], visible: false},
+                    {targets: [0, 2], visible: false},
                 ]
             });
 
@@ -331,7 +348,7 @@
                 $("#modal-parcelas").modal('show');
             });
 
-            $('#modal-parcelas').on('hidden.bs.modal',function () {
+            $('#modal-parcelas').on('hidden.bs.modal', function () {
                 limpiarCamposParcelas();
             })
 

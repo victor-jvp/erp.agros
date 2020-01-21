@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -16,6 +17,12 @@ class UsuariosController extends Controller
     public function index()
     {
         //
+
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Configuracion | Acceso') || !Auth::user()->can('Configuracion - Usuarios | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $data = array();
 
         $usuarios = User::all();
@@ -72,7 +79,11 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-        //
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Configuracion | Acceso') || !Auth::user()->can('Configuracion - Usuarios | Modificar')) {
+            return redirect()->route('home');
+        }
+
         $data['usuario'] = User::with('roles')->find($id);
         $data['roles']   = Role::all();
 
@@ -129,6 +140,7 @@ class UsuariosController extends Controller
     public function perfil($id)
     {
         //
+
         $data['usuario'] = User::with('roles')->find($id);
         $data['roles']   = Role::all();
 

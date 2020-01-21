@@ -37,9 +37,12 @@
                         <div class="tab-pane fade" id="cultivos" role="tabpanel" aria-labelledby="cultivos-tab">
 
                             <div class="row">
-                                <div class="col-md-3">
-                                    <button class="btn btn-primary" type="button" id="btnNuevoCultivo">Nuevo</button>
-                                </div>
+                                @can('Maestros - Familias y Marcas | Crear')
+                                    <div class="col-md-3">
+                                        <button class="btn btn-primary" type="button" id="btnNuevoCultivo">Nuevo
+                                        </button>
+                                    </div>
+                                @endcan
                             </div>
 
                             <!-- Modal Cultivos-->
@@ -73,7 +76,9 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cerrar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @canany(['Maestros - Familias y Marcas | Crear', 'Maestros - Familias y Marcas | Modificar'])
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @endcanany
                                             </div>
                                         </form>
                                     </div>
@@ -101,16 +106,16 @@
                                                         <td>{{ $cultivo->id }}</td>
                                                         <td scope="row">{{ $cultivo->cultivo }}</td>
                                                         <td>
-                                                            {{--                                                            <a href="javascript:void(0);" onclick="EditCaja('{{ $caja->id }}')"
-                                                            class="text-success mr-2">--}}
-                                                            {{--                                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>--}}
-                                                            {{--                                                            </a>--}}
-                                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                            </a>
+                                                            @can('Maestros - Familias y Marcas | Modificar')
+                                                                <a href="javascript:void(0);" class="text-success mr-2">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('Maestros - Familias y Marcas | Borrar')
+                                                                <a href="javascript:void(0);" class="text-danger mr-2">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -161,7 +166,8 @@
                                                                 id="variedad_cultivo_id">
                                                             <option value="" hidden>Cultivo...</option>
                                                             @foreach ($cultivos as $cultivo)
-                                                                <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}
+                                                                <option
+                                                                    value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -172,7 +178,9 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cerrar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @canany(['Maestros - Familias y Marcas | Crear', 'Maestros - Familias y Marcas | Modificar'])
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @endcanany
                                             </div>
                                         </form>
                                     </div>
@@ -204,12 +212,16 @@
                                                         <td>{{ $variedad->cultivo_id }}</td>
                                                         <td>{{ $variedad->cultivo->cultivo }}</td>
                                                         <td>
-                                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                            </a>
+                                                            @can('Maestros - Familias y Marcas | Modificar')
+                                                                <a href="javascript:void(0);" class="text-success mr-2">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('Maestros - Familias y Marcas | Borrar')
+                                                                <a href="javascript:void(0);" class="text-danger mr-2">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -259,7 +271,8 @@
                                                                 id="marca_cultivo_id">
                                                             <option value="" hidden>Cultivo...</option>
                                                             @foreach ($cultivos as $cultivo)
-                                                                <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}
+                                                                <option
+                                                                    value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -270,7 +283,9 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cerrar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @canany(['Maestros - Familias y Marcas | Crear', 'Maestros - Familias y Marcas | Modificar'])
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @endcanany
                                             </div>
                                         </form>
                                     </div>
@@ -302,12 +317,18 @@
                                                         <td>{{ $marca->cultivo_id }}</td>
                                                         <td>{{ $marca->cultivo->cultivo }}</td>
                                                         <td>
-                                                            <a href="javascript:void(0);" class="text-success mr-2 edit">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold "></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2 delete">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold "></i>
-                                                            </a>
+                                                            @can('Maestros - Familias y Marcas | Modificar')
+                                                                <a href="javascript:void(0);"
+                                                                   class="text-success mr-2 edit">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('Maestros - Familias y Marcas | Borrar')
+                                                                <a href="javascript:void(0);"
+                                                                   class="text-danger mr-2 delete">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @endforeach

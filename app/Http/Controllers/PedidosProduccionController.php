@@ -27,6 +27,7 @@ use App\Transporte;
 use Barryvdh\DomPDF\PDF;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PedidosProduccionController extends Controller
@@ -34,9 +35,10 @@ class PedidosProduccionController extends Controller
     //
     public function index(Request $request)
     {
-        //        if ($request->session()->get('error')) {
-        //            $request->session()->keep(['error']);
-        //        }
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Almacen | Acceso') || !Auth::user()->can('Almacen - Pedidos Producción | Acceso')) {
+            return redirect()->route('home');
+        }
 
         if (!is_null($request->semana_act)) {
             $data['semana_act'] = intval($request->semana_act);

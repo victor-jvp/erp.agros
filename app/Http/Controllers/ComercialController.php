@@ -9,6 +9,7 @@ use App\Especiales;
 use App\PedidoProduccion;
 use App\Prevision;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Builder;
 use function foo\func;
@@ -18,6 +19,11 @@ class ComercialController extends Controller
     //
     public function dashboard(Request $request)
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Comercial | Acceso') || !Auth::user()->can('Comercial - Dashboard | Acceso')) {
+            return redirect()->route('home');
+        }
+
         if (!is_null($request->semana_act)) {
             $data['semana_act'] = intval($request->semana_act);
         }

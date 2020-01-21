@@ -14,12 +14,17 @@ use App\ProductoCompuesto_cab;
 use App\ProductoCompuesto_cajas;
 use App\ProductoCompuesto_det;
 use App\ProductoCompuesto_tarrinas;
+use Illuminate\Support\Facades\Auth;
 
 class ProductosCompuestosController extends Controller
 {
     //Listar Productos compuestos
     public function index()
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Maestros | Acceso') || !Auth::user()->can('Maestros - Productos Compuestos | Acceso')) {
+            return redirect()->route('home');
+        }
 
         $productos = ProductoCompuesto_cab::all();
 
@@ -39,6 +44,11 @@ class ProductosCompuestosController extends Controller
 
     public function show($id)
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Maestros | Acceso') || !Auth::user()->can('Maestros - Productos Compuestos | Modificar')) {
+            return redirect()->route('home');
+        }
+
         $producto = ProductoCompuesto_cab::find($id);
         $detalles = ProductoCompuesto_det::where('compuesto_id', $id)->get();
 

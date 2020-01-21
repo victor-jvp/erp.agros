@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Especiales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,6 +16,10 @@ class EspecialesController extends Controller
      */
     public function index()
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Configuracion | Acceso') || !Auth::user()->can('Configuracion - Especiales | Acceso')) {
+            return redirect()->route('home');
+        }
 
         $especiales = Especiales::all()->first();
         if (is_null($especiales)) $especiales = new Especiales();

@@ -167,7 +167,9 @@
                                         <button type="button" class="btn btn-secondary" id="btnSavePrevisiones">
                                             Cerrar
                                         </button>
+                                        @can('Prevision - Panel de Control | Crear')
                                         <button type="submit" class="btn btn-primary">Agregar</button>
+                                        @endcan
                                     </div>
                                 </form>
 
@@ -340,7 +342,9 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
+                                        @can('Prevision - Panel de Control | Modificar')
                                         <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @endcan
                                     </div>
                                 </form>
                             </div>
@@ -491,13 +495,14 @@
                                                     <small>Semana {{ $semana_act }}</small>
                                                 </div>
                                             </div>
-
+                                            @can('Prevision - Panel de Control | Crear')
                                             <div class="col-md-6 mb-3 text-right">
                                                 <button data-finca="{{ $finca->id }}"
                                                         class="btnOpenModalPrevision btn btn-outline-primary"
                                                         type="button">Agregar
                                                 </button>
                                             </div>
+                                            @endcan
                                         </div>
 
                                         <div class="row">
@@ -657,12 +662,14 @@
                                                                                                     <i
                                                                                                             class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                                                 </a>
+                                                                                                @can('Prevision - Panel de Control | Borrar')
                                                                                                 <a href="javascript:void(0);"
                                                                                                    onclick="DeletePrevision({{ $prevision->id }})"
                                                                                                    class="text-danger mr-2 delete">
                                                                                                     <i
                                                                                                             class="nav-icon i-Close-Window font-weight-bold"></i>
                                                                                                 </a>
+                                                                                                @endcan
                                                                                             </td>
                                                                                         @else
                                                                                             <td colspan="5"></td>

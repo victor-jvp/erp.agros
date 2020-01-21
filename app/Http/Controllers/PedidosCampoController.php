@@ -7,6 +7,7 @@ use App\Finca;
 use App\Parcela;
 use App\PedidosCampo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use function foo\func;
 
@@ -14,6 +15,11 @@ class PedidosCampoController extends Controller
 {
     public function index(Request $request)
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Prevision | Acceso') || !Auth::user()->can('Prevision - Pedido Campo | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $fecha_act = (is_null($request->fecha_act)) ? date('Y-m-d') : date("Y-m-d", strtotime($request->fecha_act));
         $fincas    = Finca::all();
 
@@ -37,7 +43,7 @@ class PedidosCampoController extends Controller
 
             $query = "SELECT
                     IFNULL(COUNT( * ),0) AS total,
-                    IFNULL(SUM( kilos ), 0) AS kilos 
+                    IFNULL(SUM( kilos ), 0) AS kilos
                 FROM
                     pedidos_campo
                 INNER JOIN parcelas ON parcelas.id = pedidos_campo.parcela_id
@@ -106,7 +112,7 @@ class PedidosCampoController extends Controller
         $pedido->nro_lote_pedido = $request->nro_lote_pedido;
         $pedido->encargado       = $request->encargado;
         $pedido->finca_id        = $request->finca_id;
-        $pedido->parcela_id      = $request->parcela;        
+        $pedido->parcela_id      = $request->parcela;
         $pedido->formato         = $request->formato;
         $pedido->caja            = $request->caja;
         $pedido->kilos           = $request->kilos;
@@ -157,7 +163,7 @@ class PedidosCampoController extends Controller
                     $pedido->save();
                 }
             }
-        }        
+        }
 
         $data = array(
             'fecha_act' => $fecha_act

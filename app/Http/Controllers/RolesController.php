@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -14,6 +15,11 @@ class RolesController extends Controller
      */
     public function index()
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Configuracion | Acceso') || !Auth::user()->can('Configuracion - Roles de Usuarios | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $data = array(
             'roles' => Role::all()
         );
@@ -64,7 +70,11 @@ class RolesController extends Controller
      */
     public function show($id)
     {
-        //
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Configuracion | Acceso') || !Auth::user()->can('Configuracion - Roles de Usuarios | Modificar')) {
+            return redirect()->route('home');
+        }
+
         $role     = Role::findById($id);
         $permisos = Permission::all();
 

@@ -14,16 +14,23 @@ use App\PedidoComercialEstado;
 use App\ProductoCompuesto_det;
 use App\Transporte;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class ClientesController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Comercial | Acceso') || !Auth::user()->can('Comercial - Clientes | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $data = array(
             "clientes" => Cliente::with('contactos')->with('destinos')->get()
         );
@@ -54,6 +61,11 @@ class ClientesController extends Controller
      */
     public function show(Request $request, $id)
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Comercial | Acceso') || !Auth::user()->can('Comercial - Clientes | Modificar')) {
+            return redirect()->route('home');
+        }
+
         $cliente = Cliente::with([
             'contactos',
             'adjuntos',

@@ -20,9 +20,11 @@
                     <h4 class="card-title mb-3">Productos Compuestos</h4>
 
                     <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <button class="btn btn-primary" type="button" id="btnNuevoProducto">Nuevo</button>
-                        </div>
+                        @can('Maestros - Productos Compuestos | Crear')
+                            <div class="col-md-3 mb-3">
+                                <button class="btn btn-primary" type="button" id="btnNuevoProducto">Nuevo</button>
+                            </div>
+                        @endcan
                     </div>
 
                     {{--Modal Producto Compuesto--}}
@@ -56,7 +58,8 @@
                                                 <select class="form-control chosen" id="cultivo" name="cultivo"
                                                         required>
                                                     @foreach ($cultivos as $cultivo)
-                                                        <option value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
+                                                        <option
+                                                            value="{{ $cultivo->id }}">{{ $cultivo->cultivo }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -67,7 +70,9 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @canany(['Maestros - Productos Compuestos | Crear', 'Maestros - Productos Compuestos | Modificar'])
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @endcanany
                                     </div>
                                 </form>
                             </div>
@@ -99,16 +104,20 @@
                                         <td>{{ date('d/m/Y', strtotime($producto->fecha))}}</td>
                                         <td>{{ (isset($producto->detalles)) ? count($producto->detalles) : 0}}</td>
                                         <td>
+                                            @can('Maestros - Productos Compuestos | Modificar')
                                             <a href="javascript:void(0);" class="text-success mr-2"
                                                data-toggle="tooltip"
                                                data-placement="top" title="" data-original-title="Editar">
                                                 <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
                                             </a>
+                                            @endcan
+                                            @can('Maestros - Productos Compuestos | Borrar')
                                             <a href="{{ route('productos-compuestos.show', $producto->id)  }}"
                                                class="text-primary mr-2" data-toggle="tooltip"
                                                data-placement="top" title="" data-original-title="Compuestos">
                                                 <i class="nav-icon i-Notepad-2 font-weight-bold"></i>
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

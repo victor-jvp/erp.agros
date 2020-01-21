@@ -12,6 +12,7 @@ use App\Contador;
 use App\Tarrina;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EntradaProductosController extends Controller
 {
@@ -21,6 +22,11 @@ class EntradaProductosController extends Controller
      */
     public function index()
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Almacen | Acceso') || !Auth::user()->can('Almacen - Entrada de Productos | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $entradas = Entrada::where("tipo_mov", "E")->with('proveedor')->get();
 
         $data = array(

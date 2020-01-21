@@ -23,8 +23,7 @@
                         <li class="nav-item">
                             <a class="nav-link" id="datos-fiscales-tab" data-toggle="tab" href="#datos-fiscales"
                                role="tab"
-                               aria-controls="datos-fiscales" aria-selected="false">Datos
-                                Fiscales</a>
+                               aria-controls="datos-fiscales" aria-selected="false">Datos Fiscales</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="contactos-tab" data-toggle="tab" href="#contactos" role="tab"
@@ -644,7 +643,7 @@
                                                     title=""
                                                     data-original-title="Enviar Email"
                                                     class="btn btn-icon btn-rounded btn-primary mr-2"
-                                                    {{ (empty($cliente->email)) ? "disabled" : "" }}>
+                                                {{ (empty($cliente->email)) ? "disabled" : "" }}>
                                                 <i class="i-Paper-Plane"></i>
                                             </button>
                                         </div>

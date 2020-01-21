@@ -22,8 +22,9 @@
 
                     <div class="row">
                         <div class="col-md-3">
-{{--                            <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>--}}
-                            <a href="{{ route('usuarios.create') }}" class="btn btn-primary">Nuevo</a>
+                            @can('Configuracion - Usuarios | Crear')
+                                <a href="{{ route('usuarios.create') }}" class="btn btn-primary">Nuevo</a>
+                            @endcan
                         </div>
                     </div>
 
@@ -60,7 +61,9 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        <button type="submit" class="btn btn-primary">Continuar</button>
+                                        @can('Configuracion - Usuarios | Crear')
+                                            <button type="submit" class="btn btn-primary">Continuar</button>
+                                        @endcan
                                     </div>
                                 </form>
                             </div>
@@ -95,18 +98,22 @@
                                             <td>{{ $usuario->created_at->format('d/m/Y h:i:s a')}}</td>
                                             <td>{{ $usuario->updated_at->format('d/m/Y h:i:s a')}}</td>
                                             <td class="text-center">
-                                            @if($usuario->id != 1)
-                                                <a href="{{ route('usuarios.show', $usuario->id) }}"
-                                                   data-toggle="tooltip" data-placement="top" title=""
-                                                   data-original-title="Editar" class="text-success mr-2 edit">
-                                                    <i class="nav-icon i-Pen-2 font-weight-bold "></i>
-                                                </a>
-                                                <a href="javascript:void(0);" class="text-danger mr-2 delete"
-                                                   data-toggle="tooltip" data-placement="top" title=""
-                                                   data-original-title="Borrar">
-                                                    <i class="nav-icon i-Close-Window font-weight-bold "></i>
-                                                </a>
-                                            @endif
+                                                @if($usuario->id != 1)
+                                                    @can('Configuracion - Usuarios | Modificar')
+                                                        <a href="{{ route('usuarios.show', $usuario->id) }}"
+                                                           data-toggle="tooltip" data-placement="top" title=""
+                                                           data-original-title="Editar" class="text-success mr-2 edit">
+                                                            <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('Configuracion - Usuarios | Borrar')
+                                                        <a href="javascript:void(0);" class="text-danger mr-2 delete"
+                                                           data-toggle="tooltip" data-placement="top" title=""
+                                                           data-original-title="Borrar">
+                                                            <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                        </a>
+                                                    @endcan
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

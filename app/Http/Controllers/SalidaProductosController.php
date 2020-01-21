@@ -11,6 +11,7 @@ use App\Contador;
 use App\Tarrina;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SalidaProductosController extends Controller
 {
@@ -20,6 +21,11 @@ class SalidaProductosController extends Controller
      */
     public function index()
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Almacen | Acceso') || !Auth::user()->can('Almacen - Salida de Productos | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $data['salidas']    = Salida::where("tipo_mov", "S")->get();
         $data['nro_salida'] = Contador::next_nro_salida();
         return view('almacen.salidas', $data);

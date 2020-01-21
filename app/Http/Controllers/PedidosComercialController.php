@@ -29,6 +29,7 @@ use App\ProductoCompuesto_tarrinas;
 use App\Tarrina;
 use App\Transporte;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Builder;
 
@@ -36,6 +37,11 @@ class PedidosComercialController extends Controller
 {
     public function index(Request $request)
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Comercial | Acceso') || !Auth::user()->can('Comercial - Pedidos Comerciales | Acceso')) {
+            return redirect()->route('home');
+        }
+
         if (!is_null($request->semana_act)) {
             $data['semana_act'] = intval($request->semana_act);
         } else {

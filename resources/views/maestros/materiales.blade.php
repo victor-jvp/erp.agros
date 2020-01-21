@@ -91,7 +91,9 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cerrar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @canany(['Maestros - Materiales | Crear','aestros - Materiales | Modificar'])
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @endcanany
                                             </div>
                                         </form>
                                     </div>
@@ -125,13 +127,20 @@
                                                         <td>
                                                             {{--                                                            <a href="javascript:void(0);" onclick="EditCaja('{{ $caja->id }}')" class="text-success mr-2">--}}
                                                             {{--                                                                <i class="nav-icon i-Pen-2 font-weight-bold"></i>--}}
-                                                            {{--                                                            </a>--}}
-                                                            <a href="javascript:void(0);" class="text-success mr-2 edit">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold "></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2 delete">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold "></i>
-                                                            </a>
+                                                            {{--
+                                                                                                                     </a>--}}
+                                                            @can('Maestros - Materiales | Modificar')
+                                                                <a href="javascript:void(0);"
+                                                                   class="text-success mr-2 edit">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('Maestros - Materiales | Borrar')
+                                                                <a href="javascript:void(0);"
+                                                                   class="text-danger mr-2 delete">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -183,7 +192,8 @@
                                                             <option value=""></option>
                                                             @if (isset($palletsModels))
                                                                 @foreach ($palletsModels as $modelo)
-                                                                    <option value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
+                                                                    <option
+                                                                        value="{{ $modelo->id }}">{{ $modelo->modelo }}</option>
                                                                 @endforeach
                                                             @endif
                                                         </select>
@@ -194,7 +204,9 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cerrar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @canany(['Maestros - Materiales | Crear','aestros - Materiales | Modificar'])
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @endcanany
                                             </div>
                                         </form>
                                     </div>
@@ -226,12 +238,16 @@
                                                         <td>{{ $pallet->modelo_id }}</td>
                                                         <td>{{ $pallet->modelo->modelo }}</td>
                                                         <td>
-                                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                            </a>
+                                                            @can('Maestros - Materiales | Modificar')
+                                                                <a href="javascript:void(0);" class="text-success mr-2">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('Maestros - Materiales | Borrar')
+                                                                <a href="javascript:void(0);" class="text-danger mr-2">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -280,7 +296,9 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cerrar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @canany(['Maestros - Materiales | Crear','aestros - Materiales | Modificar'])
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @endcanany
                                             </div>
                                         </form>
                                     </div>
@@ -308,12 +326,16 @@
                                                         <td>{{ $cubre->id }}</td>
                                                         <td scope="row">{{ $cubre->formato }}</td>
                                                         <td>
-                                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                            </a>
+                                                            @can('Maestros - Materiales | Modificar')
+                                                                <a href="javascript:void(0);" class="text-success mr-2">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('Maestros - Materiales | Borrar')
+                                                                <a href="javascript:void(0);" class="text-danger mr-2">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -362,7 +384,9 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cerrar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @canany(['Maestros - Materiales | Crear','aestros - Materiales | Modificar'])
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @endcanany
                                             </div>
                                         </form>
                                     </div>
@@ -390,12 +414,16 @@
                                                         <td>{{ $auxiliar->id }}</td>
                                                         <td scope="row">{{ $auxiliar->modelo }}</td>
                                                         <td>
-                                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                            </a>
+                                                            @can('Maestros - Materiales | Modificar')
+                                                                <a href="javascript:void(0);" class="text-success mr-2">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('Maestros - Materiales | Borrar')
+                                                                <a href="javascript:void(0);" class="text-danger mr-2">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -444,7 +472,9 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cerrar
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @canany(['Maestros - Materiales | Crear','aestros - Materiales | Modificar'])
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                @endcan
                                             </div>
                                         </form>
                                     </div>
@@ -472,12 +502,16 @@
                                                         <td>{{ $tarrina->id }}</td>
                                                         <td scope="row">{{ $tarrina->modelo }}</td>
                                                         <td>
-                                                            <a href="javascript:void(0);" class="text-success mr-2">
-                                                                <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="text-danger mr-2">
-                                                                <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
-                                                            </a>
+                                                            @can('Maestros - Materiales | Modificar')
+                                                                <a href="javascript:void(0);" class="text-success mr-2">
+                                                                    <i class="nav-icon i-Pen-2 font-weight-bold edit"></i>
+                                                                </a>
+                                                            @endcan
+                                                            @can('Maestros - Materiales | Borrar')
+                                                                <a href="javascript:void(0);" class="text-danger mr-2">
+                                                                    <i class="nav-icon i-Close-Window font-weight-bold delete"></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -508,13 +542,13 @@
     <script src="{{asset('assets/js/vendor/chosen.jquery.js')}}"></script>
 
     <script>
-        $(function(){
+        $(function () {
             var activeNav = "{{ session('activeNav') }}";
-            if(activeNav == undefined || activeNav == ""){
+            if (activeNav == undefined || activeNav == "") {
                 activeNav = "cajas";
             }
-            $("#"+activeNav+"-tab").attr('aria-selected', true).addClass('active show');
-            $("#"+activeNav).addClass('active show');
+            $("#" + activeNav + "-tab").attr('aria-selected', true).addClass('active show');
+            $("#" + activeNav).addClass('active show');
         });
     </script>
 

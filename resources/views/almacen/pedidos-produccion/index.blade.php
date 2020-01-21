@@ -51,11 +51,13 @@
                                                    title="" data-original-title="Editar">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                 </a>
-                                                <a href="javascript:void(0);" class="text-danger mr-2"
-                                                   onclick="DeletePedido({{ $pedido->id }})" data-toggle="tooltip"
-                                                   data-placement="top" title="" data-original-title="Borrar">
-                                                    <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                                </a>
+                                                @can('Almacen - Pedidos Producción | Borrar')
+                                                    <a href="javascript:void(0);" class="text-danger mr-2"
+                                                       onclick="DeletePedido({{ $pedido->id }})" data-toggle="tooltip"
+                                                       data-placement="top" title="" data-original-title="Borrar">
+                                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                    </a>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
@@ -168,7 +170,9 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @can('Almacen - Pedidos Producción | Crear')
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
@@ -362,8 +366,10 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        <button type="submit" class="btn btn-primary" id="btnSavePedido">Guardar
-                                        </button>
+                                        @can('Almacen - Pedidos Producción | Modificar')
+                                            <button type="submit" class="btn btn-primary" id="btnSavePedido">Guardar
+                                            </button>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
@@ -457,9 +463,11 @@
 
                                         <div class="row">
                                             <div class="col-md-2 text-right">
+                                                @can('Almacen - Pedidos Producción | Modificar')
                                                 <button type="button" class="btn btn-primary" id="btnAddNewStock">
                                                     Agregar
                                                 </button>
+                                                @endcan
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="radio radio-primary">
@@ -510,7 +518,9 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
                                         </button>
+                                        @can('Almacen - Pedidos Producción | Modificar')
                                         <button type="submit" class="btn btn-primary" id="btnSaveStock">Guardar</button>
+                                        @endcan
                                     </div>
                                 </form>
                             </div>
@@ -685,6 +695,7 @@
                                                                             <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                         </a>
                                                                         @if ($pedido->estado_id != 3)
+                                                                            @can('Almacen - Pedidos Producción | Borrar')
                                                                             <a href="javascript:void(0);"
                                                                                onclick="DeletePedido({{ $pedido->id }})"
                                                                                class="text-danger mr-2"
@@ -693,6 +704,7 @@
                                                                                data-original-title="Borrar">
                                                                                 <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                                             </a>
+                                                                            @endcan
                                                                         @endif
                                                                     </td>
                                                                     <td>{{ $pedido->id }}</td>

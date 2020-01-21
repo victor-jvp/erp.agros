@@ -21,9 +21,11 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
 
                     <div class="row">
+                        @can('Comercial - Clientes | Crear')
                         <div class="col-md-3">
                             <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
                         </div>
+                        @endcan
                     </div>
 
                     <!-- Modal Agregar Proveedor-->
@@ -59,7 +61,9 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
+                                        @can('Comercial - Clientes | Crear')
                                         <button type="submit" class="btn btn-primary">Continuar</button>
+                                        @endcan
                                     </div>
                                 </form>
                             </div>
@@ -93,16 +97,20 @@
                                                 <td>{{ $cliente->telefono }}</td>
                                                 <td>{{ $cliente->email }}</td>
                                                 <td>
+                                                    @can('Comercial - Clientes | Modificar')
                                                     <a href="{{ route('clientes.show', $cliente->id) }}"
                                                        data-toggle="tooltip" data-placement="top" title=""
                                                        data-original-title="Editar" class="text-success mr-2 edit">
                                                         <i class="nav-icon i-Pen-2 font-weight-bold "></i>
                                                     </a>
+                                                    @endcan
+                                                    @can('Comercial - Clientes | Borrar')
                                                     <a href="javascript:void(0);" class="text-danger mr-2 delete"
                                                        data-toggle="tooltip" data-placement="top" title=""
                                                        data-original-title="Borrar">
                                                         <i class="nav-icon i-Close-Window font-weight-bold "></i>
                                                     </a>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach

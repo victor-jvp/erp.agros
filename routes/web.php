@@ -51,7 +51,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('comercial/pedidos-comercial/update/{pedido}', 'PedidosComercialController@update')->name('pedidos-comercial.update');
 
 
-
     Route::resource('comercial/clientes', 'ClientesController');
     Route::get('comercial/clientes/delete/{cliente}', 'ClientesController@delete')->name('clientes.delete');
     Route::post('comercial/clientes/{id}/adjuntos', 'ClientesController@adjuntos')->name('clientes.adjuntos');
@@ -95,7 +94,7 @@ Route::group(['middleware' => 'auth'], function () {
 #endregion
 
 #region Histórico
-Route::get('almacen/historico-entradas', 'HistoricoEntradasController@index')->name('historico_entradas.index');
+    Route::get('almacen/historico-entradas', 'HistoricoEntradasController@index')->name('historico_entradas.index');
 #endregion
 
 #region Proveedores
@@ -134,23 +133,7 @@ Route::get('almacen/historico-entradas', 'HistoricoEntradasController@index')->n
 
 #region Materiales
 
-    Route::get('maestros/materiales', function () {
-        $cajas         = App\Caja::all();
-        $pallets       = App\Pallet::all();
-        $cubres        = App\Cubre::all();
-        $auxiliares    = App\Auxiliar::all();
-        $tarrinas      = App\Tarrina::all();
-        $palletsModels = App\PalletModel::all();
-        return view('maestros.materiales', [
-            'cajas'         => $cajas,
-            'pallets'       => $pallets,
-            'cubres'        => $cubres,
-            'auxiliares'    => $auxiliares,
-            'tarrinas'      => $tarrinas,
-            'palletsModels' => $palletsModels
-        ]);
-    })->name('materiales');
-
+    Route::get('maestros/materiales', 'MaterialesController@index')->name('materiales');
     Route::resource('maestros/cajas', 'CajasController');
     Route::resource('maestros/pallets', 'PalletsController');
     Route::resource('maestros/cubres', 'CubresController');
@@ -171,16 +154,7 @@ Route::get('almacen/historico-entradas', 'HistoricoEntradasController@index')->n
 
 #region Familias y Marcas
 
-    Route::get('maestros/familias-marcas', function () {
-        $cultivos   = App\Cultivo::all();
-        $variedades = App\Variedad::all();
-        $marcas     = App\Marca::all();
-        return view('maestros.familias_marcas', array(
-            'cultivos'   => $cultivos,
-            'variedades' => $variedades,
-            'marcas'     => $marcas
-        ));
-    })->name('familias-marcas');
+    Route::get('maestros/familias-marcas', 'FamiliasMarcasController@index')->name('familias-marcas');
 
     Route::resource('maestros/cultivos', 'CultivosController');
     Route::get('maestros/cultivos/delete/{cultivo}', 'CultivosController@delete')->name('cultivos.delete');
@@ -195,16 +169,7 @@ Route::get('almacen/historico-entradas', 'HistoricoEntradasController@index')->n
 
 #region Fincas
 
-    Route::get('maestros/fincas', function () {
-        $fincas   = App\Finca::all();
-        $parcelas = App\Parcela::all();
-        $cultivos = App\Cultivo::all();
-        return view('maestros.fincas', array(
-            'fincas'   => $fincas,
-            'parcelas' => $parcelas,
-            'cultivos' => $cultivos
-        ));
-    })->name('fincas');
+    Route::get('maestros/fincas', 'FincasParcelasController@index')->name('fincas');
 
     Route::post('maestros/fincas', 'FincasController@store')->name('fincas.create');
     Route::put('maestros/fincas/{finca}', 'FincasController@update')->name('fincas.update');

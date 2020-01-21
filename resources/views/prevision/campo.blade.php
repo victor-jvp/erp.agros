@@ -108,7 +108,9 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
+                                        @canany(['Prevision - Pedido Campo | Crear', 'Prevision - Pedido Campo | Modificar'])
                                         <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @endcan
                                     </div>
                                 </form>
                             </div>
@@ -157,12 +159,14 @@
                                                     <div class="card-title">{{ $finca->finca }}</div>
                                                 </div>
 
+                                                @can('Prevision - Pedido Campo | Crear')
                                                 <div class="col-md-6 text-right">
                                                     <button data-finca="{{ $finca->id }}"
                                                             class="btnOpenModalPedido btn btn-outline-primary"
                                                             type="button">Agregar
                                                     </button>
                                                 </div>
+                                                @endcan
                                             </div>
 
                                             <div class="row">
@@ -225,11 +229,13 @@
                                                                                class="text-success mr-2 edit">
                                                                                 <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                             </a>
+                                                                            @can('Prevision - Pedido Campo | Borrar')
                                                                             <a href="javascript:void(0);"
                                                                                     onclick="DeletePedido({{ $pedido->id }})"
                                                                                     class="text-danger mr-2 delete">
                                                                                 <i class="nav-icon i-Close-Window font-weight-bold"></i>
                                                                             </a>
+                                                                            @endcan
                                                                             @if ($p > 0)
                                                                             <a href="{{ url('pedidos-campo/'.$pedido->id.'/up?fecha_act='.$fecha_act) }}"
                                                                                class="text-primary mr-2" title="Subir">

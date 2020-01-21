@@ -20,9 +20,11 @@
                     <h4 class="card-title mb-3">Entrada de Productos</h4>
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <div class="row">
+                        @can('Almacen - Entrada de Productos | Crear')
                         <div class="col-md-3">
                             <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
                         </div>
+                        @endcan
                     </div>
 
                     <!-- Modal entradas-->
@@ -183,7 +185,9 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
                                         </button>
+                                        @canany(['Almacen - Entrada de Productos | Crear', 'Almacen - Entrada de Productos | Modificar'])
                                         <button type="submit" class="btn btn-primary">Guardar</button>
+                                        @endcan
                                     </div>
                                 </form>
                             </div>
@@ -294,9 +298,11 @@
                                                    class="text-success mr-2">
                                                     <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                 </a>
+                                                @can('Almacen - Entrada de Productos | Borrar')
                                                 <a href="javascript:void(0);" class="text-danger mr-2 delete">
                                                     <i class="nav-icon i-Close-Window font-weight-bold "></i>
                                                 </a>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach

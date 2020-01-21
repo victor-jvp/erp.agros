@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ConfigEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,6 +14,11 @@ class EmailController extends Controller
 
     public function index()
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Configuracion | Acceso') || !Auth::user()->can('Configuracion - Email | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $email = ConfigEmail::first();
 
         if (is_null($email)) {
