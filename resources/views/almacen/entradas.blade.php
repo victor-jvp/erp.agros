@@ -21,9 +21,9 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <div class="row">
                         @can('Almacen - Entrada de Productos | Crear')
-                        <div class="col-md-3">
-                            <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
-                        </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
+                            </div>
                         @endcan
                     </div>
 
@@ -53,18 +53,22 @@
                                             <div class="col-md-4 mb-3">
                                                 <label for="fecha">Fecha Entrada</label>
                                                 <input type="date" class="form-control" id="fecha"
-                                                       value="{{ date('Y-m-d') }}" placeholder="Fecha Entrada"
-                                                       required=""
-                                                       name="fecha">
+                                                       required="" name="fecha">
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="costo_unit">Costo</label>
-                                                <input type="number" class="form-control" id="costo_unit"
-                                                       name="costo_unit" min="0" step="0.01" value="0">
+                                                <label for="fecha_albaran">Fecha Albarán</label>
+                                                <input type="date" class="form-control" id="fecha_albaran"
+                                                       required="" name="fecha_albaran">
                                             </div>
+
                                         </div>
 
                                         <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="nro_albaran">Nro. Albarán</label>
+                                                <input type="text" class="form-control" id="nro_albaran"
+                                                       placeholder="Nro. Albarán" required="" name="nro_albaran">
+                                            </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="categoria">Categoria</label>
                                                 <select class="form-control chosen" name="categoria" id="categoria"
@@ -84,27 +88,26 @@
                                                     <option value=""></option>
                                                 </select>
                                             </div>
+                                        </div>
+
+                                        <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="cantidad">Cantidad</label>
                                                 <input type="number" class="form-control" id="cantidad" step="0.01"
                                                        placeholder="Cantidad" required="" name="cantidad">
                                             </div>
-                                        </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="costo_unit">Costo Unitario</label>
+                                                <input type="number" class="form-control" id="costo_unit"
+                                                       name="costo_unit" min="0" step="0.01" value="0">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="costo_ext">Costo Extendido</label>
+                                                <input type="number" class="form-control" id="costo_ext" readonly
+                                                       value="0">
+                                            </div>
 
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="nro_albaran">Nro. Albarán</label>
-                                                <input type="text" class="form-control" id="nro_albaran"
-                                                       placeholder="Nro. Albarán" required="" name="nro_albaran">
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="fecha_albaran">Fecha Albarán</label>
-                                                <input type="date" class="form-control" id="fecha_albaran"
-                                                       value="{{ date('Y-m-d') }}" placeholder="Fecha Albarán"
-                                                       required=""
-                                                       name="fecha_albaran">
-                                            </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-6 mb-3">
                                                 <label for="proveedor">Proveedor</label>
                                                 <select class="form-control chosen" name="proveedor" id="proveedor"
                                                         data-placeholder="Seleccione...">
@@ -186,7 +189,7 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
                                         </button>
                                         @canany(['Almacen - Entrada de Productos | Crear', 'Almacen - Entrada de Productos | Modificar'])
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
                                         @endcan
                                     </div>
                                 </form>
@@ -202,25 +205,26 @@
                                    style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">N° Lote</th>
-                                    <th scope="col">Fecha Entrada</th>
-                                    <th scope="col">Categoria</th>
-                                    <th scope="col">Material</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Costo</th>
-                                    <th scope="col">Nº Albaran</th>
-                                    <th scope="col">Fecha Albaran</th>
-                                    <th scope="col">Transporte Adecuado</th>
-                                    <th scope="col">Control Plagas</th>
-                                    <th scope="col">Estado Palets</th>
-                                    <th scope="col">Ficha Técnica</th>
-                                    <th scope="col">Material Dañado</th>
-                                    <th scope="col">Material Limpio</th>
-                                    <th scope="col">Control Grapas</th>
-                                    <th scope="col">Cantidad Conforme</th>
-                                    <th scope="col">Proveedor</th>
-                                    <th scope="col">Accion</th>
+                                    <th>Id</th>
+                                    <th>N° Lote</th>
+                                    <th>Fecha Entrada</th>
+                                    <th>Categoria</th>
+                                    <th>Material</th>
+                                    <th class="sum text-center">Cantidad</th>
+                                    <th class="sum text-center">Costo Unitario</th>
+                                    <th class="sum text-center">Costo Extendido</th>
+                                    <th>Nº Albaran</th>
+                                    <th>Fecha Albaran</th>
+                                    <th>Transporte Adecuado</th>
+                                    <th>Control Plagas</th>
+                                    <th>Estado Palets</th>
+                                    <th>Ficha Técnica</th>
+                                    <th>Material Dañado</th>
+                                    <th>Material Limpio</th>
+                                    <th>Control Grapas</th>
+                                    <th>Cantidad Conforme</th>
+                                    <th>Proveedor</th>
+                                    <th>Accion</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -232,8 +236,9 @@
                                             <td>{{ date('d/m/Y',strtotime($entrada->fecha)) }}</td>
                                             <td>{{ $entrada->categoria }}</td>
                                             <td>{{ $entrada->material }}</td>
-                                            <td>{{ $entrada->cantidad }}</td>
-                                            <td>{{ $entrada->costo_unit }}</td>
+                                            <td class="text-right">{{ $entrada->cantidad }}</td>
+                                            <td class="text-right">{{ $entrada->costo_unit }}</td>
+                                            <td class="text-right">{{ round($entrada->costo_unit * $entrada->cantidad, 2) }}</td>
                                             <td>{{ $entrada->nro_albaran }}</td>
                                             <td>{{ (is_null($entrada->fecha_albaran)) ? "" : date('d/m/Y',strtotime($entrada->fecha_albaran)) }}</td>
                                             <td class="text-center">
@@ -299,9 +304,9 @@
                                                     <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                 </a>
                                                 @can('Almacen - Entrada de Productos | Borrar')
-                                                <a href="javascript:void(0);" class="text-danger mr-2 delete">
-                                                    <i class="nav-icon i-Close-Window font-weight-bold "></i>
-                                                </a>
+                                                    <a href="javascript:void(0);" class="text-danger mr-2 delete">
+                                                        <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                    </a>
                                                 @endcan
                                             </td>
                                         </tr>
@@ -344,7 +349,8 @@
                     {targets: [0], visible: false},
                 ],
                 responsive: true,
-                order: [[1, 'desc']]
+                order: [[1, 'desc']],
+
             });
 
             $("#btnNuevo").click(function (e) {
@@ -354,6 +360,8 @@
                 $("#nro_lote").val(nextNroLote);
                 $("#entrada_method").val(null);
                 $("#modal-entradas").modal('show');
+                var fecha = moment().format('YYYY-MM-DD');
+                $("#fecha, #fecha_albaran").val(fecha);
             });
 
             $('#entradas_table').on('click', '.delete', function () {
@@ -378,6 +386,15 @@
                 }).then(function () {
                     window.location.href = "{{ url('almacen/entrada-productos/delete') }}" + "/" + row[0];
                 })
+            });
+
+            $("#cantidad, #costo_unit").change(function () {
+                var cantidad = $("#cantidad").val();
+                var costo_unit = $("#costo_unit").val();
+
+                var costo_ext = cantidad * costo_unit;
+
+                $("#costo_ext").val(costo_ext.toFixed(2));
             });
         });
 

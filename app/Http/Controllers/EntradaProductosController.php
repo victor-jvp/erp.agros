@@ -57,7 +57,6 @@ class EntradaProductosController extends Controller
         $entrada->categoria    = $request->categoria;
         $entrada->categoria_id = $request->material;
 
-
         $entrada->nro_albaran         = $request->nro_albaran;
         $entrada->fecha_albaran       = Carbon::parse($request->fecha_albaran)->toDateTimeString();
         $entrada->proveedor_id        = $request->proveedor;
