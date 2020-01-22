@@ -38,8 +38,8 @@
 {{--                </li>--}}
 {{--            @endcan--}}
             @can('Costes | Acceso')
-                <li class="nav-item">
-                    <a class="nav-item-hold" href="#">
+                <li class="nav-item {{ request()->is('costes*') ? 'active' : '' }}">
+                    <a class="nav-item-hold" href="{{ route('costes.index') }}">
                         <i class="nav-icon i-File-Clipboard-File--Text"></i>
                         <span class="nav-text">Costes</span>
                     </a>
@@ -56,7 +56,7 @@
                 </li>
             @endcan
             @can('Configuracion | Acceso')
-                <li class="nav-item" data-item="configuracion">
+                <li class="nav-item {{ request()->is('configuracion/*') ? 'active' : '' }}" data-item="configuracion">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-Administrator"></i>
                         <span class="nav-text">Configuración</span>
@@ -91,6 +91,7 @@
                 @endcan
             </ul>
         @endcan
+
         @can('Comercial | Acceso')
             <ul class="childNav" data-parent="comercial">
                 @can('Comercial - Dashboard | Acceso')

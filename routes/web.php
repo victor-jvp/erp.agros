@@ -131,6 +131,12 @@ Route::group(['middleware' => 'auth'], function () {
 
 #endregion
 
+#region Costes
+    Route::get('costes', 'CostesController@index')->name('costes.index');
+
+
+#endregion
+
 #region Materiales
 
     Route::get('maestros/materiales', 'MaterialesController@index')->name('materiales');
