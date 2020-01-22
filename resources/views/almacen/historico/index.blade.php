@@ -23,16 +23,16 @@
                     <hr>
 
                     <div class="row">
-                        <div class="col-md-3 form-group mb-3">
+                        <div class="col-md-4 form-group mb-3">
                             <label>Entradas Desde</label>
                             <input type="date" class="form-control" id="desde">
                         </div>
-                        <div class="col-md-3 form-group mb-3">
+                        <div class="col-md-4 form-group mb-3">
                             <label>Entradas Hasta</label>
                             <input type="date" class="form-control" id="hasta">
                         </div>
 
-                        <div class="col-md-3 form-group mb-3">
+                        <div class="col-md-4 form-group mb-3">
                             <label for="albaran">Fecha Albarán</label>
                             <input type="date" class="form-control" id="albaran">
                         </div>
@@ -40,7 +40,7 @@
 
                     <div class="row">
 
-                        <div class="col-md-3 form-group mb-3">
+                        <div class="col-md-4 form-group mb-3">
                             <label for="categoria">Categoria</label>
                             <select class="form-control chosen" id="categoria" data-size="6">
                                 <option value=""></option>
@@ -51,13 +51,13 @@
                                 <option value="Tarrina">Tarrinas</option>
                             </select>
                         </div>
-                        <div class="col-md-3 form-group mb-3">
+                        <div class="col-md-4 form-group mb-3">
                             <label for="material">Material</label>
                             <select class="form-control chosen" id="material" data-size="6">
                                 <option value=""></option>
                             </select>
                         </div>
-                        <div class="col-md-3 form-group mb-3">
+                        <div class="col-md-4 form-group mb-3">
                             <label for="proveedor">Proveedor</label>
                             <select class="form-control chosen" id="proveedor" data-size="6">
                                 <option value=""></option>
@@ -74,26 +74,27 @@
                                    style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">N° Lote</th>
+                                    <th>Id</th>
+                                    <th>N° Lote</th>
                                     <th>FechaEntrada</th>
-                                    <th scope="col">Fecha Entrada</th>
-                                    <th scope="col">Categoria</th>
+                                    <th>Fecha Entrada</th>
+                                    <th>Categoria</th>
                                     <th>MaterialID</th>
-                                    <th scope="col">Material</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Nº Albaran</th>
-                                    <th scope="col">Fecha Albaran</th>
+                                    <th>Material</th>
+                                    <th class="text-center sum">Cantidad</th>
+                                    <th class="text-center sum">Costo Extendido</th>
+                                    <th>Nº Albaran</th>
+                                    <th>Fecha Albaran</th>
                                     <th>ProveedorId</th>
-                                    <th scope="col">Proveedor</th>
-                                    <th scope="col">Transporte Adecuado</th>
-                                    <th scope="col">Control Plagas</th>
-                                    <th scope="col">Estado Palets</th>
-                                    <th scope="col">Ficha Técnica</th>
-                                    <th scope="col">Material Dañado</th>
-                                    <th scope="col">Material Limpio</th>
-                                    <th scope="col">Control Grapas</th>
-                                    <th scope="col">Cantidad Conforme</th>
+                                    <th>Proveedor</th>
+                                    <th>Transporte Adecuado</th>
+                                    <th>Control Plagas</th>
+                                    <th>Estado Palets</th>
+                                    <th>Ficha Técnica</th>
+                                    <th>Material Dañado</th>
+                                    <th>Material Limpio</th>
+                                    <th>Control Grapas</th>
+                                    <th>Cantidad Conforme</th>
                                     {{-- <th scope="col">Accion</th> --}}
                                 </tr>
                                 </thead>
@@ -108,7 +109,8 @@
                                             <td>{{ $entrada->categoria }}</td>
                                             <td>{{ $entrada->categoria_id }}</td>
                                             <td>{{ $entrada->material }}</td>
-                                            <td>{{ $entrada->cantidad }}</td>
+                                            <td class="text-right">{{ $entrada->cantidad }}</td>
+                                            <td class="text-right">{{ round($entrada->cantidad * $entrada->costo_unit, 2) }}</td>
                                             <td>{{ $entrada->nro_albaran }}</td>
                                             <td>{{ (is_null($entrada->fecha_albaran)) ? "" : date('d/m/Y',strtotime($entrada->fecha_albaran)) }}</td>
                                             <td>{{ $entrada->proveedor_id }}</td>
@@ -182,6 +184,14 @@
                                     @endforeach
                                 @endif
                                 </tbody>
+                                <tfoot>
+                                <tr class="text-right">
+                                    <td colspan="7">Totales</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="12"></td>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -213,6 +223,19 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        jQuery.fn.dataTable.Api.register('sum()', function () {
+            return this.flatten().reduce(function (a, b) {
+                if (typeof a === 'string') {
+                    a = a.replace(/[^\d.-]/g, '') * 1;
+                }
+                if (typeof b === 'string') {
+                    b = b.replace(/[^\d.-]/g, '') * 1;
+                }
+
+                return a + b;
+            }, 0);
         });
 
         function loadMaterial(valor, selected) {
@@ -270,13 +293,41 @@
                 },
                 dom: 'ltipr',
                 columnDefs: [{
-                    targets: [0, 2, 5, 10],
+                    targets: [0, 2, 5, 11],
                     visible: false
                 },],
                 responsive: true,
                 order: [
                     [1, 'desc']
-                ]
+                ],
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+                    api.columns('.sum', {
+                        page: 'current'
+                    }).every(function () {
+                        var sum = this
+                            .data()
+                            .reduce(function (a, b) {
+                                var intVal = function (i) {
+                                    return typeof i === 'string' ?
+                                        i.replace(/[\$,]/g, '') * 1 :
+                                        typeof i === 'number' ?
+                                            i : 0;
+                                };
+
+                                /*var regex = /[.,\s]/g;
+                                var aa = a.toString();
+                                var bb = b.toString();
+                                var x = parseFloat(aa.replace(regex, '')) || 0;
+                                var y = parseFloat(bb.replace(regex, '')) || 0;
+                                return x + y;*/
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                        var signo = "";
+                        if (sum < 0) signo = "-";
+                        $(this.footer()).html(signo + sum.toFixed(2));
+                    });
+                }
             });
 
             $(".chosen").selectpicker({
@@ -296,16 +347,16 @@
 
             $('#proveedor').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
                 var value = $(this).val();
-                entradas_table.column(10).search(value).draw();
+                entradas_table.column(11).search(value).draw();
             });
 
             $("#albaran").change(function (e) {
                 var valor = $(this).val();
                 if (valor != "") {
                     var fecha = moment(valor).format('DD/MM/YYYY');
-                    entradas_table.column(9).search(fecha).draw();
+                    entradas_table.column(10).search(fecha).draw();
                 } else {
-                    entradas_table.column(9).search("").draw();
+                    entradas_table.column(10).search("").draw();
                 }
             });
 
