@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cliente;
 use Illuminate\Http\Request;
 use App\PedidoProduccion;
 
@@ -19,7 +20,9 @@ class CostesController extends Controller
         ])->where('estado_id', 3)
         ->orderBy('pedidos_produccion.id', 'desc')->get();
 
-        dd($data);
+        $data['clientes'] = Cliente::all();
+
+//        dd($data);
 
         return view('costes.index')->with($data);
     }

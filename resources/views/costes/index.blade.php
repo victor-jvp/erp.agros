@@ -67,7 +67,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (isset($pedidos))
+                                {{--@if (isset($pedidos))
                                 @foreach ($pedidos as $row)
                                 <tr>
                                     <td>{{ $row->nro_orden }}</td>
@@ -86,16 +86,16 @@
                                     <td>{{  }}</td>
                                 </tr>
                                 @endforeach
-                                @endif
+                                @endif--}}
                             </tbody>
-                            <tfoot>
+                            {{--<tfoot>
                                 <tr class="text-right">
                                     <td colspan="7">Totales</td>
                                     <td></td>
                                     <td></td>
                                     <td colspan="12"></td>
                                 </tr>
-                            </tfoot>
+                            </tfoot>--}}
                         </table>
                     </div>
                 </div>
