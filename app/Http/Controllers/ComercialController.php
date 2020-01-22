@@ -76,15 +76,16 @@ class ComercialController extends Controller
             $resumen['total']      = number_format($total, 2, ',', '.');
 
 
-            //PROMEDIO DE CULTIVO SEMANA, AÑO.
+            //PROMEDIO DE CULTIVO AÑO.
 
-            $promSemana = 0;
-            $promAnio   = 0;
-            $promSemana = 0;
+            $promAnual  = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg(DB::RAW('pedidos_comerciales.precio * pedidos_comerciales.kilos'));
+            $promSemana = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('semana', $data['semana_act'])->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg(DB::RAW('pedidos_comerciales.precio * pedidos_comerciales.kilos'));
 
             //LLENAR CHART DE PANEL DE VENTA
             $resumen['chart_prevision'] = abs($totalPrev - $totalPedc);
             $resumen['chart_venta']     = $totalPedc;
+            $resumen['prom_anual']      = number_format($promAnual, 2, ',', '.');
+            $resumen['prom_semana']     = number_format($promSemana, 2, ',', '.');
 
 
             for ($i = $data['semana_ini']; $i <= $data['semana_fin']; $i++) {
@@ -213,10 +214,10 @@ class ComercialController extends Controller
         $fecha = intval($data['anio']) . intval($data['semana']) . intval($data['dia']);
 
         $data['data'] = DB::table('pedidos_produccion')->select([
-                'nro_orden',
-                'razon_social as cliente',
-                'estado'
-            ])->selectRaw('CONCAT(productoscompuestos_det.variable," - ", cajas.formato, " - ", cajas.modelo) as formato')->whereRaw('CONCAT(anio,semana,valor) = ' . $fecha)->join('cat_dias_semana', 'cat_dias_semana.id', 'pedidos_produccion.dia_id')->join('productoscompuestos_det', 'productoscompuestos_det.id', 'pedidos_produccion.producto_id')->join('cajas', 'cajas.id', 'productoscompuestos_det.caja_id')->join('clientes', 'clientes.id', 'pedidos_produccion.cliente_id')->join('pedidos_produccion_estados', 'pedidos_produccion_estados.id', 'pedidos_produccion.estado_id')->orderBy('pedidos_produccion.id', 'desc')->get();
+            'nro_orden',
+            'razon_social as cliente',
+            'estado'
+        ])->selectRaw('CONCAT(productoscompuestos_det.variable," - ", cajas.formato, " - ", cajas.modelo) as formato')->whereRaw('CONCAT(anio,semana,valor) = ' . $fecha)->join('cat_dias_semana', 'cat_dias_semana.id', 'pedidos_produccion.dia_id')->join('productoscompuestos_det', 'productoscompuestos_det.id', 'pedidos_produccion.producto_id')->join('cajas', 'cajas.id', 'productoscompuestos_det.caja_id')->join('clientes', 'clientes.id', 'pedidos_produccion.cliente_id')->join('pedidos_produccion_estados', 'pedidos_produccion_estados.id', 'pedidos_produccion.estado_id')->orderBy('pedidos_produccion.id', 'desc')->get();
 
         return response()->json($data);
     }

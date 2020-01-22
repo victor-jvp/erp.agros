@@ -178,11 +178,11 @@
                                                                 <div class="d-flex border-bottom justify-content-between p-3">
                                                                     <div class="flex-grow-1">
                                                                         <span class="text-small text-muted">Media Semanal</span>
-                                                                        <h5 class="m-0">1.00 €</h5>
+                                                                        <h5 class="m-0">{{ $cultivo->resumen['prom_semana'] }} €</h5>
                                                                     </div>
                                                                     <div class="flex-grow-1">
                                                                         <span class="text-small text-muted">Media Anual</span>
-                                                                        <h5 class="m-0">3.00 €</h5>
+                                                                        <h5 class="m-0">{{ $cultivo->resumen['prom_anual'] }} €</h5>
                                                                     </div>
                                                                 </div>
                                                             </div>
