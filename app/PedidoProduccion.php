@@ -91,4 +91,9 @@ class PedidoProduccion extends Model
     {
         return $this->hasOne(PedidoProduccionCoste::class, 'pedido_id');
     }
+
+    public function pedido_comercial()
+    {
+        return $this->belongsTo(PedidoComercial::class, 'comercial_id');
+    }
 }

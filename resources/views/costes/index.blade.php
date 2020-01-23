@@ -19,21 +19,30 @@
                     <hr>
 
                     <div class="row">
-                        <div class="col-md-4 form-group mb-3">
+                        <div class="col-md-3 form-group mb-3">
                             <label>Desde</label>
                             <input type="date" class="form-control" id="desde">
                         </div>
-                        <div class="col-md-4 form-group mb-3">
+                        <div class="col-md-3 form-group mb-3">
                             <label>Hasta</label>
                             <input type="date" class="form-control" id="hasta">
                         </div>
-                        <div class="col-md-4 form-group mb-3">
+                        <div class="col-md-3 form-group mb-3">
                             <label for="cliente">Cliente</label>
                             <select class="form-control chosen" id="cliente" data-size="6">
                                 <option value=""></option>
                                 @foreach($clientes as $item)
                                     <option value="{{ $item->id }}">{{ $item->razon_social }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 form-group mb-3">
+                            <label for="cliente">Compuesto</label>
+                            <select class="form-control chosen" id="cliente" data-size="6">
+                                <option value=""></option>
+{{--                                @foreach($compuestos as $item)--}}
+{{--                                    <option value="{{ $item->id }}">{{ $item->compuesto }}</option>--}}
+{{--                                @endforeach--}}
                             </select>
                         </div>
                     </div>
@@ -45,6 +54,7 @@
                                 <thead>
                                 <tr class="text-center">
                                     <th>Nro. Orden</th>
+                                    <th>Cliente</th>
                                     <th>Compuesto</th>
                                     <th>Cajas</th>
                                     <th>Kilos</th>
@@ -67,6 +77,7 @@
                                     @foreach ($pedidos as $row)
                                         <tr>
                                             <td>{{ $row->nro_orden }}</td>
+                                            <td>{{ $row->cliente->razon_social }}</td>
                                             <td>{{ $row->variable->compuesto->compuesto }}</td>
                                             <td class="text-right">{{ number_format($row->cajas, 2, ',', '.') }}</td>
                                             <td class="text-right">{{ number_format($row->kilos, 2, ',', '.') }}</td>
