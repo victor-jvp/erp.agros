@@ -39,13 +39,8 @@
                     </div>
 
                     <div class="row">
-
-
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-12">
-                            <table id="entradas_table" class="display table table-striped table-bordered"
+                            <table id="entradas_table" class="display table table-striped table-bordered table-sm"
                                    style="width:100%">
                                 <thead>
                                 <tr class="text-center">
@@ -73,42 +68,53 @@
                                         <tr>
                                             <td>{{ $row->nro_orden }}</td>
                                             <td>{{ $row->variable->compuesto->compuesto }}</td>
-                                            <td class="text-right">{{ $row->cajas }}</td>
-                                            <td class="text-right">{{ $row->kilos }}</td>
-                                            <td class="text-right">{{ $row->precio }}</td>
-                                            <td class="text-right">0</td>
-                                            <td><input type="number" class="form-control" placeholder="Recolección"></td>
-                                            <td><input type="number" class="form-control" placeholder="Manipulación"></td>
-                                            <td><input type="text" class="form-control" placeholder="Comentario 1"></td>
-                                            <td><input type="text" class="form-control" placeholder="Comentario 2"></td>
-                                            <td><input type="number" class="form-control" placeholder="Transporte"></td>
-                                            <td><input type="number" class="form-control" placeholder="Devoluciones"></td>
+                                            <td class="text-right">{{ number_format($row->cajas, 2, ',', '.') }}</td>
+                                            <td class="text-right">{{ number_format($row->kilos, 2, ',', '.') }}</td>
+                                            <td class="text-right">{{ number_format($row->precio, 2, ',', '.') }}</td>
+                                            <td class="text-right">0.00</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->recoleccion : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->manipulacion : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->comentario1 : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->comentario2 : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->transporte : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->devoluciones : '0.00' }}</td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                                    <input type="checkbox" {{ ($row->control_plagas) ? 'checked' : '' }}>
+                                                    <input type="checkbox"
+                                                           {{ (!is_null($row->coste) && $row->coste->facturado) ? 'checked' : '' }} disabled>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                                    <input type="checkbox" {{ ($row->control_plagas) ? 'checked' : '' }}>
+                                                    <input type="checkbox"
+                                                           {{ (!is_null($row->coste) && $row->coste->cobrado) ? 'checked' : '' }} disabled>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
-                                            <td><input type="number" class="form-control" readonly></td>
-                                            <td></td>
+                                            <td class="text-right">0.00</td>
+                                            <td class="text-center">
+                                                @can('Costes | Modificar')
+                                                    <a href="javascript:void(0);"
+                                                       onclick="EditCoste({{ $row->pedido_id }})" data-toggle="tooltip"
+                                                       data-placement="top" title="" data-original-title="Editar"
+                                                       class="text-success mr-2">
+                                                        <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                    </a>
+                                                @endcan
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @endif
                                 </tbody>
                                 {{--<tfoot>
-                                    <tr class="text-right">
-                                        <td colspan="7">Totales</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td colspan="12"></td>
-                                    </tr>
-                                </tfoot>--}}
+                                        <tr class="text-right">
+                                            <td colspan="7">Totales</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="12"></td>
+                                        </tr>
+                                    </tfoot>--}}
                             </table>
                         </div>
                     </div>
@@ -117,6 +123,112 @@
         </div>
         <!-- end of col -->
     </div>
+
+    {{--Modal Editar Costes--}}
+    <div class="modal fade" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal_coste">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="{{ route('costes.index') }}" method="POST" id="form_edit">
+
+                    {{ csrf_field('PUT') }}
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-cliente-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="nro_orden">Nro. Orden</label>
+                                <input type="text" class="form-control" id="nro_orden">
+                            </div>
+                            <div class="col-md-8 mb-3">
+                                <label for="compuesto">Compuesto</label>
+                                <input type="text" class="form-control" id="compuesto">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="cajas">Cajas</label>
+                                <input type="number" class="form-control" id="cajas" step="0.01" readonly>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="kilos">Kilos</label>
+                                <input type="number" class="form-control" id="kilos" step="0.01" readonly>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="precio">Precio Venta</label>
+                                <input type="number" class="form-control" id="precio" step="0.01" readonly>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="costo">Precio Materia Prima</label>
+                                <input type="number" class="form-control" id="costo" step="0.01" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="recoleccion">Precio Recolección</label>
+                                <input type="number" class="form-control" id="recoleccion" step="0.01">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="manipulacion">Precio Manipulación</label>
+                                <input type="number" class="form-control" id="manipulacion" step="0.01">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="comentario1">Comentario 1</label>
+                                <input type="number" class="form-control" id="comentario1" step="0.01">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="comentario2">Comentario 2</label>
+                                <input type="number" class="form-control" id="comentario2" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="transporte">Transporte</label>
+                                <input type="number" class="form-control" id="transporte" step="0.01">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="devoluciones">Devoluciones</label>
+                                <input type="number" class="form-control" id="devoluciones" step="0.01">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="checkbox checkbox-success" style="display: inline-block">
+                                    <input type="checkbox" name="facturado" id="facturado">
+                                    <span>Facturado</span>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="checkbox checkbox-success" style="display: inline-block">
+                                    <input type="checkbox" name="cobrado" id="cobrado">
+                                    <span>Cobrado</span>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="total">Totales</label>
+                                <input type="number" class="form-control" id="total" step="0.01" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                        @can('Costes | Modificar')
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        @endcan
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{--Fin de Modal Editar Costes--}}
 @endsection
 
 @section('page-css')
@@ -194,6 +306,12 @@
 
         function ClearMaterial() {
             $("#material").html(null).append('<option value=""></option>');
+        }
+
+        function EditCoste(id) {
+
+
+            $("#modal_coste").modal('show');
         }
 
     </script>

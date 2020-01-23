@@ -16,6 +16,7 @@ use App\InventarioRel;
 use App\Pallet;
 use App\PedidoProduccion;
 use App\PedidoProduccionAuxiliar;
+use App\PedidoProduccionCoste;
 use App\PedidoProduccionEstado;
 use App\PedidoProduccionPaletAuxiliar;
 use App\PedidoProduccionTarrina;
@@ -236,6 +237,7 @@ class PedidosProduccionController extends Controller
 
             if ($pedido->estado_id == 3) { // Si el Pedido es Finalizado, procesar inventario.
                 $this->StoreInventario($id);
+                $this->StoreCoste($id);
             }
 
             DB::commit();
@@ -629,6 +631,16 @@ class PedidosProduccionController extends Controller
                 }
             }
         }
+    }
+
+    private function StoreCoste($id = null)
+    {
+        if (is_null($id)) return null;
+
+        $coste = new PedidoProduccionCoste();
+
+        $coste->pedido_id = $id;
+        $coste->save();
     }
 
     public function ajaxCheckStock(Request $request)
