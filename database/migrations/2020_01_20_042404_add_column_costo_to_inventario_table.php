@@ -14,7 +14,7 @@ class AddColumnCostoToInventarioTable extends Migration
     public function up()
     {
         Schema::table('inventario', function (Blueprint $table) {
-            $table->double('costo_unit')->default(0)->after('cantidad');
+            $table->double('precio')->default(0)->after('cantidad');
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnCostoToInventarioTable extends Migration
     public function down()
     {
         Schema::table('inventario', function (Blueprint $table) {
-            $table->dropColumn('costo_unit');
+            $table->dropColumn('precio');
         });
     }
 }

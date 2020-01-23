@@ -97,12 +97,12 @@
                                                        placeholder="Cantidad" required="" name="cantidad">
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="costo_unit">Costo Unitario</label>
+                                                <label for="costo_unit">Precio Unitario</label>
                                                 <input type="number" class="form-control" id="costo_unit"
                                                        name="costo_unit" min="0" step="0.01" value="0">
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="costo_ext">Costo Extendido</label>
+                                                <label for="costo_ext">Total</label>
                                                 <input type="number" class="form-control" id="costo_ext" readonly
                                                        value="0">
                                             </div>
@@ -211,8 +211,8 @@
                                     <th>Categoria</th>
                                     <th>Material</th>
                                     <th class="sum text-center">Cantidad</th>
-                                    <th class="sum text-center">Costo Unitario</th>
-                                    <th class="sum text-center">Costo Extendido</th>
+                                    <th class="sum text-center">Precio Unitario</th>
+                                    <th class="sum text-center">Total</th>
                                     <th>Nº Albaran</th>
                                     <th>Fecha Albaran</th>
                                     <th>Transporte Adecuado</th>
@@ -237,8 +237,8 @@
                                             <td>{{ $entrada->categoria }}</td>
                                             <td>{{ $entrada->material }}</td>
                                             <td class="text-right">{{ $entrada->cantidad }}</td>
-                                            <td class="text-right">{{ $entrada->costo_unit }}</td>
-                                            <td class="text-right">{{ round($entrada->costo_unit * $entrada->cantidad, 2) }}</td>
+                                            <td class="text-right">{{ round($entrada->precio, 2) }}</td>
+                                            <td class="text-right">{{ round($entrada->precio * $entrada->cantidad, 2) }}</td>
                                             <td>{{ $entrada->nro_albaran }}</td>
                                             <td>{{ (is_null($entrada->fecha_albaran)) ? "" : date('d/m/Y',strtotime($entrada->fecha_albaran)) }}</td>
                                             <td class="text-center">

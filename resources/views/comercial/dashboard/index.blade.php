@@ -30,7 +30,7 @@
                                 <select class="form-control" name="anio_act" id="anio_act">
                                     @for($i = $anio_fin; $i >= $anio_ini; $i--)
                                         <option
-                                                {{ ($i == $anio_act) ? 'selected' : '' }} value="{{ $i }}">
+                                            {{ ($i == $anio_act) ? 'selected' : '' }} value="{{ $i }}">
                                             {{ $i }}
                                         </option>
                                     @endfor
@@ -42,7 +42,7 @@
                                 <select class="form-control" name="semana_act" id="semana_act">
                                     @for($i = $semana_fin; $i >= $semana_ini; $i--)
                                         <option
-                                                {{ ($i == $semana_act) ? 'selected' : '' }} value="{{ $i }}">
+                                            {{ ($i == $semana_act) ? 'selected' : '' }} value="{{ $i }}">
                                             {{ $i }}
                                         </option>
                                     @endfor
@@ -82,8 +82,9 @@
                                                                 {{--                                                                <p>Add <code>.table-sm</code> to make tables more compact by--}}
                                                                 {{--                                                                    cutting cell padding in half.</p>--}}
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-sm table-bordered table_resumen"
-                                                                           width="100%">
+                                                                    <table
+                                                                        class="table table-sm table-bordered table_resumen"
+                                                                        width="100%">
                                                                         <thead>
                                                                         <tr class="text-center">
                                                                             <th width="20%" scope="col"></th>
@@ -170,19 +171,53 @@
                                                     <div class="col-md-12">
                                                         <div class="card mb-3">
                                                             <div class="card-body p-0">
-                                                                <div class="card-title border-bottom d-flex align-items-center m-0 p-3">
+                                                                <div
+                                                                    class="card-title border-bottom d-flex align-items-center m-0 p-3">
                                                                     <span>{{ $cultivo->cultivo }}</span>
                                                                     <span class="flex-grow-1"></span>
-                                                                    {{--                                                                    <span class="badge badge-pill badge-warning">Updated daily</span>--}}
+                                                                    <span
+                                                                        class="badge badge-pill badge-primary">Semanal</span>
                                                                 </div>
-                                                                <div class="d-flex border-bottom justify-content-between p-3">
+
+                                                                <div
+                                                                    class="d-flex border-bottom justify-content-between p-3">
                                                                     <div class="flex-grow-1">
-                                                                        <span class="text-small text-muted">Media Semanal</span>
-                                                                        <h5 class="m-0">{{ $cultivo->resumen['prom_semana'] }} €</h5>
+                                                                        <span class="text-small text-muted">Kg</span>
+                                                                        <h5 class="m-0">{{ $cultivo->resumen['promSemanaKg'] }}</h5>
                                                                     </div>
                                                                     <div class="flex-grow-1">
-                                                                        <span class="text-small text-muted">Media Anual</span>
-                                                                        <h5 class="m-0">{{ $cultivo->resumen['prom_anual'] }} €</h5>
+                                                                        <span
+                                                                            class="text-small text-muted">Precio</span>
+                                                                        <h5 class="m-0">{{ $cultivo->resumen['promSemanaPrecio'] }}
+                                                                            €</h5>
+                                                                    </div>
+                                                                    <div class="flex-grow-1">
+                                                                        <span class="text-small text-muted">€/Kg</span>
+                                                                        <h5 class="m-0">{{ $cultivo->resumen['promSemanaAmbos'] }}</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="card-title border-bottom d-flex align-items-center m-0 p-3">
+                                                                    <span>{{ $cultivo->cultivo }}</span>
+                                                                    <span class="flex-grow-1"></span>
+                                                                    <span
+                                                                        class="badge badge-pill badge-primary">Anual</span>
+                                                                </div>
+                                                                <div
+                                                                    class="d-flex border-bottom justify-content-between p-3">
+                                                                    <div class="flex-grow-1">
+                                                                        <span class="text-small text-muted">Kg</span>
+                                                                        <h5 class="m-0">{{ $cultivo->resumen['promAnualKg'] }}</h5>
+                                                                    </div>
+                                                                    <div class="flex-grow-1">
+                                                                        <span
+                                                                            class="text-small text-muted">Precio</span>
+                                                                        <h5 class="m-0">{{ $cultivo->resumen['promAnualPrecio'] }}
+                                                                            €</h5>
+                                                                    </div>
+                                                                    <div class="flex-grow-1">
+                                                                        <span class="text-small text-muted">€/Kg</span>
+                                                                        <h5 class="m-0">{{ $cultivo->resumen['promAnualAmbos'] }}</h5>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -203,7 +238,8 @@
                                                                         <select class="form-control chosen cliente_a">
                                                                             <option value=""></option>
                                                                             @foreach($clientes as $cliente)
-                                                                                <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                                                                <option
+                                                                                    value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
@@ -223,8 +259,9 @@
                                                                 <div class="row">
                                                                     <div class="col-md-6">
                                                                         <div class="table-responsive">
-                                                                            <table class="table table-sm table-bordered table_cliente_kilos_a"
-                                                                                   width="100%">
+                                                                            <table
+                                                                                class="table table-sm table-bordered table_cliente_kilos_a"
+                                                                                width="100%">
                                                                                 <thead class="text-center">
                                                                                 <tr>
                                                                                     <th scope="col" colspan="2">Kg
@@ -242,8 +279,9 @@
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <div class="table-responsive">
-                                                                            <table class="table table-sm table-bordered table_cliente_ventas_a"
-                                                                                   width="100%">
+                                                                            <table
+                                                                                class="table table-sm table-bordered table_cliente_ventas_a"
+                                                                                width="100%">
                                                                                 <thead class="text-center">
                                                                                 <tr>
                                                                                     <th scope="col" colspan="2">Formato
@@ -278,7 +316,8 @@
                                                                         <select class="form-control chosen cliente_b">
                                                                             <option value=""></option>
                                                                             @foreach($clientes as $cliente)
-                                                                                <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                                                                <option
+                                                                                    value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
@@ -298,8 +337,9 @@
                                                                 <div class="row">
                                                                     <div class="col-md-6">
                                                                         <div class="table-responsive">
-                                                                            <table class="table table-sm table-bordered table_cliente_kilos_b"
-                                                                                   width="100%">
+                                                                            <table
+                                                                                class="table table-sm table-bordered table_cliente_kilos_b"
+                                                                                width="100%">
                                                                                 <thead class="text-center">
                                                                                 <tr>
                                                                                     <th scope="col" colspan="2">Kg
@@ -317,8 +357,9 @@
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <div class="table-responsive">
-                                                                            <table class="table table-sm table-bordered table_cliente_ventas_b"
-                                                                                   width="100%">
+                                                                            <table
+                                                                                class="table table-sm table-bordered table_cliente_ventas_b"
+                                                                                width="100%">
                                                                                 <thead class="text-center">
                                                                                 <tr>
                                                                                     <th scope="col" colspan="2">Formato
@@ -369,8 +410,9 @@
                                                             <div class="card-body">
                                                                 <div class="row">
                                                                     <div class="col-md-12 table-responsive">
-                                                                        <table class="table table-sm table-bordered table_pedidos_produccion"
-                                                                               width="100%">
+                                                                        <table
+                                                                            class="table table-sm table-bordered table_pedidos_produccion"
+                                                                            width="100%">
                                                                             <thead class="text-center">
                                                                             <tr>
                                                                                 <th scope="col">Nº Orden</th>
@@ -441,15 +483,17 @@
                                                                         data-cultivo="{{ $cultivo->id }}">
                                                                     <option value=""></option>
                                                                     @foreach($clientes as $cliente)
-                                                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
+                                                                        <option
+                                                                            value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-12 mb-3 table-responsive">
-                                                                <table class="table table-sm table-bordered table_resumen_semana_cliente"
-                                                                       width="100%">
+                                                                <table
+                                                                    class="table table-sm table-bordered table_resumen_semana_cliente"
+                                                                    width="100%">
                                                                     <thead>
                                                                     <tr class="text-center">
                                                                         <th></th>
@@ -476,8 +520,9 @@
                                                         {{--                                                                    cutting cell padding in half.</p>--}}
                                                         <div class="row">
                                                             <div class="col-xs-12 table-responsive">
-                                                                <table class="table table-sm table-bordered table_resumen_semana"
-                                                                       width="100%">
+                                                                <table
+                                                                    class="table table-sm table-bordered table_resumen_semana"
+                                                                    width="100%">
                                                                     <thead>
                                                                     <tr class="text-center">
                                                                         <th></th>
@@ -658,7 +703,7 @@
                 table_proveedor.ajax.reload();
             });
 
-            $("#fecha_pedidos").change(function(e){
+            $("#fecha_pedidos").change(function (e) {
                 fecha_pedidos = $(this).val();
                 var table_pedidos_produccion = $(this).closest('div.row').next().find('table.table_pedidos_produccion').DataTable();
                 table_pedidos_produccion.ajax.reload();

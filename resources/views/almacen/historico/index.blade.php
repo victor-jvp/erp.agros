@@ -82,7 +82,7 @@
                                     <th>MaterialID</th>
                                     <th>Material</th>
                                     <th class="text-center sum">Cantidad</th>
-                                    <th class="text-center sum">Costo Extendido</th>
+                                    <th class="text-center sum">Total</th>
                                     <th>Nº Albaran</th>
                                     <th>Fecha Albaran</th>
                                     <th>ProveedorId</th>
@@ -110,7 +110,7 @@
                                             <td>{{ $entrada->categoria_id }}</td>
                                             <td>{{ $entrada->material }}</td>
                                             <td class="text-right">{{ $entrada->cantidad }}</td>
-                                            <td class="text-right">{{ round($entrada->cantidad * $entrada->costo_unit, 2) }}</td>
+                                            <td class="text-right">{{ round($entrada->cantidad * $entrada->precio, 2) }}</td>
                                             <td>{{ $entrada->nro_albaran }}</td>
                                             <td>{{ (is_null($entrada->fecha_albaran)) ? "" : date('d/m/Y',strtotime($entrada->fecha_albaran)) }}</td>
                                             <td>{{ $entrada->proveedor_id }}</td>

@@ -53,7 +53,7 @@ class EntradaProductosController extends Controller
         $entrada->nro_lote     = Contador::save_nro_lote();
         $entrada->fecha        = $request->fecha;
         $entrada->cantidad     = $request->cantidad;
-        $entrada->costo_unit   = $request->costo_unit;
+        $entrada->precio       = $request->costo_unit;
         $entrada->categoria    = $request->categoria;
         $entrada->categoria_id = $request->material;
 
@@ -82,12 +82,12 @@ class EntradaProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $entrada             = Entrada::find($id);
-        $entrada->tipo_mov   = "E";
-        $entrada->cnv_fact   = 1;
-        $entrada->fecha      = $request->fecha;
-        $entrada->cantidad   = $request->cantidad;
-        $entrada->costo_unit = $request->costo_unit;
+        $entrada           = Entrada::find($id);
+        $entrada->tipo_mov = "E";
+        $entrada->cnv_fact = 1;
+        $entrada->fecha    = $request->fecha;
+        $entrada->cantidad = $request->cantidad;
+        $entrada->precio   = $request->costo_unit;
 
         $entrada->categoria    = $request->categoria;
         $entrada->categoria_id = $request->material;
