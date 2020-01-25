@@ -3,27 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\PedidoProduccionCoste;
 use Illuminate\Http\Request;
 use App\PedidoProduccion;
+use Illuminate\Support\Facades\Auth;
 
 class CostesController extends Controller
 {
     //
     public function index()
     {
+        //PERMISO DE ACCESO
+        if (!Auth::user()->can('Costes | Acceso')) {
+            return redirect()->route('home');
+        }
+
         $data['pedidos'] = PedidoProduccion::with([
             'tarrinas.tarrina',
             'auxiliares.auxiliar',
             'palet_auxiliares.auxiliar',
             'palet.modelo',
-            'variable.caja'
-        ])->where('estado_id', 3)
-        ->orderBy('pedidos_produccion.id', 'desc')->get();
+            'variable.caja',
+            'coste',
+        ])->where('estado_id', 3)->orderBy('pedidos_produccion.id', 'desc')->get();
+
+//        dd($data['pedidos']);
 
         $data['clientes'] = Cliente::all();
 
-//        dd($data);
-
         return view('costes.index')->with($data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $coste = PedidoProduccionCoste::find($id);
+
+        if (is_null($coste)) {
+            $coste            = new PedidoProduccionCoste();
+            $coste->pedido_id = $id;
+        }
+
+        $coste->recoleccion  = $request->recoleccion;
+        $coste->manipulacion = $request->manipulacion;
+        $coste->comentario1  = $request->comentario1;
+        $coste->comentario2  = $request->comentario2;
+        $coste->transporte   = $request->transporte;
+        $coste->devoluciones = $request->devoluciones;
+        $coste->facturado    = (isset($request->facturado)) ? true : false;
+        $coste->cobrado      = (isset($request->cobrado)) ? true : false;
+
+        $cose->save();
     }
 }

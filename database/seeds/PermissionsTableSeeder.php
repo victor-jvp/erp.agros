@@ -88,9 +88,7 @@ class PermissionsTableSeeder extends Seeder
 
         #region Costes
         Permission::create(['name' => 'Costes | Acceso']);
-        Permission::create(['name' => 'Costes | Crear']);
         Permission::create(['name' => 'Costes | Modificar']);
-        Permission::create(['name' => 'Costes | Borrar']);
         #endregion
 
         #region Maestros

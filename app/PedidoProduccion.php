@@ -86,4 +86,14 @@ class PedidoProduccion extends Model
                      ->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')
                      ->join('cultivos', 'cultivos.id', '=', 'productoscompuestos_cab.cultivo_id');
     }
+
+    public function coste()
+    {
+        return $this->hasOne(PedidoProduccionCoste::class, 'pedido_id');
+    }
+
+    public function pedido_comercial()
+    {
+        return $this->belongsTo(PedidoComercial::class, 'comercial_id');
+    }
 }
