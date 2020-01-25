@@ -40,9 +40,9 @@
                             <label for="cliente">Compuesto</label>
                             <select class="form-control chosen" id="cliente" data-size="6">
                                 <option value=""></option>
-{{--                                @foreach($compuestos as $item)--}}
-{{--                                    <option value="{{ $item->id }}">{{ $item->compuesto }}</option>--}}
-{{--                                @endforeach--}}
+                                {{--                                @foreach($compuestos as $item)--}}
+                                {{--                                    <option value="{{ $item->id }}">{{ $item->compuesto }}</option>--}}
+                                {{--                                @endforeach--}}
                             </select>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                                             <td class="text-center">
                                                 @can('Costes | Modificar')
                                                     <a href="javascript:void(0);"
-                                                       onclick="EditCoste({{ $row->pedido_id }})" data-toggle="tooltip"
+                                                       onclick="EditCoste({{ $row->id }})" data-toggle="tooltip"
                                                        data-placement="top" title="" data-original-title="Editar"
                                                        class="text-success mr-2">
                                                         <i class="nav-icon i-Pen-2 font-weight-bold "></i>
@@ -144,8 +144,10 @@
 
                     {{ csrf_field('PUT') }}
 
+                    <input type="hidden" id="id" name="id">
+
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modal-cliente-title"></h5>
+                        <h5 class="modal-title">Datos del Pedido</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -154,11 +156,11 @@
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label for="nro_orden">Nro. Orden</label>
-                                <input type="text" class="form-control" id="nro_orden">
+                                <input type="text" class="form-control" id="nro_orden" readonly="">
                             </div>
                             <div class="col-md-8 mb-3">
                                 <label for="compuesto">Compuesto</label>
-                                <input type="text" class="form-control" id="compuesto">
+                                <input type="text" class="form-control" id="compuesto" readonly>
                             </div>
                         </div>
 
@@ -177,7 +179,7 @@
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="costo">Precio Materia Prima</label>
-                                <input type="number" class="form-control" id="costo" step="0.01" readonly>
+                                <input type="number" class="form-control" id="precio_mp" step="0.01" readonly>
                             </div>
                         </div>
 
@@ -320,9 +322,42 @@
         }
 
         function EditCoste(id) {
+            if (id == null || id == "") return;
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('costes.details') }}",
+                dataType: 'JSON',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data == null) return;
+
+                    $("#nro_orden").val(data.nro_orden);
+                    $("#compuesto").val(data.variable.variable + ' - ' + data.variable.caja.formato + ' - ' + data.variable.caja.modelo);
+                    $("#cajas").val(data.cajas);
+                    $("#kilos").val(data.kilos);
+                    $("#precio").val(data.precio);
+                    var total = data.kilos * data.precio;
+                    $("#precio_mp").val(total.toFixed(2));
+                    $("#recoleccion").val(data.coste.recoleccion);
+                    $("#manipulacion").val(data.coste.manipulacion);
+                    $("#comentario1").val(data.coste.comentario1);
+                    $("#comentario2").val(data.coste.comentario2);
+                    $("#transporte").val(data.coste.transporte);
+                    $("#devoluciones").val(data.coste.devoluciones);
+                    if (data.coste.facturado) $("#facturado").prop('checked', true); else $("#facturado").prop('checked', false);
+                    if (data.coste.cobrado) $("#cobrado").prop('checked', true); else $("#cobrado").prop('checked', false);
+
+                    $("#modal_coste").modal('show');
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('Error. Check Console Log');
+                },
+            });
 
 
-            $("#modal_coste").modal('show');
         }
 
     </script>

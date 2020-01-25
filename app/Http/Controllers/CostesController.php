@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Cliente;
 use App\PedidoProduccionCoste;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\PedidoProduccion;
 use Illuminate\Support\Facades\Auth;
+use Psy\Util\Json;
 
 class CostesController extends Controller
 {
@@ -52,6 +54,28 @@ class CostesController extends Controller
         $coste->facturado    = (isset($request->facturado)) ? true : false;
         $coste->cobrado      = (isset($request->cobrado)) ? true : false;
 
-        $cose->save();
+        $coste->save();
+    }
+
+    public function details(Request $request)
+    {
+        $id = $request->get('id');
+
+        $pedido = PedidoProduccion::with([
+            'variable.caja',
+            'coste',
+        ])->find($id);
+
+        if (is_null($pedido->coste)){
+            $coste = new PedidoProduccionCoste();
+            $pedido->coste()->save($coste);
+
+            $pedido = PedidoProduccion::with([
+                'variable.caja',
+                'coste',
+            ])->find($id);
+        }
+
+        return response()->json($pedido);
     }
 }

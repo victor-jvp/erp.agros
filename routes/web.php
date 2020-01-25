@@ -133,6 +133,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 #region Costes
     Route::get('costes', 'CostesController@index')->name('costes.index');
+    Route::get('costes/details', 'CostesController@details')->name('costes.details');
 
     Route::post('costes/update/{pedido_id}', 'CostesController@update')->name('costes.update');
 #endregion
