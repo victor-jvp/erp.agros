@@ -82,6 +82,7 @@ class CostesController extends Controller
             'coste',
             'inventario',
             'pedido_comercial',
+            'cliente'
         ])->find($id);
 
         if (is_null($pedido->coste)) {

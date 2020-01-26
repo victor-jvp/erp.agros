@@ -170,6 +170,12 @@
                                 <input type="text" class="form-control" id="nro_orden" readonly="">
                             </div>
                             <div class="col-md-8 mb-3">
+                                <label for="cliente">Cliente</label>
+                                <input type="text" class="form-control" id="cliente" readonly="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
                                 <label for="compuesto">Compuesto</label>
                                 <input type="text" class="form-control" id="compuesto" readonly>
                             </div>
@@ -371,6 +377,7 @@
 
                     $("#id").val(id);
                     $("#nro_orden").val(data.nro_orden);
+                    $("#cliente").val(data.cliente.razon_social);
                     $("#compuesto").val(data.variable.variable + ' - ' + data.variable.caja.formato + ' - ' + data.variable.caja.modelo);
                     $("#cajas").val(data.cajas);
                     $("#kilos").val(data.kilos);
