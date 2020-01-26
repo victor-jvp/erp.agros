@@ -56,19 +56,19 @@
                                     <th>Nro. Orden</th>
                                     <th>Cliente</th>
                                     <th>Compuesto</th>
-                                    <th>Cajas</th>
-                                    <th>Kilos</th>
-                                    <th>Precio Venta</th>
-                                    <th class="prom">Precio Materia Prima</th>
-                                    <th class="prom">Precio Recolección</th>
-                                    <th class="prom">Precio Manipulación</th>
-                                    <th>Comentario 1</th>
-                                    <th>Comentario 2</th>
-                                    <th>Transporte</th>
-                                    <th>Devoluciones</th>
+                                    <th class="sum">Cajas</th>
+                                    <th class="sum">Kilos</th>
+                                    <th class="sum">Precio Venta</th>
+                                    <th class="sum">Precio Materia Prima</th>
+                                    <th class="sum">Precio Recolección</th>
+                                    <th class="sum">Precio Manipulación</th>
+                                    <th class="sum">Comentario 1</th>
+                                    <th class="sum">Comentario 2</th>
+                                    <th class="sum">Transporte</th>
+                                    <th class="sum">Devoluciones</th>
                                     <th>Facturado</th>
                                     <th>Cobrado</th>
-                                    <th>Totales</th>
+                                    <th class="sum">Totales</th>
                                     <th>Opciones</th>
                                 </tr>
                                 </thead>
@@ -79,16 +79,16 @@
                                             <td>{{ $row->nro_orden }}</td>
                                             <td>{{ $row->cliente->razon_social }}</td>
                                             <td>{{ $row->variable->compuesto->compuesto }}</td>
-                                            <td class="text-right">{{ number_format($row->cajas, 2, ',', '.') }}</td>
-                                            <td class="text-right">{{ number_format($row->kilos, 2, ',', '.') }}</td>
-                                            <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? number_format($row->pedido_comercial->precio, 2, ',', '.') : "0.00" }}</td>
-                                            <td class="text-right">{{ number_format($row->precio_mp, 2, ',', '.') }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->recoleccion, 2,',','.') : '0.00' }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->manipulacion, 2,',','.') : '0.00' }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->comentario1, 2,',','.') : '0.00' }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->comentario2, 2,',','.') : '0.00' }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->transporte, 2,',','.') : '0.00' }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->devoluciones, 2,',','.') : '0.00' }}</td>
+                                            <td class="text-right">{{ round($row->cajas, 2) }}</td>
+                                            <td class="text-right">{{ $row->kilos }}</td>
+                                            <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio,2) : "0" }}</td>
+                                            <td class="text-right">{{ round($row->precio_mp, 2) }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario1, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones, 2) : '0' }}</td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
                                                     <input type="checkbox"
@@ -103,7 +103,7 @@
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </td>
-                                            <td class="text-right">0.00</td>
+                                            <td class="text-right">0</td>
                                             <td class="text-center">
                                                 @can('Costes | Modificar')
                                                     <a href="javascript:void(0);"
@@ -118,14 +118,24 @@
                                     @endforeach
                                 @endif
                                 </tbody>
-                                {{--<tfoot>
-                                        <tr class="text-right">
-                                            <td colspan="7">Totales</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td colspan="12"></td>
-                                        </tr>
-                                    </tfoot>--}}
+                                <tfoot>
+                                <tr class="text-right">
+                                    <th colspan="3">Totales</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="2"></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -397,34 +407,34 @@
                 //     targets: [0, 2, 5, 11],
                 //     visible: false
                 // },],
-                // footerCallback: function (row, data, start, end, display) {
-                //     var api = this.api();
-                //     api.columns('.sum', {
-                //         page: 'current'
-                //     }).every(function () {
-                //         var sum = this
-                //             .data()
-                //             .reduce(function (a, b) {
-                //                 var intVal = function (i) {
-                //                     return typeof i === 'string' ?
-                //                         i.replace(/[\$,]/g, '') * 1 :
-                //                         typeof i === 'number' ?
-                //                             i : 0;
-                //                 };
-                //
-                //                 /*var regex = /[.,\s]/g;
-                //                 var aa = a.toString();
-                //                 var bb = b.toString();
-                //                 var x = parseFloat(aa.replace(regex, '')) || 0;
-                //                 var y = parseFloat(bb.replace(regex, '')) || 0;
-                //                 return x + y;*/
-                //                 return intVal(a) + intVal(b);
-                //             }, 0);
-                //         var signo = "";
-                //         if (sum < 0) signo = "-";
-                //         $(this.footer()).html(signo + sum.toFixed(2));
-                //     });
-                // }
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+                    api.columns('.sum', {
+                        page: 'current'
+                    }).every(function () {
+                        var sum = this
+                            .data()
+                            .reduce(function (a, b) {
+                                var intVal = function (i) {
+                                    return typeof i === 'string' ?
+                                        i.replace(/[\$,]/g, '') * 1 :
+                                        typeof i === 'number' ?
+                                            i : 0;
+                                };
+
+                                /*var regex = /[.,\s]/g;
+                                var aa = a.toString();
+                                var bb = b.toString();
+                                var x = parseFloat(aa.replace(regex, '')) || 0;
+                                var y = parseFloat(bb.replace(regex, '')) || 0;
+                                return x + y;*/
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                        var signo = "";
+                        if (sum < 0) signo = "-";
+                        $(this.footer()).html(signo + sum.toFixed(2));
+                    });
+                }
             });
 
             $(".chosen").selectpicker({
