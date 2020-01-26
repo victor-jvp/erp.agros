@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\InventarioRel;
 use App\PedidoProduccionCoste;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\PedidoProduccion;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Psy\Util\Json;
 
 class CostesController extends Controller
@@ -20,25 +22,35 @@ class CostesController extends Controller
             return redirect()->route('home');
         }
 
-        $data['pedidos'] = PedidoProduccion::with([
-            'tarrinas.tarrina',
-            'auxiliares.auxiliar',
-            'palet_auxiliares.auxiliar',
+        $pedidos = PedidoProduccion::with([
             'palet.modelo',
             'variable.caja',
             'coste',
-        ])->where('estado_id', 3)->orderBy('pedidos_produccion.id', 'desc')->get();
+            'pedido_comercial',
+            'inventario',
+        ])->where('estado_id', 3)
+          ->orderBy('pedidos_produccion.id', 'desc')
+          ->get();
 
-//        dd($data['pedidos']);
+        foreach ($pedidos as $p => $pedido)
+        {
+            $pedidos[$p]->precio_mp = DB::table('inventario_rel')
+                                      ->join('inventario', 'inventario.id' ,'=','inventario_rel.entrada_id')
+                                      ->where('entrada_id', '!=', 'NULL')
+                                      ->where('pedido_id', $pedido->id)
+                                      ->sum('inventario.precio');
+        }
 
+        $data['pedidos']  = $pedidos;
         $data['clientes'] = Cliente::all();
 
         return view('costes.index')->with($data);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $coste = PedidoProduccionCoste::find($id);
+        $id    = $request->id;
+        $coste = PedidoProduccionCoste::where('pedido_id', $id)->first();
 
         if (is_null($coste)) {
             $coste            = new PedidoProduccionCoste();
@@ -55,6 +67,8 @@ class CostesController extends Controller
         $coste->cobrado      = (isset($request->cobrado)) ? true : false;
 
         $coste->save();
+
+        return redirect()->route('costes.index');
     }
 
     public function details(Request $request)
@@ -64,16 +78,28 @@ class CostesController extends Controller
         $pedido = PedidoProduccion::with([
             'variable.caja',
             'coste',
+            'inventario',
+            'pedido_comercial',
         ])->find($id);
 
-        if (is_null($pedido->coste)){
+        if (is_null($pedido->coste)) {
             $coste = new PedidoProduccionCoste();
             $pedido->coste()->save($coste);
 
             $pedido = PedidoProduccion::with([
                 'variable.caja',
                 'coste',
+                'inventario',
+                'pedido_comercial',
             ])->find($id);
+        }
+
+        if (!is_null($pedido)){
+            $pedido->precio_mp = DB::table('inventario_rel')
+              ->join('inventario', 'inventario.id' ,'=','inventario_rel.entrada_id')
+              ->where('entrada_id', '!=', 'NULL')
+              ->where('pedido_id', $id)
+              ->sum('inventario.precio');
         }
 
         return response()->json($pedido);

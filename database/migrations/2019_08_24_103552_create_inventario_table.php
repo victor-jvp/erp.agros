@@ -29,7 +29,7 @@ class CreateInventarioTable extends Migration
                 'Tarrina'
             ]);
             $table->unsignedInteger('categoria_id');
-            $table->double('cantidad');
+            $table->double('cantidad', 53, 2);
             $table->string('nro_albaran', 35)->nullable();
             $table->dateTime('fecha_albaran')->nullable();
             $table->boolean('transporte_adecuado')->default(false);

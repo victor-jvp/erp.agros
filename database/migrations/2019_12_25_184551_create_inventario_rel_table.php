@@ -8,7 +8,6 @@ class CreateInventarioRelTable extends Migration
 {
     /**
      * Run the migrations.
-     *
      * @return void
      */
     public function up()
@@ -18,7 +17,7 @@ class CreateInventarioRelTable extends Migration
             $table->unsignedInteger('entrada_id')->nullable();
             $table->unsignedInteger('salida_id')->nullable();
             $table->unsignedInteger('pedido_id')->nullable();
-            $table->double('cantidad');
+            $table->double('cantidad', 53, 2);
             $table->foreign('salida_id')->references('id')->on('inventario');
             $table->foreign('entrada_id')->references('id')->on('inventario');
             $table->foreign('pedido_id')->references('id')->on('pedidos_produccion');
@@ -28,7 +27,6 @@ class CreateInventarioRelTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()

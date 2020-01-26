@@ -97,4 +97,9 @@ class PedidoProduccion extends Model
     {
         return $this->belongsTo(PedidoComercial::class, 'comercial_id');
     }
+
+    public function inventario()
+    {
+        return $this->hasMany(InventarioRel::class, 'pedido_id');
+    }
 }

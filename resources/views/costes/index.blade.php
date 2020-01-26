@@ -81,14 +81,14 @@
                                             <td>{{ $row->variable->compuesto->compuesto }}</td>
                                             <td class="text-right">{{ number_format($row->cajas, 2, ',', '.') }}</td>
                                             <td class="text-right">{{ number_format($row->kilos, 2, ',', '.') }}</td>
-                                            <td class="text-right">{{ number_format($row->precio, 2, ',', '.') }}</td>
-                                            <td class="text-right">0.00</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->recoleccion : '0.00' }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->manipulacion : '0.00' }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->comentario1 : '0.00' }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->comentario2 : '0.00' }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->transporte : '0.00' }}</td>
-                                            <td class="text-right">{{ (!is_null($row->coste)) ? $row->coste->devoluciones : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? number_format($row->pedido_comercial->precio, 2, ',', '.') : "0.00" }}</td>
+                                            <td class="text-right">{{ number_format($row->precio_mp, 2, ',', '.') }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->recoleccion, 2,',','.') : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->manipulacion, 2,',','.') : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->comentario1, 2,',','.') : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->comentario2, 2,',','.') : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->transporte, 2,',','.') : '0.00' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? number_format($row->coste->devoluciones, 2,',','.') : '0.00' }}</td>
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
                                                     <input type="checkbox"
@@ -140,7 +140,7 @@
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal_coste">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="{{ route('costes.index') }}" method="POST" id="form_edit">
+                <form action="{{ route('costes.update') }}" method="POST" id="form_edit">
 
                     {{ csrf_field('PUT') }}
 
@@ -186,39 +186,44 @@
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="recoleccion">Precio Recolección</label>
-                                <input type="number" class="form-control" id="recoleccion" step="0.01">
+                                <input type="number" class="form-control" id="recoleccion" name="recoleccion"
+                                       step="0.01">
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="manipulacion">Precio Manipulación</label>
-                                <input type="number" class="form-control" id="manipulacion" step="0.01">
+                                <input type="number" class="form-control" id="manipulacion" name="manipulacion"
+                                       step="0.01">
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="comentario1">Comentario 1</label>
-                                <input type="number" class="form-control" id="comentario1" step="0.01">
+                                <input type="number" class="form-control" id="comentario1" name="comentario1"
+                                       step="0.01">
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="comentario2">Comentario 2</label>
-                                <input type="number" class="form-control" id="comentario2" step="0.01">
+                                <input type="number" class="form-control" id="comentario2" name="comentario2"
+                                       step="0.01">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="transporte">Transporte</label>
-                                <input type="number" class="form-control" id="transporte" step="0.01">
+                                <input type="number" class="form-control" id="transporte" name="transporte" step="0.01">
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="devoluciones">Devoluciones</label>
-                                <input type="number" class="form-control" id="devoluciones" step="0.01">
+                                <input type="number" class="form-control" id="devoluciones" name="devoluciones"
+                                       step="0.01">
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                    <input type="checkbox" name="facturado" id="facturado">
+                                    <input type="checkbox" name="facturado" id="facturado" name="facturado">
                                     <span>Facturado</span>
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="checkbox checkbox-success" style="display: inline-block">
-                                    <input type="checkbox" name="cobrado" id="cobrado">
+                                    <input type="checkbox" name="cobrado" id="cobrado" name="cobrado">
                                     <span>Cobrado</span>
                                     <span class="checkmark"></span>
                                 </label>
@@ -333,13 +338,13 @@
                 success: function (data) {
                     if (data == null) return;
 
+                    $("#id").val(id);
                     $("#nro_orden").val(data.nro_orden);
                     $("#compuesto").val(data.variable.variable + ' - ' + data.variable.caja.formato + ' - ' + data.variable.caja.modelo);
                     $("#cajas").val(data.cajas);
                     $("#kilos").val(data.kilos);
-                    $("#precio").val(data.precio);
-                    var total = data.kilos * data.precio;
-                    $("#precio_mp").val(total.toFixed(2));
+                    $("#precio").val(data.pedido_comercial.precio);
+                    $("#precio_mp").val(data.precio_mp);
                     $("#recoleccion").val(data.coste.recoleccion);
                     $("#manipulacion").val(data.coste.manipulacion);
                     $("#comentario1").val(data.coste.comentario1);
@@ -348,6 +353,10 @@
                     $("#devoluciones").val(data.coste.devoluciones);
                     if (data.coste.facturado) $("#facturado").prop('checked', true); else $("#facturado").prop('checked', false);
                     if (data.coste.cobrado) $("#cobrado").prop('checked', true); else $("#cobrado").prop('checked', false);
+                    var total = data.kilos * data.precio;
+                    $("#total").val(total.toFixed(2));
+
+                    CalcularTotal();
 
                     $("#modal_coste").modal('show');
                 },
@@ -356,8 +365,18 @@
                     alert('Error. Check Console Log');
                 },
             });
+        }
 
+        function CalcularTotal() {
+            var manipulacion = parseFloat($("#manipulacion").val());
+            var comentario1 = parseFloat($("#comentario1").val());
+            var comentario2 = parseFloat($("#comentario2").val());
+            var transporte = parseFloat($("#transporte").val());
+            var devoluciones = parseFloat($("#devoluciones").val());
+            var precio_mp = parseFloat($("#precio_mp").val());
 
+            var total = manipulacion + comentario1 + comentario2 + transporte + devoluciones;
+            $("#total").val(total);
         }
 
     </script>

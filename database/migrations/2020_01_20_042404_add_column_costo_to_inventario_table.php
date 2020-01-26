@@ -8,19 +8,17 @@ class AddColumnCostoToInventarioTable extends Migration
 {
     /**
      * Run the migrations.
-     *
      * @return void
      */
     public function up()
     {
         Schema::table('inventario', function (Blueprint $table) {
-            $table->double('precio')->default(0)->after('cantidad');
+            $table->double('precio', 53, 2)->default(0)->after('cantidad');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()
