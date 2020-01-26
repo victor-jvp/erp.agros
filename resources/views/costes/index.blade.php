@@ -28,21 +28,22 @@
                             <input type="date" class="form-control" id="hasta">
                         </div>
                         <div class="col-md-3 form-group mb-3">
-                            <label for="cliente">Cliente</label>
-                            <select class="form-control chosen" id="cliente" data-size="6">
+                            <label for="_cliente">Cliente</label>
+                            <select class="form-control chosen" id="_cliente" data-size="6">
                                 <option value=""></option>
                                 @foreach($clientes as $item)
-                                    <option value="{{ $item->id }}">{{ $item->razon_social }}</option>
+                                    <option value="{{ $item->razon_social }}">{{ $item->razon_social }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-3 form-group mb-3">
-                            <label for="cliente">Compuesto</label>
-                            <select class="form-control chosen" id="cliente" data-size="6">
+                            <label for="_compuesto">Compuesto</label>
+                            <select class="form-control chosen" id="_compuesto" data-size="6">
                                 <option value=""></option>
-                                {{--                                @foreach($compuestos as $item)--}}
-                                {{--                                    <option value="{{ $item->id }}">{{ $item->compuesto }}</option>--}}
-                                {{--                                @endforeach--}}
+                                @foreach($compuestos as $item)
+                                    @php($compuesto = $item->variable." - ".$item->caja->formato." - ".$item->caja->modelo)
+                                    <option value="{{ $compuesto }}">{{ $compuesto }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -78,7 +79,7 @@
                                         <tr>
                                             <td>{{ $row->nro_orden }}</td>
                                             <td>{{ $row->cliente->razon_social }}</td>
-                                            <td>{{ $row->variable->compuesto->compuesto }}</td>
+                                            <td>{{ $row->variable->variable." - ".$row->variable->caja->formato." - ".$row->variable->caja->modelo }}</td>
                                             <td class="text-right">{{ round($row->cajas, 2) }}</td>
                                             <td class="text-right">{{ $row->kilos }}</td>
                                             <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio,2) : "0" }}</td>
@@ -295,6 +296,26 @@
             }, 0);
         });
 
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var min = $("#desde").val();
+                var max = $("#hasta").val();
+                var fecha = data[2];
+
+                var startDate = moment(min, "YYYY-MM-DD");
+                var endDate = moment(max, "YYYY-MM-DD");
+                var diffDate = moment(fecha, "YYYY-MM-DD");
+
+                if (
+                    (min == "" || max == "") ||
+                    (diffDate.isBetween(startDate, endDate, null, '[]'))
+                ) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
         function loadMaterial(valor, selected) {
             $.ajax({
                 type: 'POST',
@@ -403,10 +424,12 @@
                 },
                 dom: 'ltipr',
                 responsive: true,
-                // columnDefs: [{
-                //     targets: [0, 2, 5, 11],
-                //     visible: false
-                // },],
+                // columnDefs: [
+                //     {
+                //         targets: [1, 3],
+                //         visible: false
+                //     },
+                // ],
                 footerCallback: function (row, data, start, end, display) {
                     var api = this.api();
                     api.columns('.sum', {
@@ -422,12 +445,6 @@
                                             i : 0;
                                 };
 
-                                /*var regex = /[.,\s]/g;
-                                var aa = a.toString();
-                                var bb = b.toString();
-                                var x = parseFloat(aa.replace(regex, '')) || 0;
-                                var y = parseFloat(bb.replace(regex, '')) || 0;
-                                return x + y;*/
                                 return intVal(a) + intVal(b);
                             }, 0);
                         var signo = "";
@@ -441,20 +458,14 @@
                 liveSearch: true
             });
 
-            $('#categoria').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+            $('#_cliente').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
                 var value = $(this).val();
-                loadMaterial(value);
-                entradas_table.column(4).search(value).draw();
+                entradas_table.column(1).search(value).draw();
             });
 
-            $('#material').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+            $('#_compuesto').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
                 var value = $(this).val();
-                entradas_table.column(5).search(value).draw();
-            });
-
-            $('#proveedor').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-                var value = $(this).val();
-                entradas_table.column(11).search(value).draw();
+                entradas_table.column(2).search(value).draw();
             });
 
             $("#albaran").change(function (e) {
@@ -472,39 +483,6 @@
                 var hasta = $("#hasta").val();
 
                 entradas_table.draw(false);
-            });
-
-            $.fn.dataTable.ext.search.push(
-                function (settings, data, dataIndex) {
-                    var min = $("#desde").val();
-                    var max = $("#hasta").val();
-                    var fecha = data[2];
-
-                    var startDate = moment(min, "YYYY-MM-DD");
-                    var endDate = moment(max, "YYYY-MM-DD");
-                    var diffDate = moment(fecha, "YYYY-MM-DD");
-
-                    if (
-                        (min == "" || max == "") ||
-                        (diffDate.isBetween(startDate, endDate, null, '[]'))
-                    ) {
-                        return true;
-                    }
-                    return false;
-                }
-            );
-
-            jQuery.fn.dataTable.Api.register('sum()', function () {
-                return this.flatten().reduce(function (a, b) {
-                    if (typeof a === 'string') {
-                        a = a.replace(/[^\d.-]/g, '') * 1;
-                    }
-                    if (typeof b === 'string') {
-                        b = b.replace(/[^\d.-]/g, '') * 1;
-                    }
-
-                    return a + b;
-                }, 0);
             });
         });
 

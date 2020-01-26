@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cliente;
 use App\InventarioRel;
 use App\PedidoProduccionCoste;
+use App\ProductoCompuesto_det;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\PedidoProduccion;
@@ -41,8 +42,9 @@ class CostesController extends Controller
                                       ->sum('inventario.precio');
         }
 
-        $data['pedidos']  = $pedidos;
-        $data['clientes'] = Cliente::all();
+        $data['pedidos']    = $pedidos;
+        $data['clientes']   = Cliente::all();
+        $data['compuestos'] = ProductoCompuesto_det::with('caja')->get();
 
         return view('costes.index')->with($data);
     }
