@@ -39,7 +39,7 @@ class CostesController extends Controller
                                       ->join('inventario', 'inventario.id' ,'=','inventario_rel.entrada_id')
                                       ->where('entrada_id', '!=', 'NULL')
                                       ->where('pedido_id', $pedido->id)
-                                      ->sum('inventario.precio');
+                                      ->sum(DB::RAW('inventario.precio * inventario_rel.cantidad'));
         }
 
         $data['pedidos']    = $pedidos;
@@ -103,7 +103,7 @@ class CostesController extends Controller
               ->join('inventario', 'inventario.id' ,'=','inventario_rel.entrada_id')
               ->where('entrada_id', '!=', 'NULL')
               ->where('pedido_id', $id)
-              ->sum('inventario.precio');
+              ->sum(DB::RAW('inventario.precio * inventario_rel.cantidad'));
         }
 
         return response()->json($pedido);

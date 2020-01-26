@@ -60,7 +60,7 @@
                                     <th class="sum">Cajas</th>
                                     <th class="sum">Kilos</th>
                                     <th class="sum">Precio Venta</th>
-                                    <th class="sum">Precio Materia Prima</th>
+                                    <th class="sum">Precio Materiales</th>
                                     <th class="sum">Precio Recolección</th>
                                     <th class="sum">Precio Manipulación</th>
                                     <th class="sum">Comentario 1</th>
@@ -195,7 +195,7 @@
                                 <input type="number" class="form-control" id="precio" step="0.01" readonly>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label for="costo">Precio Materia Prima</label>
+                                <label for="precio_mp">Precio Materiales</label>
                                 <input type="number" class="form-control" id="precio_mp" step="0.01" readonly>
                             </div>
                         </div>
