@@ -11,7 +11,7 @@
 
             <div class="d-flex align-items-center">
                 <!-- Mega menu -->
-                <div class="dropdown mega-menu d-none d-md-block">
+                {{--<div class="dropdown mega-menu d-none d-md-block">
                     <a href="#" class="btn text-muted dropdown-toggle mr-3" id="dropdownMegaMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mega Menu</a>
                     <div class="dropdown-menu text-left" aria-labelledby="dropdownMenuButton">
                         <div class="row m-0">
@@ -52,12 +52,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 <!-- / Mega menu -->
-                <div class="search-bar">
+               {{-- <div class="search-bar">
                     <input type="text" placeholder="Search">
                     <i class="search-icon text-muted i-Magnifi-Glass1"></i>
-                </div>
+                </div>--}}
             </div>
 
             <div style="margin: auto"></div>
@@ -66,7 +66,7 @@
                 <!-- Full screen toggle -->
                 <i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen></i>
                 <!-- Grid menu Dropdown -->
-                <div class="dropdown">
+                {{--<div class="dropdown">
                     <i class="i-Safe-Box text-muted header-icon" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <div class="menu-icon-grid">
@@ -78,7 +78,7 @@
                             <a href="#"><i class="i-Ambulance"></i> Support</a>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 <!-- Notificaiton -->
                 <div class="dropdown">
                     <div class="badge-top-container" id="dropdownNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -159,12 +159,12 @@
                             <a href="{{ route('usuarios.perfil', \Illuminate\Support\Facades\Auth::id()) }}" class="dropdown-item">
                                 Perfil de Usuario
                             </a>
-                            <a class="dropdown-item">Billing history</a>
 {{--                            <a class="dropdown-item" href="#">Sign out</a>--}}
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+{{--                                {{ __('Logout') }}--}}
+                                Cerrar Sesion
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
