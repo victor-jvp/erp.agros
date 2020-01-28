@@ -50,7 +50,8 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <table id="entradas_table" class="display table table-striped table-bordered table-sm"
+                            <table id="entradas_table"
+                                   class="display table table-striped table-bordered table-sm table-condensed"
                                    style="width:100%">
                                 <thead>
                                 <tr class="text-center">
@@ -77,12 +78,12 @@
                                 @if (isset($pedidos))
                                     @foreach ($pedidos as $row)
                                         <tr>
-                                            <td>{{ $row->nro_orden }}</td>
+                                            <th>{{ $row->nro_orden }}</th>
                                             <td>{{ $row->cliente->razon_social }}</td>
                                             <td>{{ $row->variable->variable." - ".$row->variable->caja->formato." - ".$row->variable->caja->modelo }}</td>
                                             <td class="text-right">{{ round($row->cajas, 2) }}</td>
                                             <td class="text-right">{{ $row->kilos }}</td>
-                                            <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio,2) : "0" }}</td>
+                                            <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio * $row->pedido_comercial->kilos,2) : "0" }}</td>
                                             <td class="text-right">{{ round($row->precio_mp, 2) }}</td>
                                             <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion, 2) : '0' }}</td>
                                             <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion, 2) : '0' }}</td>
@@ -203,8 +204,16 @@
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="recoleccion">Precio Recolección</label>
-                                <input type="number" class="form-control" id="recoleccion" name="recoleccion"
-                                       step="0.01">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <a href="javascript:void(0);" class="input-group-text" data-toggle="modal"
+                                           data-target="#modal_recolecciones">
+                                            <i class="i-Information"></i>
+                                        </a>
+                                    </div>
+                                    <input type="number" class="form-control" id="recoleccion" name="recoleccion"
+                                           readonly step="0.01" value="0">
+                                </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="manipulacion">Precio Manipulación</label>
@@ -250,7 +259,11 @@
                                 <input type="number" class="form-control" id="total" step="0.01" readonly>
                             </div>
                         </div>
+
+
                     </div>
+
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                             Cerrar
@@ -264,6 +277,78 @@
         </div>
     </div>
     {{--Fin de Modal Editar Costes--}}
+
+    {{--Modal Recolecciones--}}
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modal_recolecciones">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Recolecciones</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form action="" method="post" id="form_recoleccion">
+
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="trazabilidad">Trazabilidad</label>
+                                <select class="form-control chosen" id="trazabilidad" data-size="6"
+                                        data-show-subtext="true" name="trazabilidad" required>
+                                    <option value=""></option>
+                                    @foreach($trazabilidades as $item)
+                                        <option data-subtext="{{ $item->variedad->cultivo->cultivo }}"
+                                                value="{{ $item->id }}">{{ $item->traza }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 form-group mb-3">
+                                <label for="precio_recoleccion">Precio</label>
+                                <input type="number" class="form-control" id="precio_recoleccion" step="0.01" min="0.01"
+                                       name="precio_recoleccion" required>
+                            </div>
+
+                            <div class="col-md-2 form-group mb-3">
+                                <label>Agregar</label>
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                    <i class="i i-Add"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <table class="table table-hover table-sm table-condensed" width="100%"
+                                   id="table_recolecciones">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Traza</th>
+                                    <th>Precio</th>
+                                    <th>Opciones</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{--Fin de Modal Recolecciones--}}
 @endsection
 
 @section('page-css')
@@ -285,7 +370,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         jQuery.fn.dataTable.Api.register('sum()', function () {
             return this.flatten().reduce(function (a, b) {
                 if (typeof a === 'string') {
@@ -298,9 +382,7 @@
                 return a + b;
             }, 0);
         });
-
-        $.fn.dataTable.ext.search.push(
-            function (settings, data, dataIndex) {
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
                 var min = $("#desde").val();
                 var max = $("#hasta").val();
                 var fecha = data[2];
@@ -378,9 +460,9 @@
                     $("#compuesto").val(data.variable.variable + ' - ' + data.variable.caja.formato + ' - ' + data.variable.caja.modelo);
                     $("#cajas").val(data.cajas);
                     $("#kilos").val(data.kilos);
-                    $("#precio").val(data.pedido_comercial.precio);
+                    $("#precio").val(data.pedido_comercial.precio * data.pedido_comercial.kilos);
                     $("#precio_mp").val(data.precio_mp);
-                    $("#recoleccion").val(data.coste.recoleccion);
+                    $("#recoleccion").val(data.recoleccion);
                     $("#manipulacion").val(data.coste.manipulacion);
                     $("#comentario1").val(data.coste.comentario1);
                     $("#comentario2").val(data.coste.comentario2);
@@ -390,6 +472,19 @@
                     if (data.coste.cobrado) $("#cobrado").prop('checked', true); else $("#cobrado").prop('checked', false);
                     var total = data.kilos * data.precio;
                     $("#total").val(total.toFixed(2));
+
+                    recolecciones_table.rows().remove().draw();
+
+                    for (var i = 0; i < data.trazabilidades.length; i++) {
+                        var row = data.trazabilidades[i];
+
+                        recolecciones_table.row.add([
+                            row.id,
+                            row.trazabilidad.traza,
+                            row.precio,
+                            ''
+                        ]);
+                    }
 
                     CalcularTotal();
 
@@ -413,12 +508,12 @@
             var total = manipulacion + comentario1 + comentario2 + transporte + devoluciones;
             $("#total").val(total);
         }
-
     </script>
 
     {{--Entradas--}}
     <script>
         var entradas_table;
+        var recolecciones_table;
 
         $(document).ready(function () {
             // Configuracion de Datatable
@@ -428,12 +523,6 @@
                 },
                 dom: 'ltipr',
                 responsive: true,
-                // columnDefs: [
-                //     {
-                //         targets: [1, 3],
-                //         visible: false
-                //     },
-                // ],
                 footerCallback: function (row, data, start, end, display) {
                     var api = this.api();
                     api.columns('.sum', {
@@ -456,6 +545,18 @@
                         $(this.footer()).html(signo + sum.toFixed(2));
                     });
                 }
+            });
+
+            recolecciones_table = $("#table_recolecciones").DataTable({
+                language: {
+                    url: "{{ asset('assets/Spanish.json')}}"
+                },
+                dom: 'tir',
+                responsive: true,
+                columnDefs: [
+                    {targets: 0, visible: false},
+                    {targets: 2, className: 'text-right'},
+                ]
             });
 
             $(".chosen").selectpicker({
@@ -488,9 +589,46 @@
 
                 entradas_table.draw(false);
             });
+
+            $("#form_recoleccion").submit(function (f) {
+                f.preventDefault();
+
+                var trazabilidad_id = $("#trazabilidad").val();
+                var trazabilidad = $("#trazabilidad").find('option:selected').html();
+                var precio = $("#precio_recoleccion").val();
+                var opciones = '<a href="javascript:void(0);" class="text-danger mr-2"\n' +
+                    'data-toggle="tooltip" data-placement="top" title=""\n' +
+                    'data-original-title="Borrar" onclick="RemoveTrazabilidad(this)">\n' +
+                    '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
+                    '</a>';
+
+                recolecciones_table.row.add([
+                    trazabilidad_id +
+                    '<input type="hidden" name="trazabilidades[]" value="' + trazabilidad_id + '">' +
+                    '<input type="hidden" name="precios[]" value="' + precio + '">',
+                    trazabilidad.toString(2),
+                    precio,
+                    opciones,
+                ]).draw();
+
+                var suma = recolecciones_table.column(2).data().sum();
+                $("#recoleccion").val(suma);
+
+                $("#trazabilidad").val(null).selectpicker('refresh');
+                $("#precio_recoleccion").val(null);
+            });
         });
+
+        function RemoveTrazabilidad(elem) {
+            var tr = $(elem).closest('tr');
+            recolecciones_table.row(tr).remove().draw(false);
+            var suma = recolecciones_table.column(2).data().sum();
+            $("#recoleccion").val(suma);
+        }
 
     </script>
 
+    <script>
 
+    </script>
 @endsection

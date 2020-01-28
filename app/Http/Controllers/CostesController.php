@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Cliente;
 use App\InventarioRel;
 use App\PedidoProduccionCoste;
+use App\PedidoProduccionCosteRecoleccion;
 use App\ProductoCompuesto_det;
+use App\Trazabilidad;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\PedidoProduccion;
@@ -42,9 +44,10 @@ class CostesController extends Controller
                                       ->sum(DB::RAW('inventario.precio * inventario_rel.cantidad'));
         }
 
-        $data['pedidos']    = $pedidos;
-        $data['clientes']   = Cliente::all();
-        $data['compuestos'] = ProductoCompuesto_det::with('caja')->get();
+        $data['pedidos']        = $pedidos;
+        $data['clientes']       = Cliente::all();
+        $data['trazabilidades'] = Trazabilidad::all();
+        $data['compuestos']     = ProductoCompuesto_det::with('caja')->get();
 
         return view('costes.index')->with($data);
     }
@@ -70,6 +73,8 @@ class CostesController extends Controller
 
         $coste->save();
 
+        //if (isset($request->))
+
         return redirect()->route('costes.index');
     }
 
@@ -82,7 +87,8 @@ class CostesController extends Controller
             'coste',
             'inventario',
             'pedido_comercial',
-            'cliente'
+            'cliente',
+            'trazabilidades',
         ])->find($id);
 
         if (is_null($pedido->coste)) {
@@ -94,7 +100,8 @@ class CostesController extends Controller
                 'coste',
                 'inventario',
                 'pedido_comercial',
-                'cliente'
+                'cliente',
+                'trazabilidades',
             ])->find($id);
         }
 
@@ -104,6 +111,9 @@ class CostesController extends Controller
               ->where('entrada_id', '!=', 'NULL')
               ->where('pedido_id', $id)
               ->sum(DB::RAW('inventario.precio * inventario_rel.cantidad'));
+
+            $pedido->recoleccion = PedidoProduccionCosteRecoleccion::where('pedido_id', $id)
+                                                                   ->sum('precio');
         }
 
         return response()->json($pedido);

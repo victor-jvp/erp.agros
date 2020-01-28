@@ -36,7 +36,8 @@
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <label for="nro_orden">Nº Orden</label>
-                                                <input type="text" name="nro_orden" id="nro_orden" class="form-control">
+                                                <input type="text" name="nro_orden" id="nro_orden" class="form-control"
+                                                       readonly>
                                             </div>
 
                                             <div class="col-md-4 mb-3">
@@ -63,6 +64,7 @@
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="table-responsive table-responsive-sm">
@@ -610,13 +612,13 @@
                                                                         </a>
                                                                         @if ($pedido->estado_id != 2)
                                                                             @can('Comercial - Pedidos Comerciales | Borrar')
-                                                                            <a href="javascript:void(0);"
-                                                                               class="text-danger mr-2 delete"
-                                                                               data-toggle="tooltip"
-                                                                               data-placement="top" title=""
-                                                                               data-original-title="Borrar">
-                                                                                <i class="nav-icon i-Close-Window font-weight-bold"></i>
-                                                                            </a>
+                                                                                <a href="javascript:void(0);"
+                                                                                   class="text-danger mr-2 delete"
+                                                                                   data-toggle="tooltip"
+                                                                                   data-placement="top" title=""
+                                                                                   data-original-title="Borrar">
+                                                                                    <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                                                                </a>
                                                                             @endcan
                                                                         @endif
                                                                     </td>

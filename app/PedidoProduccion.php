@@ -102,4 +102,9 @@ class PedidoProduccion extends Model
     {
         return $this->hasMany(InventarioRel::class, 'pedido_id');
     }
+
+    public function trazabilidades()
+    {
+        return $this->hasMany(PedidoProduccionCosteRecoleccion::class, 'pedido_id');
+    }
 }
