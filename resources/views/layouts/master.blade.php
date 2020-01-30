@@ -37,7 +37,7 @@
 
         @yield('main-content')
 
-         @include('layouts.footer')
+        @include('layouts.footer')
     </div>
     <!-- ============ Body content End ============= -->
 </div>
@@ -63,7 +63,7 @@
 
 <script src="{{ asset('assets/js/tooltip.script.js') }}"></script>
 {{-- laravel js --}}
-<script src="{{mix('assets/js/laravel/app.js')}}"></script>
+<script src="{{ mix('assets/js/laravel/app.js') }}"></script>
 
 @yield('bottom-js')
 </body>
