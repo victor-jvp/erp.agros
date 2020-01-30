@@ -147,14 +147,15 @@
         <!-- end of col -->
     </div>
 
-    {{--Modal Editar Costes--}}
-    <div class="modal fade" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal_coste">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form action="{{ route('costes.update') }}" method="POST" id="form_edit">
+    <form action="{{ route('costes.update') }}" method="POST" id="form_edit">
 
-                    {{ csrf_field('PUT') }}
+        {{ csrf_field('PUT') }}
+
+        {{--Modal Editar Costes--}}
+        <div class="modal fade" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="modal_coste">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
 
                     <input type="hidden" id="id" name="id">
 
@@ -272,32 +273,29 @@
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         @endcan
                     </div>
-                </form>
+
+                </div>
             </div>
         </div>
-    </div>
-    {{--Fin de Modal Editar Costes--}}
+        {{--Fin de Modal Editar Costes--}}
 
-    {{--Modal Recolecciones--}}
-    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modal_recolecciones">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Recolecciones</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+        {{--Modal Recolecciones--}}
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modal_recolecciones">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Recolecciones</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
-                <div class="modal-body">
-
-                    <form action="" method="post" id="form_recoleccion">
-
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6 form-group mb-3">
                                 <label for="trazabilidad">Trazabilidad</label>
                                 <select class="form-control chosen" id="trazabilidad" data-size="6"
-                                        data-show-subtext="true" name="trazabilidad" required>
+                                        data-show-subtext="true" name="trazabilidad">
                                     <option value=""></option>
                                     @foreach($trazabilidades as $item)
                                         <option data-subtext="{{ $item->variedad->cultivo->cultivo }}"
@@ -309,45 +307,45 @@
                             <div class="col-md-4 form-group mb-3">
                                 <label for="precio_recoleccion">Precio</label>
                                 <input type="number" class="form-control" id="precio_recoleccion" step="0.01" min="0.01"
-                                       name="precio_recoleccion" required>
+                                       name="precio_recoleccion">
                             </div>
 
                             <div class="col-md-2 form-group mb-3">
                                 <label>Agregar</label>
-                                <button class="btn btn-primary btn-sm" type="submit">
+                                <button class="btn btn-primary btn-sm" type="button" onclick="addRecoleccion()">
                                     <i class="i i-Add"></i>
                                 </button>
                             </div>
                         </div>
 
-                    </form>
-
-                    <div class="row">
-                        <div class="col-md-12 table-responsive">
-                            <table class="table table-hover table-sm table-condensed" width="100%"
-                                   id="table_recolecciones">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Traza</th>
-                                    <th>Precio</th>
-                                    <th>Opciones</th>
-                                </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                        <div class="row">
+                            <div class="col-md-12 table-responsive">
+                                <table class="table table-hover table-sm table-condensed" width="100%"
+                                       id="table_recolecciones">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Traza</th>
+                                        <th>Precio</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
 
                 </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
-
             </div>
         </div>
-    </div>
+
+    </form>
     {{--Fin de Modal Recolecciones--}}
 @endsection
 
@@ -363,6 +361,9 @@
     <script src="{{asset('assets/js/vendor/bootstrap-select/bootstrap-select.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/bootstrap-select/i18n/defaults-es_ES.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/calendar/moment-with-locales.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/jquery.validation/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/jquery.validation/additional-methods.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/jquery.validation/messages_es.js')}}"></script>
 
     <script>
         $.ajaxSetup({
@@ -475,15 +476,22 @@
 
                     recolecciones_table.rows().remove().draw();
 
-                    for (var i = 0; i < data.trazabilidades.length; i++) {
+                    for (var i = 0; i < data.trazabilidades.length ; i++) {
                         var row = data.trazabilidades[i];
+                        var opciones = '<a href="javascript:void(0);" class="text-danger mr-2"\n' +
+                            'data-toggle="tooltip" data-placement="right" title=""\n' +
+                            'data-original-title="Borrar" onclick="RemoveTrazabilidad(this)">\n' +
+                            '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
+                            '</a>';
 
                         recolecciones_table.row.add([
                             row.id,
                             row.trazabilidad.traza,
                             row.precio,
-                            ''
-                        ]);
+                            opciones +
+                            '<input type="hidden" name="trazabilidades[]" value="' + row.trazabilidad_id + '">' +
+                            '<input type="hidden" name="precios[]" value="' + row.precio + '">',
+                        ]).draw();
                     }
 
                     CalcularTotal();
@@ -516,6 +524,10 @@
         var recolecciones_table;
 
         $(document).ready(function () {
+            $('[rel="tooltip"]').on('click', function () {
+                $(this).tooltip('hide')
+            })
+
             // Configuracion de Datatable
             entradas_table = $('#entradas_table').DataTable({
                 language: {
@@ -590,34 +602,46 @@
                 entradas_table.draw(false);
             });
 
-            $("#form_recoleccion").submit(function (f) {
-                f.preventDefault();
-
-                var trazabilidad_id = $("#trazabilidad").val();
-                var trazabilidad = $("#trazabilidad").find('option:selected').html();
-                var precio = $("#precio_recoleccion").val();
-                var opciones = '<a href="javascript:void(0);" class="text-danger mr-2"\n' +
-                    'data-toggle="tooltip" data-placement="top" title=""\n' +
-                    'data-original-title="Borrar" onclick="RemoveTrazabilidad(this)">\n' +
-                    '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
-                    '</a>';
-
-                recolecciones_table.row.add([
-                    trazabilidad_id +
-                    '<input type="hidden" name="trazabilidades[]" value="' + trazabilidad_id + '">' +
-                    '<input type="hidden" name="precios[]" value="' + precio + '">',
-                    trazabilidad.toString(2),
-                    precio,
-                    opciones,
-                ]).draw();
-
-                var suma = recolecciones_table.column(2).data().sum();
-                $("#recoleccion").val(suma);
-
-                $("#trazabilidad").val(null).selectpicker('refresh');
-                $("#precio_recoleccion").val(null);
+            $("#form_edit").validate({
+                ignore: '',
             });
         });
+
+        function addRecoleccion() {
+            var trazabilidad_id = $("#trazabilidad").val();
+            if (trazabilidad_id == null || trazabilidad_id === "") {
+                swal('Aviso', 'El campo "Trazabilidad" es requerido', 'warning');
+                return;
+            }
+            var trazabilidad = $("#trazabilidad").find('option:selected').html();
+
+            var precio = $("#precio_recoleccion").val();
+            if (precio == null || precio === "") {
+                swal('Aviso', 'El campo "Precio" es requerido', 'warning');
+                return;
+            }
+
+            var opciones = '<a href="javascript:void(0);" class="text-danger mr-2"\n' +
+                'data-toggle="tooltip" data-placement="right" title=""\n' +
+                'data-original-title="Borrar" onclick="RemoveTrazabilidad(this)">\n' +
+                '<i class="nav-icon i-Close-Window font-weight-bold "></i>\n' +
+                '</a>';
+
+            recolecciones_table.row.add([
+                trazabilidad_id,
+                trazabilidad.toString(2),
+                precio,
+                opciones +
+                '<input type="hidden" name="trazabilidades[]" value="' + trazabilidad_id + '">' +
+                '<input type="hidden" name="precios[]" value="' + precio + '">',
+            ]).draw();
+
+            var suma = recolecciones_table.column(2).data().sum();
+            $("#recoleccion").val(suma);
+
+            $("#trazabilidad").val(null).selectpicker('refresh');
+            $("#precio_recoleccion").val(null);
+        }
 
         function RemoveTrazabilidad(elem) {
             var tr = $(elem).closest('tr');
@@ -625,7 +649,6 @@
             var suma = recolecciones_table.column(2).data().sum();
             $("#recoleccion").val(suma);
         }
-
     </script>
 
     <script>

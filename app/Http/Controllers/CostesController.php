@@ -31,17 +31,10 @@ class CostesController extends Controller
             'coste',
             'pedido_comercial',
             'inventario',
-        ])->where('estado_id', 3)
-          ->orderBy('pedidos_produccion.id', 'desc')
-          ->get();
+        ])->where('estado_id', 3)->orderBy('pedidos_produccion.id', 'desc')->get();
 
-        foreach ($pedidos as $p => $pedido)
-        {
-            $pedidos[$p]->precio_mp = DB::table('inventario_rel')
-                                      ->join('inventario', 'inventario.id' ,'=','inventario_rel.entrada_id')
-                                      ->where('entrada_id', '!=', 'NULL')
-                                      ->where('pedido_id', $pedido->id)
-                                      ->sum(DB::RAW('inventario.precio * inventario_rel.cantidad'));
+        foreach ($pedidos as $p => $pedido) {
+            $pedidos[$p]->precio_mp = DB::table('inventario_rel')->join('inventario', 'inventario.id', '=', 'inventario_rel.entrada_id')->where('entrada_id', '!=', 'NULL')->where('pedido_id', $pedido->id)->sum(DB::RAW('inventario.precio * inventario_rel.cantidad'));
         }
 
         $data['pedidos']        = $pedidos;
@@ -54,6 +47,7 @@ class CostesController extends Controller
 
     public function update(Request $request)
     {
+//        dd($request);
         $id    = $request->id;
         $coste = PedidoProduccionCoste::where('pedido_id', $id)->first();
 
@@ -73,7 +67,19 @@ class CostesController extends Controller
 
         $coste->save();
 
-        //if (isset($request->))
+        $pedido = PedidoProduccion::find($id);
+        $pedido->trazabilidades()->delete();
+        $pedido->save();
+
+        if (isset($request->trazabilidades)) {
+            for ($i = 0; $i < count($request->trazabilidades); $i++) {
+                $reco                  = new PedidoProduccionCosteRecoleccion();
+                $reco->pedido_id       = $id;
+                $reco->trazabilidad_id = $request->trazabilidades[$i];
+                $reco->precio          = $request->precios[$i];
+                $reco->save();
+            }
+        }
 
         return redirect()->route('costes.index');
     }
@@ -88,7 +94,7 @@ class CostesController extends Controller
             'inventario',
             'pedido_comercial',
             'cliente',
-            'trazabilidades',
+            'trazabilidades.trazabilidad',
         ])->find($id);
 
         if (is_null($pedido->coste)) {
@@ -101,19 +107,14 @@ class CostesController extends Controller
                 'inventario',
                 'pedido_comercial',
                 'cliente',
-                'trazabilidades',
+                'trazabilidades.trazabilidad',
             ])->find($id);
         }
 
-        if (!is_null($pedido)){
-            $pedido->precio_mp = DB::table('inventario_rel')
-              ->join('inventario', 'inventario.id' ,'=','inventario_rel.entrada_id')
-              ->where('entrada_id', '!=', 'NULL')
-              ->where('pedido_id', $id)
-              ->sum(DB::RAW('inventario.precio * inventario_rel.cantidad'));
+        if (!is_null($pedido)) {
+            $pedido->precio_mp = DB::table('inventario_rel')->join('inventario', 'inventario.id', '=', 'inventario_rel.entrada_id')->where('entrada_id', '!=', 'NULL')->where('pedido_id', $id)->sum(DB::RAW('inventario.precio * inventario_rel.cantidad'));
 
-            $pedido->recoleccion = PedidoProduccionCosteRecoleccion::where('pedido_id', $id)
-                                                                   ->sum('precio');
+            $pedido->recoleccion = PedidoProduccionCosteRecoleccion::where('pedido_id', $id)->sum('precio');
         }
 
         return response()->json($pedido);

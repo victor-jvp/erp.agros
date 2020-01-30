@@ -9,7 +9,8 @@ class Trazabilidad extends Model
 {
     //
     use SoftDeletes;
-    protected $table = 'trazabilidad';
+    protected $table   = 'trazabilidad';
+    protected $appends = ['traza'];
 
     public function parcela()
     {
