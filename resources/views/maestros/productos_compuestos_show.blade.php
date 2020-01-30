@@ -31,7 +31,8 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            @canany(['Maestros - Productos Compuestos | Crear', 'Maestros - Productos Compuestos | Modificar'])
+                            @canany(['Maestros - Productos Compuestos | Crear', 'Maestros - Productos Compuestos |
+                            Modificar'])
                                 <button class="btn btn-primary" type="button" id="btnNuevoDetalle">Agregar Detalle
                                 </button>
                             @endcan
@@ -80,7 +81,39 @@
                                                     @endif
                                                 </select>
                                             </div>
+                                        </div>
 
+                                        <label>Categorias</label>
+
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <label class="radio radio-success">
+                                                    <input type="radio" name="categoria_id" value="1" checked>
+                                                    <span>1era.</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="radio radio-success">
+                                                    <input type="radio" name="categoria_id" value="2">
+                                                    <span>1era. B</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="radio radio-success">
+                                                    <input type="radio" name="categoria_id" value="3">
+                                                    <span>2da.</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="radio radio-success">
+                                                    <input type="radio" name="categoria_id" value="4">
+                                                    <span>Industria</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
                                         </div>
 
                                         <div class="row">
@@ -376,7 +409,8 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        @canany(['Maestros - Productos Compuestos | Crear', 'Maestros - Productos Compuestos | Crear'])
+                                        @canany(['Maestros - Productos Compuestos | Crear', 'Maestros - Productos Compuestos
+                                        | Crear'])
                                             <button type="submit" class="btn btn-primary">Guardar</button>
                                         @endcanany
                                     </div>
@@ -606,7 +640,8 @@
                             caja.caja.formato + ' | ' + caja.caja.modelo,
                             caja.cantidad,
                             '<input type="hidden" name="cajas_id[]" value="' + caja.caja_id + '">' +
-                            '<input type="hidden" name="cajas_cantidad[]" value="' + caja.cantidad + '"> ' +
+                            '<input type="hidden" name="cajas_cantidad[]" value="' + caja.cantidad +
+                            '"> ' +
                             opciones
                         ]).draw();
                     }
@@ -652,6 +687,7 @@
                 }
             });
         }
+
     </script>
     {{--Table Tarrinas | Auxiliares de Caja --}}
     <script>
@@ -853,6 +889,7 @@
                 $('#caja_modelo').val(null).trigger('chosen:updated');
             }
         });
+
     </script>
     {{--Table Euro Pallet Auxiliares--}}
     <script>
@@ -947,6 +984,7 @@
                 $('#euro_auxiliar_modelo').val(null).trigger('chosen:updated');
             }
         });
+
     </script>
     {{--Table Grand Pallet Auxiliares--}}
     <script>
@@ -1041,6 +1079,7 @@
                 $('#grand_auxiliar_modelo').val(null).trigger('chosen:updated');
             }
         });
+
     </script>
     <script>
         $(document).ready(function () {
@@ -1051,5 +1090,6 @@
                 allow_single_deselect: true
             });
         })
+
     </script>
 @endsection
