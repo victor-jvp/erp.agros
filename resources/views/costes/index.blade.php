@@ -48,6 +48,27 @@
                         </div>
                     </div>
 
+                    <label for="">Categoria</label>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="radio radio-success">
+                                <input class="categoria" type="radio" name="categoria_id" value="" checked>
+                                <span>Todos</span>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        @foreach($categorias as $item)
+                        <div class="col-md-2">
+                            <label class="radio radio-success">
+                                <input class="categoria" type="radio" value="{{ $item->id }}" name="categoria_id">
+                                <span>{{ $item->name }}</span>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        @endforeach
+                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <table id="entradas_table"
@@ -58,6 +79,8 @@
                                     <th>Nro. Orden</th>
                                     <th>Cliente</th>
                                     <th>Compuesto</th>
+                                    <th>categoria_id</th>
+                                    <th>Categoria</th>
                                     <th class="sum">Cajas</th>
                                     <th class="sum">Kilos</th>
                                     <th class="sum">Precio Venta</th>
@@ -81,6 +104,8 @@
                                             <th>{{ $row->nro_orden }}</th>
                                             <td>{{ $row->cliente->razon_social }}</td>
                                             <td>{{ $row->variable->variable." - ".$row->variable->caja->formato." - ".$row->variable->caja->modelo }}</td>
+                                            <td>{{ (is_null($row->variable->categoria_id)) ? "" : $row->variable->categoria_id }}</td>
+                                            <td>{{ (is_null($row->variable->categoria)) ? "" : $row->variable->categoria->name }}</td>
                                             <td class="text-right">{{ round($row->cajas, 2) }}</td>
                                             <td class="text-right">{{ $row->kilos }}</td>
                                             <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio * $row->pedido_comercial->kilos,2) : "0" }}</td>
@@ -122,7 +147,7 @@
                                 </tbody>
                                 <tfoot>
                                 <tr class="text-right">
-                                    <th colspan="3">Totales</th>
+                                    <th colspan="5">Totales</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -476,7 +501,7 @@
 
                     recolecciones_table.rows().remove().draw();
 
-                    for (var i = 0; i < data.trazabilidades.length ; i++) {
+                    for (var i = 0; i < data.trazabilidades.length; i++) {
                         var row = data.trazabilidades[i];
                         var opciones = '<a href="javascript:void(0);" class="text-danger mr-2"\n' +
                             'data-toggle="tooltip" data-placement="right" title=""\n' +
@@ -535,6 +560,9 @@
                 },
                 dom: 'ltipr',
                 responsive: true,
+                columnDefs: [
+                    {targets: 3, visible: false},
+                ],
                 footerCallback: function (row, data, start, end, display) {
                     var api = this.api();
                     api.columns('.sum', {
@@ -585,15 +613,20 @@
                 entradas_table.column(2).search(value).draw();
             });
 
-            $("#albaran").change(function (e) {
+            $(".categoria").on('change', function () {
+                var value = $(this).val();
+                entradas_table.column(3).search(value).draw();
+            });
+
+/*            $("#albaran").change(function (e) {
                 var valor = $(this).val();
                 if (valor != "") {
                     var fecha = moment(valor).format('DD/MM/YYYY');
-                    entradas_table.column(10).search(fecha).draw();
+                    entradas_table.column(12).search(fecha).draw();
                 } else {
-                    entradas_table.column(10).search("").draw();
+                    entradas_table.column(12).search("").draw();
                 }
-            });
+            });*/
 
             $("#desde, #hasta").on("change", function (e) {
                 var desde = $("#desde").val();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
 use App\Cliente;
 use App\InventarioRel;
 use App\PedidoProduccionCoste;
@@ -40,6 +41,7 @@ class CostesController extends Controller
         $data['pedidos']        = $pedidos;
         $data['clientes']       = Cliente::all();
         $data['trazabilidades'] = Trazabilidad::all();
+        $data['categorias']     = Categoria::all();
         $data['compuestos']     = ProductoCompuesto_det::with('caja')->get();
 
         return view('costes.index')->with($data);
