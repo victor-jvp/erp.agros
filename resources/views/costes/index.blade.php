@@ -51,22 +51,36 @@
                     <label for="">Categoria</label>
 
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-2 mb-3">
                             <label class="radio radio-success">
                                 <input class="categoria" type="radio" name="categoria_id" value="" checked>
                                 <span>Todos</span>
                                 <span class="checkmark"></span>
                             </label>
                         </div>
+
                         @foreach($categorias as $item)
-                        <div class="col-md-2">
-                            <label class="radio radio-success">
-                                <input class="categoria" type="radio" value="{{ $item->id }}" name="categoria_id">
-                                <span>{{ $item->name }}</span>
+                            <div class="col-md-2 mb-3">
+                                <label class="radio radio-success">
+                                    <input class="categoria" type="radio" value="{{ $item->id }}" name="categoria_id">
+                                    <span>{{ $item->name }}</span>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        @endforeach
+
+                        <div class="col-md-2 mb-3">
+                            <label class="radio radio-primary">
+                                <input type="radio" class="vista" name="vista" id="vista" value="totales" checked>
+                                <span>Totales</span>
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio radio-primary">
+                                <input type="radio" class="vista" name="vista" id="vista" value="kgs">
+                                <span>Kgs.</span>
                                 <span class="checkmark"></span>
                             </label>
                         </div>
-                        @endforeach
                     </div>
 
                     <div class="row">
@@ -618,15 +632,41 @@
                 entradas_table.column(3).search(value).draw();
             });
 
-/*            $("#albaran").change(function (e) {
-                var valor = $(this).val();
-                if (valor != "") {
-                    var fecha = moment(valor).format('DD/MM/YYYY');
-                    entradas_table.column(12).search(fecha).draw();
-                } else {
-                    entradas_table.column(12).search("").draw();
-                }
-            });*/
+            $(".vista").on('change', function () {
+                var vista = $(this).val();
+                var rows = entradas_table.rows().data();
+
+                rows.each(function (value, index) {
+                    var kilos = entradas_table.cell(index, 6).data();
+                    console.log(kilos);
+
+                    if (kilos != NaN){
+
+                    }
+
+                    if (vista == "totales") {
+                        var precio_venta = (value.toFixed(2) * kilos.toFixed(2));
+                        console.log(precio_venta);
+
+                        entradas_table.cell(index, 7).data(precio_venta).draw();
+                    } else {
+                        var precio_venta = (value / kilos);
+                        console.log(precio_venta);
+
+                        entradas_table.cell(index, 7).data(precio_venta).draw();
+                    }
+                });
+            });
+
+            /*            $("#albaran").change(function (e) {
+                            var valor = $(this).val();
+                            if (valor != "") {
+                                var fecha = moment(valor).format('DD/MM/YYYY');
+                                entradas_table.column(12).search(fecha).draw();
+                            } else {
+                                entradas_table.column(12).search("").draw();
+                            }
+                        });*/
 
             $("#desde, #hasta").on("change", function (e) {
                 var desde = $("#desde").val();
