@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Auxiliar;
+use App\Categoria;
 use App\Cultivo;
 use App\Caja;
 use App\Cubre;
@@ -63,6 +64,7 @@ class ProductosCompuestosController extends Controller
         $tarrinas   = Tarrina::all();
         $auxiliares = Auxiliar::all();
         $cubres     = Cubre::all();
+        $categorias = Categoria::all();
 
         return view('maestros.productos_compuestos_show', [
             'producto'   => $producto,
@@ -70,7 +72,8 @@ class ProductosCompuestosController extends Controller
             'cajas'      => $cajas,
             'auxiliares' => $auxiliares,
             'tarrinas'   => $tarrinas,
-            'cubres'     => $cubres
+            'cubres'     => $cubres,
+            'categorias' => $categorias
         ]);
     }
 
@@ -99,14 +102,13 @@ class ProductosCompuestosController extends Controller
     //Agrega los detalles a productos compuestos
     public function store(Request $request)
     {
-        //         dd($request);
-
         if ($request->id == "") $detalle = new ProductoCompuesto_det();
         else
             $detalle = ProductoCompuesto_det::find($request->id);
 
         $detalle->compuesto_id   = $request->compuesto_id;
         $detalle->variable       = $request->variable;
+        $detalle->categoria_id   = $request->categoria_id;
         $detalle->caja_id        = $request->caja_id;
         $detalle->kg             = $request->kg;
         $detalle->cubre_id       = $request->cubre_id;
@@ -149,9 +151,9 @@ class ProductosCompuestosController extends Controller
             foreach ($request->cajas_id as $i => $item) {
                 $caja = new ProductoCompuesto_cajas();
 
-                $caja->det_id      = $detalle->id;
-                $caja->caja_id = $request->cajas_id[$i];
-                $caja->cantidad    = $request->cajas_cantidad[$i];
+                $caja->det_id   = $detalle->id;
+                $caja->caja_id  = $request->cajas_id[$i];
+                $caja->cantidad = $request->cajas_cantidad[$i];
                 $caja->save();
             }
         }
@@ -217,7 +219,10 @@ class ProductosCompuestosController extends Controller
 
     public function ajaxGetCompuesto(Request $request)
     {
-        $data = ProductoCompuesto_det::with(['compuesto', 'caja'])->get();
+        $data = ProductoCompuesto_det::with([
+            'compuesto',
+            'caja'
+        ])->get();
 
         return response()->json($data);
     }

@@ -86,34 +86,17 @@
                                         <label>Categorias</label>
 
                                         <div class="row">
-                                            <div class="col-md-3 mb-3">
-                                                <label class="radio radio-success">
-                                                    <input type="radio" name="categoria_id" value="1" checked>
-                                                    <span>1era.</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label class="radio radio-success">
-                                                    <input type="radio" name="categoria_id" value="2">
-                                                    <span>1era. B</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label class="radio radio-success">
-                                                    <input type="radio" name="categoria_id" value="3">
-                                                    <span>2da.</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-3 mb-3">
-                                                <label class="radio radio-success">
-                                                    <input type="radio" name="categoria_id" value="4">
-                                                    <span>Industria</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
+                                            @foreach($categorias as $item)
+                                                <div class="col-md-3 mb-3">
+                                                    <label class="radio radio-success">
+                                                        <input type="radio" name="categoria_id"
+                                                               id="categoria_id_{{ $item->id }}"
+                                                               value="{{ $item->id }}">
+                                                        <span>{{ $item->name }}</span>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                            @endforeach
                                         </div>
 
                                         <div class="row">
@@ -590,6 +573,7 @@
 
                     $('#variable').val(row.variable);
                     $('#caja_id').val(row.caja_id).trigger('chosen:updated');
+                    $("#categoria_id_" + row.categoria_id).prop('checked', true);
                     $('#kg').val(row.kg);
                     $('#cubre_id').val(row.cubre_id).trigger('chosen:updated');
                     $('#cubre_cantidad').val(row.cubre_cantidad);
