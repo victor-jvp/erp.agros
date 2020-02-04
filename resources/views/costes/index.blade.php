@@ -71,12 +71,13 @@
 
                         <div class="col-md-2 mb-3">
                             <label class="radio radio-primary">
-                                <input type="radio" class="vista" name="vista" id="vista" value="totales" checked>
+                                <input type="radio" class="vista" name="vista" id="vista_totales" value="totales"
+                                       checked>
                                 <span>Totales</span>
                                 <span class="checkmark"></span>
                             </label>
                             <label class="radio radio-primary">
-                                <input type="radio" class="vista" name="vista" id="vista" value="kgs">
+                                <input type="radio" class="vista" name="vista" id="vista_kgs" value="kgs">
                                 <span>Kgs.</span>
                                 <span class="checkmark"></span>
                             </label>
@@ -97,14 +98,25 @@
                                     <th>Categoria</th>
                                     <th class="sum">Cajas</th>
                                     <th class="sum">Kilos</th>
-                                    <th class="sum">Precio Venta</th>
-                                    <th class="sum">Precio Materiales</th>
-                                    <th class="sum">Precio Recolección</th>
-                                    <th class="sum">Precio Manipulación</th>
-                                    <th class="sum">Comentario 1</th>
-                                    <th class="sum">Comentario 2</th>
-                                    <th class="sum">Transporte</th>
-                                    <th class="sum">Devoluciones</th>
+
+                                    <th class="sum kgs">Precio Venta</th>
+                                    <th class="sum kgs">Precio Materiales</th>
+                                    <th class="sum kgs">Precio Recolección</th>
+                                    <th class="sum kgs">Precio Manipulación</th>
+                                    <th class="sum kgs">Comentario 1</th>
+                                    <th class="sum kgs">Comentario 2</th>
+                                    <th class="sum kgs">Transporte</th>
+                                    <th class="sum kgs">Devoluciones</th>
+
+                                    <th class="sum total">Precio Venta</th>
+                                    <th class="sum total">Precio Materiales</th>
+                                    <th class="sum total">Precio Recolección</th>
+                                    <th class="sum total">Precio Manipulación</th>
+                                    <th class="sum total">Comentario 1</th>
+                                    <th class="sum total">Comentario 2</th>
+                                    <th class="sum total">Transporte</th>
+                                    <th class="sum total">Devoluciones</th>
+
                                     <th>Facturado</th>
                                     <th>Cobrado</th>
                                     <th class="sum">Totales</th>
@@ -122,7 +134,17 @@
                                             <td>{{ (is_null($row->variable->categoria)) ? "" : $row->variable->categoria->name }}</td>
                                             <td class="text-right">{{ round($row->cajas, 2) }}</td>
                                             <td class="text-right">{{ $row->kilos }}</td>
-                                            <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio * $row->pedido_comercial->kilos,2) : "0" }}</td>
+
+                                            <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio,2) : "0" }}</td>
+                                            <td class="text-right">{{ round($row->precio_mp / $row->kilos, 2) }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario1 / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2 / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones / $row->kilos, 2) : '0' }}</td>
+
+                                            <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio * $row->kilos, 2) : "0" }}</td>
                                             <td class="text-right">{{ round($row->precio_mp, 2) }}</td>
                                             <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion, 2) : '0' }}</td>
                                             <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion, 2) : '0' }}</td>
@@ -130,6 +152,7 @@
                                             <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2, 2) : '0' }}</td>
                                             <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte, 2) : '0' }}</td>
                                             <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones, 2) : '0' }}</td>
+
                                             <td class="text-center">
                                                 <label class="checkbox checkbox-success" style="display: inline-block">
                                                     <input type="checkbox"
@@ -164,6 +187,7 @@
                                     <th colspan="5">Totales</th>
                                     <th></th>
                                     <th></th>
+
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -172,6 +196,16 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
+
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+
                                     <th colspan="2"></th>
                                     <th></th>
                                     <th></th>
@@ -575,7 +609,7 @@
                 dom: 'ltipr',
                 responsive: true,
                 columnDefs: [
-                    {targets: 3, visible: false},
+                    {targets: [3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22], visible: false},
                 ],
                 footerCallback: function (row, data, start, end, display) {
                     var api = this.api();
@@ -634,29 +668,10 @@
 
             $(".vista").on('change', function () {
                 var vista = $(this).val();
-                var rows = entradas_table.rows().data();
-
-                rows.each(function (value, index) {
-                    var kilos = entradas_table.cell(index, 6).data();
-                    console.log(kilos);
-
-                    if (kilos != NaN){
-
-                    }
-
-                    if (vista == "totales") {
-                        var precio_venta = (value.toFixed(2) * kilos.toFixed(2));
-                        console.log(precio_venta);
-
-                        entradas_table.cell(index, 7).data(precio_venta).draw();
-                    } else {
-                        var precio_venta = (value / kilos);
-                        console.log(precio_venta);
-
-                        entradas_table.cell(index, 7).data(precio_venta).draw();
-                    }
-                });
+                activeColumns(vista);
             });
+
+            activeColumns();
 
             /*            $("#albaran").change(function (e) {
                             var valor = $(this).val();
@@ -679,6 +694,24 @@
                 ignore: '',
             });
         });
+
+        function activeColumns(vista = null) {
+            if (vista == null) {
+                $("#vista_totales").prop('checked', true);
+                vista = "totales";
+            }
+            var kgsColumns = [7, 8, 9, 10, 11, 12, 13, 14];
+            var totalColumns = [15, 16, 17, 18, 19, 20, 21, 22];
+
+            if (vista === "kgs") {
+                entradas_table.columns(kgsColumns).visible(true);
+                entradas_table.columns(totalColumns).visible(false);
+            }
+            if (vista === "totales") {
+                entradas_table.columns(kgsColumns).visible(false);
+                entradas_table.columns(totalColumns).visible(true);
+            }
+        }
 
         function addRecoleccion() {
             var trazabilidad_id = $("#trazabilidad").val();
