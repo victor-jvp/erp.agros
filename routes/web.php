@@ -136,6 +136,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('costes', 'CostesController@update')->name('costes.update');
 
     Route::get('costes/details', 'CostesController@details')->name('costes.details');
+
+    Route::get('costes/pdf-list', 'CostesController@pdf_list')->name('costes.pdf.list');
 #endregion
 
 #region Materiales

@@ -121,4 +121,11 @@ class CostesController extends Controller
 
         return response()->json($pedido);
     }
+
+    public function pdf_list(Request $request)
+    {
+        $pdf = \PDF::loadView('costes.print.list')->setPaper('A4', 'landscape');
+
+        return $pdf->stream('Costes.pdf');
+    }
 }
