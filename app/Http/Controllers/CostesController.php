@@ -124,7 +124,13 @@ class CostesController extends Controller
 
     public function pdf_list(Request $request)
     {
-        $pdf = \PDF::loadView('costes.print.list')->setPaper('A4', 'landscape');
+        $data['costes'] = PedidoProduccionCoste::with([
+            'pedido.cliente',
+            'pedido.variable.caja',
+            'pedido.pedido_comercial',
+        ])->get();
+
+        $pdf = \PDF::loadView('costes.print.list', $data)->setPaper('A4', 'landscape');
 
         return $pdf->stream('Costes.pdf');
     }
