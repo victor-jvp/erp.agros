@@ -137,8 +137,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('costes/details', 'CostesController@details')->name('costes.details');
 
-    //Route::get('costes/pdf-list', 'CostesController@pdf_list')->name('costes.pdf.list');
-    Route::post('costes/pdf-list', 'CostesController@pdf_list')->name('costes.pdf.list');
+    Route::get('costes/pdf-list', 'CostesController@pdf_list')->name('costes.pdf.list');
+    //Route::post('costes/pdf-list', 'CostesController@pdf_list')->name('costes.pdf.list');
 #endregion
 
 #region Materiales

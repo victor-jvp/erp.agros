@@ -18,9 +18,7 @@
 
                     <hr>
 
-                    <form action="{{ route('costes.pdf.list') }}" method="post">
-
-                        @csrf
+                    <form action="{{ route('costes.pdf.list') }}" method="GET">
 
                         <div class="row">
                             <div class="col-md-3 form-group mb-3">
@@ -98,8 +96,8 @@
                                     </div>
 
                                     <div class="col-md-6 mb-3 text-right">
-                                        <a href="{{ route('costes.pdf.list') }}" target="_blank"
-                                           class="btn btn-primary mb-sm-0 mb-3 print-invoice">Reporte</a>
+                                        <button type="submit" formtarget="_blank"
+                                           class="btn btn-primary mb-sm-0 mb-3 print-invoice">Reporte</button>
                                     </div>
                                 </div>
                             </div>

@@ -9,6 +9,7 @@ use App\PedidoProduccionCoste;
 use App\PedidoProduccionCosteRecoleccion;
 use App\ProductoCompuesto_det;
 use App\Trazabilidad;
+use Carbon\Carbon;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\PedidoProduccion;
@@ -124,22 +125,29 @@ class CostesController extends Controller
 
     public function pdf_list(Request $request)
     {
-        if ($request->isMethod('post')) {
-            $desde     = $request->desde;
-            $hasta     = $request->hasta;
-            $cliente   = $request->cliente;
-            $compuesto = $request->compuesto;
-            $categoria = $request->categoria;
-            $vista     = $request->vista;
 
-            dd($request);
-        }
+        $desde     = $request->get('desde');
+        $hasta     = $request->get('hasta');
+        $cliente   = $request->get('cliente');
+        $compuesto = $request->get('compuesto');
+        $categoria = $request->get('categoria');
+        $vista     = $request->get('vista');
 
-        $data['costes'] = PedidoProduccionCoste::with([
+        dd($request);
+
+        $query = PedidoProduccionCoste::with([
             'pedido.cliente',
             'pedido.variable.caja',
             'pedido.pedido_comercial',
-        ])->get();
+        ]);
+
+        if (!is_null($desde) && !is_null($hasta)){
+            $query = $query->where('');
+        }
+
+        $query = $query->get();
+
+        $data['costes'] = $query;
 
         $pdf = \PDF::loadView('costes.print.list', $data)->setPaper('A4', 'landscape');
 
