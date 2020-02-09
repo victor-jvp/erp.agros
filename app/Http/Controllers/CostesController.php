@@ -124,6 +124,17 @@ class CostesController extends Controller
 
     public function pdf_list(Request $request)
     {
+        if ($request->isMethod('post')) {
+            $desde     = $request->desde;
+            $hasta     = $request->hasta;
+            $cliente   = $request->cliente;
+            $compuesto = $request->compuesto;
+            $categoria = $request->categoria;
+            $vista     = $request->vista;
+
+            dd($request);
+        }
+
         $data['costes'] = PedidoProduccionCoste::with([
             'pedido.cliente',
             'pedido.variable.caja',

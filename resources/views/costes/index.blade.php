@@ -18,221 +18,229 @@
 
                     <hr>
 
-                    <div class="row">
-                        <div class="col-md-3 form-group mb-3">
-                            <label>Desde</label>
-                            <input type="date" class="form-control" id="desde">
-                        </div>
-                        <div class="col-md-3 form-group mb-3">
-                            <label>Hasta</label>
-                            <input type="date" class="form-control" id="hasta">
-                        </div>
-                        <div class="col-md-3 form-group mb-3">
-                            <label for="_cliente">Cliente</label>
-                            <select class="form-control chosen" id="_cliente" data-size="6">
-                                <option value=""></option>
-                                @foreach($clientes as $item)
-                                    <option value="{{ $item->razon_social }}">{{ $item->razon_social }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-3 form-group mb-3">
-                            <label for="_compuesto">Compuesto</label>
-                            <select class="form-control chosen" id="_compuesto" data-size="6">
-                                <option value=""></option>
-                                @foreach($compuestos as $item)
-                                    @php($compuesto = $item->variable." - ".$item->caja->formato." - ".$item->caja->modelo)
-                                    <option value="{{ $compuesto }}">{{ $compuesto }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                    <form action="{{ route('costes.pdf.list') }}" method="post">
 
-                    <div class="row">
-                        <div class="col-md-9 mb-3">
-                            <label for="">Categoria</label>
-                            <div class="row">
-                                <div class="col-md-2 mb-3">
-                                    <label class="radio radio-success">
-                                        <input class="categoria" type="radio" name="categoria_id" value="" checked>
-                                        <span>Todos</span>
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
+                        @csrf
 
-                                @foreach($categorias as $item)
-                                    <div class="col-md-2 mb-3">
-                                        <label class="radio radio-success">
-                                            <input class="categoria" type="radio" value="{{ $item->id }}"
-                                                   name="categoria_id">
-                                            <span>{{ $item->name }}</span>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                @endforeach
+                        <div class="row">
+                            <div class="col-md-3 form-group mb-3">
+                                <label>Desde</label>
+                                <input type="date" class="form-control" id="desde" name="desde">
                             </div>
-                        </div>
-
-                        <div class="col-md-3 mb-3">
-
-                            <label for="">Vista</label>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="radio radio-primary">
-                                        <input type="radio" class="vista" name="vista" id="vista_totales"
-                                               value="totales"
-                                               checked>
-                                        <span>Totales</span>
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="radio radio-primary">
-                                        <input type="radio" class="vista" name="vista" id="vista_kgs" value="kgs">
-                                        <span>Kgs.</span>
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-
-                                <div class="col-md-6 mb-3 text-right">
-                                    <a href="{{ route('costes.pdf.list') }}" target="_blank" class="btn btn-primary mb-sm-0 mb-3 print-invoice">Reporte</a>
-                                </div>
+                            <div class="col-md-3 form-group mb-3">
+                                <label>Hasta</label>
+                                <input type="date" class="form-control" id="hasta" name="hasta">
+                            </div>
+                            <div class="col-md-3 form-group mb-3">
+                                <label for="_cliente">Cliente</label>
+                                <select class="form-control chosen" id="_cliente" data-size="6" name="cliente">
+                                    <option value=""></option>
+                                    @foreach($clientes as $item)
+                                        <option value="{{ $item->razon_social }}">{{ $item->razon_social }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 form-group mb-3">
+                                <label for="_compuesto">Compuesto</label>
+                                <select class="form-control chosen" id="_compuesto" data-size="6" name="compuesto">
+                                    <option value=""></option>
+                                    @foreach($compuestos as $item)
+                                        @php($compuesto = $item->variable." - ".$item->caja->formato." - ".$item->caja->modelo)
+                                        <option value="{{ $compuesto }}">{{ $compuesto }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12 table-responsive">
-                                <table id="entradas_table" class="display table table-striped table-sm table-condensed"
-                                       style="width:100%">
-                                    <thead>
-                                    <tr class="text-center">
-                                        <th>Nro. Orden</th>
-                                        <th>Cliente</th>
-                                        <th>Compuesto</th>
-                                        <th>categoria_id</th>
-                                        <th>Categoria</th>
-                                        <th class="sum">Cajas</th>
-                                        <th class="sum">Kilos</th>
+                            <div class="col-md-9 mb-3">
+                                <label for="">Categoria</label>
+                                <div class="row">
+                                    <div class="col-md-2 mb-3">
+                                        <label class="radio radio-success">
+                                            <input class="categoria" type="radio" name="categoria" value="" checked>
+                                            <span>Todos</span>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
 
-                                        <th class="sum kgs">Precio Venta</th>
-                                        <th class="sum kgs">Precio Materiales</th>
-                                        <th class="sum kgs">Precio Recolección</th>
-                                        <th class="sum kgs">Precio Manipulación</th>
-                                        <th class="sum kgs">Comentario 1</th>
-                                        <th class="sum kgs">Comentario 2</th>
-                                        <th class="sum kgs">Transporte</th>
-                                        <th class="sum kgs">Devoluciones</th>
-
-                                        <th class="sum total">Precio Venta</th>
-                                        <th class="sum total">Precio Materiales</th>
-                                        <th class="sum total">Precio Recolección</th>
-                                        <th class="sum total">Precio Manipulación</th>
-                                        <th class="sum total">Comentario 1</th>
-                                        <th class="sum total">Comentario 2</th>
-                                        <th class="sum total">Transporte</th>
-                                        <th class="sum total">Devoluciones</th>
-
-                                        <th>Facturado</th>
-                                        <th>Cobrado</th>
-                                        <th class="sum">Totales</th>
-                                        <th>Opciones</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if (isset($pedidos))
-                                        @foreach ($pedidos as $row)
-                                            <tr>
-                                                <th>{{ $row->nro_orden }}</th>
-                                                <td>{{ $row->cliente->razon_social }}</td>
-                                                <td>{{ $row->variable->variable." - ".$row->variable->caja->formato." - ".$row->variable->caja->modelo }}</td>
-                                                <td>{{ (is_null($row->variable->categoria_id)) ? "" : $row->variable->categoria_id }}</td>
-                                                <td>{{ (is_null($row->variable->categoria)) ? "" : $row->variable->categoria->name }}</td>
-                                                <td class="text-right">{{ round($row->cajas, 2) }}</td>
-                                                <td class="text-right">{{ $row->kilos }}</td>
-
-                                                <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio,2) : "0" }}</td>
-                                                <td class="text-right">{{ round($row->precio_mp / $row->kilos, 2) }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion / $row->kilos, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion / $row->kilos, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario1 / $row->kilos, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2 / $row->kilos, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte / $row->kilos, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones / $row->kilos, 2) : '0' }}</td>
-
-                                                <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio * $row->kilos, 2) : "0" }}</td>
-                                                <td class="text-right">{{ round($row->precio_mp, 2) }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario1, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones, 2) : '0' }}</td>
-
-                                                <td class="text-center">
-                                                    <label class="checkbox checkbox-success"
-                                                           style="display: inline-block">
-                                                        <input type="checkbox"
-                                                               {{ (!is_null($row->coste) && $row->coste->facturado) ? 'checked' : '' }} disabled>
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td class="text-center">
-                                                    <label class="checkbox checkbox-success"
-                                                           style="display: inline-block">
-                                                        <input type="checkbox"
-                                                               {{ (!is_null($row->coste) && $row->coste->cobrado) ? 'checked' : '' }} disabled>
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td class="text-right">0</td>
-                                                <td class="text-center">
-                                                    @can('Costes | Modificar')
-                                                        <a href="javascript:void(0);"
-                                                           onclick="EditCoste({{ $row->id }})" data-toggle="tooltip"
-                                                           data-placement="top" title=""
-                                                           data-original-title="Editar"
-                                                           class="text-success mr-2">
-                                                            <i class="nav-icon i-Pen-2 font-weight-bold "></i>
-                                                        </a>
-                                                    @endcan
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                    </tbody>
-                                    <tfoot>
-                                    <tr class="text-right">
-                                        <th colspan="5">Totales</th>
-                                        <th></th>
-                                        <th></th>
-
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-
-                                        <th colspan="2"></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
+                                    @foreach($categorias as $item)
+                                        <div class="col-md-2 mb-3">
+                                            <label class="radio radio-success">
+                                                <input class="categoria" type="radio" value="{{ $item->id }}"
+                                                       name="categoria">
+                                                <span>{{ $item->name }}</span>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
+
+                            <div class="col-md-3 mb-3">
+
+                                <label for="">Vista</label>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="radio radio-primary">
+                                            <input type="radio" class="vista" name="vista" id="vista_totales"
+                                                   value="totales"
+                                                   checked>
+                                            <span>Totales</span>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio radio-primary">
+                                            <input type="radio" class="vista" name="vista" id="vista_kgs" value="kgs">
+                                            <span>Kgs.</span>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3 text-right">
+                                        <a href="{{ route('costes.pdf.list') }}" target="_blank"
+                                           class="btn btn-primary mb-sm-0 mb-3 print-invoice">Reporte</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 table-responsive">
+                                    <table id="entradas_table"
+                                           class="display table table-striped table-sm table-condensed"
+                                           style="width:100%">
+                                        <thead>
+                                        <tr class="text-center">
+                                            <th>Nro. Orden</th>
+                                            <th>Cliente</th>
+                                            <th>Compuesto</th>
+                                            <th>categoria_id</th>
+                                            <th>Categoria</th>
+                                            <th class="sum">Cajas</th>
+                                            <th class="sum">Kilos</th>
+
+                                            <th class="sum kgs">Precio Venta</th>
+                                            <th class="sum kgs">Precio Materiales</th>
+                                            <th class="sum kgs">Precio Recolección</th>
+                                            <th class="sum kgs">Precio Manipulación</th>
+                                            <th class="sum kgs">Comentario 1</th>
+                                            <th class="sum kgs">Comentario 2</th>
+                                            <th class="sum kgs">Transporte</th>
+                                            <th class="sum kgs">Devoluciones</th>
+
+                                            <th class="sum total">Precio Venta</th>
+                                            <th class="sum total">Precio Materiales</th>
+                                            <th class="sum total">Precio Recolección</th>
+                                            <th class="sum total">Precio Manipulación</th>
+                                            <th class="sum total">Comentario 1</th>
+                                            <th class="sum total">Comentario 2</th>
+                                            <th class="sum total">Transporte</th>
+                                            <th class="sum total">Devoluciones</th>
+
+                                            <th>Facturado</th>
+                                            <th>Cobrado</th>
+                                            <th class="sum">Totales</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @if (isset($pedidos))
+                                            @foreach ($pedidos as $row)
+                                                <tr>
+                                                    <th>{{ $row->nro_orden }}</th>
+                                                    <td>{{ $row->cliente->razon_social }}</td>
+                                                    <td>{{ $row->variable->variable." - ".$row->variable->caja->formato." - ".$row->variable->caja->modelo }}</td>
+                                                    <td>{{ (is_null($row->variable->categoria_id)) ? "" : $row->variable->categoria_id }}</td>
+                                                    <td>{{ (is_null($row->variable->categoria)) ? "" : $row->variable->categoria->name }}</td>
+                                                    <td class="text-right">{{ round($row->cajas, 2) }}</td>
+                                                    <td class="text-right">{{ $row->kilos }}</td>
+
+                                                    <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio,2) : "0" }}</td>
+                                                    <td class="text-right">{{ round($row->precio_mp / $row->kilos, 2) }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion / $row->kilos, 2) : '0' }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion / $row->kilos, 2) : '0' }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario1 / $row->kilos, 2) : '0' }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2 / $row->kilos, 2) : '0' }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte / $row->kilos, 2) : '0' }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones / $row->kilos, 2) : '0' }}</td>
+
+                                                    <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio * $row->kilos, 2) : "0" }}</td>
+                                                    <td class="text-right">{{ round($row->precio_mp, 2) }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion, 2) : '0' }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion, 2) : '0' }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario1, 2) : '0' }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2, 2) : '0' }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte, 2) : '0' }}</td>
+                                                    <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones, 2) : '0' }}</td>
+
+                                                    <td class="text-center">
+                                                        <label class="checkbox checkbox-success"
+                                                               style="display: inline-block">
+                                                            <input type="checkbox"
+                                                                   {{ (!is_null($row->coste) && $row->coste->facturado) ? 'checked' : '' }} disabled>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <label class="checkbox checkbox-success"
+                                                               style="display: inline-block">
+                                                            <input type="checkbox"
+                                                                   {{ (!is_null($row->coste) && $row->coste->cobrado) ? 'checked' : '' }} disabled>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td class="text-right">0</td>
+                                                    <td class="text-center">
+                                                        @can('Costes | Modificar')
+                                                            <a href="javascript:void(0);"
+                                                               onclick="EditCoste({{ $row->id }})" data-toggle="tooltip"
+                                                               data-placement="top" title=""
+                                                               data-original-title="Editar"
+                                                               class="text-success mr-2">
+                                                                <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                            </a>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                        </tbody>
+                                        <tfoot>
+                                        <tr class="text-right">
+                                            <th colspan="5">Totales</th>
+                                            <th></th>
+                                            <th></th>
+
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+
+                                            <th colspan="2"></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+
                         </div>
 
-                    </div>
+                    </form>
                 </div>
             </div>
             <!-- end of col -->
