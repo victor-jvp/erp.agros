@@ -133,21 +133,45 @@ class CostesController extends Controller
         $categoria = $request->get('categoria');
         $vista     = $request->get('vista');
 
-        dd($request);
-
-        $query = PedidoProduccionCoste::with([
-            'pedido.cliente',
-            'pedido.variable.caja',
-            'pedido.pedido_comercial',
+        $query = PedidoProduccion::with([
+            'coste',
+            'cliente',
+            'pedido_comercial',
         ]);
 
-        if (!is_null($desde) && !is_null($hasta)){
-            $query = $query->where('');
+        if (!is_null($desde) && !is_null($hasta)) {
+            $from  = date($desde);
+            $to    = date($hasta);
+            $query = $query->whereBetween('pedidos_produccion.created_at', [
+                $from,
+                $to
+            ]);
         }
 
-        $query = $query->get();
+        if (!is_null($cliente)) {
+            $query = $query->where('cliente_id', $cliente);
+        }
 
-        $data['costes'] = $query;
+        if (!is_null($compuesto)) {
+            $query = $query->where('producto_id', $compuesto);
+        }
+
+        if (!is_null($categoria)) {
+            $query = $query->whereHas('variable.caja', function ($q) use ($categoria) {
+                $q->where('productoscompuestos_det.categoria_id', $categoria);
+            });
+        }
+        else {
+            $query = $query->with('variable.caja');
+        }
+
+        $pedidos = $query->where('estado_id', 3)->orderBy('pedidos_produccion.id', 'desc')->get();
+
+        foreach ($pedidos as $p => $pedido) {
+            $pedidos[$p]->precio_mp = DB::table('inventario_rel')->join('inventario', 'inventario.id', '=', 'inventario_rel.entrada_id')->where('entrada_id', '!=', 'NULL')->where('pedido_id', $pedido->id)->sum(DB::RAW('inventario.precio * inventario_rel.cantidad'));
+        }
+
+        $data['costes'] = $pedidos;
 
         $pdf = \PDF::loadView('costes.print.list', $data)->setPaper('A4', 'landscape');
 

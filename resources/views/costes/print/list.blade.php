@@ -790,34 +790,41 @@
 
                 @foreach($costes as $row)
                     @php
-                        $kilos = $row->pedido->kilos
+                        $kilos = $row->kilos
                     @endphp
 
                     <tr class="{{ ($loop->even) ? 'even' : 'odd' }}_row" style="font-size: 7pt;">
-                        <td style="text-align: center; font-size: 6pt;">{{ $row->pedido->nro_orden }}</td>
-                        <td style="font-size: 6pt;">{{ $row->pedido->cliente->razon_social }}</td>
-                        <td style="font-size: 6pt; width: 75px;">{{ $row->pedido->variable->variable." - ".$row->pedido->variable->caja->formato." - ".$row->pedido->variable->caja->modelo }}</td>
-                        <td style="text-align: right;">{{ round($row->pedido->cajas, 2) }}</td>
-                        <td style="text-align: right;">{{ round($row->pedido->kilos, 2) }}</td>
-                        <td style="text-align: right;">{{ (!is_null($row->pedido->pedido_comercial)) ? round($row->pedido->pedido_comercial->precio, 2) : 0 }} €</td>
+                        <td style="text-align: center; font-size: 6pt;">{{ $row->nro_orden }}</td>
+                        <td style="font-size: 6pt;">{{ $row->cliente->razon_social }}</td>
+                        <td style="font-size: 6pt; width: 75px;">{{ $row->variable->variable." - ".$row->variable->caja->formato." - ".$row->variable->caja->modelo }}</td>
+                        <td style="text-align: right;">{{ round($row->cajas, 2) }}</td>
+                        <td style="text-align: right;">{{ round($row->kilos, 2) }}</td>
+                        <td style="text-align: right;">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio, 2) : "0" }}
+                            €
+                        </td>
                         <td style="text-align: right;">{{ round($row->precio_mp, 2)." €" }}</td>
-                        <td style="text-align: right;">{{ round($row->recoleccion, 2)." €" }}</td>
-                        <td style="text-align: right;">{{ round($row->manipulacion, 2)." €" }}</td>
-                        <td style="text-align: right;">{{ round($row->comentario1, 2)." €" }}</td>
-                        <td style="text-align: right;">{{ round($row->comentario2, 2)." €" }}</td>
-                        <td style="text-align: right;">{{ round($row->transporte, 2)." €" }}</td>
-                        <td style="text-align: right;">{{ round($row->devoluciones, 2)." €" }}</td>
-                        <td style="text-align: center;">{{ ($row->facturado) ? "SI" : "NO"}}</td>
-                        <td style="text-align: center;">{{ ($row->cobrado) ? "SI" : "NO"}}</td>
+                        <td style="text-align: right;">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion, 2) : "0"." €" }}</td>
+                        <td style="text-align: right;">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion, 2) :  "0"." €" }}</td>
+                        <td style="text-align: right;">{{ (!is_null($row->coste)) ? round($row->coste->comentario1, 2) : "0"." €" }}</td>
+                        <td style="text-align: right;">{{ (!is_null($row->coste)) ? round($row->coste->comentario2, 2) : "0"." €" }}</td>
+                        <td style="text-align: right;">{{ (!is_null($row->coste)) ? round($row->coste->transporte, 2) : "0"." €" }}</td>
+                        <td style="text-align: right;">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones, 2) : "0"." €" }}</td>
+                        <td style="text-align: center;">{{ (!is_null($row->coste) && $row->coste->facturado) ? "SI" : "NO"}}</td>
+                        <td style="text-align: center;">{{ (!is_null($row->coste) && $row->coste->cobrado) ? "SI" : "NO"}}</td>
                         <td style="text-align: right;">
                             @php
-                                $gasto = $row->precio_mp + $row->recoleccion + $row->manipulacion + $row->comentario1 + $row->comentario2 + $row->transporte + $row->devoluciones;
+                                if (!is_null($row->coste)){
+                                    $item = $row->coste;
+                                    $gasto = $item->precio_mp + $item->recoleccion + $item->manipulacion + $item->comentario1 + $item->comentario2 + $item->transporte + $item->devoluciones;
+                                }else{
+                                    $gasto = 0;
+                                }
                                 echo round($gasto, 2)." €";
                             @endphp
                         </td>
                         <td style="text-align: right;">
                             @php
-                                $beneficio = ((!is_null($row->pedido->pedido_comercial)) ? $row->pedido->pedido_comercial->precio : 0) * $kilos;
+                                $beneficio = ((!is_null($row->pedido_comercial)) ? $row->pedido_comercial->precio : 0) * $kilos;
                                 echo round($beneficio, 2)." €";
                             @endphp
                         </td>
