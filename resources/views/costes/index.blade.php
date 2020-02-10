@@ -142,75 +142,122 @@
 
                                         <th>Facturado</th>
                                         <th>Cobrado</th>
-                                        <th class="sum">Totales</th>
+
+                                        <th class="sum total">Total Gastos</th>
+                                        <th class="sum total">Beneficio</th>
+                                        <th>Porcentaje</th>
+
+                                        <th class="sum total">Total Gastos</th>
+                                        <th class="sum total">Beneficio</th>
+                                        <th>Porcentaje</th>
+
                                         <th>Opciones</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if (isset($pedidos))
-                                        @foreach ($pedidos as $row)
-                                            <tr>
-                                                <td>{{ $row->id }}</td>
-                                                <th>{{ $row->nro_orden }}</th>
-                                                <td>{{ date('Y-m-d', strtotime($row->FechaOrden)) }}</td>
-                                                <td>{{ $row->cliente_id }}</td>
-                                                <td>{{ $row->cliente->razon_social }}</td>
-                                                <td>{{ $row->producto_id }}</td>
-                                                <td>{{ $row->variable->variable." - ".$row->variable->caja->formato." - ".$row->variable->caja->modelo }}</td>
-                                                <td>{{ (is_null($row->variable->categoria_id)) ? "" : $row->variable->categoria_id }}</td>
-                                                <td>{{ (is_null($row->variable->categoria)) ? "" : $row->variable->categoria->name }}</td>
-                                                <td class="text-right">{{ round($row->cajas, 2) }}</td>
-                                                <td class="text-right">{{ $row->kilos }}</td>
+                                    @foreach ($pedidos as $row)
+                                        <tr>
+                                            <td>{{ $row->id }}</td>
+                                            <th>{{ $row->nro_orden }}</th>
+                                            <td>{{ date('Y-m-d', strtotime($row->FechaOrden)) }}</td>
+                                            <td>{{ $row->cliente_id }}</td>
+                                            <td>{{ $row->cliente->razon_social }}</td>
+                                            <td>{{ $row->producto_id }}</td>
+                                            <td>{{ $row->variable->variable." - ".$row->variable->caja->formato." - ".$row->variable->caja->modelo }}</td>
+                                            <td>{{ (is_null($row->variable->categoria_id)) ? "" : $row->variable->categoria_id }}</td>
+                                            <td>{{ (is_null($row->variable->categoria)) ? "" : $row->variable->categoria->name }}</td>
+                                            <td class="text-right">{{ round($row->cajas, 2) }}</td>
+                                            <td class="text-right">{{ $row->kilos }}</td>
 
-                                                <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio,2) : "0" }}</td>
-                                                <td class="text-right">{{ round($row->precio_mp / $row->kilos, 2) }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion / $row->kilos, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion / $row->kilos, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario1 / $row->kilos, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2 / $row->kilos, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte / $row->kilos, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio, 2) : "0" }}</td>
+                                            <td class="text-right">{{ round($row->precio_mp / $row->kilos, 2) }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario1 / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2 / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte / $row->kilos, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones / $row->kilos, 2) : '0' }}</td>
 
-                                                <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio * $row->kilos, 2) : "0" }}</td>
-                                                <td class="text-right">{{ round($row->precio_mp, 2) }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario1, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte, 2) : '0' }}</td>
-                                                <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->pedido_comercial)) ? round($row->pedido_comercial->precio * $row->kilos, 2) : "0" }}</td>
+                                            <td class="text-right">{{ round($row->precio_mp, 2) }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->recoleccion, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->manipulacion, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario1, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->comentario2, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->transporte, 2) : '0' }}</td>
+                                            <td class="text-right">{{ (!is_null($row->coste)) ? round($row->coste->devoluciones, 2) : '0' }}</td>
 
-                                                <td class="text-center">
-                                                    <label class="checkbox checkbox-success"
-                                                           style="display: inline-block">
-                                                        <input type="checkbox"
-                                                               {{ (!is_null($row->coste) && $row->coste->facturado) ? 'checked' : '' }} disabled>
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td class="text-center">
-                                                    <label class="checkbox checkbox-success"
-                                                           style="display: inline-block">
-                                                        <input type="checkbox"
-                                                               {{ (!is_null($row->coste) && $row->coste->cobrado) ? 'checked' : '' }} disabled>
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td class="text-right">0</td>
-                                                <td class="text-center">
-                                                    @can('Costes | Modificar')
-                                                        <a href="javascript:void(0);"
-                                                           onclick="EditCoste({{ $row->id }})" data-toggle="tooltip"
-                                                           data-placement="top" title=""
-                                                           data-original-title="Editar"
-                                                           class="text-success mr-2">
-                                                            <i class="nav-icon i-Pen-2 font-weight-bold "></i>
-                                                        </a>
-                                                    @endcan
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
+                                            <td class="text-center">
+                                                <label class="checkbox checkbox-success"
+                                                       style="display: inline-block">
+                                                    <input type="checkbox"
+                                                           {{ (!is_null($row->coste) && $row->coste->facturado) ? 'checked' : '' }} disabled>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="checkbox checkbox-success"
+                                                       style="display: inline-block">
+                                                    <input type="checkbox"
+                                                           {{ (!is_null($row->coste) && $row->coste->cobrado) ? 'checked' : '' }} disabled>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <?php
+                                            $kgsGasto = 0;
+                                            $kgsBeneficio = 0;
+                                            $kgsPorc = 0;
+                                            $totalGasto = 0;
+                                            $totalBeneficio = 0;
+                                            $totalPorc = 0;
+                                            if (!is_null($row->coste)) {
+                                                $item         = $row->coste;
+                                                $kgsGasto     = ($item->precio_mp / $row->kilos) + ($item->recoleccion / $row->kilos) + ($item->manipulacion / $row->kilos) + ($item->comentario1 / $row->kilos) + ($item->comentario2 / $row->kilos) + ($item->transporte / $row->kilos) + ($item->devoluciones / $row->kilos);
+                                                $kgsBeneficio = (!is_null($row->pedido_comercial)) ? $row->pedido_comercial->precio : 0;
+
+                                                if ($kgsBeneficio > 0) {
+                                                    if ($kgsGasto > 0) {
+                                                        $kgsPorc = (round((($kgsBeneficio / $kgsGasto) - 1), 2));
+                                                    }
+                                                    else {
+                                                        $kgsPorc = 100;
+                                                    }
+                                                }
+
+                                                $totalGasto     = $item->precio_mp + $item->recoleccion + $item->manipulacion + $item->comentario1 + $item->comentario2 + $item->transporte + $item->devoluciones;
+                                                $totalBeneficio = ((!is_null($row->pedido_comercial)) ? $row->pedido_comercial->precio : 0) * $row->kilos;
+
+                                                if ($totalBeneficio > 0) {
+                                                    if ($totalGasto > 0) {
+                                                        $totalPorc = (round((($totalBeneficio / $totalGasto) - 1), 2));
+                                                    }
+                                                    else {
+                                                        $totalPorc = 100;
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                            <td class="text-right">{{ $kgsGasto }}</td>
+                                            <td class="text-right">{{ $kgsBeneficio }}</td>
+                                            <td class="text-right">{{ $kgsPorc }}</td>
+
+                                            <td class="text-right">{{ $totalGasto }}</td>
+                                            <td class="text-right">{{ $totalBeneficio }}</td>
+                                            <td class="text-right">{{ $totalPorc }}</td>
+
+                                            <td class="text-center">
+                                                @can('Costes | Modificar')
+                                                    <a href="javascript:void(0);"
+                                                       onclick="EditCoste({{ $row->id }})" data-toggle="tooltip"
+                                                       data-placement="top" title=""
+                                                       data-original-title="Editar"
+                                                       class="text-success mr-2">
+                                                        <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                    </a>
+                                                @endcan
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                     <tfoot>
                                     <tr class="text-right">
@@ -237,6 +284,11 @@
                                         <th></th>
 
                                         <th colspan="2"></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -654,6 +706,12 @@
                 (colStart + 14),
                 (colStart + 15),
                 (colStart + 16),
+                (colStart + 19),
+                (colStart + 20),
+                (colStart + 21),
+                (colStart + 22),
+                (colStart + 23),
+                (colStart + 24),
             ];
 
             // Configuracion de Datatable
@@ -767,6 +825,9 @@
                 (colStart + 6),
                 (colStart + 7),
                 (colStart + 8),
+                (colStart + 19),
+                (colStart + 20),
+                (colStart + 21),
             ];
             colStart = (colStart + 8);
             var totalColumns = [
@@ -778,6 +839,9 @@
                 (colStart + 6),
                 (colStart + 7),
                 (colStart + 8),
+                (colStart + 14),
+                (colStart + 15),
+                (colStart + 16),
             ];
 
             if (vista === "kgs") {
