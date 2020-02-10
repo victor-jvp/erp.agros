@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Modulo;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,8 @@ class UsuariosController extends Controller
     public function create()
     {
         //
-        $data['roles'] = Role::all();
+        $data['roles']   = Role::all();
+        $data['modulos'] = Modulo::all();
 
         return view('configuracion.usuarios.create', $data);
     }
@@ -53,15 +55,15 @@ class UsuariosController extends Controller
     {
         $usuario = new User();
 
-        $usuario->name      = $request->name;
-        $usuario->email     = $request->email;
-        $usuario->cargo     = $request->cargo;
-        $usuario->telefono1 = $request->telefono1;
-        $usuario->telefono2 = $request->telefono2;
-        $usuario->password  = Hash::make($request->password);
+        $usuario->name               = $request->name;
+        $usuario->email              = $request->email;
+        $usuario->cargo              = $request->cargo;
+        $usuario->telefono1          = $request->telefono1;
+        $usuario->telefono2          = $request->telefono2;
+        $usuario->landing_seccion_id = $request->seccion_id;
+        $usuario->password           = Hash::make($request->password);
 
-        if (isset($request->roles))
-        {
+        if (isset($request->roles)) {
             foreach ($request->roles as $r => $rol) {
                 $usuario->assignRole($rol);
             }
@@ -86,6 +88,7 @@ class UsuariosController extends Controller
 
         $data['usuario'] = User::with('roles')->find($id);
         $data['roles']   = Role::all();
+        $data['modulos'] = Modulo::all();
 
         return view('configuracion.usuarios.show')->with($data);
     }
@@ -101,11 +104,12 @@ class UsuariosController extends Controller
         //
         $usuario = User::find($id);
 
-        $usuario->name      = $request->name;
-        $usuario->email     = $request->email;
-        $usuario->cargo     = $request->cargo;
-        $usuario->telefono1 = $request->telefono1;
-        $usuario->telefono2 = $request->telefono2;
+        $usuario->name               = $request->name;
+        $usuario->email              = $request->email;
+        $usuario->cargo              = $request->cargo;
+        $usuario->telefono1          = $request->telefono1;
+        $usuario->telefono2          = $request->telefono2;
+        $usuario->landing_seccion_id = $request->seccion_id;
 
         if ($request->password != "") {
             $usuario->password = Hash::make($request->password);
@@ -133,10 +137,10 @@ class UsuariosController extends Controller
     }
 
     /**
-    * Display the specified resource.
-    * @param int $id
-    * @return \Illuminate\Http\Response
-    */
+     * Display the specified resource.
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function perfil($id)
     {
         //

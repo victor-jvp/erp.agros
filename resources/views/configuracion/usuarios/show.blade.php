@@ -98,7 +98,23 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6"></div>
+                            <div class="col-md-3 mb-3">
+                                <label for="seccion_id">Landing Page</label>
+                                <select class="form-control chosen" id="seccion_id" data-size="6"
+                                        data-show-subtext="true" name="seccion_id">
+                                    <option value=""></option>
+                                    @foreach($modulos as $modulo)
+                                        <optgroup label="{{ $modulo->name }}">
+                                            @foreach($modulo->secciones as $seccion)
+                                                <option
+                                                    {{ ($seccion->id == $usuario->landing_seccion_id) ? 'selected' : '' }}
+                                                    value="{{ $seccion->id }}">{{ $seccion->name }}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3"></div>
                             <div class="col-md-3 mb-3 ">
                                 <label for="created_at">Fecha de Alta</label>
                                 <h5>{{ date('d/m/Y h:i:s a', strtotime($usuario->created_at)) }}</h5>

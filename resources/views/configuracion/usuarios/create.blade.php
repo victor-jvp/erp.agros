@@ -98,6 +98,24 @@
                                        name="confirm_password" placeholder="Confirmar Contraseña">
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="seccion_id">Landing Page</label>
+                                <select class="form-control chosen" id="seccion_id" data-size="6"
+                                        data-show-subtext="true" name="seccion_id">
+                                    <option value=""></option>
+                                    @foreach($modulos as $modulo)
+                                        <optgroup label="{{ $modulo->name }}">
+                                            @foreach($modulo->secciones as $seccion)
+                                                <option value="{{ $seccion->id }}">{{ $seccion->name }}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3"></div>
+                        </div>
                     </div>
 
                     <div class="tab-pane fade" id="roles" role="tabpanel" aria-labelledby="about-tab">

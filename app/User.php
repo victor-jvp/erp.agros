@@ -23,6 +23,7 @@ class User extends Authenticatable
         'telefono1',
         'telefono2',
         'cargo',
+        'landing_seccion_id'
     ];
 
     /**
@@ -46,4 +47,9 @@ class User extends Authenticatable
         'created_at',
         'updated_at'
     ];
+
+    public function seccion()
+    {
+        return $this->belongsTo(ModuloSeccion::class, 'landing_seccion_id');
+    }
 }
