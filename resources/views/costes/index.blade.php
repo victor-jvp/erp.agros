@@ -663,7 +663,7 @@
                 },
                 dom: 'ltipr',
                 columnDefs: [
-                    {targets: [0, 2, 3, 5, 7], visible: false},
+                    {targets: [0, 3, 5, 7], visible: false},
                     {targets: [columns], visible: false},
                 ],
                 footerCallback: function (row, data, start, end, display) {
@@ -687,6 +687,7 @@
                     });
                 },
                 responsive: true,
+                ordering: [[0, 'desc']]
             });
 
             recolecciones_table = $("#table_recolecciones").DataTable({

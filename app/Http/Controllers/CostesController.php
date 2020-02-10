@@ -140,12 +140,10 @@ class CostesController extends Controller
         ]);
 
         if (!is_null($desde) && !is_null($hasta)) {
-            $from  = date($desde);
-            $to    = date($hasta);
-            $query = $query->whereBetween('pedidos_produccion.created_at', [
-                $from,
-                $to
-            ]);
+            $from  = date('Y-m-d', strtotime($desde));
+            $to    = date('Y-m-d', strtotime($hasta));
+            $query = $query->whereRaw('DATE(CONCAT( SUBSTR( nro_orden, 5, 4 ), "-", SUBSTR( nro_orden, 3, 2 ), "-", SUBSTR( nro_orden, 1, 2 ) )) >= ?', $from);
+            $query = $query->whereRaw('DATE(CONCAT( SUBSTR( nro_orden, 5, 4 ), "-", SUBSTR( nro_orden, 3, 2 ), "-", SUBSTR( nro_orden, 1, 2 ) )) <= ?', $to);
         }
 
         if (!is_null($cliente)) {
@@ -160,8 +158,7 @@ class CostesController extends Controller
             $query = $query->whereHas('variable.caja', function ($q) use ($categoria) {
                 $q->where('productoscompuestos_det.categoria_id', $categoria);
             });
-        }
-        else {
+        } else {
             $query = $query->with('variable.caja');
         }
 
@@ -172,6 +169,7 @@ class CostesController extends Controller
         }
 
         $data['costes'] = $pedidos;
+        $data['vista']  = $vista;
 
         $pdf = \PDF::loadView('costes.print.list', $data)->setPaper('A4', 'landscape');
 
