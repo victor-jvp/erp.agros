@@ -1070,8 +1070,7 @@ class PedidosProduccionController extends Controller
         $data['pedidos'] = $pedidos;
 
         $pdf = \PDF::loadView('almacen.pedidos-produccion.pdf_materiales_dia', $data)->setPaper('a4', 'landscape');
-
-        //return view('almacen.pedidos-produccion.pdf_pedido', $data);
+//        return view('almacen.pedidos-produccion.pdf_materiales_dia', $data);
 
         return $pdf->stream('materiales ' . $anio . $semana . $dia . $cultivo . '.pdf');
     }
