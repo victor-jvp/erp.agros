@@ -802,6 +802,10 @@
 
         table.change_order_items > tbody > tr > td {
             border-right: 1px solid black;
+            /*padding-left: 0.5em;*/
+            /*padding-right: 0.5em;*/
+            /*padding-top: 0;*/
+            /*padding-bottom: 0;*/
             padding: 0.5em;
         }
 
@@ -851,8 +855,8 @@
                     </td>
                     <td style="font-size: 10pt;">
                         <p style="text-align: right;"><b>Año:</b> {{ $pedidos[0]->anio }}<br>
-                        <b>Semana:</b> {{ $pedidos[0]->semana }}<br>
-                        <b>Dia:</b> {{ $pedidos[0]->dia->dia }}</p>
+                            <b>Semana:</b> {{ $pedidos[0]->semana }}<br>
+                            <b>Dia:</b> {{ $pedidos[0]->dia->dia }}</p>
                     </td>
                 </tr>
                 </tbody>
@@ -881,61 +885,31 @@
                         <tr>
                             <td>Palet</td>
                             <td>{{ $pedido->palet->modelo->modelo." - ".$pedido->palet->formato }}</td>
-                            <td>
-                                @foreach ($pedido->palets_salidas as $salida)
-                                    <p style="padding: 0px; text-align: right;">{{ $salida->cantidad }}</p>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach ($pedido->palets_entradas as $entrada)
-                                    <p style="padding: 0px;">{{ $entrada->nro_lote }}</p>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach ($pedido->palets_salidas as $salida)
-                                    <p style="padding: 0px;">{{ $salida->nro_lote }}</p>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach ($pedido->palets_entradas as $entrada)
-                                    <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach ($pedido->palets_entradas as $entrada)
-                                    <p style="padding: 0px;">{{ $entrada->razon_social }}</p>
-                                @endforeach
-                            </td>
+                            <td><span
+                                    style="padding: 0; text-align: right;">@foreach ($pedido->palets_salidas as $salida){{ $salida->cantidad }}
+                                    <br>@endforeach</span></td>
+                            <td><span
+                                    style="padding: 0;">@foreach ($pedido->palets_entradas as $entrada){{ $entrada->nro_lote }}
+                                    <br>@endforeach</span></td>
+                            <td><span
+                                    style="padding: 0;">@foreach ($pedido->palets_salidas as $salida){{ $salida->nro_lote }}
+                                    <br>@endforeach</span></td>
+                            <td><span
+                                    style="padding: 0;">@foreach ($pedido->palets_entradas as $entrada){{ $entrada->nro_albaran }}
+                                    <br>@endforeach</span></td>
+                            <td><span
+                                    style="padding: 0;">@foreach ($pedido->palets_entradas as $entrada){{ $entrada->razon_social }}
+                                    <br>@endforeach</span></td>
                         </tr>
 
                         <tr>
                             <td>Caja</td>
                             <td>{{ $pedido->variable->caja->formato." - ".$pedido->variable->caja->modelo }}</td>
-                            <td style="text-align: right;">
-                                @foreach ($pedido->cajas_salidas as $salida)
-                                    <p style="padding: 0px; text-align: right;">{{ $salida->cantidad }}</p>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach ($pedido->cajas_entradas as $entrada)
-                                    <p style="padding: 0px;">{{ $entrada->nro_lote }}</p>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach ($pedido->cajas_salidas as $salida)
-                                    <p style="padding: 0px;">{{ $salida->nro_lote }}</p>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach ($pedido->cajas_entradas as $entrada)
-                                    <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach ($pedido->cajas_entradas as $entrada)
-                                    <p style="padding: 0px;">{{ $entrada->razon_social }}</p>
-                                @endforeach
-                            </td>
+                            <td><span style="padding: 0; text-align: right;">@foreach ($pedido->cajas_salidas as $salida){{ $salida->cantidad }}<br>@endforeach</span></td>
+                            <td>@foreach ($pedido->cajas_entradas as $entrada)<span style="padding: 0;">{{ $entrada->nro_lote }}</span><br>@endforeach</td>
+                            <td>@foreach ($pedido->cajas_salidas as $salida)<span style="padding: 0;">{{ $salida->nro_lote }}</span><br>@endforeach</td>
+                            <td>@foreach ($pedido->cajas_entradas as $entrada)<span style="padding: 0;">{{ $entrada->nro_albaran }}</span><br>@endforeach</td>
+                            <td>@foreach ($pedido->cajas_entradas as $entrada)<span style="padding: 0;">{{ $entrada->razon_social }}</span><br>@endforeach</td>
                         </tr>
 
 
@@ -945,27 +919,27 @@
                                 <td>{{ $tarrina->tarrina->modelo }}</td>
                                 <td style="text-align: right;">
                                     @foreach ($tarrina->salidas as $salida)
-                                        <p style="padding: 0px; text-align: right;">{{ $salida->cantidad }}</p>
+                                        <span style="padding: 0; text-align: right;">{{ $salida->cantidad }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($tarrina->entradas as $entrada)
-                                        <p style="padding: 0px;">{{ $entrada->nro_lote }}</p>
+                                        <span style="padding: 0;">{{ $entrada->nro_lote }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($tarrina->salidas as $salida)
-                                        <p style="padding: 0px;">{{ $salida->nro_lote }}</p>
+                                        <span style="padding: 0;">{{ $salida->nro_lote }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($tarrina->entradas as $entrada)
-                                        <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
+                                        <span style="padding: 0;">{{ $entrada->nro_albaran }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($tarrina->entradas as $entrada)
-                                        <p style="padding: 0px;">{{ $entrada->razon_social }}</p>
+                                        <span style="padding: 0;">{{ $entrada->razon_social }}</span><br>
                                     @endforeach
                                 </td>
                             </tr>
@@ -977,27 +951,27 @@
                                 <td>{{ $auxiliar->auxiliar->modelo }}</td>
                                 <td style="text-align: right;">
                                     @foreach ($auxiliar->salidas as $salida)
-                                        <p style="padding: 0px; text-align: right;">{{ $salida->cantidad }}</p>
+                                        <span style="padding: 0; text-align: right;">{{ $salida->cantidad }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($auxiliar->entradas as $entrada)
-                                        <p style="padding: 0px;">{{ $entrada->nro_lote }}</p>
+                                        <span style="padding: 0;">{{ $entrada->nro_lote }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($auxiliar->salidas as $salida)
-                                        <p style="padding: 0px;">{{ $salida->nro_lote }}</p>
+                                        <span style="padding: 0;">{{ $salida->nro_lote }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($auxiliar->entradas as $entrada)
-                                        <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
+                                        <span style="padding: 0;">{{ $entrada->nro_albaran }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($auxiliar->entradas as $entrada)
-                                        <p style="padding: 0px;">{{ $entrada->razon_social }}</p>
+                                        <span style="padding: 0;">{{ $entrada->razon_social }}</span><br>
                                     @endforeach
                                 </td>
                             </tr>
@@ -1008,27 +982,27 @@
                                 <td>{{ $auxiliar->auxiliar->modelo }}</td>
                                 <td style="text-align: right;">
                                     @foreach ($auxiliar->salidas as $salida)
-                                        <p style="padding: 0px; text-align: right;">{{ $salida->cantidad }}</p>
+                                        <span style="padding: 0; text-align: right;">{{ $salida->cantidad }}</span>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($auxiliar->entradas as $entrada)
-                                        <p style="padding: 0px;">{{ $entrada->nro_lote }}</p>
+                                        <span style="padding: 0;">{{ $entrada->nro_lote }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($auxiliar->salidas as $salida)
-                                        <p style="padding: 0px;">{{ $salida->nro_lote }}</p>
+                                        <span style="padding: 0;">{{ $salida->nro_lote }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($auxiliar->entradas as $entrada)
-                                        <p style="padding: 0px;">{{ $entrada->nro_albaran }}</p>
+                                        <span style="padding: 0;">{{ $entrada->nro_albaran }}</span><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($auxiliar->entradas as $entrada)
-                                        <p style="padding: 0px;">{{ $entrada->razon_social }}</p>
+                                        <span style="padding: 0;">{{ $entrada->razon_social }}</span><br>
                                     @endforeach
                                 </td>
                             </tr>
