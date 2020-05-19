@@ -16,7 +16,8 @@ class ModulosTableSeeder extends Seeder
             ['name' => 'Prevision'],
             ['name' => 'Comercial'],
             ['name' => 'Almacen'],
-            ['name' => 'Costes']
+            ['name' => 'Costes'],
+            ['name' => 'Trazabilidad'],
         ]);
 
         DB::table('modulos_secciones')->insert([

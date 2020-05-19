@@ -72,7 +72,7 @@ class ComercialController extends Controller
             }
 
             $resumen['total_prev'] = number_format($totalPrev, 2, ',', '.');
-            $resumen['total_pedc'] = number_format($totalPedc, 2, ',', '.');
+            $resumen['total_pedc'] = number_format(abs($totalPedc), 2, ',', '.');
             $resumen['total']      = number_format($total, 2, ',', '.');
 
 
@@ -86,7 +86,7 @@ class ComercialController extends Controller
             $promSemanaAmbos  = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('semana', $data['semana_act'])->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg(DB::RAW('pedidos_comerciales.precio * pedidos_comerciales.kilos'));
 
             //LLENAR CHART DE PANEL DE VENTA
-            $resumen['chart_prevision']  = abs($totalPrev - $totalPedc);
+            $resumen['chart_prevision']  = $totalPrev;
             $resumen['chart_venta']      = $totalPedc;
             $resumen['promAnualKg']      = number_format($promAnualKg, 2, ',', '.');
             $resumen['promAnualPrecio']  = number_format($promAnualPrecio, 2, ',', '.');

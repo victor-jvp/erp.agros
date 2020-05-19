@@ -884,12 +884,13 @@
         $(document).ready(function () {
 
             $(".echarts").each(function (elem) {
+                console.log($(this));
                 var chart = $(this).attr('id');
                 var prev = $(this).attr('data-prev');
                 var venta = $(this).attr('data-venta');
-                var echartElem = document.getElementById(chart);
-                if (echartElem) {
-                    var echart = echarts.init(echartElem);
+                //var echartElem = document.getElementById(chart);
+                if (document.getElementById(chart)) {
+                    var echart = echarts.init(document.getElementById(chart));
                     echart.setOption(_extends({}, echartOptions.defaultOptions, {
                         legend: {
                             show: true,
@@ -917,9 +918,7 @@
                     }));
 
                     $(window).on('resize', function () {
-                        setTimeout(function () {
-                            echart.resize();
-                        }, 500);
+                        echart.resize();
                     });
                 }
             });

@@ -46,6 +46,15 @@
                     <div class="triangle"></div>
                 </li>
             @endcan
+            @can('Trazabilidad - Agro Alfa | Acceso')--}}
+               <li class="nav-item" data-item="dpto_tecnico">
+                   <a class="nav-item-hold" href="#">
+                       <i class="nav-icon i-Post-Sign-2-ways"></i>
+                       <span class="nav-text">Trazabilidad</span>
+                   </a>
+                   <div class="triangle"></div>
+               </li>
+            @endcan
             @can('Maestros | Acceso')
                 <li class="nav-item {{ request()->is('maestros/*') ? 'active' : '' }}" data-item="maestros">
                     <a class="nav-item-hold" href="#">
@@ -201,13 +210,13 @@
             </ul>
         @endcan
 
-        @can('Departamento Tecnico | Acceso')
+        @can('Trazabilidad - Agro Alfa | Acceso')
             <ul class="childNav" data-parent="dpto_tecnico">
-                @can('Departamento Tecnico - Informes | Acceso')
+                @can('Trazabilidad - Agro Alfa | Crear')
                     <li class="nav-item">
                         <a href="#imageCroper">
                             <i class="nav-icon i-Crop-2"></i>
-                            <span class="item-name">Informes</span>
+                            <span class="item-name">Crear</span>
                         </a>
                     </li>
                 @endcan
@@ -215,7 +224,7 @@
                     <li class="nav-item">
                         <a href="#loader">
                             <i class="nav-icon i-Loading-3"></i>
-                            <span class="item-name">Panel de Control</span>
+                            <span class="item-name">Entradas</span>
                         </a>
                     </li>
                 @endcan
