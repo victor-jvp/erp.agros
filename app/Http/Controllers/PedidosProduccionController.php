@@ -990,28 +990,28 @@ class PedidosProduccionController extends Controller
                                     ->where('entrada.categoria', '=', 'Palet')
                                     ->where('entrada.categoria_id', $pedido->pallet_id)
                                     ->get();
-            $pedidos{$p}->palets_entradas = $entrada;
+            $pedidos[$p]->palets_entradas = $entrada;
 
             $salida = InventarioRel::salida()
                                    ->where('pedido_id', $pedido->id)
                                    ->where('salida.categoria', '=', 'Palet')
                                    ->where('salida.categoria_id', $pedido->pallet_id)
                                    ->get();
-            $pedidos{$p}->palets_salidas = $salida;
+            $pedidos[$p]->palets_salidas = $salida;
 
             $entrada = InventarioRel::entrada()
                                     ->where('pedido_id', $pedido->id)
                                     ->where('entrada.categoria', '=', 'Palet')
                                     ->where('entrada.categoria_id', $pedido->variable->caja_id)
                                     ->get();
-            $pedidos{$p}->cajas_entradas = $entrada;
+            $pedidos[$p]->cajas_entradas = $entrada;
 
             $salida = InventarioRel::salida()
                                    ->where('pedido_id', $pedido->id)
                                    ->where('salida.categoria', '=', 'Palet')
                                    ->where('salida.categoria_id', $pedido->variable->caja_id)
                                    ->get();
-            $pedidos{$p}->cajas_salidas = $salida;
+            $pedidos[$p]->cajas_salidas = $salida;
 
             foreach ($pedido->tarrinas as $i => $row)
             {
@@ -1020,14 +1020,14 @@ class PedidosProduccionController extends Controller
                                      ->where('entrada.categoria', '=', 'Tarrina')
                                      ->where('entrada.categoria_id', $row->tarrina_id)
                                      ->get();
-                $pedidos{$p}->tarrinas{$i}->entradas = $entrada;
+                $pedidos[$p]->tarrinas[$i]->entradas = $entrada;
 
                 $salida = InventarioRel::salida()
                                      ->where('pedido_id', $pedido->id)
                                      ->where('salida.categoria', '=', 'Tarrina')
                                      ->where('salida.categoria_id', $row->tarrina_id)
                                      ->get();
-                $pedidos{$p}->tarrinas{$i}->salidas = $salida;
+                $pedidos[$p]->tarrinas[$i]->salidas = $salida;
             }
 
             foreach ($pedido->auxiliares as $i => $row)
@@ -1037,14 +1037,14 @@ class PedidosProduccionController extends Controller
                                         ->where('entrada.categoria', '=', 'Auxiliar')
                                         ->where('entrada.categoria_id', $row->auxiliar_id)
                                         ->get();
-                $pedidos{$p}->auxiliares{$i}->entradas = $entrada;
+                $pedidos[$p]->auxiliares[$i]->entradas = $entrada;
 
                 $salida = InventarioRel::salida()
                                        ->where('pedido_id', $pedido->id)
                                        ->where('salida.categoria', '=', 'Auxiliar')
                                        ->where('salida.categoria_id', $row->auxiliar_id)
                                        ->get();
-                $pedidos{$p}->auxiliares{$i}->salidas = $salida;
+                $pedidos[$p]->auxiliares[$i]->salidas = $salida;
             }
 
             foreach ($pedido->palet_auxiliares as $i => $row)
@@ -1054,14 +1054,14 @@ class PedidosProduccionController extends Controller
                                         ->where('entrada.categoria', '=', 'Auxiliar')
                                         ->where('entrada.categoria_id', $row->auxiliar_id)
                                         ->get();
-                $pedidos{$p}->palet_auxiliares{$i}->entradas = $entrada;
+                $pedidos[$p]->palet_auxiliares[$i]->entradas = $entrada;
 
                 $salida = InventarioRel::salida()
                                        ->where('pedido_id', $pedido->id)
                                        ->where('salida.categoria', '=', 'Auxiliar')
                                        ->where('salida.categoria_id', $row->auxiliar_id)
                                        ->get();
-                $pedidos{$p}->palet_auxiliares{$i}->salidas = $salida;
+                $pedidos[$p]->palet_auxiliares[$i]->salidas = $salida;
             }
         }
 

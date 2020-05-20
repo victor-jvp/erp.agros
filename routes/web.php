@@ -146,6 +146,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('trazabilidad/clientes/create', 'TzClientesController@create')->name('tz.clientes.create');
     Route::post('trazabilidad/clientes/create', 'TzClientesController@create')->name('tz.clientes.create');
     Route::get('trazabilidad/clientes/show/{id}', 'TzClientesController@show')->name('tz.clientes.show');
+    Route::put('trazabilidad/clientes/update/{id}', 'TzClientesController@update')->name('tz.clientes.update');
+    Route::get('trazabilidad/clientes/delete/{id}', 'TzClientesController@delete')->name('tz.clientes.delete');
+
 #endregion
 
 #region Materiales

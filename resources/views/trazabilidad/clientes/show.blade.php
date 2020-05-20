@@ -21,20 +21,19 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" id="datos-fiscales-tab" data-toggle="tab" href="#datos-fiscales"
-                               role="tab"
-                               aria-controls="datos-fiscales" aria-selected="false">Datos del cliente</a>
+                            <a class="nav-link active show" id="datos-fiscales-tab" data-toggle="tab" href="#datos-fiscales"
+                               role="tab" aria-controls="datos-fiscales" aria-selected="false">Datos del cliente</a>
                         </li>
                     </ul>
 
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade" id="datos-fiscales" role="tabpanel"
+                        <div class="tab-pane fade active show" id="datos-fiscales" role="tabpanel"
                              aria-labelledby="datos-fiscales-tab">
-                            <form action="{{ route('clientes.update', $cliente->id) }}" method="POST"
+                            <form action="{{ route('tz.clientes.update', $cliente->id) }}" method="POST"
                                   id="datos_comerciales_form">
-                                {{ csrf_field() }}
-                                {{ method_field('PUT') }}
-                                <input type="hidden" name="_tab" value="datos-fiscales">
+                                @csrf
+                                @method('PUT')
+
                                 <input type="hidden" name="id" id="id" value="{{ $cliente->id }}">
 
                                 <div class="row">
@@ -60,7 +59,8 @@
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="pais">Domicilio</label>
-                                        <input type="text" class="form-control" id="domicilio" value="{{ $cliente->domicilio }}"
+                                        <input type="text" class="form-control" id="domicilio"
+                                               value="{{ $cliente->domicilio }}"
                                                placeholder="Domicilio" name="domicilio">
                                     </div>
                                 </div>
@@ -99,12 +99,6 @@
     <script src="{{asset('assets/js/tooltip.script.js')}}"></script>
 
     <script>
-        $(document).ready(function () {
-            var tab = '{{ $tab }}';
-            $("#" + tab + "").addClass('active show');
-            $("#" + tab + "-tab").addClass('active show').attr('aria-selected', true);
-        });
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
