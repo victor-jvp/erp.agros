@@ -15,7 +15,7 @@ class CreateTzEntradasTable extends Migration
     {
         Schema::create('tz_entradas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('fecha')->nullable()->default(new DateTime());
+            $table->date('fecha')->nullable()->useCurrent();
             $table->string('traza', 35)->nullable()->default(null);
             $table->unsignedBigInteger('proveedor_id');
             $table->unsignedBigInteger('articulo_id');
@@ -23,6 +23,9 @@ class CreateTzEntradasTable extends Migration
             $table->string('variedad')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('proveedor_id')->references('id')->on('tz_proveedores');
+            $table->foreign('articulo_id')->references('id')->on('tz_articulos');
         });
     }
 
