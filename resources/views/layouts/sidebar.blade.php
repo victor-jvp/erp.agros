@@ -250,7 +250,7 @@
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='tz.proveedores.index' ? 'open' : '' }}"
                     href="{{ route('tz.proveedores.index') }}">
-                    <i class="nav-icon i-Arrow-Outside"></i>
+                    <i class="nav-icon i-Gears-2"></i>
                     <span class="item-name">Proveedores</span>
                 </a>
             </li>
@@ -266,8 +266,9 @@
             @endcan
             @can('Trazabilidad - Artículos | Acceso')
             <li class="nav-item">
-                <a href="#loader">
-                    <i class="nav-icon i-Arrow-Outside"></i>
+                <a class="{{ Route::currentRouteName()=='tz.articulos.index' ? 'open' : '' }}"
+                    href="{{ route('tz.articulos.index') }}">
+                    <i class="nav-icon i-Structure"></i>
                     <span class="item-name">Artículos</span>
                 </a>
             </li>
