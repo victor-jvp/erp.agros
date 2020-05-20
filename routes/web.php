@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -142,13 +144,22 @@ Route::group(['middleware' => 'auth'], function () {
 
 #region Trazabilidad AgroAlfa
 
+    #region Clientes
     Route::get('trazabilidad/clientes', 'TzClientesController@index')->name('tz.clientes.index');
     Route::get('trazabilidad/clientes/create', 'TzClientesController@create')->name('tz.clientes.create');
     Route::post('trazabilidad/clientes/create', 'TzClientesController@create')->name('tz.clientes.create');
     Route::get('trazabilidad/clientes/show/{id}', 'TzClientesController@show')->name('tz.clientes.show');
     Route::put('trazabilidad/clientes/update/{id}', 'TzClientesController@update')->name('tz.clientes.update');
     Route::get('trazabilidad/clientes/delete/{id}', 'TzClientesController@delete')->name('tz.clientes.delete');
-
+    #endregion
+    #region Proveedores
+    Route::get('trazabilidad/proveedores', 'TzproveedoresController@index')->name('tz.proveedores.index');
+    Route::get('trazabilidad/proveedores/create', 'TzproveedoresController@create')->name('tz.proveedores.create');
+    Route::post('trazabilidad/proveedores/create', 'TzproveedoresController@create')->name('tz.proveedores.create');
+    Route::get('trazabilidad/proveedores/show/{id}', 'TzproveedoresController@show')->name('tz.proveedores.show');
+    Route::put('trazabilidad/proveedores/update/{id}', 'TzproveedoresController@update')->name('tz.proveedores.update');
+    Route::get('trazabilidad/proveedores/delete/{id}', 'TzproveedoresController@delete')->name('tz.proveedores.delete');
+    #endregion
 #endregion
 
 #region Materiales

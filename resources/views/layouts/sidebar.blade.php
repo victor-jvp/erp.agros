@@ -130,7 +130,7 @@
             <li class="nav-item">
                 <a class="{{ (Route::currentRouteName()=='clientes.index' || Request::is('comercial/clientes/*')) ? 'open' : '' }}"
                     href="{{ route('clientes.index') }}">
-                    <i class="nav-icon i-Receipt"></i>
+                    <i class="nav-icon i-Business-Mens"></i>
                     <span class="item-name">Clientes</span>
                 </a>
             </li>
@@ -139,7 +139,7 @@
             <li class="nav-item">
                 <a class="{{ (Route::currentRouteName()=='transportes.index' || Request::is('comercial/transportes/*')) ? 'open' : '' }}"
                     href="{{ route('transportes.index') }}">
-                    <i class="nav-icon i-Receipt"></i>
+                    <i class="nav-icon i-Truck"></i>
                     <span class="item-name">Transportes</span>
                 </a>
             </li>
@@ -248,7 +248,8 @@
             @endcan
             @can('Trazabilidad - Proveedores | Acceso')
             <li class="nav-item">
-                <a href="#loader">
+                <a class="{{ Route::currentRouteName()=='tz.proveedores.index' ? 'open' : '' }}"
+                    href="{{ route('tz.proveedores.index') }}">
                     <i class="nav-icon i-Arrow-Outside"></i>
                     <span class="item-name">Proveedores</span>
                 </a>
@@ -258,7 +259,7 @@
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='tz.clientes.index' ? 'open' : '' }}"
                     href="{{ route('tz.clientes.index') }}">
-                    <i class="nav-icon i-Arrow-Outside"></i>
+                    <i class="nav-icon i-Business-Mens"></i>
                     <span class="item-name">Clientes</span>
                 </a>
             </li>
