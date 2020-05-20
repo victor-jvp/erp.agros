@@ -126,7 +126,6 @@ Route::group(['middleware' => 'auth'], function () {
 #region Trazabilidad de Pedidos
     Route::get('almacen/traza-pedidos', 'TrazaPedidosController@index')->name('traza-pedidos.index');
     Route::post('almacen/traza-pedidos/details', 'TrazaPedidosController@details')->name('traza-pedidos.details');
-
 #endregion
 
 #endregion
@@ -139,6 +138,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('costes/pdf-list', 'CostesController@pdf_list')->name('costes.pdf.list');
     //Route::post('costes/pdf-list', 'CostesController@pdf_list')->name('costes.pdf.list');
+#endregion
+
+#region Trazabilidad AgroAlfa
+
+    Route::get('trazabilidad/clientes', 'TzClientesController@index')->name('tz.clientes.index');
+    Route::get('trazabilidad/clientes/create', 'TzClientesController@create')->name('tz.clientes.create');
+    Route::post('trazabilidad/clientes/create', 'TzClientesController@create')->name('tz.clientes.create');
+    Route::get('trazabilidad/clientes/show/{id}', 'TzClientesController@show')->name('tz.clientes.show');
 #endregion
 
 #region Materiales
@@ -207,7 +214,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 #endregion
 
-#region Trazabilidad
+#region Maestros / Trazabilidad
 
     Route::resource('maestros/trazabilidad', 'TrazabilidadController');
     Route::post('maestros/trazabilidad/ajaxSelectParcela', 'TrazabilidadController@ajaxSelectParcela')->name('trazabilidad.ajaxSelectParcela');
