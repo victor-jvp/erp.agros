@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -144,6 +145,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 #region Trazabilidad AgroAlfa
 
+    #region Entradas
+    Route::get('trazabilidad/entradas', 'TzEntradasController@index')->name('tz.entradas.index');
+    Route::get('trazabilidad/entradas/create', 'TzEntradasController@create')->name('tz.entradas.create');
+    Route::post('trazabilidad/entradas/create', 'TzEntradasController@create')->name('tz.entradas.create');
+    Route::get('trazabilidad/entradas/show/{id}', 'TzEntradasController@show')->name('tz.entradas.show');
+    Route::put('trazabilidad/entradas/update/{id}', 'TzEntradasController@update')->name('tz.entradas.update');
+    Route::get('trazabilidad/entradas/delete/{id}', 'TzEntradasController@delete')->name('tz.entradas.delete');
+    #endregion
     #region Clientes
     Route::get('trazabilidad/clientes', 'TzClientesController@index')->name('tz.clientes.index');
     Route::get('trazabilidad/clientes/create', 'TzClientesController@create')->name('tz.clientes.create');

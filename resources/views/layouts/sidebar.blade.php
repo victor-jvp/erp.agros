@@ -221,10 +221,12 @@
         'Trazabilidad - Proveedores | Acceso',
         'Trazabilidad - Clientes | Acceso',
         'Trazabilidad - Artículos | Acceso'])
+
         <ul class="childNav" data-parent="trazabilidad">
             @can('Trazabilidad - Entradas | Acceso')
             <li class="nav-item">
-                <a href="#imageCroper">
+                <a class="{{ Route::currentRouteName()=='tz.entradas.index' ? 'open' : '' }}"
+                   href="{{ route('tz.entradas.index') }}">
                     <i class="nav-icon i-Arrow-Inside"></i>
                     <span class="item-name">Entradas</span>
                 </a>

@@ -22,9 +22,9 @@
 
                     <div class="row">
                         @can('Trazabilidad - Artículos | Crear')
-                        <div class="col-md-3">
-                            <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
-                        </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
+                            </div>
                         @endcan
                     </div>
 
@@ -57,7 +57,7 @@
                                             Cerrar
                                         </button>
                                         @can('Trazabilidad - Artículos | Crear')
-                                        <button type="submit" class="btn btn-primary">Continuar</button>
+                                            <button type="submit" class="btn btn-primary">Continuar</button>
                                         @endcan
                                     </div>
                                 </form>
@@ -87,18 +87,18 @@
                                                 <td>{{ $articulo->articulo }}</td>
                                                 <td>
                                                     @can('Trazabilidad - Artículos | Modificar')
-                                                    <a href="{{ route('tz.articulos.show', $articulo->id) }}"
-                                                       data-toggle="tooltip" data-placement="top" title=""
-                                                       data-original-title="Editar" class="text-success mr-2 edit">
-                                                        <i class="nav-icon i-Pen-2 font-weight-bold "></i>
-                                                    </a>
+                                                        <a href="{{ route('tz.articulos.show', $articulo->id) }}"
+                                                           data-toggle="tooltip" data-placement="top" title=""
+                                                           data-original-title="Editar" class="text-success mr-2 edit">
+                                                            <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                        </a>
                                                     @endcan
                                                     @can('Trazabilidad - Artículos | Borrar')
-                                                    <a href="javascript:void(0);" class="text-danger mr-2 delete"
-                                                       data-toggle="tooltip" data-placement="top" title=""
-                                                       data-original-title="Borrar">
-                                                        <i class="nav-icon i-Close-Window font-weight-bold "></i>
-                                                    </a>
+                                                        <a href="javascript:void(0);" class="text-danger mr-2 delete"
+                                                           data-toggle="tooltip" data-placement="top" title=""
+                                                           data-original-title="Borrar">
+                                                            <i class="nav-icon i-Close-Window font-weight-bold "></i>
+                                                        </a>
                                                     @endcan
                                                 </td>
                                             </tr>

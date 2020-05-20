@@ -27,7 +27,7 @@ class TzArticulosController extends Controller
         //dd($request);
         $articulo = new TzArticulo();
 
-        $articulo->articulo   = $request->articulo;
+        $articulo->articulo = $request->articulo;
 
         $articulo->save();
 
@@ -51,7 +51,7 @@ class TzArticulosController extends Controller
     {
         $articulo = TzArticulo::find($id);
 
-        $articulo->articulo   = $request->articulo;
+        $articulo->articulo = $request->articulo;
 
         $articulo->save();
 

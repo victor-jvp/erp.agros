@@ -8,7 +8,6 @@ class CreateTzEntradasTable extends Migration
 {
     /**
      * Run the migrations.
-     *
      * @return void
      */
     public function up()
@@ -16,9 +15,10 @@ class CreateTzEntradasTable extends Migration
         Schema::create('tz_entradas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('fecha')->nullable()->useCurrent();
+            $table->string('albaran', 35)->nullable()->default(null);
             $table->string('traza', 35)->nullable()->default(null);
-            $table->unsignedBigInteger('proveedor_id');
-            $table->unsignedBigInteger('articulo_id');
+            $table->unsignedBigInteger('proveedor_id')->nullable();
+            $table->unsignedBigInteger('articulo_id')->nullable();
             $table->double('cantidad', 15, 8)->nullable()->default(0);
             $table->string('variedad')->nullable()->default(null);
             $table->timestamps();
@@ -31,7 +31,6 @@ class CreateTzEntradasTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
      * @return void
      */
     public function down()

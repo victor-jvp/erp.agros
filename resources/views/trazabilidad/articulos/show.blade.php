@@ -21,7 +21,8 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active show" id="datos-fiscales-tab" data-toggle="tab" href="#datos-fiscales"
+                            <a class="nav-link active show" id="datos-fiscales-tab" data-toggle="tab"
+                               href="#datos-fiscales"
                                role="tab" aria-controls="datos-fiscales" aria-selected="false">Datos del artículo</a>
                         </li>
                     </ul>
