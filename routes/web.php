@@ -175,12 +175,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('trazabilidad/proveedores/delete/{id}', 'TzproveedoresController@delete')->name('tz.proveedores.delete');
     #endregion
     #region Artículos
-    Route::get('trazabilidad/articulos', 'TzarticulosController@index')->name('tz.articulos.index');
-    Route::get('trazabilidad/articulos/create', 'TzarticulosController@create')->name('tz.articulos.create');
-    Route::post('trazabilidad/articulos/create', 'TzarticulosController@create')->name('tz.articulos.create');
-    Route::get('trazabilidad/articulos/show/{id}', 'TzarticulosController@show')->name('tz.articulos.show');
-    Route::put('trazabilidad/articulos/update/{id}', 'TzarticulosController@update')->name('tz.articulos.update');
-    Route::get('trazabilidad/articulos/delete/{id}', 'TzarticulosController@delete')->name('tz.articulos.delete');
+    Route::get('trazabilidad/articulos', 'TzArticulosController@index')->name('tz.articulos.index');
+    Route::get('trazabilidad/articulos/create', 'TzArticulosController@create')->name('tz.articulos.create');
+    Route::post('trazabilidad/articulos/create', 'TzArticulosController@create')->name('tz.articulos.create');
+    Route::get('trazabilidad/articulos/show/{id}', 'TzArticulosController@show')->name('tz.articulos.show');
+    Route::put('trazabilidad/articulos/update/{id}', 'TzArticulosController@update')->name('tz.articulos.update');
+    Route::get('trazabilidad/articulos/delete/{id}', 'TzArticulosController@delete')->name('tz.articulos.delete');
     #endregion
 #endregion
 
