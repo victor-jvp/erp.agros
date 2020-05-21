@@ -31,7 +31,7 @@ class TzArticulosController extends Controller
 
         $articulo->save();
 
-        return redirect()->route('tz.articulos.show', $articulo->id);
+        return redirect()->route('tz.articulos.index');
     }
 
     public function show($id)

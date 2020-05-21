@@ -234,7 +234,8 @@
             @endcan
             @can('Trazabilidad - Salidas | Acceso')
             <li class="nav-item">
-                <a href="#loader">
+                <a class="{{ Route::currentRouteName()=='tz.salidas.index' ? 'open' : '' }}"
+                   href="{{ route('tz.salidas.index') }}">
                     <i class="nav-icon i-Arrow-Outside"></i>
                     <span class="item-name">Salidas</span>
                 </a>

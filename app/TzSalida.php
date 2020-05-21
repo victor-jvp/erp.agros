@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TzEntrada extends Model
+class TzSalida extends Model
 {
     //
     use SoftDeletes;
-    protected $table = "tz_entradas";
+    protected $table = "tz_salidas";
 
     public function proveedor()
     {
@@ -21,8 +21,13 @@ class TzEntrada extends Model
         return $this->belongsTo(TzArticulo::class, 'articulo_id');
     }
 
-    public function salidas()
+    public function cliente()
     {
-        return $this->hasMany(TzSalida::class);
+        return $this->belongsTo(TzCliente::class, 'cliente_id');
+    }
+
+    public function entrada()
+    {
+        return $this->belongsTo(TzEntrada::class, 'entrada_id');
     }
 }

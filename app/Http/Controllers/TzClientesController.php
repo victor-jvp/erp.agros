@@ -35,7 +35,7 @@ class TzClientesController extends Controller
 
         $cliente->save();
 
-        return redirect()->route('tz.clientes.show', $cliente->id);
+        return redirect()->route('tz.clientes.index');
     }
 
     public function show($id)

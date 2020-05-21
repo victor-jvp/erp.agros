@@ -147,11 +147,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     #region Entradas
     Route::get('trazabilidad/entradas', 'TzEntradasController@index')->name('tz.entradas.index');
-    Route::get('trazabilidad/entradas/create', 'TzEntradasController@create')->name('tz.entradas.create');
-    Route::post('trazabilidad/entradas/create', 'TzEntradasController@create')->name('tz.entradas.create');
+    Route::post('trazabilidad/entradas/store', 'TzEntradasController@store')->name('tz.entradas.store');
     Route::get('trazabilidad/entradas/show/{id}', 'TzEntradasController@show')->name('tz.entradas.show');
-    Route::put('trazabilidad/entradas/update/{id}', 'TzEntradasController@update')->name('tz.entradas.update');
     Route::get('trazabilidad/entradas/delete/{id}', 'TzEntradasController@delete')->name('tz.entradas.delete');
+    #endregion
+    #region Salidas
+    Route::get('trazabilidad/salidas', 'TzSalidasController@index')->name('tz.salidas.index');
+    Route::post('trazabilidad/salidas/store', 'TzSalidasController@store')->name('tz.salidas.store');
+    Route::get('trazabilidad/salidas/show/{id}', 'TzSalidasController@show')->name('tz.salidas.show');
+    Route::get('trazabilidad/salidas/delete/{id}', 'TzSalidasController@delete')->name('tz.salidas.delete');
     #endregion
     #region Clientes
     Route::get('trazabilidad/clientes', 'TzClientesController@index')->name('tz.clientes.index');

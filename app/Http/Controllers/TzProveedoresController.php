@@ -34,7 +34,7 @@ class TzProveedoresController extends Controller
 
         $proveedor->save();
 
-        return redirect()->route('tz.proveedores.show', $proveedor->id);
+        return redirect()->route('tz.proveedores.index');
     }
 
     public function show($id)

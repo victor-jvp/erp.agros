@@ -16,7 +16,7 @@ class CreateTzSalidasTable extends Migration
             $table->bigIncrements('id');
             $table->date('fecha')->nullable()->useCurrent();
             $table->string('traza', 35)->nullable()->default(null);
-            $table->unsignedBigInteger('salida_id');
+            $table->unsignedBigInteger('entrada_id');
             $table->unsignedBigInteger('proveedor_id');
             $table->unsignedBigInteger('articulo_id');
             $table->double('cajas', 15, 8)->nullable()->default(0);
@@ -33,7 +33,7 @@ class CreateTzSalidasTable extends Migration
             $table->foreign('proveedor_id')->references('id')->on('tz_proveedores');
             $table->foreign('articulo_id')->references('id')->on('tz_articulos');
             $table->foreign('cliente_id')->references('id')->on('tz_clientes');
-            $table->foreign('salida_id')->references('id')->on('tz_entradas');
+            $table->foreign('entrada_id')->references('id')->on('tz_entradas');
         });
     }
 

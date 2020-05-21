@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\TzArticulo;
+use App\TzCliente;
 use App\TzEntrada;
 use App\TzProveedor;
 use Illuminate\Http\Request;
@@ -14,22 +15,33 @@ class TzEntradasController extends Controller
     public function index()
     {
         //PERMISO DE ACCESO
-        if (!Auth::user()->can('Trazabilidad - Clientes | Acceso')) {
+        if (!Auth::user()->can('Trazabilidad - Entradas | Acceso')) {
             return redirect()->route('home');
         }
 
         $data = array(
             "proveedores" => TzProveedor::all(),
             "articulos"   => TzArticulo::all(),
+            "clientes"    => TzCliente::all(),
             "entradas"    => TzEntrada::all()
         );
 
         return view('trazabilidad.entradas.index', $data);
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
-        $entrada = new TzEntrada();
+
+        if (is_null($request->entrada_id)) {
+            $entrada = new TzEntrada();
+        }
+        else {
+            $entrada = TzEntrada::find($request->entrada_id);
+        }
+
+        if (is_null($entrada)) {
+            return redirect()->route('tz.entradas.index');
+        }
 
         $entrada->fecha        = $request->fecha;
         $entrada->albaran      = $request->albaran;

@@ -5,7 +5,7 @@
         <h1>Trazabilidad</h1>
         <ul>
             {{-- <li><a href="">UI Kits</a></li> --}}
-            <li>Entradas</li>
+            <li>Salidas</li>
         </ul>
     </div>
 
@@ -17,28 +17,28 @@
             <div class="card text-left">
 
                 <div class="card-body">
-                    <h4 class="card-title mb-3">Entradas</h4>
+                    <h4 class="card-title mb-3">Salidas</h4>
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
 
                     <div class="row">
-                        @can('Trazabilidad - Entradas | Crear')
+                        @can('Trazabilidad - Salidas | Crear')
                             <div class="col-md-3">
                                 <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
                             </div>
                         @endcan
                     </div>
 
-                    <!-- Modal Detalles Entrada-->
+                    <!-- Modal Detalles Salida-->
                     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                         aria-hidden="true" id="modal-entrada">
+                         aria-hidden="true" id="modal-salida">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="/trazabilidad/entradas/store" method="POST" id="entrada_form">
+                                <form action="/trazabilidad/salidas/store" method="POST" id="salida_form">
                                     @csrf
-                                    <input type="hidden" name="entrada_id" id="entrada_id">
+                                    <input type="hidden" name="salida_id" id="salida_id">
 
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-entrada-title"></h5>
+                                        <h5 class="modal-title" id="modal-salida-title"></h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -58,9 +58,9 @@
                                                        placeholder="Albarán" name="albaran">
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label for="traza">Traza de Entrada</label>
+                                                <label for="traza">Traza de Salida</label>
                                                 <input type="text" class="form-control" id="traza"
-                                                       placeholder="Traza de Entrada" name="traza">
+                                                       placeholder="Traza de Salida" name="traza">
                                             </div>
                                         </div>
 
@@ -106,7 +106,7 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        @can('Trazabilidad - Entradas | Crear')
+                                        @can('Trazabilidad - Salidas | Crear')
                                             <button type="submit" class="btn btn-primary">Guardar</button>
                                         @endcan
                                     </div>
@@ -122,7 +122,7 @@
                             <div class="modal-content">
                                 <form action="/trazabilidad/salidas/create" method="POST" id="salida_form">
                                     @csrf
-                                    <input type="hidden" name="entrada_id" id="salida_entrada_id">
+                                    <input type="hidden" name="salida_id" id="salida_salida_id">
 
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="modal-salida-title"></h5>
@@ -246,14 +246,14 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table id="entradas_table" class="display table table-striped table-bordered"
+                                <table id="salidas_table" class="display table table-striped table-bordered"
                                        style="width:100%">
                                     <thead>
                                     <tr>
                                         <th>id</th>
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Albarán</th>
-                                        <th scope="col">Traza Entrada</th>
+                                        <th scope="col">Traza Salida</th>
                                         <th>proveedor_id</th>
                                         <th scope="col">Proveedor</th>
                                         <th>articulo_id</th>
@@ -264,19 +264,19 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if (isset($entradas))
-                                        @foreach ($entradas as $entrada)
+                                    @if (isset($salidas))
+                                        @foreach ($salidas as $salida)
                                             <tr>
-                                                <td>{{ $entrada->id }}</td>
-                                                <td>{{ date("d/m/Y", strtotime($entrada->fecha)) }}</td>
-                                                <td>{{ $entrada->albaran }}</td>
-                                                <td>{{ $entrada->traza }}</td>
-                                                <td>{{ $entrada->proveedor_id }}</td>
-                                                <td>{{ (isset($entrada->proveedor)) ? $entrada->proveedor->proveedor : "" }}</td>
-                                                <td>{{ $entrada->articulo_id }}</td>
-                                                <td>{{ (isset($entrada->articulo)) ? $entrada->articulo->articulo : "" }}</td>
-                                                <td class="text-right">{{ round($entrada->cantidad, 2) }}</td>
-                                                <td>{{ $entrada->variedad }}</td>
+                                                <td>{{ $salida->id }}</td>
+                                                <td>{{ date("d/m/Y", strtotime($salida->fecha)) }}</td>
+                                                <td>{{ $salida->albaran }}</td>
+                                                <td>{{ $salida->traza }}</td>
+                                                <td>{{ $salida->proveedor_id }}</td>
+                                                <td>{{ (isset($salida->proveedor)) ? $salida->proveedor->proveedor : "" }}</td>
+                                                <td>{{ $salida->articulo_id }}</td>
+                                                <td>{{ (isset($salida->articulo)) ? $salida->articulo->articulo : "" }}</td>
+                                                <td class="text-right">{{ round($salida->cantidad, 2) }}</td>
+                                                <td>{{ $salida->variedad }}</td>
                                                 <td class="text-center">
                                                     @can('Trazabilidad - Salidas | Crear')
                                                         <a href="javascript:void(0);" class="text-primary mr-2 salida"
@@ -285,14 +285,14 @@
                                                             <i class="nav-icon i-Arrow-Outside font-weight-bold "></i>
                                                         </a>
                                                     @endcan
-                                                    @can('Trazabilidad - Entradas | Modificar')
+                                                    @can('Trazabilidad - Salidas | Modificar')
                                                         <a href="javascript:void(0);" class="text-success mr-2 edit"
                                                            data-toggle="tooltip" data-placement="top" title=""
                                                            data-original-title="Editar">
                                                             <i class="nav-icon i-Pen-2 font-weight-bold "></i>
                                                         </a>
                                                     @endcan
-                                                    @can('Trazabilidad - Entradas | Borrar')
+                                                    @can('Trazabilidad - Salidas | Borrar')
                                                         <a href="javascript:void(0);" class="text-danger mr-2 delete"
                                                            data-toggle="tooltip" data-placement="top" title=""
                                                            data-original-title="Borrar">
@@ -331,8 +331,8 @@
     <script src="{{asset('assets/js/vendor/jquery.validation/messages_es.js')}}"></script>
 
     <script>
-        var table_entradas;
-        var entrada_form;
+        var table_salidas;
+        var salida_form;
         var salida_form;
 
         $(document).ready(function () {
@@ -340,7 +340,7 @@
                 liveSearch: true
             });
 
-            entrada_form = $("#entrada_form").validate({
+            salida_form = $("#salida_form").validate({
                 errorPlacement: function (error, element) {
                     error.addClass('invalid-feedback');
                     if ($(element).is('select')) {
@@ -365,7 +365,7 @@
 
         $(function () {
             // Configuracion de Datatable
-            table_entradas = $('#entradas_table').DataTable({
+            table_salidas = $('#salidas_table').DataTable({
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
@@ -375,9 +375,9 @@
                 },]
             });
 
-            $('#entradas_table .delete').on('click', function () {
+            $('#salidas_table .delete').on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_entradas.row(tr).data();
+                var row = table_salidas.row(tr).data();
 
                 swal({
                     title: 'Confirmar Proceso',
@@ -392,29 +392,29 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('trazabilidad/entradas/delete') }}" + "/" + row[
+                    window.location.href = "{{ url('trazabilidad/salidas/delete') }}" + "/" + row[
                         0]
                 })
             });
 
-            $("#entradas_table .salida").on('click', function () {
+            $("#salidas_table .salida").on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_entradas.row(tr).data();
+                var row = table_salidas.row(tr).data();
                 var id = row[0];
 
-                $("#salida_entrada_id").val(id);
+                $("#salida_salida_id").val(id);
 
                 LimpiarCamposSalida();
                 $("#modal-salida-title").html("Nueva Salida");
                 $("#modal-salida").modal('show');
             });
 
-            $("#entradas_table .edit").on('click', function () {
+            $("#salidas_table .edit").on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_entradas.row(tr).data();
+                var row = table_salidas.row(tr).data();
 
                 //console.log(row);
-                $("#entrada_id").val(row[0]);
+                $("#salida_id").val(row[0]);
                 var fecha = moment(row[1], "DD/MM/YYYY").format("YYYY-MM-DD");
                 $("#fecha").val(fecha);
                 $("#albaran").val(row[2]);
@@ -425,19 +425,19 @@
                 $("#variedad").val(row[9]);
 
                 LimpiarCamposSalida();
-                $("#modal-entrada-title").html("Detalles de Salida");
-                $("#modal-entrada").modal('show');
+                $("#modal-salida-title").html("Detalles de Salida");
+                $("#modal-salida").modal('show');
             });
 
             $("#btnNuevo").click(function (e) {
-                LimpiarCamposEntrada();
-                $("#entrada_id").val(null);
-                $("#modal-entrada-title").html("Nuevo Entrada");
-                $("#modal-entrada").modal('show');
+                LimpiarCamposSalida();
+                $("#salida_id").val(null);
+                $("#modal-salida-title").html("Nuevo Salida");
+                $("#modal-salida").modal('show');
             })
         });
 
-        function LimpiarCamposEntrada() {
+        function LimpiarCamposSalida() {
             var fecha = moment().format("YYYY-MM-DD");
             $("#fecha").val(fecha);
             $('#albaran, #traza, #cantidad, #variedad').val(null);
