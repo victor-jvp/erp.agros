@@ -23,6 +23,6 @@ class TzEntrada extends Model
 
     public function salidas()
     {
-        return $this->hasMany(TzSalida::class);
+        return $this->hasMany(TzSalida::class, 'entrada_id');
     }
 }

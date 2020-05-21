@@ -28,101 +28,13 @@
                         @endcan
                     </div>
 
-                    <!-- Modal Detalles Salida-->
+                    {{--Modal Generar Salida--}}
                     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                          aria-hidden="true" id="modal-salida">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="/trazabilidad/salidas/store" method="POST" id="salida_form">
                                     @csrf
-                                    <input type="hidden" name="salida_id" id="salida_id">
-
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-salida-title"></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="fecha">Fecha</label>
-                                                <input type="date" class="form-control" id="fecha" name="fecha" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="albaran">Albarán</label>
-                                                <input type="text" class="form-control" id="albaran"
-                                                       placeholder="Albarán" name="albaran">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="traza">Traza de Salida</label>
-                                                <input type="text" class="form-control" id="traza"
-                                                       placeholder="Traza de Salida" name="traza">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="proveedor">Proveedor</label>
-                                                <select name="proveedor_id" id="proveedor" class="form-control chosen"
-                                                        required>
-                                                    <option value=""></option>
-                                                    @foreach ($proveedores as $proveedor)
-                                                        <option value="{{ $proveedor->id }}">{{ $proveedor->proveedor }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="articulo">Artículo</label>
-                                                <select name="articulo_id" id="articulo" class="form-control chosen"
-                                                        required>
-                                                    <option value=""></option>
-                                                    @foreach ($articulos as $articulo)
-                                                        <option value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="cantidad">Kilos</label>
-                                                <input type="number" class="form-control" id="cantidad" name="cantidad"
-                                                       required placeholder="Kilos" min="0.01" step="0.01">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="variedad">Variedad</label>
-                                                <input type="text" class="form-control" id="variedad"
-                                                       placeholder="Variedad"
-                                                       name="variedad">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Cerrar
-                                        </button>
-                                        @can('Trazabilidad - Salidas | Crear')
-                                            <button type="submit" class="btn btn-primary">Guardar</button>
-                                        @endcan
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{--Modal Generar Salida--}}
-                    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                         aria-hidden="true" id="modal-salida">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form action="/trazabilidad/salidas/create" method="POST" id="salida_form">
-                                    @csrf
-                                    <input type="hidden" name="salida_id" id="salida_salida_id">
 
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="modal-salida-title"></h5>
@@ -140,7 +52,7 @@
                                             <div class="col-md-6 mb-3">
                                                 <label for="salida_fecha">Fecha</label>
                                                 <input type="date" class="form-control" id="salida_fecha"
-                                                       value="{{ date('Y-m-d') }}" placeholder="Fecha" required=""
+                                                       placeholder="Fecha" required=""
                                                        name="fecha">
                                             </div>
                                         </div>
@@ -163,7 +75,8 @@
                                                         class="form-control chosen" required>
                                                     <option value=""></option>
                                                     @foreach ($articulos as $articulo)
-                                                        <option value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
+                                                        <option
+                                                            value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -194,7 +107,8 @@
                                                         class="form-control chosen">
                                                     <option value=""></option>
                                                     @foreach ($clientes as $cliente)
-                                                        <option value="{{ $cliente->id }}">{{ $cliente->cliente }}</option>
+                                                        <option
+                                                            value="{{ $cliente->id }}">{{ $cliente->cliente }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -251,15 +165,22 @@
                                     <thead>
                                     <tr>
                                         <th>id</th>
-                                        <th scope="col">Fecha</th>
-                                        <th scope="col">Albarán</th>
                                         <th scope="col">Traza Salida</th>
+                                        <th scope="col">Fecha</th>
                                         <th>proveedor_id</th>
                                         <th scope="col">Proveedor</th>
                                         <th>articulo_id</th>
                                         <th scope="col">Artículo</th>
+                                        <th scope="col">Cajas</th>
                                         <th scope="col">Kilos</th>
-                                        <th scope="col">Variedad</th>
+                                        <th scope="col">Precio Venta</th>
+                                        <th>cliente_id</th>
+                                        <th scope="col">Cliente</th>
+                                        <th scope="col">Coste</th>
+                                        <th scope="col">Comisión</th>
+                                        <th scope="col">Precio Liquidación</th>
+                                        <th>pagada</th>
+                                        <th scope="col">Pagada</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
                                     </thead>
@@ -268,21 +189,33 @@
                                         @foreach ($salidas as $salida)
                                             <tr>
                                                 <td>{{ $salida->id }}</td>
-                                                <td>{{ date("d/m/Y", strtotime($salida->fecha)) }}</td>
-                                                <td>{{ $salida->albaran }}</td>
                                                 <td>{{ $salida->traza }}</td>
+                                                <td>{{ date("d/m/Y", strtotime($salida->fecha)) }}</td>
                                                 <td>{{ $salida->proveedor_id }}</td>
                                                 <td>{{ (isset($salida->proveedor)) ? $salida->proveedor->proveedor : "" }}</td>
                                                 <td>{{ $salida->articulo_id }}</td>
                                                 <td>{{ (isset($salida->articulo)) ? $salida->articulo->articulo : "" }}</td>
+                                                <td class="text-right">{{ round($salida->cajas, 2) }}</td>
                                                 <td class="text-right">{{ round($salida->cantidad, 2) }}</td>
-                                                <td>{{ $salida->variedad }}</td>
+                                                <td class="text-right">{{ round($salida->precio, 2) }}</td>
+                                                <td>{{ $salida->cliente_id }}</td>
+                                                <td>{{ (isset($salida->cliente)) ? $salida->cliente->cliente : "" }}</td>
+                                                <td class="text-right">{{ round($salida->coste, 2) }}</td>
+                                                <td class="text-right">{{ round($salida->comision, 2) }}</td>
+                                                <td class="text-right">{{ round($salida->precio_liquidacion, 2) }}</td>
+                                                <td>{{ $salida->pagada }}</td>
                                                 <td class="text-center">
-                                                    @can('Trazabilidad - Salidas | Crear')
-                                                        <a href="javascript:void(0);" class="text-primary mr-2 salida"
+                                                    <label class="checkbox checkbox-primary">
+                                                        <input type="checkbox" {{ ($salida->pagada) ? "checked" : "" }}>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </td>
+                                                <td class="text-center">
+                                                    @can('Trazabilidad - Liquidaciones | Crear')
+                                                        <a href="javascript:void(0);" class="text-primary mr-2 liquidacion"
                                                            data-toggle="tooltip" data-placement="top" title=""
-                                                           data-original-title="Generar Salida">
-                                                            <i class="nav-icon i-Arrow-Outside font-weight-bold "></i>
+                                                           data-original-title="Generar Liquidación">
+                                                            <i class="nav-icon i-Money-2 font-weight-bold "></i>
                                                         </a>
                                                     @endcan
                                                     @can('Trazabilidad - Salidas | Modificar')
@@ -333,22 +266,10 @@
     <script>
         var table_salidas;
         var salida_form;
-        var salida_form;
 
         $(document).ready(function () {
             $(".chosen").selectpicker({
                 liveSearch: true
-            });
-
-            salida_form = $("#salida_form").validate({
-                errorPlacement: function (error, element) {
-                    error.addClass('invalid-feedback');
-                    if ($(element).is('select')) {
-                        element.parent().after(error); // special placement for select elements
-                    } else {
-                        error.insertAfter(element);  // default placement for everything else
-                    }
-                }
             });
 
             salida_form = $("#salida_form").validate({
@@ -370,7 +291,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [{
-                    targets: [0, 4, 6],
+                    targets: [0, 3, 5, 10, 15],
                     visible: false
                 },]
             });
@@ -397,15 +318,15 @@
                 })
             });
 
-            $("#salidas_table .salida").on('click', function () {
+            $("#entradas_table .liquidacion").on('click', function () {
                 var tr = $(this).closest('tr');
-                var row = table_salidas.row(tr).data();
+                var row = table_entradas.row(tr).data();
                 var id = row[0];
 
-                $("#salida_salida_id").val(id);
+                $("#salida_id").val(id);
 
                 LimpiarCamposSalida();
-                $("#modal-salida-title").html("Nueva Salida");
+                $("#modal-salida-title").html("Generar Liquidación");
                 $("#modal-salida").modal('show');
             });
 

@@ -19,7 +19,7 @@ class CreateTzEntradasTable extends Migration
             $table->string('traza', 35)->nullable()->default(null);
             $table->unsignedBigInteger('proveedor_id')->nullable();
             $table->unsignedBigInteger('articulo_id')->nullable();
-            $table->double('cantidad', 15, 8)->nullable()->default(0);
+            $table->double('cantidad', 15, 3)->nullable()->default(0);
             $table->string('variedad')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();

@@ -244,7 +244,7 @@
             @can('Trazabilidad - Liquidaciones | Acceso')
             <li class="nav-item">
                 <a href="#loader">
-                    <i class="nav-icon i-Arrow-Outside"></i>
+                    <i class="nav-icon i-Money-2"></i>
                     <span class="item-name">Liquidaciones</span>
                 </a>
             </li>

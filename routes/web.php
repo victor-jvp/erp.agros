@@ -155,6 +155,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('trazabilidad/salidas', 'TzSalidasController@index')->name('tz.salidas.index');
     Route::post('trazabilidad/salidas/store', 'TzSalidasController@store')->name('tz.salidas.store');
     Route::get('trazabilidad/salidas/show/{id}', 'TzSalidasController@show')->name('tz.salidas.show');
+    Route::get('trazabilidad/salidas/getByEntrada', 'TzSalidasController@getByEntrada')->name('tz.salidas.getByEntrada');
     Route::get('trazabilidad/salidas/delete/{id}', 'TzSalidasController@delete')->name('tz.salidas.delete');
     #endregion
     #region Clientes

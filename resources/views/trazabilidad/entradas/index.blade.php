@@ -47,7 +47,8 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label for="fecha">Fecha</label>
-                                                <input type="date" class="form-control" id="fecha" name="fecha" required>
+                                                <input type="date" class="form-control" id="fecha" name="fecha"
+                                                       required>
                                             </div>
                                         </div>
 
@@ -82,7 +83,8 @@
                                                         required>
                                                     <option value=""></option>
                                                     @foreach ($articulos as $articulo)
-                                                        <option value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
+                                                        <option
+                                                            value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -118,125 +120,197 @@
                     {{--Modal Generar Salida--}}
                     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                          aria-hidden="true" id="modal-salida">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <form action="/trazabilidad/salidas/create" method="POST" id="salida_form">
-                                    @csrf
-                                    <input type="hidden" name="entrada_id" id="salida_entrada_id">
 
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-salida-title"></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-salida-title"></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="table-salidas-tab" data-toggle="tab"
+                                               href="#table-salidas"
+                                               role="tab"
+                                               aria-controls="table-salidas" aria-selected="false">Salidas</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="new-salida-tab" data-toggle="tab" href="#new-salida"
+                                               role="tab"
+                                               aria-controls="pallets" aria-selected="false">Nueva</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade active show" id="table-salidas" role="tabpanel"
+                                             aria-labelledby="table-salidas-tab">
+
+                                            <div class="row">
+                                                <div class="col-md-12 mb-3 table-responsive">
+                                                    <table id="salidas_table"
+                                                           class="display table table-striped table-bordered"
+                                                           style="width:100%">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>id</th>
+                                                            <th scope="col">Traza Salida</th>
+                                                            <th scope="col">Fecha</th>
+                                                            <th>proveedor_id</th>
+                                                            <th scope="col">Proveedor</th>
+                                                            <th>articulo_id</th>
+                                                            <th scope="col">Artículo</th>
+                                                            <th scope="col">Cajas</th>
+                                                            <th scope="col">Kilos</th>
+                                                            <th scope="col">Precio Venta</th>
+                                                            <th>cliente_id</th>
+                                                            <th scope="col">Cliente</th>
+                                                            <th scope="col">Coste</th>
+                                                            <th scope="col">Comisión</th>
+                                                            <th scope="col">Precio Liquidación</th>
+                                                            <th scope="col">Pagada</th>
+                                                            <th scope="col">Acciones</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="tab-pane fade" id="new-salida" role="tabpanel"
+                                             aria-labelledby="new-salida-tab">
+                                            <form action="/trazabilidad/salidas/store" method="POST" id="salida_form">
+                                                @csrf
+                                                <input type="hidden" name="entrada_id" id="salida_entrada_id">
+                                                <input type="hidden" name="salida_id" id="salida_id">
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_traza">Traza</label>
+                                                        <input type="text" class="form-control" id="salida_traza"
+                                                               placeholder="Traza Salida" required="" name="traza">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_fecha">Fecha</label>
+                                                        <input type="date" class="form-control" id="salida_fecha"
+                                                               value="{{ date('Y-m-d') }}" placeholder="Fecha"
+                                                               required=""
+                                                               name="fecha">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_proveedor">Proveedor</label>
+                                                        <select name="proveedor_id" id="salida_proveedor" required
+                                                                class="form-control chosen">
+                                                            <option value=""></option>
+                                                            @foreach ($proveedores as $proveedor)
+                                                                <option
+                                                                    value="{{ $proveedor->id }}">{{ $proveedor->proveedor }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_articulo">Artículo</label>
+                                                        <select name="articulo_id" id="salida_articulo"
+                                                                class="form-control chosen" required>
+                                                            <option value=""></option>
+                                                            @foreach ($articulos as $articulo)
+                                                                <option
+                                                                    value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_cajas">Cajas</label>
+                                                        <input type="number" class="form-control" id="salida_cajas"
+                                                               placeholder="Cajas" name="cajas">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_cantidad">Kilos</label>
+                                                        <input type="number" class="form-control" id="salida_cantidad"
+                                                               required
+                                                               name="cantidad" placeholder="Kilos">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_precio">Precio Venta</label>
+                                                        <input type="number" class="form-control" id="salida_precio"
+                                                               placeholder="Precio Venta" name="precio">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_cliente">Cliente</label>
+                                                        <select name="cliente_id" id="salida_cliente"
+                                                                class="form-control chosen">
+                                                            <option value=""></option>
+                                                            @foreach ($clientes as $cliente)
+                                                                <option
+                                                                    value="{{ $cliente->id }}">{{ $cliente->cliente }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_coste">Coste</label>
+                                                        <input type="number" class="form-control" id="salida_coste"
+                                                               placeholder="Coste" name="coste">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_comision">Comisión</label>
+                                                        <input type="number" class="form-control" id="salida_comision"
+                                                               placeholder="Comisión" name="comision">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_precio_liquidacion">Precio
+                                                            Liquidación</label>
+                                                        <input type="number" class="form-control"
+                                                               id="salida_precio_liquidacion"
+                                                               placeholder="Precio Liquidación"
+                                                               name="precio_liquidacion">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3 mt-4">
+                                                        <label class="checkbox checkbox-primary">
+                                                            <input type="checkbox" id="salida_pagada" name="pagada">
+                                                            <span>Pagada</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                @can('Trazabilidad - Salidas | Crear')
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Guardar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                @endcan
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_traza">Traza</label>
-                                                <input type="text" class="form-control" id="salida_traza"
-                                                       placeholder="Traza Salida" required="" name="fecha">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_fecha">Fecha</label>
-                                                <input type="date" class="form-control" id="salida_fecha"
-                                                       value="{{ date('Y-m-d') }}" placeholder="Fecha" required=""
-                                                       name="fecha">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_proveedor">Proveedor</label>
-                                                <select name="proveedor_id" id="salida_proveedor" required
-                                                        class="form-control chosen">
-                                                    <option value=""></option>
-                                                    @foreach ($proveedores as $proveedor)
-                                                        <option value="{{ $proveedor->id }}">{{ $proveedor->proveedor }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_articulo">Artículo</label>
-                                                <select name="articulo_id" id="salida_articulo"
-                                                        class="form-control chosen" required>
-                                                    <option value=""></option>
-                                                    @foreach ($articulos as $articulo)
-                                                        <option value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_cajas">Cajas</label>
-                                                <input type="number" class="form-control" id="salida_cajas"
-                                                       placeholder="Cajas" name="cajas">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_cantidad">Kilos</label>
-                                                <input type="number" class="form-control" id="salida_cantidad" required
-                                                       name="cantidad" placeholder="Kilos">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_precio">Precio Venta</label>
-                                                <input type="number" class="form-control" id="salida_precio"
-                                                       placeholder="Precio Venta" name="precio">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_cliente">Cliente</label>
-                                                <select name="cliente_id" id="salida_cliente"
-                                                        class="form-control chosen">
-                                                    <option value=""></option>
-                                                    @foreach ($clientes as $cliente)
-                                                        <option value="{{ $cliente->id }}">{{ $cliente->cliente }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_coste">Coste</label>
-                                                <input type="number" class="form-control" id="salida_coste"
-                                                       placeholder="Coste" name="coste">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_comision">Comisión</label>
-                                                <input type="number" class="form-control" id="salida_comision"
-                                                       placeholder="Comisión" name="comision">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="salida_precio_liquidacion">Precio Liquidación</label>
-                                                <input type="number" class="form-control" id="salida_precio_liquidacion"
-                                                       placeholder="Precio Liquidación" name="precio_liquidacion">
-                                            </div>
-                                            <div class="col-md-6 mb-3 mt-4">
-                                                <label class="checkbox checkbox-primary">
-                                                    <input type="checkbox" id="salida_pagada" name="comision">
-                                                    <span>Pagada</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Cerrar
-                                        </button>
-                                        @can('Trazabilidad - Salidas | Crear')
-                                            <button type="submit" class="btn btn-primary">Guardar</button>
-                                        @endcan
-                                    </div>
-                                </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                        Cerrar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -278,10 +352,10 @@
                                                 <td class="text-right">{{ round($entrada->cantidad, 2) }}</td>
                                                 <td>{{ $entrada->variedad }}</td>
                                                 <td class="text-center">
-                                                    @can('Trazabilidad - Salidas | Crear')
+                                                    @can('Trazabilidad - Salidas | Acceso')
                                                         <a href="javascript:void(0);" class="text-primary mr-2 salida"
                                                            data-toggle="tooltip" data-placement="top" title=""
-                                                           data-original-title="Generar Salida">
+                                                           data-original-title="Salidas">
                                                             <i class="nav-icon i-Arrow-Outside font-weight-bold "></i>
                                                         </a>
                                                     @endcan
@@ -332,8 +406,10 @@
 
     <script>
         var table_entradas;
+        var table_salidas;
         var entrada_form;
         var salida_form;
+        var entrada_id;
 
         $(document).ready(function () {
             $(".chosen").selectpicker({
@@ -364,6 +440,33 @@
         });
 
         $(function () {
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "date-uk-pre": function (a) {
+                    var ukDatea = a.split('/');
+                    return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+                },
+
+                "date-uk-asc": function (a, b) {
+                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+                },
+
+                "date-uk-desc": function (a, b) {
+                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+                }
+            });
+            jQuery.fn.dataTable.Api.register('sum()', function () {
+                return this.flatten().reduce(function (a, b) {
+                    if (typeof a === 'string') {
+                        a = a.replace(/[^\d.-]/g, '') * 1;
+                    }
+                    if (typeof b === 'string') {
+                        b = b.replace(/[^\d.-]/g, '') * 1;
+                    }
+
+                    return a + b;
+                }, 0);
+            });
+
             // Configuracion de Datatable
             table_entradas = $('#entradas_table').DataTable({
                 language: {
@@ -373,6 +476,63 @@
                     targets: [0, 4, 6],
                     visible: false
                 },]
+            });
+
+            table_salidas = $('#salidas_table').DataTable({
+                language: {
+                    url: "{{ asset('assets/Spanish.json')}}"
+                },
+                ajax: {
+                    url: "{{ route('tz.salidas.getByEntrada') }}",
+                    data: function (d) {
+                        d.entrada_id = entrada_id
+                    }
+                },
+                columns: [
+                    {data: "id"},
+                    {data: "traza"},
+                    {
+                        data: "fecha", render: function (data) {
+                            return moment(data, 'YYYY-MM-DD').format('DD/MM/YYYY')
+                        }
+                    },
+                    {data: "proveedor_id"},
+                    {
+                        data: null, render: function (data, type, row) {
+                            return row.proveedor.proveedor;
+                        }
+                    },
+                    {data: "articulo_id"},
+                    {
+                        data: null, render: function (data, type, row) {
+                            return row.articulo.articulo;
+                        }
+                    },
+                    {data: "cajas"},
+                    {data: "cantidad"},
+                    {data: "precio"},
+                    {data: "cliente_id"},
+                    {
+                        data: null, render: function (data, type, row) {
+                            return row.cliente.cliente;
+                        }
+                    },
+                    {data: "coste"},
+                    {data: "comision"},
+                    {data: "precio_liquidacion"},
+                    {data: "pagada"},
+                    {
+                        data: null, render: function (data, type, row) {
+                            return '-Opciones-';
+                        }
+                    }
+                ],
+                columnDefs: [{
+                    targets: [0, 3, 5, 10, 15],
+                    visible: false
+                }],
+                responsive: true,
+                paging: false
             });
 
             $('#entradas_table .delete').on('click', function () {
@@ -403,9 +563,11 @@
                 var id = row[0];
 
                 $("#salida_entrada_id").val(id);
+                entrada_id = id;
+                table_salidas.ajax.reload();
 
                 LimpiarCamposSalida();
-                $("#modal-salida-title").html("Nueva Salida");
+                $("#modal-salida-title").html("Salidas");
                 $("#modal-salida").modal('show');
             });
 
@@ -425,7 +587,7 @@
                 $("#variedad").val(row[9]);
 
                 LimpiarCamposSalida();
-                $("#modal-entrada-title").html("Detalles de Salida");
+                $("#modal-entrada-title").html("Modificar entrada");
                 $("#modal-entrada").modal('show');
             });
 

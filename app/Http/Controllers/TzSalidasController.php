@@ -42,13 +42,19 @@ class TzSalidasController extends Controller
             return redirect()->route('tz.salidas.index');
         }
 
-        $salida->fecha        = $request->fecha;
-        $salida->albaran      = $request->albaran;
-        $salida->traza        = $request->traza;
-        $salida->proveedor_id = $request->proveedor_id;
-        $salida->articulo_id  = $request->articulo_id;
-        $salida->cantidad     = $request->cantidad;
-        $salida->variedad     = $request->variedad;
+        $salida->traza              = $request->traza;
+        $salida->fecha              = $request->fecha;
+        $salida->proveedor_id       = $request->proveedor_id;
+        $salida->articulo_id        = $request->articulo_id;
+        $salida->entrada_id         = $request->entrada_id;
+        $salida->cantidad           = $request->cantidad;
+        $salida->cajas              = $request->cajas;
+        $salida->precio             = $request->precio;
+        $salida->cliente_id         = $request->cliente_id;
+        $salida->coste              = $request->coste;
+        $salida->comision           = $request->comision;
+        $salida->precio_liquidacion = $request->precio_liquidacion;
+        $salida->pagada             = (isset($request->pagada)) ? true : false;
 
         $salida->save();
 
@@ -58,5 +64,23 @@ class TzSalidasController extends Controller
     public function show($id)
     {
         return view('trazabilidad.salidas.show');
+    }
+
+    public function getByEntrada(Request $request)
+    {
+        if (is_null($request->get('entrada_id'))) {
+            return response()->json(array('data' => []));
+        }
+
+        $data = array();
+        $entrada = TzEntrada::with([
+            'salidas.proveedor',
+            'salidas.cliente',
+            'salidas.articulo'
+        ])->find($request->get('entrada_id'));
+
+        $data['data'] = $entrada->salidas;
+
+        return response()->json($data);
     }
 }
