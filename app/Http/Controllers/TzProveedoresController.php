@@ -11,7 +11,7 @@ class TzProveedoresController extends Controller
     public function index(Request $request)
     {
         //PERMISO DE ACCESO
-        if (!Auth::user()->can('Trazabilidad - Proveedores | Acceso')) {
+        if (!Auth::user()->can('AgroAlfaro - Proveedores | Acceso')) {
             return redirect()->route('home');
         }
 
@@ -19,7 +19,7 @@ class TzProveedoresController extends Controller
             "proveedores" => TzProveedor::all(),
         );
 
-        return view('trazabilidad.proveedores.index', $data);
+        return view('agroAlfaro.proveedores.index', $data);
     }
 
     public function create(Request $request)
@@ -41,13 +41,13 @@ class TzProveedoresController extends Controller
     {
 
         //PERMISO DE ACCESO
-        if (!Auth::user()->can('Trazabilidad - Proveedores | Acceso') || !Auth::user()->can('Trazabilidad - Proveedores | Modificar')) {
+        if (!Auth::user()->can('AgroAlfaro - Proveedores | Acceso') || !Auth::user()->can('AgroAlfaro - Proveedores | Modificar')) {
             return redirect()->route('home');
         }
 
         $data['proveedor'] = TzProveedor::find($id);
 
-        return view('trazabilidad.proveedores.show', $data);
+        return view('agroAlfaro.proveedores.show', $data);
     }
 
     public function update(Request $request, $id)

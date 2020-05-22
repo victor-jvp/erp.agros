@@ -32,6 +32,7 @@ class CreatePedidosProduccionTable extends Migration
             $table->unsignedInteger('estado_id')->nullable();
             $table->unsignedInteger('cancelado_id')->nullable();
             $table->string('cancelado_coment')->nullable();
+
             $table->foreign('dia_id')->references('id')->on('cat_dias_semana');
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->foreign('destino_id')->references('id')->on('clientes_destinos');

@@ -15,7 +15,7 @@ class TzEntradasController extends Controller
     public function index()
     {
         //PERMISO DE ACCESO
-        if (!Auth::user()->can('Trazabilidad - Entradas | Acceso')) {
+        if (!Auth::user()->can('AgroAlfaro - Entradas | Acceso')) {
             return redirect()->route('home');
         }
 
@@ -26,7 +26,7 @@ class TzEntradasController extends Controller
             "entradas"    => TzEntrada::all()
         );
 
-        return view('trazabilidad.entradas.index', $data);
+        return view('agroAlfaro.entradas.index', $data);
     }
 
     public function store(Request $request)
@@ -58,6 +58,6 @@ class TzEntradasController extends Controller
 
     public function show($id)
     {
-        return view('trazabilidad.entradas.show');
+        return view('agroAlfaro.entradas.show');
     }
 }

@@ -146,41 +146,25 @@ Route::group(['middleware' => 'auth'], function () {
 #region Trazabilidad AgroAlfa
 
     #region Entradas
-    Route::get('trazabilidad/entradas', 'TzEntradasController@index')->name('tz.entradas.index');
-    Route::post('trazabilidad/entradas/store', 'TzEntradasController@store')->name('tz.entradas.store');
-    Route::get('trazabilidad/entradas/show/{id}', 'TzEntradasController@show')->name('tz.entradas.show');
-    Route::get('trazabilidad/entradas/delete/{id}', 'TzEntradasController@delete')->name('tz.entradas.delete');
+    Route::get('agroAlfaro/entradas', 'TzEntradasController@index')->name('tz.entradas.index');
+    Route::post('agroAlfaro/entradas/store', 'TzEntradasController@store')->name('tz.entradas.store');
+    Route::get('agroAlfaro/entradas/show/{id}', 'TzEntradasController@show')->name('tz.entradas.show');
+    Route::get('agroAlfaro/entradas/delete/{id}', 'TzEntradasController@delete')->name('tz.entradas.delete');
     #endregion
     #region Salidas
-    Route::get('trazabilidad/salidas', 'TzSalidasController@index')->name('tz.salidas.index');
-    Route::post('trazabilidad/salidas/store', 'TzSalidasController@store')->name('tz.salidas.store');
-    Route::get('trazabilidad/salidas/show/{id}', 'TzSalidasController@show')->name('tz.salidas.show');
-    Route::get('trazabilidad/salidas/getByEntrada', 'TzSalidasController@getByEntrada')->name('tz.salidas.getByEntrada');
-    Route::get('trazabilidad/salidas/delete/{id}', 'TzSalidasController@delete')->name('tz.salidas.delete');
-    #endregion
-    #region Clientes
-    Route::get('trazabilidad/clientes', 'TzClientesController@index')->name('tz.clientes.index');
-    Route::get('trazabilidad/clientes/create', 'TzClientesController@create')->name('tz.clientes.create');
-    Route::post('trazabilidad/clientes/create', 'TzClientesController@create')->name('tz.clientes.create');
-    Route::get('trazabilidad/clientes/show/{id}', 'TzClientesController@show')->name('tz.clientes.show');
-    Route::put('trazabilidad/clientes/update/{id}', 'TzClientesController@update')->name('tz.clientes.update');
-    Route::get('trazabilidad/clientes/delete/{id}', 'TzClientesController@delete')->name('tz.clientes.delete');
+    Route::get('agroAlfaro/salidas', 'TzSalidasController@index')->name('tz.salidas.index');
+    Route::post('agroAlfaro/salidas/store', 'TzSalidasController@store')->name('tz.salidas.store');
+    Route::get('agroAlfaro/salidas/show/{id}', 'TzSalidasController@show')->name('tz.salidas.show');
+    Route::get('agroAlfaro/salidas/getByEntrada', 'TzSalidasController@getByEntrada')->name('tz.salidas.getByEntrada');
+    Route::get('agroAlfaro/salidas/delete/{id}', 'TzSalidasController@delete')->name('tz.salidas.delete');
     #endregion
     #region Proveedores
-    Route::get('trazabilidad/proveedores', 'TzproveedoresController@index')->name('tz.proveedores.index');
-    Route::get('trazabilidad/proveedores/create', 'TzproveedoresController@create')->name('tz.proveedores.create');
-    Route::post('trazabilidad/proveedores/create', 'TzproveedoresController@create')->name('tz.proveedores.create');
-    Route::get('trazabilidad/proveedores/show/{id}', 'TzproveedoresController@show')->name('tz.proveedores.show');
-    Route::put('trazabilidad/proveedores/update/{id}', 'TzproveedoresController@update')->name('tz.proveedores.update');
-    Route::get('trazabilidad/proveedores/delete/{id}', 'TzproveedoresController@delete')->name('tz.proveedores.delete');
-    #endregion
-    #region Artículos
-    Route::get('trazabilidad/articulos', 'TzArticulosController@index')->name('tz.articulos.index');
-    Route::get('trazabilidad/articulos/create', 'TzArticulosController@create')->name('tz.articulos.create');
-    Route::post('trazabilidad/articulos/create', 'TzArticulosController@create')->name('tz.articulos.create');
-    Route::get('trazabilidad/articulos/show/{id}', 'TzArticulosController@show')->name('tz.articulos.show');
-    Route::put('trazabilidad/articulos/update/{id}', 'TzArticulosController@update')->name('tz.articulos.update');
-    Route::get('trazabilidad/articulos/delete/{id}', 'TzArticulosController@delete')->name('tz.articulos.delete');
+    Route::get('agroAlfaro/proveedores', 'TzproveedoresController@index')->name('tz.proveedores.index');
+    Route::get('agroAlfaro/proveedores/create', 'TzproveedoresController@create')->name('tz.proveedores.create');
+    Route::post('agroAlfaro/proveedores/create', 'TzproveedoresController@create')->name('tz.proveedores.create');
+    Route::get('agroAlfaro/proveedores/show/{id}', 'TzproveedoresController@show')->name('tz.proveedores.show');
+    Route::put('agroAlfaro/proveedores/update/{id}', 'TzproveedoresController@update')->name('tz.proveedores.update');
+    Route::get('agroAlfaro/proveedores/delete/{id}', 'TzproveedoresController@delete')->name('tz.proveedores.delete');
     #endregion
 #endregion
 

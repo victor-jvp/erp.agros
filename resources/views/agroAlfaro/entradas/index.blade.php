@@ -2,7 +2,7 @@
 
 @section('main-content')
     <div class="breadcrumb">
-        <h1>Trazabilidad</h1>
+        <h1>AgroAlfaro</h1>
         <ul>
             {{-- <li><a href="">UI Kits</a></li> --}}
             <li>Entradas</li>
@@ -21,7 +21,7 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
 
                     <div class="row">
-                        @can('Trazabilidad - Entradas | Crear')
+                        @can('AgroAlfaro - Entradas | Crear')
                             <div class="col-md-3">
                                 <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
                             </div>
@@ -33,7 +33,7 @@
                          aria-hidden="true" id="modal-entrada">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="/trazabilidad/entradas/store" method="POST" id="entrada_form">
+                                <form action="/agroAlfaro/entradas/store" method="POST" id="entrada_form">
                                     @csrf
                                     <input type="hidden" name="entrada_id" id="entrada_id">
 
@@ -108,7 +108,7 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        @can('Trazabilidad - Entradas | Crear')
+                                        @can('AgroAlfaro - Entradas | Crear')
                                             <button type="submit" class="btn btn-primary">Guardar</button>
                                         @endcan
                                     </div>
@@ -183,7 +183,7 @@
                                         </div>
                                         <div class="tab-pane fade" id="new-salida" role="tabpanel"
                                              aria-labelledby="new-salida-tab">
-                                            <form action="/trazabilidad/salidas/store" method="POST" id="salida_form">
+                                            <form action="/agroAlfaro/salidas/store" method="POST" id="salida_form">
                                                 @csrf
                                                 <input type="hidden" name="entrada_id" id="salida_entrada_id">
                                                 <input type="hidden" name="salida_id" id="salida_id">
@@ -293,7 +293,7 @@
                                                     </div>
                                                 </div>
 
-                                                @can('Trazabilidad - Salidas | Crear')
+                                                @can('AgroAlfaro - Salidas | Crear')
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <button type="submit" class="btn btn-primary">
@@ -352,21 +352,21 @@
                                                 <td class="text-right">{{ round($entrada->cantidad, 2) }}</td>
                                                 <td>{{ $entrada->variedad }}</td>
                                                 <td class="text-center">
-                                                    @can('Trazabilidad - Salidas | Acceso')
+                                                    @can('AgroAlfaro - Salidas | Acceso')
                                                         <a href="javascript:void(0);" class="text-primary mr-2 salida"
                                                            data-toggle="tooltip" data-placement="top" title=""
                                                            data-original-title="Salidas">
                                                             <i class="nav-icon i-Arrow-Outside font-weight-bold "></i>
                                                         </a>
                                                     @endcan
-                                                    @can('Trazabilidad - Entradas | Modificar')
+                                                    @can('AgroAlfaro - Entradas | Modificar')
                                                         <a href="javascript:void(0);" class="text-success mr-2 edit"
                                                            data-toggle="tooltip" data-placement="top" title=""
                                                            data-original-title="Editar">
                                                             <i class="nav-icon i-Pen-2 font-weight-bold "></i>
                                                         </a>
                                                     @endcan
-                                                    @can('Trazabilidad - Entradas | Borrar')
+                                                    @can('AgroAlfaro - Entradas | Borrar')
                                                         <a href="javascript:void(0);" class="text-danger mr-2 delete"
                                                            data-toggle="tooltip" data-placement="top" title=""
                                                            data-original-title="Borrar">
@@ -552,7 +552,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('trazabilidad/entradas/delete') }}" + "/" + row[
+                    window.location.href = "{{ url('agroAlfaro/entradas/delete') }}" + "/" + row[
                         0]
                 })
             });

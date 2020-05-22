@@ -14,18 +14,18 @@ class CreateTzEntradasTable extends Migration
     {
         Schema::create('tz_entradas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('proveedor_id');
+            $table->unsignedInteger('producto_id');
             $table->date('fecha')->nullable()->useCurrent();
             $table->string('albaran', 35)->nullable()->default(null);
             $table->string('traza', 35)->nullable()->default(null);
-            $table->unsignedBigInteger('proveedor_id')->nullable();
-            $table->unsignedBigInteger('articulo_id')->nullable();
             $table->double('cantidad', 15, 3)->nullable()->default(0);
             $table->string('variedad')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('proveedor_id')->references('id')->on('tz_proveedores');
-            $table->foreign('articulo_id')->references('id')->on('tz_articulos');
+            $table->foreign('producto_id')->references('id')->on('productoscompuestos_det');
         });
     }
 

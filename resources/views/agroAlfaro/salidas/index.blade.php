@@ -2,7 +2,7 @@
 
 @section('main-content')
     <div class="breadcrumb">
-        <h1>Trazabilidad</h1>
+        <h1>Agro Alfaro</h1>
         <ul>
             {{-- <li><a href="">UI Kits</a></li> --}}
             <li>Salidas</li>
@@ -21,7 +21,7 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
 
                     <div class="row">
-                        @can('Trazabilidad - Salidas | Crear')
+                        @can('AgroAlfaro - Salidas | Crear')
                             <div class="col-md-3">
                                 <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
                             </div>
@@ -33,7 +33,7 @@
                          aria-hidden="true" id="modal-salida">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="/trazabilidad/salidas/store" method="POST" id="salida_form">
+                                <form action="/agroAlfaro/salidas/store" method="POST" id="salida_form">
                                     @csrf
 
                                     <div class="modal-header">
@@ -146,7 +146,7 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Cerrar
                                         </button>
-                                        @can('Trazabilidad - Salidas | Crear')
+                                        @can('AgroAlfaro - Salidas | Crear')
                                             <button type="submit" class="btn btn-primary">Guardar</button>
                                         @endcan
                                     </div>
@@ -211,21 +211,21 @@
                                                     </label>
                                                 </td>
                                                 <td class="text-center">
-                                                    @can('Trazabilidad - Liquidaciones | Crear')
+                                                    @can('AgroAlfaro - Liquidaciones | Crear')
                                                         <a href="javascript:void(0);" class="text-primary mr-2 liquidacion"
                                                            data-toggle="tooltip" data-placement="top" title=""
                                                            data-original-title="Generar Liquidación">
                                                             <i class="nav-icon i-Money-2 font-weight-bold "></i>
                                                         </a>
                                                     @endcan
-                                                    @can('Trazabilidad - Salidas | Modificar')
+                                                    @can('AgroAlfaro - Salidas | Modificar')
                                                         <a href="javascript:void(0);" class="text-success mr-2 edit"
                                                            data-toggle="tooltip" data-placement="top" title=""
                                                            data-original-title="Editar">
                                                             <i class="nav-icon i-Pen-2 font-weight-bold "></i>
                                                         </a>
                                                     @endcan
-                                                    @can('Trazabilidad - Salidas | Borrar')
+                                                    @can('AgroAlfaro - Salidas | Borrar')
                                                         <a href="javascript:void(0);" class="text-danger mr-2 delete"
                                                            data-toggle="tooltip" data-placement="top" title=""
                                                            data-original-title="Borrar">
@@ -313,7 +313,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('trazabilidad/salidas/delete') }}" + "/" + row[
+                    window.location.href = "{{ url('agroAlfaro/salidas/delete') }}" + "/" + row[
                         0]
                 })
             });

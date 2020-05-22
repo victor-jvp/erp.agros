@@ -46,19 +46,17 @@
                 <div class="triangle"></div>
             </li>
             @endcan
-            @canany(['Trazabilidad - Entradas | Acceso',
-                    'Trazabilidad - Salidas | Acceso',
-                    'Trazabilidad - Liquidaciones | Acceso',
-                    'Trazabilidad - Proveedores | Acceso',
-                    'Trazabilidad - Clientes | Acceso',
-                    'Trazabilidad - Artículos | Acceso'])
-                <li class="nav-item {{ request()->is('trazabilidad/*') ? 'active' : '' }}" data-item="trazabilidad">
-                    <a class="nav-item-hold" href="#">
-                        <i class="nav-icon i-Post-Sign-2-ways"></i>
-                        <span class="nav-text">Trazabilidad</span>
-                    </a>
-                    <div class="triangle"></div>
-                </li>
+            @canany(['AgroAlfaro - Entradas | Acceso',
+            'AgroAlfaro - Salidas | Acceso',
+            'AgroAlfaro - Liquidaciones | Acceso',
+            'AgroAlfaro - Proveedores | Acceso'])
+            <li class="nav-item {{ request()->is('agroAlfaro/*') ? 'active' : '' }}" data-item="agroAlfaro">
+                <a class="nav-item-hold" href="#">
+                    <i class="nav-icon i-Post-Sign-2-ways"></i>
+                    <span class="nav-text">Agro Alfaro</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
             @endcanany
             @can('Maestros | Acceso')
             <li class="nav-item {{ request()->is('maestros/*') ? 'active' : '' }}" data-item="maestros">
@@ -215,33 +213,30 @@
         </ul>
         @endcan
 
-        @canany(['Trazabilidad - Entradas | Acceso',
-        'Trazabilidad - Salidas | Acceso',
-        'Trazabilidad - Liquidaciones | Acceso',
-        'Trazabilidad - Proveedores | Acceso',
-        'Trazabilidad - Clientes | Acceso',
-        'Trazabilidad - Artículos | Acceso'])
-
-        <ul class="childNav" data-parent="trazabilidad">
-            @can('Trazabilidad - Entradas | Acceso')
+        @canany(['AgroAlfaro - Entradas | Acceso',
+        'AgroAlfaro - Salidas | Acceso',
+        'AgroAlfaro - Liquidaciones | Acceso',
+        'AgroAlfaro - Proveedores | Acceso'])
+        <ul class="childNav" data-parent="agroAlfaro">
+            @can('AgroAlfaro - Entradas | Acceso')
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='tz.entradas.index' ? 'open' : '' }}"
-                   href="{{ route('tz.entradas.index') }}">
+                    href="{{ route('tz.entradas.index') }}">
                     <i class="nav-icon i-Arrow-Inside"></i>
                     <span class="item-name">Entradas</span>
                 </a>
             </li>
             @endcan
-            @can('Trazabilidad - Salidas | Acceso')
+            @can('AgroAlfaro - Salidas | Acceso')
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='tz.salidas.index' ? 'open' : '' }}"
-                   href="{{ route('tz.salidas.index') }}">
+                    href="{{ route('tz.salidas.index') }}">
                     <i class="nav-icon i-Arrow-Outside"></i>
                     <span class="item-name">Salidas</span>
                 </a>
             </li>
             @endcan
-            @can('Trazabilidad - Liquidaciones | Acceso')
+            @can('AgroAlfaro - Liquidaciones | Acceso')
             <li class="nav-item">
                 <a href="#loader">
                     <i class="nav-icon i-Money-2"></i>
@@ -249,30 +244,12 @@
                 </a>
             </li>
             @endcan
-            @can('Trazabilidad - Proveedores | Acceso')
+            @can('AgroAlfaro - Proveedores | Acceso')
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='tz.proveedores.index' ? 'open' : '' }}"
                     href="{{ route('tz.proveedores.index') }}">
                     <i class="nav-icon i-Gears-2"></i>
                     <span class="item-name">Proveedores</span>
-                </a>
-            </li>
-            @endcan
-            @can('Trazabilidad - Clientes | Acceso')
-            <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='tz.clientes.index' ? 'open' : '' }}"
-                    href="{{ route('tz.clientes.index') }}">
-                    <i class="nav-icon i-Business-Mens"></i>
-                    <span class="item-name">Clientes</span>
-                </a>
-            </li>
-            @endcan
-            @can('Trazabilidad - Artículos | Acceso')
-            <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='tz.articulos.index' ? 'open' : '' }}"
-                    href="{{ route('tz.articulos.index') }}">
-                    <i class="nav-icon i-Structure"></i>
-                    <span class="item-name">Artículos</span>
                 </a>
             </li>
             @endcan
