@@ -2,7 +2,7 @@
 
 @section('main-content')
 <div class="breadcrumb">
-    <h1>AgroAlfaro</h1>
+    <h1>Agro Alfaro</h1>
     <ul>
         {{-- <li><a href="">UI Kits</a></li> --}}
         <li>Entradas</li>
@@ -119,7 +119,7 @@
                 {{--Modal Generar Salida--}}
                 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                     aria-hidden="true" id="modal-salida">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog modal-lg mw-100 w-100">
                         <div class="modal-content">
 
                             <div class="modal-header">
@@ -180,6 +180,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="new-salida" role="tabpanel"
                                         aria-labelledby="new-salida-tab">
+
                                         <form action="/agroAlfaro/salidas/store" method="POST" id="salida_form">
                                             @csrf
                                             <input type="hidden" name="entrada_id" id="salida_entrada_id">
@@ -189,13 +190,13 @@
                                                 <div class="col-md-6 mb-3">
                                                     <label for="salida_traza">Traza</label>
                                                     <input type="text" class="form-control" id="salida_traza"
-                                                        placeholder="Traza Salida" required="" name="traza">
+                                                           placeholder="Traza Salida" required="" name="traza">
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="salida_fecha">Fecha</label>
                                                     <input type="date" class="form-control" id="salida_fecha"
-                                                        value="{{ date('Y-m-d') }}" placeholder="Fecha" required=""
-                                                        name="fecha">
+                                                           value="{{ date('Y-m-d') }}" placeholder="Fecha" required=""
+                                                           name="fecha">
                                                 </div>
                                             </div>
 
@@ -203,23 +204,23 @@
                                                 <div class="col-md-6 mb-3">
                                                     <label for="salida_proveedor">Proveedor</label>
                                                     <select name="proveedor_id" id="salida_proveedor" required
-                                                        class="form-control chosen">
+                                                            class="form-control chosen">
                                                         <option value=""></option>
                                                         @foreach ($proveedores as $proveedor)
-                                                        <option value="{{ $proveedor->id }}">{{ $proveedor->proveedor }}
-                                                        </option>
+                                                            <option value="{{ $proveedor->id }}">{{ $proveedor->proveedor }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="salida_producto">Producto</label>
                                                     <select name="producto_id" id="salida_producto"
-                                                        class="form-control chosen" required>
+                                                            class="form-control chosen" required>
                                                         <option value=""></option>
                                                         @foreach ($compuestos as $compuesto)
-                                                        <option value="{{ $compuesto->id }}">
-                                                            {{ $compuesto->variable. " - ".$compuesto->caja->formato. " - ".$compuesto->caja->modelo }}
-                                                        </option>
+                                                            <option value="{{ $compuesto->id }}">
+                                                                {{ $compuesto->variable. " - ".$compuesto->caja->formato. " - ".$compuesto->caja->modelo }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -229,12 +230,12 @@
                                                 <div class="col-md-6 mb-3">
                                                     <label for="salida_cajas">Cajas</label>
                                                     <input type="number" class="form-control" id="salida_cajas"
-                                                        placeholder="Cajas" name="cajas">
+                                                           placeholder="Cajas" name="cajas">
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="salida_cantidad">Kilos</label>
                                                     <input type="number" class="form-control" id="salida_cantidad"
-                                                        required name="cantidad" placeholder="Kilos">
+                                                           required name="cantidad" placeholder="Kilos">
                                                 </div>
                                             </div>
 
@@ -242,16 +243,16 @@
                                                 <div class="col-md-6 mb-3">
                                                     <label for="salida_precio">Precio Venta</label>
                                                     <input type="number" class="form-control" id="salida_precio" required
-                                                        placeholder="Precio Venta" name="precio">
+                                                           placeholder="Precio Venta" name="precio">
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="salida_cliente">Cliente</label>
                                                     <select name="cliente_id" id="salida_cliente" required
-                                                        class="form-control chosen">
+                                                            class="form-control chosen">
                                                         <option value=""></option>
                                                         @foreach ($clientes as $cliente)
-                                                        <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}
-                                                        </option>
+                                                            <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -261,12 +262,12 @@
                                                 <div class="col-md-6 mb-3">
                                                     <label for="salida_coste">Coste</label>
                                                     <input type="number" class="form-control" id="salida_coste"
-                                                        placeholder="Coste" name="coste">
+                                                           placeholder="Coste" name="coste">
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="salida_comision">Comisión</label>
                                                     <input type="number" class="form-control" id="salida_comision"
-                                                        placeholder="Comisión" name="comision">
+                                                           placeholder="Comisión" name="comision">
                                                 </div>
                                             </div>
 
@@ -275,8 +276,8 @@
                                                     <label for="salida_precio_liquidacion">Precio
                                                         Liquidación</label>
                                                     <input type="number" class="form-control"
-                                                        id="salida_precio_liquidacion" placeholder="Precio Liquidación"
-                                                        name="precio_liquidacion">
+                                                           id="salida_precio_liquidacion" placeholder="Precio Liquidación"
+                                                           name="precio_liquidacion">
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-4">
                                                     <label class="checkbox checkbox-primary">
@@ -288,15 +289,17 @@
                                             </div>
 
                                             @can('AgroAlfaro - Salidas | Crear')
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <button type="submit" class="btn btn-primary">
-                                                        Guardar
-                                                    </button>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Guardar
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             @endcan
                                         </form>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -547,7 +550,7 @@
                 {
                     data: null,
                     render: function (data, type, row) {
-                        return '-Opciones-';
+                        return "-Opciones-";
                     }
                 }
             ],

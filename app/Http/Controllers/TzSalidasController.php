@@ -23,7 +23,8 @@ class TzSalidasController extends Controller
             "proveedores" => TzProveedor::all(),
             "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
             "clientes"    => Cliente::all(),
-            "salidas"     => TzSalida::all()
+            "salidas"     => TzSalida::all(),
+            "entradas"    => TzEntrada::all(),
         );
 
         return view('agroAlfaro.salidas.index', $data);
@@ -31,6 +32,7 @@ class TzSalidasController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         if (is_null($request->salida_id)) {
             $salida = new TzSalida();
         }
