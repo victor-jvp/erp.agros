@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\TzArticulo;
-use App\TzCliente;
+use App\Cliente;
+use App\ProductoCompuesto_det;
 use App\TzEntrada;
 use App\TzProveedor;
 use App\TzSalida;
@@ -21,8 +21,8 @@ class TzSalidasController extends Controller
 
         $data = array(
             "proveedores" => TzProveedor::all(),
-            "articulos"   => TzArticulo::all(),
-            "clientes"    => TzCliente::all(),
+            "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
+            "clientes"    => Cliente::all(),
             "salidas"     => TzSalida::all()
         );
 
@@ -31,6 +31,7 @@ class TzSalidasController extends Controller
 
     public function store(Request $request)
     {
+
         if (is_null($request->salida_id)) {
             $salida = new TzSalida();
         }
@@ -45,7 +46,7 @@ class TzSalidasController extends Controller
         $salida->traza              = $request->traza;
         $salida->fecha              = $request->fecha;
         $salida->proveedor_id       = $request->proveedor_id;
-        $salida->articulo_id        = $request->articulo_id;
+        $salida->producto_id        = $request->producto_id;
         $salida->entrada_id         = $request->entrada_id;
         $salida->cantidad           = $request->cantidad;
         $salida->cajas              = $request->cajas;
@@ -76,7 +77,7 @@ class TzSalidasController extends Controller
         $entrada = TzEntrada::with([
             'salidas.proveedor',
             'salidas.cliente',
-            'salidas.articulo'
+            'salidas.producto.compuesto'
         ])->find($request->get('entrada_id'));
 
         $data['data'] = $entrada->salidas;

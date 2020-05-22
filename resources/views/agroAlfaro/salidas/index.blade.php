@@ -70,14 +70,15 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label for="salida_articulo">Artículo</label>
-                                                <select name="articulo_id" id="salida_articulo"
+                                                <label for="salida_producto">Producto</label>
+                                                <select name="producto_id" id="salida_producto"
                                                         class="form-control chosen" required>
                                                     <option value=""></option>
-                                                    @foreach ($articulos as $articulo)
-                                                        <option
-                                                            value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
-                                                    @endforeach
+                                                     @foreach ($compuestos as $compuesto)
+                                                        <option value="{{ $compuesto->id }}">
+                                                            {{ $compuesto->variable. " - ".$compuesto->caja->formato. " - ".$compuesto->caja->modelo }}
+                                                        </option>
+                                                        @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -169,8 +170,8 @@
                                         <th scope="col">Fecha</th>
                                         <th>proveedor_id</th>
                                         <th scope="col">Proveedor</th>
-                                        <th>articulo_id</th>
-                                        <th scope="col">Artículo</th>
+                                        <th>producto_id</th>
+                                        <th scope="col">Producto</th>
                                         <th scope="col">Cajas</th>
                                         <th scope="col">Kilos</th>
                                         <th scope="col">Precio Venta</th>
@@ -193,13 +194,13 @@
                                                 <td>{{ date("d/m/Y", strtotime($salida->fecha)) }}</td>
                                                 <td>{{ $salida->proveedor_id }}</td>
                                                 <td>{{ (isset($salida->proveedor)) ? $salida->proveedor->proveedor : "" }}</td>
-                                                <td>{{ $salida->articulo_id }}</td>
-                                                <td>{{ (isset($salida->articulo)) ? $salida->articulo->articulo : "" }}</td>
+                                                <td>{{ $salida->producto_id }}</td>
+                                                <td>{{ (!is_null($salida->producto_id)) ? $salida->producto->variable. " - ".$salida->producto->caja->formato. " - ".$salida->producto->caja->modelo : "" }}
                                                 <td class="text-right">{{ round($salida->cajas, 2) }}</td>
                                                 <td class="text-right">{{ round($salida->cantidad, 2) }}</td>
                                                 <td class="text-right">{{ round($salida->precio, 2) }}</td>
                                                 <td>{{ $salida->cliente_id }}</td>
-                                                <td>{{ (isset($salida->cliente)) ? $salida->cliente->cliente : "" }}</td>
+                                                <td>{{ (isset($salida->cliente)) ? $salida->razon_social : "" }}</td>
                                                 <td class="text-right">{{ round($salida->coste, 2) }}</td>
                                                 <td class="text-right">{{ round($salida->comision, 2) }}</td>
                                                 <td class="text-right">{{ round($salida->precio_liquidacion, 2) }}</td>
@@ -341,7 +342,7 @@
                 $("#albaran").val(row[2]);
                 $("#traza").val(row[3]);
                 $("#proveedor").val(row[4]).selectpicker('refresh');
-                $("#articulo").val(row[6]).selectpicker('refresh');
+                $("#producto").val(row[6]).selectpicker('refresh');
                 $("#cantidad").val(row[8]);
                 $("#variedad").val(row[9]);
 
@@ -368,7 +369,7 @@
         function LimpiarCamposSalida() {
             $("#salida_traza, #salida_cajas, #salida_cantidad, #salida_precio, #salida_coste, #salida_comision, #salida_precio_liquidacion")
                 .val(null);
-            $("#salida_proveedor, #salida_articulo, #salida_cliente").val(null).selectpicker();
+            $("#salida_proveedor, #salida_producto, #salida_cliente").val(null).selectpicker();
         }
 
     </script>

@@ -16,9 +16,9 @@ class TzEntrada extends Model
         return $this->belongsTo(TzProveedor::class, 'proveedor_id');
     }
 
-    public function articulo()
+    public function producto()
     {
-        return $this->belongsTo(TzArticulo::class, 'articulo_id');
+        return $this->belongsTo(ProductoCompuesto_det::class, 'producto_id');
     }
 
     public function salidas()

@@ -16,14 +16,14 @@ class TzSalida extends Model
         return $this->belongsTo(TzProveedor::class, 'proveedor_id');
     }
 
-    public function articulo()
+    public function producto()
     {
-        return $this->belongsTo(TzArticulo::class, 'articulo_id');
+        return $this->belongsTo(ProductoCompuesto_det::class, 'producto_id');
     }
 
     public function cliente()
     {
-        return $this->belongsTo(TzCliente::class, 'cliente_id');
+        return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
     public function entrada()

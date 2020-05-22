@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\TzArticulo;
-use App\TzCliente;
+use App\Cliente;
+use App\ProductoCompuesto_det;
 use App\TzEntrada;
 use App\TzProveedor;
 use Illuminate\Http\Request;
@@ -21,8 +21,8 @@ class TzEntradasController extends Controller
 
         $data = array(
             "proveedores" => TzProveedor::all(),
-            "articulos"   => TzArticulo::all(),
-            "clientes"    => TzCliente::all(),
+            "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
+            "clientes"    => Cliente::all(),
             "entradas"    => TzEntrada::all()
         );
 
@@ -34,8 +34,7 @@ class TzEntradasController extends Controller
 
         if (is_null($request->entrada_id)) {
             $entrada = new TzEntrada();
-        }
-        else {
+        } else {
             $entrada = TzEntrada::find($request->entrada_id);
         }
 
@@ -47,7 +46,7 @@ class TzEntradasController extends Controller
         $entrada->albaran      = $request->albaran;
         $entrada->traza        = $request->traza;
         $entrada->proveedor_id = $request->proveedor_id;
-        $entrada->articulo_id  = $request->articulo_id;
+        $entrada->producto_id  = $request->producto_id;
         $entrada->cantidad     = $request->cantidad;
         $entrada->variedad     = $request->variedad;
 
