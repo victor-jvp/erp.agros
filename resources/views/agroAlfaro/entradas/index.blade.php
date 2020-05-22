@@ -325,7 +325,7 @@
                                         <th>proveedor_id</th>
                                         <th scope="col">Proveedor</th>
                                         <th>producto_id</th>
-                                        <th scope="col">Artículo</th>
+                                        <th scope="col">Producto</th>
                                         <th scope="col">Kilos</th>
                                         <th scope="col">Variedad</th>
                                         <th scope="col">Acciones</th>
@@ -511,8 +511,7 @@
                 {
                     data: null,
                     render: function (data, type, row) {
-                        return row.producto.variable + " - " + row.producto.caja.formato +
-                            " - " + row.producto.caja.modelo;
+                        return row.producto.variable + " - " + row.producto.caja.formato + " - " + row.producto.caja.modelo;
                     }
                 },
                 {
@@ -530,7 +529,7 @@
                 {
                     data: null,
                     render: function (data, type, row) {
-                        return row.cliente.cliente;
+                        return row.cliente.razon_social;
                     }
                 },
                 {

@@ -31,7 +31,6 @@ class TzSalidasController extends Controller
 
     public function store(Request $request)
     {
-
         if (is_null($request->salida_id)) {
             $salida = new TzSalida();
         }
@@ -77,7 +76,7 @@ class TzSalidasController extends Controller
         $entrada = TzEntrada::with([
             'salidas.proveedor',
             'salidas.cliente',
-            'salidas.producto.compuesto'
+            'salidas.producto.caja'
         ])->find($request->get('entrada_id'));
 
         $data['data'] = $entrada->salidas;
