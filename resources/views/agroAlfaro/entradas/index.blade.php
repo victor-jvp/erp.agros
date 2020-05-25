@@ -618,7 +618,10 @@
                 columnDefs: [{
                     targets: [0, 4, 6],
                     visible: false
-                },]
+                },],
+                sorting: [
+                    [0, 'desc']
+                ]
             });
 
             table_salidas = $('#salidas_table').DataTable({
@@ -711,7 +714,10 @@
                     visible: false
                 }],
                 responsive: false,
-                paging: false
+                paging: false,
+                sorting: [
+                    [0, 'desc']
+                ]
             });
 
             $('#entradas_table .delete').on('click', function () {

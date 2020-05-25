@@ -238,7 +238,8 @@
             @endcan
             @can('AgroAlfaro - Liquidaciones | Acceso')
             <li class="nav-item">
-                <a href="#loader">
+                <a class="{{ Route::currentRouteName()=='tz.liquidaciones.index' ? 'open' : '' }}"
+                    href="{{ route('tz.liquidaciones.index') }}">
                     <i class="nav-icon i-Money-2"></i>
                     <span class="item-name">Liquidaciones</span>
                 </a>

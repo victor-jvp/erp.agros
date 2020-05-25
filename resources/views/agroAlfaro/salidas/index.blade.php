@@ -64,9 +64,12 @@
                                                         required>
                                                     <option value=""></option>
                                                     @foreach ($entradas as $entrada)
-                                                        <option value="{{ $entrada->id }}">
-                                                            {{ "Traza: ".$entrada->traza. " - Albaran: ". $entrada->albaran." - Kilos: ".$entrada->cantidad }}
-                                                        </option>
+                                                        @php($disponible = round($entrada->cantidad - $entrada->salidas->sum('cantidad'), 2))
+                                                        @if ($disponible>0)
+                                                            <option value="{{ $entrada->id }}" data-max="{{ $disponible }}">
+                                                                {{ "Traza: ".$entrada->traza. " - Albaran: ". $entrada->albaran." - Disponible: ". $disponible }}
+                                                            </option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -100,24 +103,6 @@
 
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <label for="cajas">Cajas</label>
-                                                <input type="number" class="form-control" id="cajas" placeholder="Cajas"
-                                                       name="cajas">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="cantidad">Kilos</label>
-                                                <input type="number" class="form-control" id="cantidad" required
-                                                       name="cantidad" placeholder="Kilos">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="precio">Precio Venta</label>
-                                                <input type="number" class="form-control" id="precio"
-                                                       placeholder="Precio Venta" name="precio">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
                                                 <label for="cliente">Cliente</label>
                                                 <select name="cliente_id" id="cliente" class="form-control chosen">
                                                     <option value=""></option>
@@ -126,6 +111,24 @@
                                                             value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="cajas">Cajas</label>
+                                                <input type="number" class="form-control" id="cajas" placeholder="Cajas"
+                                                       name="cajas">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="cantidad">Kilos</label>
+                                                <input type="number" class="form-control" id="cantidad" required
+                                                       name="cantidad" placeholder="Kilos">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="precio">Precio Venta</label>
+                                                <input type="number" class="form-control" id="precio"
+                                                       placeholder="Precio Venta" name="precio">
                                             </div>
                                         </div>
 
@@ -233,8 +236,7 @@
                                                     <ul class="pl-2">
                                                         <li>Traza: {{ $salida->entrada->traza }}</li>
                                                         <li>Albarán: {{ $salida->entrada->albaran }}</li>
-                                                        <li>Kilos: {{ round($salida->entrada->cantidad, 2) }}</li>
-                                                        {{-- <li>Disponible: {{ $salida->entrada->disponible }}</li> --}}
+                                                        <li>Disponible: {{ round($salida->entrada->cantidad - $salida->entrada->salidas->sum('cantidad'), 2) }}</li>
                                                     </ul>
 
                                                 </td>
@@ -324,6 +326,9 @@
                     visible: false
                 },],
                 responsive: false,
+                sorting: [
+                    [0, 'desc']
+                ]
             });
 
             $('#salidas_table .delete').on('click', function () {
@@ -343,8 +348,19 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('agroAlfaro/salidas/delete') }}" + "/" + row[
-                        0]
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ url('agroAlfaro/salidas/delete') }}" + "/" +row[0],
+                        dataType: 'JSON',
+                        success: function (json) {
+                            if (json == null || json == false) return;
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            console.log(error)
+                            alert('Error. Check Console Log');
+                        },
+                    });
                 })
             });
 
@@ -389,27 +405,37 @@
 
             $("#btnNuevo").click(function (e) {
                 LimpiarCamposSalida();
+
                 $("#salida_id").val(null);
                 $("#modal-salida-title").html("Nuevo Salida");
                 $("#modal-salida").modal('show');
             })
 
             $("#cantidad, #precio, #comision, #coste").change(function (e) {
-                var kilos = $("#kilos").val();
-                var precio = $("#precio").val();
-                var coste = $("#coste").val();
-                var comision = $("#comision").val();
+                var kilos = parseFloat($("#cantidad").val());
+                var precio = parseFloat($("#precio").val());
+                var coste = parseFloat($("#coste").val());
+                var comision = parseFloat($("#comision").val());
                 var precio_liquidacion = "";
 
                 if (kilos > 0 && precio > 0 && coste > 0 && comision > 0) {
-                    var total_venta = kilos * precio;
-                    var total_comision = total_venta - (total_venta * comision);
-                    precio_liquidacion = total_venta + total_comision + coste;
-
+                    var total_comision = precio - (precio * comision);
+                    precio_liquidacion = (precio - total_comision + coste).toFixed(2);
                 }
 
                 $("#precio_liquidacion").val(precio_liquidacion);
             });
+
+            $('#entrada').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                var valor = $(this).val();
+                $("#cantidad").removeAttr('max');
+
+                if (valor != "") {
+                    var max = $(this).find('option:selected').data('max');
+                    $("#cantidad").attr('max', max);
+                }
+            });
+
         });
 
         function LimpiarCamposSalida() {

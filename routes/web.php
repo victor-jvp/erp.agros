@@ -158,6 +158,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('agroAlfaro/salidas/getByEntrada', 'TzSalidasController@getByEntrada')->name('tz.salidas.getByEntrada');
     Route::get('agroAlfaro/salidas/delete/{id}', 'TzSalidasController@delete')->name('tz.salidas.delete');
     #endregion
+    #region Liquidaciones
+    Route::get('agroAlfaro/liquidaciones', 'TzLiquidacionesController@index')->name('tz.liquidaciones.index');
+    #endregion
     #region Proveedores
     Route::get('agroAlfaro/proveedores', 'TzproveedoresController@index')->name('tz.proveedores.index');
     Route::get('agroAlfaro/proveedores/create', 'TzproveedoresController@create')->name('tz.proveedores.create');
