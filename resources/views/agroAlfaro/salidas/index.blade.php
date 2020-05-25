@@ -394,7 +394,7 @@
                 $("#modal-salida").modal('show');
             })
 
-            $("#kilos, #precio, #comision").change(function (e) {
+            $("#cantidad, #precio, #comision, #coste").change(function (e) {
                 var kilos = $("#kilos").val();
                 var precio = $("#precio").val();
                 var coste = $("#coste").val();

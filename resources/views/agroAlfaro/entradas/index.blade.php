@@ -234,25 +234,6 @@
 
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="salida_cajas">Cajas</label>
-                                                        <input type="number" class="form-control" id="salida_cajas"
-                                                               placeholder="Cajas" name="cajas">
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="salida_cantidad">Kilos</label>
-                                                        <input type="number" class="form-control" id="salida_cantidad"
-                                                               required name="cantidad" placeholder="Kilos" min="0.01">
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="salida_precio">Precio Venta</label>
-                                                        <input type="number" class="form-control" id="salida_precio"
-                                                               required
-                                                               placeholder="Precio Venta" name="precio">
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
                                                         <label for="salida_cliente">Cliente</label>
                                                         <select name="cliente_id" id="salida_cliente" required
                                                                 class="form-control chosen">
@@ -263,6 +244,26 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_cajas">Cajas</label>
+                                                        <input type="number" class="form-control" id="salida_cajas"
+                                                               placeholder="Cajas" name="cajas">
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_cantidad">Kilos</label>
+                                                        <input type="number" class="form-control" id="salida_cantidad"
+                                                               required name="cantidad" placeholder="Kilos" min="0.01">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="salida_precio">Precio Venta</label>
+                                                        <input type="number" class="form-control" id="salida_precio"
+                                                               required
+                                                               placeholder="Precio Venta" name="precio">
                                                     </div>
                                                 </div>
 
@@ -286,7 +287,7 @@
                                                         <input type="number" class="form-control"
                                                                id="salida_precio_liquidacion"
                                                                placeholder="Precio Liquidación"
-                                                               name="precio_liquidacion">
+                                                               name="precio_liquidacion" readonly>
                                                     </div>
                                                     <div class="col-md-6 mb-3 mt-4">
                                                         <label class="checkbox checkbox-primary">
@@ -330,6 +331,7 @@
                                     @csrf
                                     <input type="hidden" name="salida_id" id="m_salida_id">
                                     <input type="hidden" name="entrada_id" id="m_salida_entrada_id">
+                                    <input type="hidden" name="return_to" value="tz.entradas.index">
 
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="modal-edit-salida-title"></h5>
@@ -379,24 +381,6 @@
 
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <label for="m_salida_cajas">Cajas</label>
-                                                <input type="number" class="form-control" id="m_salida_cajas" placeholder="Cajas"
-                                                       name="cajas">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="m_salida_cantidad">Kilos</label>
-                                                <input type="number" class="form-control" id="m_salida_cantidad" required
-                                                       name="cantidad" placeholder="Kilos">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="m_salida_precio">Precio Venta</label>
-                                                <input type="number" class="form-control" id="m_salida_precio"
-                                                       placeholder="Precio Venta" name="precio">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
                                                 <label for="m_salida_cliente">Cliente</label>
                                                 <select name="cliente_id" id="m_salida_cliente" class="form-control chosen">
                                                     <option value=""></option>
@@ -405,6 +389,24 @@
                                                             value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="m_salida_cajas">Cajas</label>
+                                                <input type="number" class="form-control" id="m_salida_cajas" placeholder="Cajas"
+                                                       name="cajas">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="m_salida_cantidad">Kilos</label>
+                                                <input type="number" class="form-control" id="m_salida_cantidad" required
+                                                       name="cantidad" placeholder="Kilos">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="m_salida_precio">Precio Venta</label>
+                                                <input type="number" class="form-control" id="m_salida_precio"
+                                                       placeholder="Precio Venta" name="precio">
                                             </div>
                                         </div>
 
@@ -729,8 +731,7 @@
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "{{ url('agroAlfaro/entradas/delete') }}" + "/" + row[
-                        0]
+                    window.location.href = "{{ url('agroAlfaro/entradas/delete') }}" + "/" + row[0]
                 })
             });
 
@@ -775,6 +776,36 @@
                 $("#modal-entrada-title").html("Nuevo Entrada");
                 $("#modal-entrada").modal('show');
             })
+
+            $("#salida_cantidad, #salida_precio, #salida_comision, #salida_coste").change(function (e) {
+                var kilos = parseFloat($("#salida_cantidad").val());
+                var precio = parseFloat($("#salida_precio").val());
+                var coste = parseFloat($("#salida_coste").val());
+                var comision = parseFloat($("#salida_comision").val());
+                var precio_liquidacion = "";
+
+                if (kilos > 0 && precio > 0 && coste > 0 && comision > 0) {
+                    var total_comision = precio - (precio * comision);
+                    precio_liquidacion = (precio - total_comision + coste).toFixed(2);
+                }
+
+                $("#salida_precio_liquidacion").val(precio_liquidacion);
+            });
+
+            $("#m_salida_cantidad, #m_salida_precio, #m_salida_comision, #m_salida_coste").change(function (e) {
+                var kilos = parseFloat($("#m_salida_cantidad").val());
+                var precio = parseFloat($("#m_salida_precio").val());
+                var coste = parseFloat($("#m_salida_coste").val());
+                var comision = parseFloat($("#m_salida_comision").val());
+                var precio_liquidacion = "";
+
+                if (kilos > 0 && precio > 0 && coste > 0 && comision > 0) {
+                    var total_comision = precio - (precio * comision);
+                    precio_liquidacion = (precio - total_comision + coste).toFixed(2);
+                }
+
+                $("#m_salida_precio_liquidacion").val(precio_liquidacion);
+            });
         });
 
         function modalEditSalida(e)
@@ -821,20 +852,18 @@
                 buttonsStyling: false
             }).then(function () {
                 $.ajax({
-                type: 'GET',
-                url: "{{ url('agroAlfaro/salidas/delete') }}" + "/" +row.id,
-                dataType: 'JSON',
-                success: function (json) {
-                    if (json == null || json == false) return;
-                    swal('Realizado.','Registro eliminado.', 'success');
-                    table_salidas.ajax.reload();
-
-                },
-                error: function (error) {
-                    console.log(error)
-                    alert('Error. Check Console Log');
-                },
-            });
+                    type: 'GET',
+                    url: "{{ url('agroAlfaro/salidas/delete') }}" + "/" +row.id,
+                    dataType: 'JSON',
+                    success: function (json) {
+                        if (json == null || json == false) return;
+                        window.location.reload();
+                    },
+                    error: function (error) {
+                        console.log(error)
+                        alert('Error. Check Console Log');
+                    },
+                });
             })
         }
 

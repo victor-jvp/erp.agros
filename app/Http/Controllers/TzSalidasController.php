@@ -60,6 +60,10 @@ class TzSalidasController extends Controller
 
         $salida->save();
 
+        if (isset($request->return_to) && !empty($request->return_to)) {
+            return redirect()->route($request->return_to);
+        }
+
         return redirect()->route('tz.salidas.index');
     }
 
