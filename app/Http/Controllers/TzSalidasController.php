@@ -85,4 +85,16 @@ class TzSalidasController extends Controller
 
         return response()->json($data);
     }
+
+    public function delete($id)
+    {
+        $salida = TzSalida::find($id);
+
+        if (!is_null($salida)) {
+            $salida->delete();
+            return response()->json(true);
+        }
+
+        return response()->json(false);
+    }
 }

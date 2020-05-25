@@ -23,7 +23,7 @@ class TzEntradasController extends Controller
             "proveedores" => TzProveedor::all(),
             "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
             "clientes"    => Cliente::all(),
-            "entradas"    => TzEntrada::all()
+            "entradas"    => TzEntrada::with('salidas')->get(),
         );
 
         return view('agroAlfaro.entradas.index', $data);
@@ -34,7 +34,8 @@ class TzEntradasController extends Controller
 
         if (is_null($request->entrada_id)) {
             $entrada = new TzEntrada();
-        } else {
+        }
+        else {
             $entrada = TzEntrada::find($request->entrada_id);
         }
 
@@ -59,4 +60,6 @@ class TzEntradasController extends Controller
     {
         return view('agroAlfaro.entradas.show');
     }
+
+
 }
