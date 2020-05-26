@@ -84,7 +84,7 @@
                                                     <option value=""></option>
                                                     @foreach ($compuestos as $compuesto)
                                                         <option value="{{ $compuesto->id }}">
-                                                            {{ $compuesto->variable. " - ".$compuesto->caja->formato. " - ".$compuesto->caja->modelo }}
+                                                            {{ $compuesto->compuesto->cultivo->cultivo. " - ".$compuesto->compuesto->compuesto. " - ".$compuesto->variable }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -192,7 +192,7 @@
                                                     <div class="col-md-6 mb-3">
                                                         <label for="salida_traza">Traza</label>
                                                         <input type="text" class="form-control" id="salida_traza"
-                                                               placeholder="Traza Salida" required="" name="traza">
+                                                               placeholder="Traza Salida" readonly name="traza">
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="salida_fecha">Fecha</label>
@@ -223,7 +223,7 @@
                                                             <option value=""></option>
                                                             @foreach ($compuestos as $compuesto)
                                                                 <option value="{{ $compuesto->id }}">
-                                                                    {{ $compuesto->variable. " - ".$compuesto->caja->formato. " - ".$compuesto->caja->modelo }}
+                                                                    {{ $compuesto->compuesto->cultivo->cultivo. " - ".$compuesto->compuesto->compuesto. " - ".$compuesto->variable }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -370,7 +370,7 @@
                                                     <option value=""></option>
                                                     @foreach ($compuestos as $compuesto)
                                                         <option value="{{ $compuesto->id }}">
-                                                            {{ $compuesto->variable. " - ".$compuesto->caja->formato. " - ".$compuesto->caja->modelo }}
+                                                            {{ $compuesto->compuesto->cultivo->cultivo. " - ".$compuesto->compuesto->compuesto. " - ".$compuesto->variable }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -471,6 +471,7 @@
                                         <th scope="col">Disponible</th>
                                         <th scope="col">Variedad</th>
                                         <th scope="col">Acciones</th>
+                                        <th>total_salidas</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -487,7 +488,7 @@
                                                 </td>
                                                 <td>{{ $entrada->producto_id }}</td>
                                                 <td>
-                                                    {{ (!is_null($entrada->producto_id)) ? $entrada->producto->variable. " - ".$entrada->producto->caja->formato. " - ".$entrada->producto->caja->modelo : "" }}
+                                                    {{ (!is_null($entrada->producto_id)) ? $entrada->producto->compuesto->cultivo->cultivo. " - ".$entrada->producto->compuesto->compuesto. " - ".$entrada->producto->variable : "" }}
                                                 </td>
                                                 <td class="text-right">{{ round($entrada->cantidad, 2) }}</td>
                                                 <td class="text-right">{{ round(($entrada->cantidad - $entrada->salidas->sum('cantidad')), 2) }}</td>
@@ -515,6 +516,7 @@
                                                         </a>
                                                     @endcan
                                                 </td>
+                                                <td>{{ $entrada->traza."S".str_pad(($entrada->salidas()->withTrashed()->count() + 1), 2, "0", STR_PAD_LEFT) }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -615,7 +617,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [{
-                    targets: [0, 4, 6],
+                    targets: [0, 4, 6, 12],
                     visible: false
                 },],
                 sorting: [
@@ -661,7 +663,7 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            return row.producto.variable + " - " + row.producto.caja.formato + " - " + row.producto.caja.modelo;
+                            return row.producto.compuesto.cultivo.cultivo + " - " + row.producto.compuesto.compuesto + " - " + row.producto.variable;
                         }
                     },
                     {
@@ -749,7 +751,9 @@
                 entrada_id = id;
                 table_salidas.ajax.reload();
 
+                console.log(row);
                 $("#salida_cantidad").attr("max", row[9]);
+                $("#salida_traza").val(row[12]);
 
                 LimpiarCamposSalida();
                 $("#modal-salida-title").html("Salidas");
@@ -877,11 +881,11 @@
             $("#fecha").val(fecha);
             $("#traza").val(new_traza);
             $('#albaran, #cantidad, #variedad').val(null);
-            $("#proveedor, #articulo").val(null).selectpicker("refresh");
+            $("#proveedor, #producto").val(null).selectpicker("refresh");
         }
 
         function LimpiarCamposSalida() {
-            $("#salida_traza, #salida_cajas, #salida_cantidad, #salida_precio, #salida_coste, #salida_comision, #salida_precio_liquidacion")
+            $("#salida_cajas, #salida_cantidad, #salida_precio, #salida_coste, #salida_comision, #salida_precio_liquidacion")
                 .val(null);
             $("#salida_proveedor, #salida_articulo, #salida_cliente").val(null).selectpicker();
         }

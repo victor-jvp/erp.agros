@@ -201,7 +201,7 @@
                                             {{--                                                            data-euro="{{ $compuesto->euro_cantidad }}"--}}
                                             {{--                                                            data-grand="{{ $compuesto->grand_cantidad }}"--}}
                                             {{--                                                            value="{{ $compuesto->id }}">--}}
-                                            {{--                                                        {{ $compuesto->variable. " - ".$compuesto->caja->formato. " - ".$compuesto->caja->modelo }}--}}
+                                            {{--                                                        {{ $compuesto->compuesto->cultivo->cultivo. " - ".$compuesto->compuesto->compuesto. " - ".$compuesto->variable }}--}}
                                             {{--                                                    </option>--}}
                                             {{--                                                @endforeach--}}
                                             {{--                                            </select>--}}

@@ -94,7 +94,7 @@
                                                     <option value=""></option>
                                                     @foreach ($compuestos as $compuesto)
                                                         <option value="{{ $compuesto->id }}">
-                                                            {{ $compuesto->variable. " - ".$compuesto->caja->formato. " - ".$compuesto->caja->modelo }}
+                                                            {{ $compuesto->compuesto->cultivo->cultivo. " - ".$compuesto->compuesto->compuesto. " - ".$compuesto->variable }}
                                                         </option>
                                                     @endforeach
                                                 </select>

@@ -24,7 +24,7 @@ class TzEntradasController extends Controller
             "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
             "clientes"    => Cliente::all(),
             "entradas"    => TzEntrada::with('salidas')->get(),
-            "new_traza" => TzEntrada::new_traza()
+            "new_traza"   => TzEntrada::new_traza()
         );
 
         return view('agroAlfaro.entradas.index', $data);
@@ -34,7 +34,8 @@ class TzEntradasController extends Controller
     {
 
         if (is_null($request->entrada_id)) {
-            $entrada = new TzEntrada();
+            $entrada        = new TzEntrada();
+            $entrada->traza = TzEntrada::new_traza();
         }
         else {
             $entrada = TzEntrada::find($request->entrada_id);
@@ -46,7 +47,6 @@ class TzEntradasController extends Controller
 
         $entrada->fecha        = $request->fecha;
         $entrada->albaran      = $request->albaran;
-        $entrada->traza        = $request->traza;
         $entrada->proveedor_id = $request->proveedor_id;
         $entrada->producto_id  = $request->producto_id;
         $entrada->cantidad     = $request->cantidad;

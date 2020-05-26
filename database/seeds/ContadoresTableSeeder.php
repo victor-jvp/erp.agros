@@ -15,9 +15,7 @@ class ContadoresTableSeeder extends Seeder
             ['contador' => 'nro_lote', 'valor'             => 0 ],
             ['contador' => 'nro_salida', 'valor'           => 0 ],
             ['contador' => 'nro_lote_pedido', 'valor'      => 0 ],
-            ['contador' => 'nro_pedido_comercial', 'valor' => 0 ],
-            ['contador' => 'tz_nro_entrada', 'valor'       => 0 ],
-            ['contador' => 'tz_nro_salida', 'valor'        => 0 ]
+            ['contador' => 'nro_pedido_comercial', 'valor' => 0 ]
         ]);
     }
 }

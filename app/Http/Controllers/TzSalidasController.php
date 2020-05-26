@@ -24,7 +24,7 @@ class TzSalidasController extends Controller
             "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
             "clientes"    => Cliente::all(),
             "salidas"     => TzSalida::all(),
-            "entradas"    => TzEntrada::all(),
+            "entradas"    => TzEntrada::all()
         );
 
         return view('agroAlfaro.salidas.index', $data);
@@ -82,7 +82,7 @@ class TzSalidasController extends Controller
         $entrada = TzEntrada::with([
             'salidas.proveedor',
             'salidas.cliente',
-            'salidas.producto.caja'
+            'salidas.producto.compuesto.cultivo'
         ])->find($request->get('entrada_id'));
 
         $data['data'] = $entrada->salidas;
