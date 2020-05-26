@@ -45,7 +45,7 @@ class Contador extends Model
     }
     #endregion
 
-    #region Salida
+    #region Lote de Pedido
     public function scopeNext_nro_lote_pedido()
     {
         $nro_lote_pedido = $this->where('contador', '=', 'nro_lote_pedido')->first(['valor'])->valor + 1;
@@ -76,6 +76,7 @@ class Contador extends Model
     #endregion
 
     #region Pedidos Producción
+
     public function scopeNext_nro_pedido_produccion()
     {
         $nro_pedido_produccion = $this->where('contador', '=', 'nro_pedido_produccion')->first(['valor'])->valor + 1;

@@ -55,15 +55,13 @@
 
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <label for="albaran">Albarán</label>
-                                                <input type="text" class="form-control" id="albaran"
-                                                       placeholder="Albarán"
-                                                       name="albaran">
+                                                <label for="traza">Traza de Entrada</label>
+                                                <input type="text" class="form-control" id="traza" readonly name="traza">
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label for="traza">Traza de Entrada</label>
-                                                <input type="text" class="form-control" id="traza"
-                                                       placeholder="Traza de Entrada" name="traza">
+                                                <label for="albaran">Albarán</label>
+                                                <input type="text" class="form-control" id="albaran"
+                                                       placeholder="Albarán" name="albaran">
                                             </div>
                                         </div>
 
@@ -553,6 +551,7 @@
         var entrada_form;
         var salida_form;
         var entrada_id;
+        const new_traza = "{{ $new_traza }}";
 
         $(document).ready(function () {
             $(".chosen").selectpicker({
@@ -825,13 +824,13 @@
             $("#m_salida_fecha").val(fecha);
             $("#m_salida_proveedor").val(row.proveedor_id).selectpicker('refresh');
             $("#m_salida_producto").val(row.producto_id).selectpicker('refresh');
-            $("#m_salida_cajas").val(row.cajas);
-            $("#m_salida_cantidad").val(row.cantidad);
-            $("#m_salida_precio").val(row.precio);
+            $("#m_salida_cajas").val(parseFloat(row.cajas));
+            $("#m_salida_cantidad").val(parseFloat(row.cantidad));
+            $("#m_salida_precio").val(parseFloat(row.precio));
             $("#m_salida_cliente").val(row.cliente_id).selectpicker('refresh');
-            $("#m_salida_coste").val(row.coste);
-            $("#m_salida_comision").val(row.comision);
-            $("#m_salida_precio_liquidacion").val(row.precio_liquidacion);
+            $("#m_salida_coste").val(parseFloat(row.coste));
+            $("#m_salida_comision").val(parseFloat(row.comision));
+            $("#m_salida_precio_liquidacion").val(parseFloat(row.precio_liquidacion));
             $("#m_salida_pagada").prop('checked', (row.pagada == 1));
             $("#m_salida_entrada_id").val(row.entrada_id);
 
@@ -876,7 +875,8 @@
         function LimpiarCamposEntrada() {
             var fecha = moment().format("YYYY-MM-DD");
             $("#fecha").val(fecha);
-            $('#albaran, #traza, #cantidad, #variedad').val(null);
+            $("#traza").val(new_traza);
+            $('#albaran, #cantidad, #variedad').val(null);
             $("#proveedor, #articulo").val(null).selectpicker("refresh");
         }
 

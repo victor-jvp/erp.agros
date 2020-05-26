@@ -26,4 +26,11 @@ class TzEntrada extends Model
     {
         return $this->hasMany(TzSalida::class, 'entrada_id');
     }
+
+     public function scopeNew_traza()
+    {
+        $count = $this->where('fecha', '=', date('Y-m-d'))->count() + 1;
+        $traza = "AGF-" . date('y') . date('m') . date('d') . str_pad($count, 3, "0", STR_PAD_LEFT);
+        return $traza;
+    }
 }

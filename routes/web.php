@@ -162,12 +162,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('agroAlfaro/liquidaciones', 'TzLiquidacionesController@index')->name('tz.liquidaciones.index');
     #endregion
     #region Proveedores
-    Route::get('agroAlfaro/proveedores', 'TzproveedoresController@index')->name('tz.proveedores.index');
-    Route::get('agroAlfaro/proveedores/create', 'TzproveedoresController@create')->name('tz.proveedores.create');
-    Route::post('agroAlfaro/proveedores/create', 'TzproveedoresController@create')->name('tz.proveedores.create');
-    Route::get('agroAlfaro/proveedores/show/{id}', 'TzproveedoresController@show')->name('tz.proveedores.show');
-    Route::put('agroAlfaro/proveedores/update/{id}', 'TzproveedoresController@update')->name('tz.proveedores.update');
-    Route::get('agroAlfaro/proveedores/delete/{id}', 'TzproveedoresController@delete')->name('tz.proveedores.delete');
+    Route::get('agroAlfaro/proveedores', 'TzProveedoresController@index')->name('tz.proveedores.index');
+    Route::get('agroAlfaro/proveedores/create', 'TzProveedoresController@create')->name('tz.proveedores.create');
+    Route::post('agroAlfaro/proveedores/create', 'TzProveedoresController@create')->name('tz.proveedores.create');
+    Route::get('agroAlfaro/proveedores/show/{id}', 'TzProveedoresController@show')->name('tz.proveedores.show');
+    Route::put('agroAlfaro/proveedores/update/{id}', 'TzProveedoresController@update')->name('tz.proveedores.update');
+    Route::get('agroAlfaro/proveedores/delete/{id}', 'TzProveedoresController@delete')->name('tz.proveedores.delete');
     #endregion
 #endregion
 

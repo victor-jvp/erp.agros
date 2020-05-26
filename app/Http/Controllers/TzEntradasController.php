@@ -24,6 +24,7 @@ class TzEntradasController extends Controller
             "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
             "clientes"    => Cliente::all(),
             "entradas"    => TzEntrada::with('salidas')->get(),
+            "new_traza" => TzEntrada::new_traza()
         );
 
         return view('agroAlfaro.entradas.index', $data);
