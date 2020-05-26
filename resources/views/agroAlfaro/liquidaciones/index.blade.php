@@ -44,9 +44,10 @@
                                         <th scope="col">Proveedor</th>
                                         <th>producto_id</th>
                                         <th scope="col">Producto</th>
-                                        <th scope="col">Cajas</th>
-                                        <th scope="col">Kilos</th>
-                                        <th scope="col">Precio Liquidación</th>
+                                        <th scope="col" class="sum">Cajas</th>
+                                        <th scope="col" class="sum">Kilos</th>
+                                        <th scope="col" class="sum">Precio Liquidación</th>
+                                        <th scope="col" class="sum">Total Liquidación</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
                                     </thead>
@@ -64,8 +65,9 @@
                                                 <td class="text-right">{{ round($liquidacion->cajas, 2) }}</td>
                                                 <td class="text-right">{{ round($liquidacion->cantidad, 2) }}</td>
                                                 <td class="text-right">{{ round($liquidacion->precio_liquidacion, 2) }}</td>
+                                                <td class="text-right">{{ round($liquidacion->precio_liquidacion * $liquidacion->cantidad, 2) }}</td>
                                                 <td class="text-center">
-                                                    @can('AgroAlfaro - Liquidaciones | Modificar')
+                                                    {{--@can('AgroAlfaro - Liquidaciones | Modificar')
                                                         <a href="javascript:void(0);" class="text-success mr-2 edit"
                                                            data-toggle="tooltip" data-placement="top" title=""
                                                            data-original-title="Editar">
@@ -78,12 +80,20 @@
                                                            data-original-title="Borrar">
                                                             <i class="nav-icon i-Close-Window font-weight-bold "></i>
                                                         </a>
-                                                    @endcan
+                                                    @endcan--}}
                                                 </td>
                                             </tr>
                                         @endforeach
                                     @endif
                                     </tbody>
+                                    <tfoot class="text-right">
+                                        <td colspan="7"><b>Totales</b></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -132,6 +142,33 @@
         });
 
         $(function () {
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "date-uk-pre": function (a) {
+                    var ukDatea = a.split('/');
+                    return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+                },
+
+                "date-uk-asc": function (a, b) {
+                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+                },
+
+                "date-uk-desc": function (a, b) {
+                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+                }
+            });
+            jQuery.fn.dataTable.Api.register('sum()', function () {
+                return this.flatten().reduce(function (a, b) {
+                    if (typeof a === 'string') {
+                        a = a.replace(/[^\d.-]/g, '') * 1;
+                    }
+                    if (typeof b === 'string') {
+                        b = b.replace(/[^\d.-]/g, '') * 1;
+                    }
+
+                    return a + b;
+                }, 0);
+            });
+
             // Configuracion de Datatable
             table_liquidaciones = $('#liquidaciones_table').DataTable({
                 language: {
@@ -144,7 +181,27 @@
                 responsive: false,
                 sorting: [
                     [0, 'desc']
-                ]
+                ],
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+                    api.columns('.sum', {
+                        page: 'current'
+                    }).every(function () {
+                        var sum = this
+                            .data()
+                            .reduce(function (a, b) {
+                                var regex = /[.,\s]/g;
+                                var aa = a.toString();
+                                var bb = b.toString();
+                                var x = parseFloat(aa.replace(regex, '')) || 0;
+                                var y = parseFloat(bb.replace(regex, '')) || 0;
+                                return x + y;
+                            }, 0);
+                        var signo = "";
+                        if (sum < 0) signo = "-";
+                        $(this.footer()).html(signo + sum);
+                    });
+                }
             });
 
             $('#liquidaciones_table .delete').on('click', function () {
@@ -166,7 +223,7 @@
                 }).then(function () {
                     $.ajax({
                         type: 'GET',
-                        url: "{{ url('agroAlfaro/liquidaciones/delete') }}" + "/" +row[0],
+                        url: "{{ url('agroAlfaro/liquidaciones/delete') }}" + "/" + row[0],
                         dataType: 'JSON',
                         success: function (json) {
                             if (json == null || json == false) return;

@@ -30,4 +30,9 @@ class TzSalida extends Model
     {
         return $this->belongsTo(TzEntrada::class, 'entrada_id');
     }
+
+    public function scopeLiquidacion()
+    {
+        return $this->precio - ($this->precio * ($this->comision / 100)) - $this->coste;
+    }
 }

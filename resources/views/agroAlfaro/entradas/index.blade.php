@@ -148,6 +148,14 @@
                                         <div class="tab-pane fade active show" id="table-salidas" role="tabpanel"
                                              aria-labelledby="table-salidas-tab">
 
+                                             <div class="row">
+                                                 <div class="col-md-3 mb-3">
+                                                    <label for="merma">Merma</label>
+                                                    <input type="number" class="form-control" id="merma" name="merma"
+                                                        placeholder="Merma" min="0.01" step="0.01" readonly>
+                                                 </div>
+                                             </div>
+
                                             <div class="row">
                                                 <div class="col-md-12 mb-3 table-responsive">
                                                     <table id="salidas_table"
@@ -246,7 +254,7 @@
                                                     <div class="col-md-6 mb-3">
                                                         <label for="salida_cajas">Cajas</label>
                                                         <input type="number" class="form-control" id="salida_cajas"
-                                                               placeholder="Cajas" name="cajas">
+                                                               placeholder="Cajas" name="cajas" step="0.01">
                                                     </div>
 
                                                 </div>
@@ -255,13 +263,13 @@
                                                     <div class="col-md-6 mb-3">
                                                         <label for="salida_cantidad">Kilos</label>
                                                         <input type="number" class="form-control" id="salida_cantidad"
-                                                               required name="cantidad" placeholder="Kilos" min="0.01">
+                                                               required name="cantidad" placeholder="Kilos" min="0.01" step="0.01">
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="salida_precio">Precio Venta</label>
                                                         <input type="number" class="form-control" id="salida_precio"
                                                                required
-                                                               placeholder="Precio Venta" name="precio">
+                                                               placeholder="Precio Venta" name="precio" step="0.01">
                                                     </div>
                                                 </div>
 
@@ -269,12 +277,12 @@
                                                     <div class="col-md-6 mb-3">
                                                         <label for="salida_coste">Coste</label>
                                                         <input type="number" class="form-control" id="salida_coste"
-                                                               placeholder="Coste" name="coste">
+                                                               placeholder="Coste" name="coste" step="0.01">
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="salida_comision">Comisión</label>
                                                         <input type="number" class="form-control" id="salida_comision"
-                                                               placeholder="Comisión" name="comision">
+                                                               placeholder="Comisión" name="comision" step="0.01">
                                                     </div>
                                                 </div>
 
@@ -285,7 +293,7 @@
                                                         <input type="number" class="form-control"
                                                                id="salida_precio_liquidacion"
                                                                placeholder="Precio Liquidación"
-                                                               name="precio_liquidacion" readonly>
+                                                               name="precio_liquidacion" readonly step="0.01">
                                                     </div>
                                                     <div class="col-md-6 mb-3 mt-4">
                                                         <label class="checkbox checkbox-primary">
@@ -391,7 +399,7 @@
                                             <div class="col-md-6 mb-3">
                                                 <label for="m_salida_cajas">Cajas</label>
                                                 <input type="number" class="form-control" id="m_salida_cajas" placeholder="Cajas"
-                                                       name="cajas">
+                                                       name="cajas" step="0.01">
                                             </div>
                                         </div>
 
@@ -399,12 +407,12 @@
                                             <div class="col-md-6 mb-3">
                                                 <label for="m_salida_cantidad">Kilos</label>
                                                 <input type="number" class="form-control" id="m_salida_cantidad" required
-                                                       name="cantidad" placeholder="Kilos">
+                                                       name="cantidad" placeholder="Kilos" step="0.01">
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="m_salida_precio">Precio Venta</label>
                                                 <input type="number" class="form-control" id="m_salida_precio"
-                                                       placeholder="Precio Venta" name="precio">
+                                                       placeholder="Precio Venta" name="precio" step="0.01">
                                             </div>
                                         </div>
 
@@ -412,12 +420,12 @@
                                             <div class="col-md-6 mb-3">
                                                 <label for="m_salida_coste">Coste</label>
                                                 <input type="number" class="form-control" id="m_salida_coste" placeholder="Coste"
-                                                       name="coste">
+                                                       name="coste" step="0.01">
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="m_salida_comision">Comisión</label>
                                                 <input type="number" class="form-control" id="m_salida_comision"
-                                                       placeholder="Comisión" name="comision">
+                                                       placeholder="Comisión" name="comision" step="0.01">
                                             </div>
                                         </div>
 
@@ -426,7 +434,7 @@
                                                 <label for="m_salida_precio_liquidacion">Precio Liquidación</label>
                                                 <input type="number" class="form-control" id="m_salida_precio_liquidacion"
                                                        placeholder="Precio Liquidación" name="precio_liquidacion"
-                                                       readonly>
+                                                       readonly step="0.01">
                                             </div>
                                             <div class="col-md-6 mb-3 mt-4">
                                                 <label class="checkbox checkbox-primary">
@@ -469,6 +477,7 @@
                                         <th scope="col">Producto</th>
                                         <th scope="col">Kilos</th>
                                         <th scope="col">Disponible</th>
+                                        <th scope="col">Merma</th>
                                         <th scope="col">Variedad</th>
                                         <th scope="col">Acciones</th>
                                         <th>total_salidas</th>
@@ -491,7 +500,8 @@
                                                     {{ (!is_null($entrada->producto_id)) ? $entrada->producto->compuesto->cultivo->cultivo. " - ".$entrada->producto->compuesto->compuesto. " - ".$entrada->producto->variable : "" }}
                                                 </td>
                                                 <td class="text-right">{{ round($entrada->cantidad, 2) }}</td>
-                                                <td class="text-right">{{ round(($entrada->cantidad - $entrada->salidas->sum('cantidad')), 2) }}</td>
+                                                <td class="text-right">{{ round(($entrada->cantidad - $entrada->salidas->sum('cantidad') - $entrada->merma), 2) }}</td>
+                                                <td class="text-right">{{ round($entrada->merma, 2) }}</td>
                                                 <td>{{ $entrada->variedad }}</td>
                                                 <td class="text-center">
                                                     @can("AgroAlfaro - Salidas | Acceso")
@@ -617,7 +627,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [{
-                    targets: [0, 4, 6, 12],
+                    targets: [0, 4, 6, 13],
                     visible: false
                 },],
                 sorting: [
@@ -698,7 +708,7 @@
                         className: "text-center",
                         render: function(data, type, row){
                             var checked = (data == "1") ? "checked" : "";
-                            return '<label class="checkbox checkbox-primary"><input type="checkbox" '+ checked +'><span class="checkmark"></span></label>';
+                            return '<label class="checkbox checkbox-primary"><input type="checkbox" '+ checked +' disabled><span class="checkmark"></span></label>';
                         }
                     },
                     {
@@ -751,9 +761,8 @@
                 entrada_id = id;
                 table_salidas.ajax.reload();
 
-                console.log(row);
                 $("#salida_cantidad").attr("max", row[9]);
-                $("#salida_traza").val(row[12]);
+                $("#salida_traza").val(row[13]);
 
                 LimpiarCamposSalida();
                 $("#modal-salida-title").html("Salidas");
@@ -794,9 +803,10 @@
                 var precio_liquidacion = "";
 
                 if (kilos > 0 && precio > 0 && coste > 0 && comision > 0) {
-                    var total_comision = precio - (precio * comision);
-                    precio_liquidacion = (precio - total_comision + coste).toFixed(2);
+                    var total_comision = precio * (comision / 100);
+                    precio_liquidacion = (precio - total_comision - coste).toFixed(2);
                 }
+                console.log(precio_liquidacion);
 
                 $("#salida_precio_liquidacion").val(precio_liquidacion);
             });
@@ -809,9 +819,10 @@
                 var precio_liquidacion = "";
 
                 if (kilos > 0 && precio > 0 && coste > 0 && comision > 0) {
-                    var total_comision = precio - (precio * comision);
-                    precio_liquidacion = (precio - total_comision + coste).toFixed(2);
+                    var total_comision = precio * (comision / 100);
+                    precio_liquidacion = (precio - total_comision - coste).toFixed(2);
                 }
+                console.log(precio_liquidacion);
 
                 $("#m_salida_precio_liquidacion").val(precio_liquidacion);
             });
@@ -885,8 +896,8 @@
         }
 
         function LimpiarCamposSalida() {
-            $("#salida_cajas, #salida_cantidad, #salida_precio, #salida_coste, #salida_comision, #salida_precio_liquidacion")
-                .val(null);
+            $("#salida_cajas, #salida_cantidad, #salida_precio, #salida_coste, #salida_precio_liquidacion").val(null);
+            $("#salida_comision").val(8.50);
             $("#salida_proveedor, #salida_articulo, #salida_cliente").val(null).selectpicker();
         }
 

@@ -47,8 +47,8 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label for="traza">Traza</label>
-                                                <input type="text" class="form-control" id="traza"
-                                                       placeholder="Traza Salida" required="" name="traza">
+                                                <input type="text" class="form-control" id="traza" readonly
+                                                       placeholder="Traza Salida" name="traza" required>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="fecha">Fecha</label>
@@ -64,7 +64,7 @@
                                                         required>
                                                     <option value=""></option>
                                                     @foreach ($entradas as $entrada)
-                                                        @php($disponible = round($entrada->cantidad - $entrada->salidas->sum('cantidad'), 2))
+                                                        @php($disponible = round($entrada->cantidad - $entrada->salidas->sum('cantidad') - $entrada->merma, 2))
                                                         @if ($disponible>0)
                                                             <option value="{{ $entrada->id }}" data-max="{{ $disponible }}">
                                                                 {{ "Traza: ".$entrada->traza. " - Albaran: ". $entrada->albaran." - Disponible: ". $disponible }}
@@ -236,7 +236,8 @@
                                                     <ul class="pl-2">
                                                         <li>Traza: {{ $salida->entrada->traza }}</li>
                                                         <li>Albarán: {{ $salida->entrada->albaran }}</li>
-                                                        <li>Disponible: {{ round($salida->entrada->cantidad - $salida->entrada->salidas->sum('cantidad'), 2) }}</li>
+                                                        <li>Disponible: {{ round($salida->entrada->cantidad - $salida->entrada->salidas->sum('cantidad') - $salida->entrada->merma, 2) }}</li>
+                                                        <li>Merma: {{ round($salida->entrada->merma, 2)  }}</li>
                                                     </ul>
 
                                                 </td>
@@ -419,8 +420,8 @@
                 var precio_liquidacion = "";
 
                 if (kilos > 0 && precio > 0 && coste > 0 && comision > 0) {
-                    var total_comision = precio - (precio * comision);
-                    precio_liquidacion = (precio - total_comision + coste).toFixed(2);
+                    var total_comision = precio * (comision / 100);
+                    precio_liquidacion = (precio - total_comision - coste).toFixed(2);
                 }
 
                 $("#precio_liquidacion").val(precio_liquidacion);
@@ -441,7 +442,8 @@
         function LimpiarCamposSalida() {
             var fecha = moment().format("YYYY-MM-DD");
             $("#fecha").val(fecha);
-            $('#salida_id, #traza, #cajas, #cantidad, #precio, #cliente, #coste, #comision, #precio_liquidacion').val(null);
+            $('#salida_id, #traza, #cajas, #cantidad, #precio, #cliente, #coste, #precio_liquidacion').val(null);
+            $("#comision").val(8.5);
             $("#proveedor, #producto, #cliente, #entrada").val(null).selectpicker("refresh");
             $("#pagada").prop('checked', false);
         }

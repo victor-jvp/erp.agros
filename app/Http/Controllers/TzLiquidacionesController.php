@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Cliente;
 use App\TzSalida;
-use App\TzEntrada;
 use App\TzProveedor;
 use App\ProductoCompuesto_det;
 use App\Http\Controllers\Controller;
@@ -21,9 +19,9 @@ class TzLiquidacionesController extends Controller
         }
 
         $data = array(
-            "proveedores" => TzProveedor::all(),
-            "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
-            "salidas"     => TzSalida::all()
+            "proveedores"   => TzProveedor          ::all(),
+            "compuestos"    => ProductoCompuesto_det::with('compuesto')->get(),
+            "liquidaciones" => TzSalida             ::where('pagada', '=', false)->get(),
         );
 
         return view('agroAlfaro.liquidaciones.index', $data);
