@@ -208,7 +208,7 @@
                                                 <td>{{ $salida->proveedor_id }}</td>
                                                 <td>{{ (isset($salida->proveedor)) ? $salida->proveedor->proveedor : "" }}</td>
                                                 <td>{{ $salida->producto_id }}</td>
-                                                <td>{{ (!is_null($salida->producto_id)) ? $salida->producto->variable. " - ".$salida->producto->caja->formato. " - ".$salida->producto->caja->modelo : "" }}
+                                                <td>{{ (!is_null($salida->producto_id)) ? $salida->producto->compuesto->cultivo->cultivo. " - ".$salida->producto->compuesto->compuesto. " - ".$salida->producto->variable : "" }}</td>
                                                 <td class="text-right">{{ round($salida->cajas, 2) }}</td>
                                                 <td class="text-right">{{ round($salida->cantidad, 2) }}</td>
                                                 <td class="text-right">{{ round($salida->precio, 2) }}</td>
@@ -236,14 +236,6 @@
 
                                                 </td>
                                                 <td class="text-center">
-                                                    @can('AgroAlfaro - Liquidaciones | Crear')
-                                                        <a href="javascript:void(0);"
-                                                           class="text-primary mr-2 liquidacion"
-                                                           data-toggle="tooltip" data-placement="top" title=""
-                                                           data-original-title="Generar Liquidación">
-                                                            <i class="nav-icon i-Money-2 font-weight-bold "></i>
-                                                        </a>
-                                                    @endcan
                                                     @can('AgroAlfaro - Salidas | Modificar')
                                                         <a href="javascript:void(0);" class="text-success mr-2 edit"
                                                            data-toggle="tooltip" data-placement="top" title=""

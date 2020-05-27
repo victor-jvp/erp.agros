@@ -1066,13 +1066,6 @@
                                         typeof i === 'number' ?
                                             i : 0;
                                 };
-
-                                /*var regex = /[.,\s]/g;
-                                var aa = a.toString();
-                                var bb = b.toString();
-                                var x = parseFloat(aa.replace(regex, '')) || 0;
-                                var y = parseFloat(bb.replace(regex, '')) || 0;
-                                return x + y;*/
                                 return intVal(a) + intVal(b);
                             }, 0);
                         var signo = "";
@@ -1088,9 +1081,6 @@
             });
 
             $("#desde, #hasta").on("change", function (e) {
-                var desde = $("#desde").val();
-                var hasta = $("#hasta").val();
-
                 table_pedidos_produccion.draw(false);
             });
 

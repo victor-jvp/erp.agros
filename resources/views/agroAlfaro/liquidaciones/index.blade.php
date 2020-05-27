@@ -21,11 +21,35 @@
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
 
                     <div class="row">
-                        @can('AgroAlfaro - Liquidaciones | Crear')
-                            <div class="col-md-3">
-                                <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
-                            </div>
-                        @endcan
+                        <div class="col-md-2 form-group mb-3">
+                            <label>Fecha Desde</label>
+                            <input type="date" class="form-control" id="desde">
+                        </div>
+                        <div class="col-md-2 form-group mb-3">
+                            <label>Fecha Hasta</label>
+                            <input type="date" class="form-control" id="hasta">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="proveedor">Proveedor</label>
+                            <select id="proveedor" class="form-control chosen">
+                                <option value=""></option>
+                                @foreach ($proveedores as $proveedor)
+                                    <option value="{{ $proveedor->id }}">{{ $proveedor->proveedor }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="producto">Producto</label>
+                            <select id="producto" class="form-control chosen">
+                                <option value=""></option>
+                                @foreach ($compuestos as $compuesto)
+                                    <option value="{{ $compuesto->id }}">
+                                        {{ $compuesto->compuesto->cultivo->cultivo. " - ".$compuesto->compuesto->compuesto. " - ".$compuesto->variable }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
                     <hr>
@@ -61,38 +85,32 @@
                                                 <td>{{ $liquidacion->proveedor_id }}</td>
                                                 <td>{{ (isset($liquidacion->proveedor)) ? $liquidacion->proveedor->proveedor : "" }}</td>
                                                 <td>{{ $liquidacion->producto_id }}</td>
-                                                <td>{{ (!is_null($liquidacion->producto_id)) ? $liquidacion->producto->variable. " - ".$liquidacion->producto->caja->formato. " - ".$liquidacion->producto->caja->modelo : "" }}
+                                                <td>{{ (!is_null($liquidacion->producto_id)) ? $liquidacion->producto->compuesto->cultivo->cultivo. " - ".$liquidacion->producto->compuesto->compuesto. " - ".$liquidacion->producto->variable : "" }}</td>
                                                 <td class="text-right">{{ round($liquidacion->cajas, 2) }}</td>
                                                 <td class="text-right">{{ round($liquidacion->cantidad, 2) }}</td>
                                                 <td class="text-right">{{ round($liquidacion->precio_liquidacion, 2) }}</td>
-                                                <td class="text-right">{{ round($liquidacion->precio_liquidacion * $liquidacion->cantidad, 2) }}</td>
+                                                <td class="text-right font-weight-bold">{{ round($liquidacion->precio_liquidacion * $liquidacion->cantidad, 2) }}</td>
                                                 <td class="text-center">
-                                                    {{--@can('AgroAlfaro - Liquidaciones | Modificar')
-                                                        <a href="javascript:void(0);" class="text-success mr-2 edit"
-                                                           data-toggle="tooltip" data-placement="top" title=""
-                                                           data-original-title="Editar">
-                                                            <i class="nav-icon i-Pen-2 font-weight-bold "></i>
+                                                    @can('AgroAlfaro - Liquidaciones | Crear')
+                                                        <a href="javascript:void(0);" class="text-success mr-2 pagada"
+                                                           data-toggle="tooltip" data-placement="top"
+                                                           title="Marcar como Pagada"
+                                                           data-original-title="Marcar como Pagada">
+                                                            <i class="nav-icon i-Money-2 font-weight-bold "></i>
                                                         </a>
                                                     @endcan
-                                                    @can('AgroAlfaro - Liquidaciones | Borrar')
-                                                        <a href="javascript:void(0);" class="text-danger mr-2 delete"
-                                                           data-toggle="tooltip" data-placement="top" title=""
-                                                           data-original-title="Borrar">
-                                                            <i class="nav-icon i-Close-Window font-weight-bold "></i>
-                                                        </a>
-                                                    @endcan--}}
                                                 </td>
                                             </tr>
                                         @endforeach
                                     @endif
                                     </tbody>
-                                    <tfoot class="text-right">
-                                        <td colspan="7"><b>Totales</b></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <tfoot class="text-right font-weight-bold">
+                                    <td colspan="7"><b>Totales</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                     </tfoot>
                                 </table>
                             </div>
@@ -114,30 +132,30 @@
 @section('bottom-js')
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/calendar/moment-with-locales.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/bootstrap-select/bootstrap-select.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/bootstrap-select/i18n/defaults-es_ES.min.js')}}"></script>
-    <script src="{{asset('assets/js/vendor/calendar/moment-with-locales.min.js')}}"></script>
-    <script src="{{asset('assets/js/vendor/jquery.validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('assets/js/vendor/jquery.validation/messages_es.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/buttons.flash.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/jszip.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/pdfmake.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/vfs_fonts.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/buttons.print.min.js')}}"></script>
 
     <script>
         var table_liquidaciones;
         var liquidacion_form;
 
-        $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function (e) {
             $(".chosen").selectpicker({
                 liveSearch: true
-            });
-
-            liquidacion_form = $("#liquidacion_form").validate({
-                errorPlacement: function (error, element) {
-                    error.addClass('invalid-feedback');
-                    if ($(element).is('select')) {
-                        element.parent().after(error); // special placement for select elements
-                    } else {
-                        error.insertAfter(element); // default placement for everything else
-                    }
-                }
             });
         });
 
@@ -168,16 +186,81 @@
                     return a + b;
                 }, 0);
             });
+            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                    var min = $("#desde").val();
+                    var max = $("#hasta").val();
+                    var fecha = data[2];
+
+                    var startDate = moment(min, "YYYY-MM-DD");
+                    var endDate = moment(max, "YYYY-MM-DD");
+                    var diffDate = moment(fecha, "DD/MM/YYYY");
+
+                    if (
+                        (min == "" || max == "")
+                        ||
+                        (diffDate.isBetween(startDate, endDate, null, '[]'))
+                    ) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
 
             // Configuracion de Datatable
             table_liquidaciones = $('#liquidaciones_table').DataTable({
                 language: {
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
-                columnDefs: [{
-                    targets: [0, 3, 5],
-                    visible: false
-                },],
+                columnDefs: [
+                    {targets: [0, 3, 5],  visible: false },
+                ],
+                dom: 'lBfrtip',
+                buttons: [
+                    /*{
+                        extend: 'print',
+                        text: 'Imprimir',
+                        autoPrint: false,
+                        exportOptions: {
+                            columns: [1,2,4,6,7,8,9,10],
+                            stripHtml: true
+                        },
+                        customize: function(win){
+                            $(win.document.body)
+                                .css( 'font-size', '10pt' )
+                            $(win.document.body).find( 'table' )
+                                .addClass( 'compact' )
+                                .css( 'font-size', 'inherit' )
+                                .css( 'color', 'black');
+                        }
+                    {
+                        extend: 'copy',
+                        exportOptions: {
+                            columns: [1,2,4,6,7,8,9,10],
+                            stripHtml: false
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [1,2,4,6,7,8,9,10],
+                            stripHtml: false
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [1,2,4,6,7,8,9,10],
+                            stripHtml: false
+                        }
+                    },*/
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [1,2,4,6,7,8,9,10],
+                            stripHtml: false
+                        }
+                    }
+                ],
                 responsive: false,
                 sorting: [
                     [0, 'desc']
@@ -190,12 +273,13 @@
                         var sum = this
                             .data()
                             .reduce(function (a, b) {
-                                var regex = /[.,\s]/g;
-                                var aa = a.toString();
-                                var bb = b.toString();
-                                var x = parseFloat(aa.replace(regex, '')) || 0;
-                                var y = parseFloat(bb.replace(regex, '')) || 0;
-                                return x + y;
+                                var intVal = function (i) {
+                                    return typeof i === 'string' ?
+                                        i.replace(/[\$,]/g, '') * 1 :
+                                        typeof i === 'number' ?
+                                            i : 0;
+                                };
+                                return intVal(a) + intVal(b);
                             }, 0);
                         var signo = "";
                         if (sum < 0) signo = "-";
@@ -204,13 +288,23 @@
                 }
             });
 
-            $('#liquidaciones_table .delete').on('click', function () {
+            $("#proveedor").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                var valor = $(this).val();
+                table_liquidaciones.columns(3).search(valor).draw(false);
+            });
+
+            $("#producto").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                var valor = $(this).val();
+                table_liquidaciones.columns(5).search(valor).draw(false);
+            });
+
+            $('#liquidaciones_table .pagada').on('click', function () {
                 var tr = $(this).closest('tr');
                 var row = table_liquidaciones.row(tr).data();
 
                 swal({
                     title: 'Confirmar Proceso',
-                    text: "Confirme eliminar el registro seleccionado",
+                    text: "Confirmar marcar como pagado el registro seleccionado",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#0CC27E',
@@ -222,102 +316,34 @@
                     buttonsStyling: false
                 }).then(function () {
                     $.ajax({
-                        type: 'GET',
-                        url: "{{ url('agroAlfaro/liquidaciones/delete') }}" + "/" + row[0],
+                        type: 'POST',
+                        url: "{{ route('tz.liquidaciones.marcarPagada') }}",
                         dataType: 'JSON',
+                        data: {
+                            id: row[0],
+                        },
                         success: function (json) {
-                            if (json == null || json == false) return;
-                            window.location.reload();
+                            if (json == null || json === false) return;
+                            swal({
+                                type: 'success',
+                                title: "¡Completado!",
+                                text: "Proceso realizado con éxito",
+                                confirmButtonClass: 'btn btn-success mr-5'
+                            }).then(function () {
+                                window.location.reload();
+                            });
                         },
                         error: function (error) {
-                            console.log(error)
-                            alert('Error. Check Console Log');
+                            console.debug(error);
+                            swal('¡Error!', 'Ha ocurrido un error en el proceso, intente más tarde.', 'error');
                         },
                     });
-                })
+                });
             });
 
-            $("#entradas_table .liquidacion").on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = table_entradas.row(tr).data();
-                var id = row[0];
-
-                $("#liquidacion_id").val(id);
-
-                LimpiarCamposSalida();
-                $("#modal-liquidacion-title").html("Generar Liquidación");
-                $("#modal-liquidacion").modal('show');
+            $("#desde, #hasta").on("change", function (e) {
+                table_liquidaciones.draw(false);
             });
-
-            $("#liquidaciones_table .edit").on('click', function () {
-                var tr = $(this).closest('tr');
-                var row = table_liquidaciones.row(tr).data();
-
-                LimpiarCamposSalida();
-
-                //console.log(row);
-                $("#liquidacion_id").val(row[0]);
-                $("#traza").val(row[1]);
-                var fecha = moment(row[2], "DD/MM/YYYY").format("YYYY-MM-DD");
-                $("#fecha").val(fecha);
-                $("#proveedor").val(row[3]).selectpicker('refresh');
-                $("#producto").val(row[5]).selectpicker('refresh');
-                $("#cajas").val(row[7]);
-                $("#cantidad").val(row[8]);
-                $("#precio").val(row[9]);
-                $("#cliente").val(row[10]).selectpicker('refresh');
-                $("#coste").val(row[12]);
-                $("#comision").val(row[13]);
-                $("#precio_liquidacion").val(row[14]);
-                $("#pagada").prop('checked', (row[15] == 1));
-                $("#entrada").val(row[17]).selectpicker('refresh');
-
-                $("#modal-liquidacion-title").html("Detalles de Salida");
-                $("#modal-liquidacion").modal('show');
-            });
-
-            $("#btnNuevo").click(function (e) {
-                LimpiarCamposSalida();
-
-                $("#liquidacion_id").val(null);
-                $("#modal-liquidacion-title").html("Nuevo Salida");
-                $("#modal-liquidacion").modal('show');
-            })
-
-            $("#cantidad, #precio, #comision, #coste").change(function (e) {
-                var kilos = parseFloat($("#cantidad").val());
-                var precio = parseFloat($("#precio").val());
-                var coste = parseFloat($("#coste").val());
-                var comision = parseFloat($("#comision").val());
-                var precio_liquidacion = "";
-
-                if (kilos > 0 && precio > 0 && coste > 0 && comision > 0) {
-                    var total_comision = precio - (precio * comision);
-                    precio_liquidacion = (precio - total_comision + coste).toFixed(2);
-                }
-
-                $("#precio_liquidacion").val(precio_liquidacion);
-            });
-
-            $('#entrada').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-                var valor = $(this).val();
-                $("#cantidad").removeAttr('max');
-
-                if (valor != "") {
-                    var max = $(this).find('option:selected').data('max');
-                    $("#cantidad").attr('max', max);
-                }
-            });
-
         });
-
-        function LimpiarCamposSalida() {
-            var fecha = moment().format("YYYY-MM-DD");
-            $("#fecha").val(fecha);
-            $('#liquidacion_id, #traza, #cajas, #cantidad, #precio, #cliente, #coste, #comision, #precio_liquidacion').val(null);
-            $("#proveedor, #producto, #cliente, #entrada").val(null).selectpicker("refresh");
-            $("#pagada").prop('checked', false);
-        }
-
     </script>
 @endsection

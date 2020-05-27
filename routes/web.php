@@ -161,6 +161,7 @@ Route::group(['middleware' => 'auth'], function () {
     #endregion
     #region Liquidaciones
     Route::get('agroAlfaro/liquidaciones', 'TzLiquidacionesController@index')->name('tz.liquidaciones.index');
+    Route::post('agroAlfaro/liquidaciones/ajaxMarcarPagada', 'TzLiquidacionesController@marcar_pagada')->name('tz.liquidaciones.marcarPagada');
     #endregion
     #region Proveedores
     Route::get('agroAlfaro/proveedores', 'TzProveedoresController@index')->name('tz.proveedores.index');
