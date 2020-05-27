@@ -45,7 +45,7 @@ class TzEntradasController extends Controller
             return redirect()->route('tz.entradas.index');
         }
 
-        $entrada->fecha        = $request->fecha;
+        $entrada->fecha        = date("Y-m-d", strtotime($request->fecha));
         $entrada->albaran      = $request->albaran;
         $entrada->proveedor_id = $request->proveedor_id;
         $entrada->producto_id  = $request->producto_id;

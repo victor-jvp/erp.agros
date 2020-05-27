@@ -199,7 +199,7 @@
                             }, 0);
                         var signo = "";
                         if (sum < 0) signo = "-";
-                        $(this.footer()).html(signo + sum);
+                        $(this.footer()).html(signo + sum.toFixed(2));
                     });
                 }
             });
