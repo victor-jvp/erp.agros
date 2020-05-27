@@ -150,6 +150,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('agroAlfaro/entradas/store', 'TzEntradasController@store')->name('tz.entradas.store');
     Route::get('agroAlfaro/entradas/show/{id}', 'TzEntradasController@show')->name('tz.entradas.show');
     Route::get('agroAlfaro/entradas/delete/{id}', 'TzEntradasController@delete')->name('tz.entradas.delete');
+    Route::post('agroAlfaro/entradas/ajaxGenerarMerma', 'TzEntradasController@generar_merma')->name('tz.entradas.generarMerma');
     #endregion
     #region Salidas
     Route::get('agroAlfaro/salidas', 'TzSalidasController@index')->name('tz.salidas.index');

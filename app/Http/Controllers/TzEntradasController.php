@@ -62,5 +62,18 @@ class TzEntradasController extends Controller
         return view('agroAlfaro.entradas.show');
     }
 
+    public function generar_merma(Request $request)
+    {
+        $result = false;
+        $id = $request->get('id');
+        if (!is_null($id)) {
+            $entrada        = TzEntrada::find($id);
+            $merma          = $entrada->cantidad - $entrada->salidas()->sum('cantidad');
+            $entrada->merma = $merma;
+            $entrada->save();
+            $result         = true;
+        }
 
+        return response()->json($result);
+    }
 }

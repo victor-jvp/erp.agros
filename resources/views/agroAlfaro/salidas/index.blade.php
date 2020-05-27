@@ -20,14 +20,6 @@
                     <h4 class="card-title mb-3">Salidas</h4>
                     {{-- <p>Takes the basic nav from above and adds the <code>.nav-tabs</code> class to generate a tabbed interface</p> --}}
 
-                    <div class="row">
-                        @can('AgroAlfaro - Salidas | Crear')
-                            <div class="col-md-3">
-                                <button class="btn btn-primary" type="button" id="btnNuevo">Nuevo</button>
-                            </div>
-                        @endcan
-                    </div>
-
                     {{--Modal Generar Salida--}}
                     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                          aria-hidden="true" id="modal-salida">
@@ -66,7 +58,8 @@
                                                     @foreach ($entradas as $entrada)
                                                         @php($disponible = round($entrada->cantidad - $entrada->salidas->sum('cantidad') - $entrada->merma, 2))
                                                         @if ($disponible>0)
-                                                            <option value="{{ $entrada->id }}" data-max="{{ $disponible }}">
+                                                            <option value="{{ $entrada->id }}"
+                                                                    data-max="{{ $disponible }}">
                                                                 {{ "Traza: ".$entrada->traza. " - Albaran: ". $entrada->albaran." - Disponible: ". $disponible }}
                                                             </option>
                                                         @endif
@@ -236,7 +229,8 @@
                                                     <ul class="pl-2">
                                                         <li>Traza: {{ $salida->entrada->traza }}</li>
                                                         <li>Albarán: {{ $salida->entrada->albaran }}</li>
-                                                        <li>Disponible: {{ round($salida->entrada->cantidad - $salida->entrada->salidas->sum('cantidad') - $salida->entrada->merma, 2) }}</li>
+                                                        <li>
+                                                            Disponible: {{ round($salida->entrada->cantidad - $salida->entrada->salidas->sum('cantidad') - $salida->entrada->merma, 2) }}</li>
                                                         <li>Merma: {{ round($salida->entrada->merma, 2)  }}</li>
                                                     </ul>
 
@@ -351,7 +345,7 @@
                 }).then(function () {
                     $.ajax({
                         type: 'GET',
-                        url: "{{ url('agroAlfaro/salidas/delete') }}" + "/" +row[0],
+                        url: "{{ url('agroAlfaro/salidas/delete') }}" + "/" + row[0],
                         dataType: 'JSON',
                         success: function (json) {
                             if (json == null || json == false) return;
@@ -404,14 +398,6 @@
                 $("#modal-salida").modal('show');
             });
 
-            $("#btnNuevo").click(function (e) {
-                LimpiarCamposSalida();
-
-                $("#salida_id").val(null);
-                $("#modal-salida-title").html("Nuevo Salida");
-                $("#modal-salida").modal('show');
-            })
-
             $("#cantidad, #precio, #comision, #coste").change(function (e) {
                 var kilos = parseFloat($("#cantidad").val());
                 var precio = parseFloat($("#precio").val());
@@ -442,8 +428,7 @@
         function LimpiarCamposSalida() {
             var fecha = moment().format("YYYY-MM-DD");
             $("#fecha").val(fecha);
-            $('#salida_id, #traza, #cajas, #cantidad, #precio, #cliente, #coste, #precio_liquidacion').val(null);
-            $("#comision").val(8.5);
+            $('#salida_id, #traza, #cajas, #cantidad, #precio, #cliente, #coste, #precio_liquidacion, #comision').val(null);
             $("#proveedor, #producto, #cliente, #entrada").val(null).selectpicker("refresh");
             $("#pagada").prop('checked', false);
         }
