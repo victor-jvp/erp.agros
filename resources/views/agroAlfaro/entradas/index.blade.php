@@ -183,6 +183,7 @@
                                                             <th scope="col">Coste</th>
                                                             <th scope="col">Comisión</th>
                                                             <th scope="col">Precio Liquidación</th>
+                                                            <th>ECO</th>
                                                             <th scope="col">Pagada</th>
                                                             <th scope="col">Acciones</th>
                                                         </tr>
@@ -301,7 +302,14 @@
                                                                placeholder="Precio Liquidación"
                                                                name="precio_liquidacion" readonly step="0.01">
                                                     </div>
-                                                    <div class="col-md-6 mb-3 mt-4">
+                                                    <div class="col-md-3 mb-3 mt-4">
+                                                        <label class="checkbox checkbox-primary">
+                                                            <input type="checkbox" id="salida_eco" name="eco">
+                                                            <span>ECO</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3 mt-4">
                                                         <label class="checkbox checkbox-primary">
                                                             <input type="checkbox" id="salida_pagada" name="pagada">
                                                             <span>Pagada</span>
@@ -446,7 +454,14 @@
                                                        readonly
                                                        step="0.01">
                                             </div>
-                                            <div class="col-md-6 mb-3 mt-4">
+                                            <div class="col-md-3 mb-3 mt-4">
+                                                <label class="checkbox checkbox-primary">
+                                                    <input type="checkbox" id="m_salida_eco" name="eco">
+                                                    <span>ECO</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-3 mt-4">
                                                 <label class="checkbox checkbox-primary">
                                                     <input type="checkbox" id="m_salida_pagada" name="pagada">
                                                     <span>Pagada</span>
@@ -719,6 +734,15 @@
                         data: "precio_liquidacion"
                     },
                     {
+                        data: "eco",
+                        className: "text-center",
+                        render: function (data, type, row) {
+                            var checked = (data == "1") ? "checked" : "";
+                            return '<label class="checkbox checkbox-primary"><input type="checkbox" ' +
+                                checked + ' disabled><span class="checkmark"></span></label>';
+                        }
+                    },
+                    {
                         data: "pagada",
                         className: "text-center",
                         render: function (data, type, row) {
@@ -917,6 +941,7 @@
             $("#m_salida_coste").val(parseFloat(row.coste));
             $("#m_salida_comision").val(parseFloat(row.comision));
             $("#m_salida_precio_liquidacion").val(parseFloat(row.precio_liquidacion));
+            $("#m_salida_pagada").prop('checked', (row.eco == 1));
             $("#m_salida_pagada").prop('checked', (row.pagada == 1));
             $("#m_salida_entrada_id").val(row.entrada_id);
 

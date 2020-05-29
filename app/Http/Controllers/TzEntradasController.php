@@ -34,7 +34,7 @@ class TzEntradasController extends Controller
 
         if (is_null($request->entrada_id)) {
             $entrada        = new TzEntrada();
-            $entrada->traza = TzEntrada::new_traza();
+            $entrada->traza = $request->traza;
         }
         else {
             $entrada = TzEntrada::find($request->entrada_id);
@@ -82,5 +82,16 @@ class TzEntradasController extends Controller
         $result = TzEntrada::where('fecha', $request->get('fecha'))->withTrashed()->count() + 1;
         $result = str_pad($result, 3, "0", STR_PAD_LEFT);
         return response()->json($result);
+    }
+
+    public function delete($id)
+    {
+        $entrada = TzEntrada::find($id);
+
+        if (!is_null($entrada)) {
+            $entrada->delete();
+        }
+
+        return redirect()->route('tz.entradas.index');
     }
 }
