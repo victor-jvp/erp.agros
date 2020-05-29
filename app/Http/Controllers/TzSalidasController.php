@@ -56,6 +56,7 @@ class TzSalidasController extends Controller
         $salida->coste              = $request->coste;
         $salida->comision           = $request->comision;
         $salida->precio_liquidacion = $request->precio_liquidacion;
+        $salida->eco                = (isset($request->eco)) ? true : false;
         $salida->pagada             = (isset($request->pagada)) ? true : false;
 
         $salida->save();

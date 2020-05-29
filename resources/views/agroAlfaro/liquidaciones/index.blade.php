@@ -68,10 +68,13 @@
                                         <th scope="col">Proveedor</th>
                                         <th>producto_id</th>
                                         <th scope="col">Producto</th>
+                                        <th>ECO</th>
+                                        <th>ECO</th>
                                         <th scope="col" class="sum">Cajas</th>
                                         <th scope="col" class="sum">Kilos</th>
                                         <th scope="col" class="sum">Precio Liquidación</th>
                                         <th scope="col" class="sum">Total Liquidación</th>
+
                                         <th scope="col">Acciones</th>
                                     </tr>
                                     </thead>
@@ -86,6 +89,13 @@
                                                 <td>{{ (isset($liquidacion->proveedor)) ? $liquidacion->proveedor->proveedor : "" }}</td>
                                                 <td>{{ $liquidacion->producto_id }}</td>
                                                 <td>{{ (!is_null($liquidacion->producto_id)) ? $liquidacion->producto->compuesto->cultivo->cultivo. " - ".$liquidacion->producto->compuesto->compuesto. " - ".$liquidacion->producto->variable : "" }}</td>
+                                                <td>{{ ($liquidacion->eco) ? "SI" : "NO" }}</td>
+                                                <td class="text-center">
+                                                    <label class="checkbox checkbox-primary">
+                                                        <input type="checkbox" {{ ($liquidacion->eco) ? "checked" : "" }} disabled>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </td>
                                                 <td class="text-right">{{ round($liquidacion->cajas, 2) }}</td>
                                                 <td class="text-right">{{ round($liquidacion->cantidad, 2) }}</td>
                                                 <td class="text-right">{{ round($liquidacion->precio_liquidacion, 2) }}</td>
@@ -105,7 +115,8 @@
                                     @endif
                                     </tbody>
                                     <tfoot class="text-right font-weight-bold">
-                                    <td colspan="7"><b>Totales</b></td>
+                                    <td colspan="8"><b>Totales</b></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -212,7 +223,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    {targets: [0, 3, 5],  visible: false },
+                    {targets: [0, 3, 5, 7],  visible: false },
                 ],
                 dom: 'lBfrtip',
                 buttons: [
@@ -255,9 +266,12 @@
                     },*/
                     {
                         extend: 'pdf',
+                        footer: true,
+                        orientation: 'landscape',
+                        title: 'Liquidaciones',
                         exportOptions: {
-                            columns: [1,2,4,6,7,8,9,10],
-                            stripHtml: false
+                            columns: [1,2,4,6,7,9,10,11,12],
+                            stripHtml: true
                         }
                     }
                 ],
@@ -266,6 +280,9 @@
                     [0, 'desc']
                 ],
                 footerCallback: function (row, data, start, end, display) {
+                    var totalKilos = 0;
+                    var totalLiquidacion = 0;
+                    var columnaPrecioLiquidacion = null;
                     var api = this.api();
                     api.columns('.sum', {
                         page: 'current'
@@ -281,10 +298,26 @@
                                 };
                                 return intVal(a) + intVal(b);
                             }, 0);
+
                         var signo = "";
                         if (sum < 0) signo = "-";
-                        $(this.footer()).html(signo + sum.toFixed(2));
+                        var total = signo + sum.toFixed(2);
+                        if(this.index() == 11){
+                            columnaPrecioLiquidacion = this;
+                        }else{
+                            $(this.footer()).html(total);
+                        }
+
+                        if (this.index() == 10){
+                            totalKilos = total;
+                        }
+                        if (this.index() == 12) {
+                            totalLiquidacion = total;
+                        }
                     });
+
+                    var promPrecio = totalLiquidacion / totalKilos;
+                    $(columnaPrecioLiquidacion.footer()).html(promPrecio.toFixed(2));
                 }
             });
 

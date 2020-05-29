@@ -145,7 +145,14 @@
                                                        placeholder="Precio Liquidación" name="precio_liquidacion"
                                                        readonly>
                                             </div>
-                                            <div class="col-md-6 mb-3 mt-4">
+                                            <div class="col-md-3 mb-3 mt-4">
+                                                <label class="checkbox checkbox-primary">
+                                                    <input type="checkbox" id="eco" name="eco">
+                                                    <span>ECO</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-3 mb-3 mt-4">
                                                 <label class="checkbox checkbox-primary">
                                                     <input type="checkbox" id="pagada" name="pagada">
                                                     <span>Pagada</span>
@@ -191,6 +198,8 @@
                                         <th scope="col">Coste</th>
                                         <th scope="col">Comisión</th>
                                         <th scope="col">Precio Liquidación</th>
+                                        <th>eco</th>
+                                        <th scope="col">ECO</th>
                                         <th>pagada</th>
                                         <th scope="col">Pagada</th>
                                         <th>entrada_id</th>
@@ -213,14 +222,21 @@
                                                 <td class="text-right">{{ round($salida->cantidad, 2) }}</td>
                                                 <td class="text-right">{{ round($salida->precio, 2) }}</td>
                                                 <td>{{ $salida->cliente_id }}</td>
-                                                <td>{{ (isset($salida->cliente)) ? $salida->razon_social : "" }}</td>
+                                                <td>{{ (!is_null($salida->cliente_id)) ? $salida->cliente->razon_social : "" }}</td>
                                                 <td class="text-right">{{ round($salida->coste, 2) }}</td>
                                                 <td class="text-right">{{ round($salida->comision, 2) }}</td>
                                                 <td class="text-right">{{ round($salida->precio_liquidacion, 2) }}</td>
+                                                <td>{{ $salida->eco }}</td>
+                                                <td class="text-center">
+                                                    <label class="checkbox checkbox-primary">
+                                                        <input type="checkbox" {{ ($salida->eco) ? "checked" : "" }} disabled>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </td>
                                                 <td>{{ $salida->pagada }}</td>
                                                 <td class="text-center">
                                                     <label class="checkbox checkbox-primary">
-                                                        <input type="checkbox" {{ ($salida->pagada) ? "checked" : "" }}>
+                                                        <input type="checkbox" {{ ($salida->pagada) ? "checked" : "" }} disabled>
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </td>
@@ -309,7 +325,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [{
-                    targets: [0, 3, 5, 10, 15, 17],
+                    targets: [0, 3, 5, 10, 15, 17, 19],
                     visible: false
                 },],
                 responsive: false,
@@ -383,8 +399,9 @@
                 $("#coste").val(row[12]);
                 $("#comision").val(row[13]);
                 $("#precio_liquidacion").val(row[14]);
-                $("#pagada").prop('checked', (row[15] == 1));
-                $("#entrada").val(row[17]).selectpicker('refresh');
+                $("#eco").prop('checked', (row[15] == 1));
+                $("#pagada").prop('checked', (row[17] == 1));
+                $("#entrada").val(row[19]).selectpicker('refresh');
 
                 $("#modal-salida-title").html("Detalles de Salida");
                 $("#modal-salida").modal('show');
@@ -422,7 +439,7 @@
             $("#fecha").val(fecha);
             $('#salida_id, #traza, #cajas, #cantidad, #precio, #cliente, #coste, #precio_liquidacion, #comision').val(null);
             $("#proveedor, #producto, #cliente, #entrada").val(null).selectpicker("refresh");
-            $("#pagada").prop('checked', false);
+            $("#pagada, #eco").prop('checked', false);
         }
 
     </script>
