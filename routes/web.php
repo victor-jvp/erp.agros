@@ -151,6 +151,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('agroAlfaro/entradas/show/{id}', 'TzEntradasController@show')->name('tz.entradas.show');
     Route::get('agroAlfaro/entradas/delete/{id}', 'TzEntradasController@delete')->name('tz.entradas.delete');
     Route::post('agroAlfaro/entradas/ajaxGenerarMerma', 'TzEntradasController@generar_merma')->name('tz.entradas.generarMerma');
+    Route::post('agroAlfaro/entradas/ajaxCount', 'TzEntradasController@ajaxCount')->name('tz.entradas.ajaxCount');
     #endregion
     #region Salidas
     Route::get('agroAlfaro/salidas', 'TzSalidasController@index')->name('tz.salidas.index');
@@ -158,6 +159,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('agroAlfaro/salidas/show/{id}', 'TzSalidasController@show')->name('tz.salidas.show');
     Route::get('agroAlfaro/salidas/getByEntrada', 'TzSalidasController@getByEntrada')->name('tz.salidas.getByEntrada');
     Route::get('agroAlfaro/salidas/delete/{id}', 'TzSalidasController@delete')->name('tz.salidas.delete');
+    Route::post('agroAlfaro/salidas/ajaxCount', 'TzSalidasController@ajaxCount')->name('tz.salidas.ajaxCount');
     #endregion
     #region Liquidaciones
     Route::get('agroAlfaro/liquidaciones', 'TzLiquidacionesController@index')->name('tz.liquidaciones.index');

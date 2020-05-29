@@ -23,8 +23,7 @@ class TzEntradasController extends Controller
             "proveedores" => TzProveedor::all(),
             "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
             "clientes"    => Cliente::all(),
-            "entradas"    => TzEntrada::with('salidas')->get(),
-            "new_traza"   => TzEntrada::new_traza()
+            "entradas"    => TzEntrada::with('salidas')->get()
         );
 
         return view('agroAlfaro.entradas.index', $data);
@@ -74,6 +73,14 @@ class TzEntradasController extends Controller
             $result         = true;
         }
 
+        return response()->json($result);
+    }
+
+
+    public function ajaxCount(Request $request)
+    {
+        $result = TzEntrada::where('fecha', $request->get('fecha'))->withTrashed()->count() + 1;
+        $result = str_pad($result, 3, "0", STR_PAD_LEFT);
         return response()->json($result);
     }
 }

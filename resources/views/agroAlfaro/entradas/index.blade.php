@@ -57,7 +57,7 @@
                                             <div class="col-md-6 mb-3">
                                                 <label for="traza">Traza de Entrada</label>
                                                 <input type="text" class="form-control" id="traza" readonly
-                                                       name="traza">
+                                                       name="traza" required>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="albaran">Albarán</label>
@@ -490,7 +490,6 @@
                                         <th scope="col">Merma</th>
                                         <th scope="col">Variedad</th>
                                         <th scope="col">Acciones</th>
-                                        <th>total_salidas</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -538,8 +537,6 @@
                                                         </a>
                                                     @endcan
                                                 </td>
-                                                <td>{{ $entrada->traza."S".str_pad(($entrada->salidas()->withTrashed()->count() + 1), 2, "0", STR_PAD_LEFT) }}
-                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -576,7 +573,6 @@
         var entrada_form;
         var salida_form;
         var entrada_id;
-        const new_traza = "{{ $new_traza }}";
 
         $.ajaxSetup({
             headers: {
@@ -646,7 +642,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    { targets: [0, 4, 6, 13], visible: false }
+                    { targets: [0, 4, 6], visible: false }
                 ],
                 sorting: [
                     [0, 'desc']
@@ -790,7 +786,6 @@
                 }
 
                 $("#salida_cantidad").attr("max", row[9]);
-                $("#salida_traza").val(row[13]);
 
                 LimpiarCamposSalida();
                 $("#modal-salida-title").html("Salidas");
@@ -893,6 +888,16 @@
                     });
                 })
             });
+
+            $("#fecha").change(function(){
+                var fecha = $(this).val();
+                buildTrazaEntrada(fecha);
+            });
+
+            $("#salida_fecha").change(function(e){
+                var fecha = $(this).val();
+                buildTrazaSalida(fecha);
+            });
         });
 
         function modalEditSalida(e) {
@@ -952,10 +957,58 @@
             })
         }
 
+        function buildTrazaEntrada(fecha)
+        {
+            $("#traza").val(null);
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('tz.entradas.ajaxCount') }}",
+                dataType: 'JSON',
+                data: {
+                    fecha: fecha
+                },
+                success: function (json) {
+                    var traza  = "AGF-" + moment(fecha, "YYYY-MM-DD").format("YYMMDD");
+                    var cant   = json;
+                    var result = traza + cant;
+
+                    $("#traza").val(result);
+                },
+                error: function (error) {
+                    swal('¡Error!', 'Ha ocurrido un error en el proceso, intente más tarde.', 'error');
+                },
+            });
+        }
+
+        function buildTrazaSalida(fecha)
+        {
+            $("#salida_traza").val(null);
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('tz.salidas.ajaxCount') }}",
+                dataType: 'JSON',
+                data: {
+                    fecha: fecha
+                },
+                success: function (json) {
+                    var traza  = "AGF-" + moment(fecha, "YYYY-MM-DD").format("YYMMDD");
+                    var cant   = json;
+                    var result = traza + cant;
+
+                    $("#salida_traza").val(result);
+                },
+                error: function (error) {
+                    swal('¡Error!', 'Ha ocurrido un error en el proceso, intente más tarde.', 'error');
+                },
+            });
+        }
+
         function LimpiarCamposEntrada() {
             var fecha = moment().format("YYYY-MM-DD");
             $("#fecha").val(fecha);
-            $("#traza").val(new_traza);
+            buildTrazaEntrada(fecha);
             $('#albaran, #cantidad, #variedad').val(null);
             $("#proveedor, #producto").val(null).selectpicker("refresh");
         }
@@ -963,6 +1016,9 @@
         function LimpiarCamposSalida() {
             $("#salida_cajas, #salida_cantidad, #salida_precio, #salida_coste, #salida_precio_liquidacion").val(null);
             $("#salida_comision").val(8.50);
+            var fecha = moment().format("YYYY-MM-DD");
+            $("#salida_fecha").val(fecha);
+            buildTrazaSalida(fecha);
             $("#salida_proveedor, #salida_articulo, #salida_cliente").val(null).selectpicker();
         }
 

@@ -27,13 +27,4 @@ class TzEntrada extends Model
     {
         return $this->hasMany(TzSalida::class, 'entrada_id');
     }
-
-     public function scopeNew_traza()
-    {
-        $fecha = Carbon::now()->format("ymd");
-        $traza = "AGF-".$fecha;
-        $count = $this->where('traza', 'LIKE', '%'.$traza.'%')->count() + 1;
-        $traza = "AGF-" . date('y') . date('m') . date('d') . str_pad($count, 3, "0", STR_PAD_LEFT);
-        return $traza;
-    }
 }
