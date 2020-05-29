@@ -29,7 +29,7 @@
                             <label>Fecha Hasta</label>
                             <input type="date" class="form-control" id="hasta">
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="proveedor">Proveedor</label>
                             <select id="proveedor" class="form-control chosen">
                                 <option value=""></option>
@@ -39,7 +39,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-2 mb-3">
                             <label for="producto">Producto</label>
                             <select id="producto" class="form-control chosen">
                                 <option value=""></option>
@@ -49,6 +49,32 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="col-md-4 form-group mb-3">
+                            <label>ECO</label>
+                            <diuv class="row">
+                                <div class="col-md-4">
+                                    <label class="radio radio-outline-primary">
+                                        <input type="radio" class="eco" name="eco" value="" checked>
+                                        <span class="">Todos</span>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="radio radio-outline-primary">
+                                        <input type="radio" class="eco" name="eco" value="SI">
+                                        <span class="">Si</span>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="radio radio-outline-primary">
+                                        <input type="radio" class="eco" name="eco" value="NO">
+                                        <span class="">No</span>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </diuv>
                         </div>
                     </div>
 
@@ -92,7 +118,8 @@
                                                 <td>{{ ($liquidacion->eco) ? "SI" : "NO" }}</td>
                                                 <td class="text-center">
                                                     <label class="checkbox checkbox-primary">
-                                                        <input type="checkbox" {{ ($liquidacion->eco) ? "checked" : "" }} disabled>
+                                                        <input type="checkbox"
+                                                               {{ ($liquidacion->eco) ? "checked" : "" }} disabled>
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </td>
@@ -223,7 +250,7 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    {targets: [0, 3, 5, 7],  visible: false },
+                    {targets: [0, 3, 5, 7], visible: false},
                 ],
                 dom: 'lBfrtip',
                 buttons: [
@@ -270,7 +297,7 @@
                         orientation: 'landscape',
                         title: 'Liquidaciones',
                         exportOptions: {
-                            columns: [1,2,4,6,7,9,10,11,12],
+                            columns: [1, 2, 4, 6, 7, 9, 10, 11, 12],
                             stripHtml: true
                         }
                     }
@@ -302,13 +329,13 @@
                         var signo = "";
                         if (sum < 0) signo = "-";
                         var total = signo + sum.toFixed(2);
-                        if(this.index() == 11){
+                        if (this.index() == 11) {
                             columnaPrecioLiquidacion = this;
-                        }else{
+                        } else {
                             $(this.footer()).html(total);
                         }
 
-                        if (this.index() == 10){
+                        if (this.index() == 10) {
                             totalKilos = total;
                         }
                         if (this.index() == 12) {
@@ -329,6 +356,11 @@
             $("#producto").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
                 var valor = $(this).val();
                 table_liquidaciones.columns(5).search(valor).draw(false);
+            });
+
+            $(".eco").on('change', function (e) {
+                var estado = $(this).val();
+                table_liquidaciones.columns(7).search(estado).draw(false);
             });
 
             $('#liquidaciones_table .pagada').on('click', function () {
