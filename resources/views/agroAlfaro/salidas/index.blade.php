@@ -242,14 +242,14 @@
                                                 </td>
                                                 <td>{{ $salida->entrada_id }}</td>
                                                 <td>
+                                                    @if(isset($salida->entrada))
                                                     <ul class="pl-2">
                                                         <li>Traza: {{ $salida->entrada->traza }}</li>
                                                         <li>Albarán: {{ $salida->entrada->albaran }}</li>
-                                                        <li>
-                                                            Disponible: {{ round($salida->entrada->cantidad - $salida->entrada->salidas->sum('cantidad') - $salida->entrada->merma, 2) }}</li>
+                                                        <li>Disponible: {{ round($salida->entrada->cantidad - $salida->entrada->salidas->sum('cantidad') - $salida->entrada->merma, 2) }}</li>
                                                         <li>Merma: {{ round($salida->entrada->merma, 2)  }}</li>
                                                     </ul>
-
+                                                    @endif
                                                 </td>
                                                 <td class="text-center">
                                                     @can('AgroAlfaro - Salidas | Modificar')

@@ -100,7 +100,6 @@
                                         <th scope="col" class="sum">Kilos</th>
                                         <th scope="col" class="sum">Precio Liquidación</th>
                                         <th scope="col" class="sum">Total Liquidación</th>
-
                                         <th scope="col">Acciones</th>
                                     </tr>
                                     </thead>
@@ -142,8 +141,15 @@
                                     @endif
                                     </tbody>
                                     <tfoot class="text-right font-weight-bold">
-                                    <td colspan="8"><b>Totales</b></td>
                                     <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>Totales</b></td>
+                                    <td><b>Totales</b></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -251,6 +257,7 @@
                 },
                 columnDefs: [
                     {targets: [0, 3, 5, 7], visible: false},
+                    {targets: [9,10,11,12], width: 50,}
                 ],
                 dom: 'lBfrtip',
                 buttons: [
@@ -292,13 +299,18 @@
                         }
                     },*/
                     {
-                        extend: 'pdf',
+                        extend: 'pdfHtml5',
                         footer: true,
                         orientation: 'landscape',
                         title: 'Liquidaciones',
                         exportOptions: {
                             columns: [1, 2, 4, 6, 7, 9, 10, 11, 12],
                             stripHtml: true
+                        },
+                        customize: function(doc) {
+                            doc.styles.tableHeader.fontSize = 8;
+                            doc.defaultStyle.fontSize = 8; //<-- set fontsize to 16 instead of 10
+                            doc.styles.tableFooter.fontSize = 7;
                         }
                     }
                 ],

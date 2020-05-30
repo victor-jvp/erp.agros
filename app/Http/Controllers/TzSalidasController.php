@@ -23,7 +23,7 @@ class TzSalidasController extends Controller
             "proveedores" => TzProveedor::all(),
             "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
             "clientes"    => Cliente::all(),
-            "salidas"     => TzSalida::all(),
+            "salidas"     => TzSalida::with('entrada')->get(),
             "entradas"    => TzEntrada::all()
         );
 
@@ -79,7 +79,7 @@ class TzSalidasController extends Controller
             return response()->json(array('data' => []));
         }
 
-        $data = array();
+        $data    = array();
         $entrada = TzEntrada::with([
             'salidas.proveedor',
             'salidas.cliente',
@@ -103,13 +103,13 @@ class TzSalidasController extends Controller
         return response()->json(false);
     }
 
-     public function ajaxCount(Request $request)
+    public function ajaxCount(Request $request)
     {
         $entrada = TzEntrada::where('fecha', $request->get('fecha'))->withTrashed()->count() + 1;
         $entrada = str_pad($entrada, 3, "0", STR_PAD_LEFT);
         $salida  = TzSalida::where('fecha', $request->get('fecha'))->withTrashed()->count() + 1;
         $salida  = str_pad($salida, 2, "0", STR_PAD_LEFT);
-        $result  = $entrada."S".$salida;
+        $result  = $entrada . "S" . $salida;
 
         return response()->json($result);
     }
