@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\TzSalida;
 use App\TzProveedor;
 use App\ProductoCompuesto_det;
+use App\TzEntrada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,8 @@ class TzLiquidacionesController extends Controller
         $data = array(
             "proveedores"   => TzProveedor::all(),
             "compuestos"    => ProductoCompuesto_det::with('compuesto')->get(),
-            "liquidaciones" => TzSalida::where('pagada', '=', false)->get(),
+            "liquidaciones" => TzSalida::with('entrada')->where('pagada', '=', false)->get(),
+            "albaranes" => TzEntrada::select('id', 'albaran')->groupBy('albaran', 'id')->get(),
         );
 
         return view('agroAlfaro.liquidaciones.index', $data);

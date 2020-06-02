@@ -78,6 +78,17 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="albaran">Albarán</label>
+                            <select id="albaran" class="form-control chosen show-tick" multiple>
+                                @foreach ($albaranes as $entrada)
+                                    <option value="{{ $entrada->albaran }}">{{ $entrada->albaran }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                     <hr>
 
                     <div class="row">
@@ -89,6 +100,7 @@
                                     <tr>
                                         <th>id</th>
                                         <th scope="col">Traza Salida</th>
+                                        <th scope="col">Albarán</th>
                                         <th scope="col">Fecha Salida</th>
                                         <th>proveedor_id</th>
                                         <th scope="col">Proveedor</th>
@@ -109,6 +121,7 @@
                                             <tr>
                                                 <td>{{ $liquidacion->id }}</td>
                                                 <td>{{ $liquidacion->traza }}</td>
+                                                <td>{{ (isset($liquidacion->entrada)) ? $liquidacion->entrada->albaran : "" }}</td>
                                                 <td>{{ date("d/m/Y", strtotime($liquidacion->fecha)) }}</td>
                                                 <td>{{ $liquidacion->proveedor_id }}</td>
                                                 <td>{{ (isset($liquidacion->proveedor)) ? $liquidacion->proveedor->proveedor : "" }}</td>
@@ -141,6 +154,7 @@
                                     @endif
                                     </tbody>
                                     <tfoot class="text-right font-weight-bold">
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -256,8 +270,8 @@
                     url: "{{ asset('assets/Spanish.json')}}"
                 },
                 columnDefs: [
-                    {targets: [0, 3, 5, 7], visible: false},
-                    {targets: [9,10,11,12], width: 50,}
+                    {targets: [0, 4, 6, 8], visible: false},
+                    {targets: [10,11,12,13], width: 50,}
                 ],
                 dom: 'lBfrtip',
                 buttons: [
@@ -304,12 +318,12 @@
                         orientation: 'landscape',
                         title: 'Liquidaciones',
                         exportOptions: {
-                            columns: [1, 2, 4, 6, 7, 9, 10, 11, 12],
+                            columns: [1, 2, 3, 5, 7, 8, 10, 11, 12, 13],
                             stripHtml: true
                         },
                         customize: function(doc) {
                             doc.styles.tableHeader.fontSize = 8;
-                            doc.defaultStyle.fontSize = 8; //<-- set fontsize to 16 instead of 10
+                            doc.defaultStyle.fontSize = 7; //<-- set fontsize to 16 instead of 10
                             doc.styles.tableFooter.fontSize = 7;
                         }
                     }
@@ -341,16 +355,16 @@
                         var signo = "";
                         if (sum < 0) signo = "-";
                         var total = signo + sum.toFixed(2);
-                        if (this.index() == 11) {
+                        if (this.index() == 12) {
                             columnaPrecioLiquidacion = this;
                         } else {
                             $(this.footer()).html(total);
                         }
 
-                        if (this.index() == 10) {
+                        if (this.index() == 11) {
                             totalKilos = total;
                         }
-                        if (this.index() == 12) {
+                        if (this.index() == 13) {
                             totalLiquidacion = total;
                         }
                     });
@@ -362,17 +376,17 @@
 
             $("#proveedor").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
                 var valor = $(this).val();
-                table_liquidaciones.columns(3).search(valor).draw(false);
+                table_liquidaciones.columns(4).search(valor).draw(false);
             });
 
             $("#producto").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
                 var valor = $(this).val();
-                table_liquidaciones.columns(5).search(valor).draw(false);
+                table_liquidaciones.columns(6).search(valor).draw(false);
             });
 
             $(".eco").on('change', function (e) {
                 var estado = $(this).val();
-                table_liquidaciones.columns(7).search(estado).draw(false);
+                table_liquidaciones.columns(8).search(estado).draw(false);
             });
 
             $('#liquidaciones_table .pagada').on('click', function () {
@@ -420,6 +434,18 @@
 
             $("#desde, #hasta").on("change", function (e) {
                 table_liquidaciones.draw(false);
+            });
+
+            $("#albaran").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                var data = $(this).val();
+                //if no data selected use ""
+                if (data.length === 0) {
+                    data = [""];
+                }
+                //join array into string with regex or (|)
+                var val = data.join('|');
+                // //search for the option(s) selected
+                table_liquidaciones.columns(2).search(val ? val : '', true, false).draw(false);
             });
         });
     </script>
