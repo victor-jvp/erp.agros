@@ -408,16 +408,13 @@
             });
 
             $("#cantidad, #precio, #comision, #coste").change(function (e) {
-                var kilos = parseFloat($("#cantidad").val());
                 var precio = parseFloat($("#precio").val());
                 var coste = parseFloat($("#coste").val());
                 var comision = parseFloat($("#comision").val());
                 var precio_liquidacion = "";
 
-                if (kilos > 0 && precio > 0 && coste > 0 && comision > 0) {
-                    var total_comision = precio * (comision / 100);
-                    precio_liquidacion = (precio - total_comision - coste).toFixed(2);
-                }
+                var total_comision = precio * (comision / 100);
+                precio_liquidacion = (precio - total_comision - coste).toFixed(2);
 
                 $("#precio_liquidacion").val(precio_liquidacion);
             });

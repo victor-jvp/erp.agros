@@ -843,33 +843,25 @@
             })
 
             $("#salida_cantidad, #salida_precio, #salida_comision, #salida_coste").change(function (e) {
-                var kilos = parseFloat($("#salida_cantidad").val());
                 var precio = parseFloat($("#salida_precio").val());
                 var coste = parseFloat($("#salida_coste").val());
                 var comision = parseFloat($("#salida_comision").val());
                 var precio_liquidacion = "";
 
-                if (kilos > 0 && precio > 0 && coste > 0 && comision > 0) {
-                    var total_comision = precio * (comision / 100);
-                    precio_liquidacion = (precio - total_comision - coste).toFixed(2);
-                }
-                console.log(precio_liquidacion);
+                var total_comision = precio * (comision / 100);
+                precio_liquidacion = (precio - total_comision - coste).toFixed(2);
 
                 $("#salida_precio_liquidacion").val(precio_liquidacion);
             });
 
             $("#m_salida_cantidad, #m_salida_precio, #m_salida_comision, #m_salida_coste").change(function (e) {
-                var kilos = parseFloat($("#m_salida_cantidad").val());
                 var precio = parseFloat($("#m_salida_precio").val());
                 var coste = parseFloat($("#m_salida_coste").val());
                 var comision = parseFloat($("#m_salida_comision").val());
                 var precio_liquidacion = "";
 
-                if (kilos > 0 && precio > 0 && coste > 0 && comision > 0) {
-                    var total_comision = precio * (comision / 100);
-                    precio_liquidacion = (precio - total_comision - coste).toFixed(2);
-                }
-                console.log(precio_liquidacion);
+                var total_comision = precio * (comision / 100);
+                precio_liquidacion = (precio - total_comision - coste).toFixed(2);
 
                 $("#m_salida_precio_liquidacion").val(precio_liquidacion);
             });
