@@ -23,7 +23,6 @@ class TzSalidasController extends Controller
             "proveedores" => TzProveedor::all(),
             "compuestos"  => ProductoCompuesto_det::with('compuesto')->get(),
             "clientes"    => Cliente::all(),
-            "salidas"     => TzSalida::with('entrada')->get(),
             "entradas"    => TzEntrada::all()
         );
 

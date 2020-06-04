@@ -120,7 +120,7 @@
                                         @foreach ($liquidaciones as $liquidacion)
                                             <tr>
                                                 <td>{{ $liquidacion->id }}</td>
-                                                <td>{{ $liquidacion->traza }}</td>
+                                                <td><span style="white-space: nowrap;">{{ $liquidacion->traza }}</span></td>
                                                 <td>{{ (isset($liquidacion->entrada)) ? $liquidacion->entrada->albaran : "" }}</td>
                                                 <td>{{ date("d/m/Y", strtotime($liquidacion->fecha)) }}</td>
                                                 <td>{{ $liquidacion->proveedor_id }}</td>

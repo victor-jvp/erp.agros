@@ -208,11 +208,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if (isset($salidas))
-                                        @foreach ($salidas as $salida)
+                                    @foreach ($entradas as $entrada)
+                                        @foreach ($entrada->salidas as $salida)
                                             <tr>
                                                 <td>{{ $salida->id }}</td>
-                                                <td>{{ $salida->traza }}</td>
+                                                <td><span style="white-space: nowrap;">{{ $salida->traza }}</span></td>
                                                 <td>{{ date("d/m/Y", strtotime($salida->fecha)) }}</td>
                                                 <td>{{ $salida->proveedor_id }}</td>
                                                 <td>{{ (isset($salida->proveedor)) ? $salida->proveedor->proveedor : "" }}</td>
@@ -243,12 +243,12 @@
                                                 <td>{{ $salida->entrada_id }}</td>
                                                 <td>
                                                     @if(isset($salida->entrada))
-                                                    <ul class="pl-2">
-                                                        <li>Traza: {{ $salida->entrada->traza }}</li>
-                                                        <li>Albarán: {{ $salida->entrada->albaran }}</li>
-                                                        <li>Disponible: {{ round($salida->entrada->cantidad - $salida->entrada->salidas->sum('cantidad') - $salida->entrada->merma, 2) }}</li>
-                                                        <li>Merma: {{ round($salida->entrada->merma, 2)  }}</li>
-                                                    </ul>
+                                                        <ul class="pl-2">
+                                                            <li>Traza: {{ $salida->entrada->traza }}</li>
+                                                            <li>Albarán: {{ $salida->entrada->albaran }}</li>
+                                                            <li>Disponible: {{ round($salida->entrada->cantidad - $salida->entrada->salidas->sum('cantidad') - $salida->entrada->merma, 2) }}</li>
+                                                            <li>Merma: {{ round($salida->entrada->merma, 2)  }}</li>
+                                                        </ul>
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
@@ -269,7 +269,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-                                    @endif
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

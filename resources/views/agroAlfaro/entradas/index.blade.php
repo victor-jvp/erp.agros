@@ -514,7 +514,7 @@
                                                 <td>{{ $entrada->id }}</td>
                                                 <td>{{ date("d/m/Y", strtotime($entrada->fecha)) }}</td>
                                                 <td>{{ $entrada->albaran }}</td>
-                                                <td>{{ $entrada->traza }}</td>
+                                                <td><span style="white-space: nowrap;">{{ $entrada->traza }}</span></td>
                                                 <td>{{ $entrada->proveedor_id }}</td>
                                                 <td>
                                                     {{ (isset($entrada->proveedor)) ? $entrada->proveedor->proveedor : "" }}
@@ -679,7 +679,10 @@
                         data: "id"
                     },
                     {
-                        data: "traza"
+                        data: "traza",
+                        render: function(data){
+                            return '<span style="white-space: nowrap;">'+data+'</span>';
+                        }
                     },
                     {
                         data: "fecha",
