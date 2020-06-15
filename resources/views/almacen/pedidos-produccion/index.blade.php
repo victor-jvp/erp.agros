@@ -669,14 +669,14 @@
                                                                     <td class="{{ $color }}">{{ $pedido->nro_orden }}</td>
                                                                     <td class="{{ $color }}">{{ $pedido->cliente->razon_social }}</td>
                                                                     <td class="{{ $color }}">
-                                                                        {{ $pedido->variable->compuesto->cultivo->cultivo." - ".$pedido->variable->variable. " - ". $pedido->variable->caja->formato. " - " .$pedido->variable->caja->modelo }}
+                                                                        {{ $pedido->variable->compuesto->cultivo->cultivo." - ".$pedido->variable->compuesto->compuesto. " - ". $pedido->variable->variable }}
                                                                     </td>
-                                                                    <td class="{{ $color }}">{{ $pedido->cajas }}</td>
-                                                                    <td class="{{ $color }}">{{ $pedido->kilos }}</td>
+                                                                    <td class="text-right {{ $color }}">{{ number_format($pedido->cajas, 0, ',', '.') }}</td>
+                                                                    <td class="text-right {{ $color }}">{{ number_format($pedido->kilos, 2, ',', '.') }}</td>
                                                                     <td class="{{ $color }}">
                                                                         {{ (is_null($pedido->pallet_id)) ? "" : $pedido->palet->modelo->modelo." - ".$pedido->palet->formato }}
                                                                     </td>
-                                                                    <td class="{{ $color }}">{{ $pedido->pallet_cantidad }}</td>
+                                                                    <td class="text-right {{ $color }}">{{ number_format($pedido->pallet_cantidad, 0, ',', '.') }}</td>
                                                                     <td class="{{ $color }}">
                                                                         {{ (is_null($pedido->destino_id)) ? "" : $pedido->destino->descripcion }}
                                                                     </td>
@@ -1416,8 +1416,7 @@
 
                     for (i = 0; i < data.length; i++) {
                         var value = data[i].id;
-                        var text = data[i].variable + " - " + data[i].caja.formato + " - " + data[i].caja
-                            .modelo;
+                        var text = data[i].compuesto.cultivo.cultivo + " - " + data[i].compuesto.compuesto + " - " + data[i].variable;
                         var kg = data[i].kg;
                         var euro_palet = data[i].euro_cantidad;
                         var grand_palet = data[i].grand_cantidad;

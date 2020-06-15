@@ -29,7 +29,7 @@ class CostesController extends Controller
 
         $pedidos = PedidoProduccion::with([
             'palet.modelo',
-            'variable.caja',
+            'variable.compuesto.cultivo',
             'coste',
             'pedido_comercial',
             'inventario',
@@ -92,7 +92,7 @@ class CostesController extends Controller
         $id = $request->get('id');
 
         $pedido = PedidoProduccion::with([
-            'variable.caja',
+            'variable.compuesto.cultivo',
             'coste',
             'inventario',
             'pedido_comercial',

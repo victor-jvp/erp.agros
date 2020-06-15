@@ -271,9 +271,9 @@
                                             <td>{{ $pedido->fecha_orden }}</td>
                                             <td class="{{ $color }}">{{ $pedido->nro_orden }}</td>
                                             <td class="{{ $color }}">{{ $pedido->estado->estado }}</td>
-                                            <td class="{{ $color }}">{{ $pedido->variable->compuesto->cultivo->cultivo." - ".$pedido->variable->variable. " - ". $pedido->variable->caja->formato. " - " .$pedido->variable->caja->modelo }}</td>
-                                            <td class="{{ $color }}">{{ $pedido->cajas }}</td>
-                                            <td class="{{ $color }}">{{ $pedido->kilos }}</td>
+                                            <td class="{{ $color }}">{{ $pedido->variable->compuesto->cultivo->cultivo." - ".$pedido->variable->compuesto->compuesto. " - ". $pedido->variable->variable }}</td>
+                                            <td class="text-right {{ $color }}">{{ $pedido->cajas }}</td>
+                                            <td class="text-right {{ $color }}">{{ $pedido->kilos }}</td>
                                             <td class="{{ $color }}">{{ (is_null($pedido->pallet_id)) ? "" : $pedido->palet->modelo->modelo." - ".$pedido->palet->formato }}</td>
                                             <td class="{{ $color }}">{{ $pedido->pallet_cantidad }}</td>
                                             <td class="{{ $color }}">{{ (is_null($pedido->destino_id)) ? "" : $pedido->destino->descripcion }}</td>
@@ -634,7 +634,7 @@
                 $("#edit_semana").val(data.semana);
                 $("#edit_cliente_id").val(data.cliente_id);
                 $("#edit_cliente").val(data.cliente.razon_social);
-                $("#edit_producto_id").val(data.variable.variable + " - " + data.variable.caja.formato + " - " + data.variable.caja.modelo);
+                $("#edit_producto_id").val(data.variable.compuesto.cultivo.cultivo + " - " + data.variable.compuesto.compuesto + " - " + data.variable.variable);
                 $("#edit_dia").val(data.dia.dia);
                 $("#edit_cajas").val(data.cajas);
                 $("#edit_kilos").val(data.kilos);

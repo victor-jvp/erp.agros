@@ -64,7 +64,7 @@ class PedidosComercialController extends Controller
         $tarrinas    = Tarrina::all();
         $auxiliares  = Auxiliar::all();
         $cubres      = Cubre::all();
-        $compuestos  = ProductoCompuesto_det::with('compuesto')->with('caja')->get();
+        $compuestos  = ProductoCompuesto_det::with('compuesto.cultivo')->with('caja')->get();
 
         foreach ($cultivos as $c => $cultivo) {
             $pedidos = PedidoComercial::select(['pedidos_comerciales.*'])->with([
@@ -72,13 +72,13 @@ class PedidosComercialController extends Controller
                 'destino',
                 'palet.modelo',
                 'transporte',
-                'variable.compuesto',
+                'variable.compuesto.cultivo',
             ])->WithCultivos($data['semana_act'], $data['anio_act'], $cultivo->id)->get();
 
             $cultivos[$c]->pedidos = $pedidos;
         }
 
-        //dd($cultivos);
+        //dd($compuestos);
 
         $data['semana']             = CatDiasSemana::orderBy('order', 'ASC')->get();
         $especiales                 = Especiales::all()->first();
@@ -113,7 +113,7 @@ class PedidosComercialController extends Controller
             'destino',
             'palet.modelo',
             'transporte',
-            'variable.compuesto',
+            'variable.compuesto.cultivo',
             'variable.caja',
             'dia',
             'estado'

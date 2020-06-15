@@ -120,7 +120,7 @@ class PedidosProduccionController extends Controller
             'destino',
             'palet.modelo',
             'transporte',
-            'variable.compuesto',
+            'variable.compuesto.cultivo',
             'variable.caja',
             'dia',
             'estado'

@@ -64,11 +64,11 @@ class ComercialController extends Controller
 
                 $resumen['prev_dia'][$d]  = number_format($DiaPrev, 2, ',', '.');
                 $resumen['pedc_dia'][$d]  = number_format($DiaPedc, 2, ',', '.');
-                $resumen['total_dia'][$d] = number_format(($DiaPrev - $DiaPedc), 2, ',', '.');
+                $resumen['total_dia'][$d] = number_format(abs($DiaPrev - $DiaPedc), 2, ',', '.');
 
                 $totalPrev = $totalPrev + $DiaPrev;
                 $totalPedc = $totalPedc + $DiaPedc;
-                $total     = $total + $DiaPrev - $DiaPedc;
+                $total     = abs($total + $DiaPrev - $DiaPedc);
             }
 
             $resumen['total_prev'] = number_format($totalPrev, 2, ',', '.');
@@ -80,10 +80,10 @@ class ComercialController extends Controller
 
             $promAnualKg      = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg('pedidos_comerciales.kilos');
             $promAnualPrecio  = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg('pedidos_comerciales.precio');
-            $promAnualAmbos   = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg(DB::RAW('pedidos_comerciales.precio * pedidos_comerciales.kilos'));
+            $promAnualAmbos   = round($promAnualKg, 2) * round($promAnualPrecio, 2);
             $promSemanaKg     = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('semana', $data['semana_act'])->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg('pedidos_comerciales.kilos');
             $promSemanaPrecio = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('semana', $data['semana_act'])->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg('pedidos_comerciales.precio');
-            $promSemanaAmbos  = DB::table('pedidos_comerciales')->where('anio', $data['anio_act'])->where('semana', $data['semana_act'])->where('productoscompuestos_cab.cultivo_id', $cultivo->id)->join('productoscompuestos_det', 'productoscompuestos_det.id', '=', 'pedidos_comerciales.producto_id')->join('productoscompuestos_cab', 'productoscompuestos_cab.id', '=', 'productoscompuestos_det.compuesto_id')->avg(DB::RAW('pedidos_comerciales.precio * pedidos_comerciales.kilos'));
+            $promSemanaAmbos  = round($promSemanaKg, 2) * round($promSemanaPrecio, 2);
 
             //LLENAR CHART DE PANEL DE VENTA
             $resumen['chart_prevision']  = $totalPrev;

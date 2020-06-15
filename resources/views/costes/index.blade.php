@@ -163,7 +163,7 @@
                                             <td>{{ $row->cliente_id }}</td>
                                             <td>{{ $row->cliente->razon_social }}</td>
                                             <td>{{ $row->producto_id }}</td>
-                                            <td>{{ $row->variable->variable." - ".$row->variable->caja->formato." - ".$row->variable->caja->modelo }}</td>
+                                            <td>{{ $row->variable->compuesto->cultivo->cultivo." - ".$row->variable->compuesto->compuesto." - ".$row->variable->variable }}</td>
                                             <td>{{ (is_null($row->variable->categoria_id)) ? "" : $row->variable->categoria_id }}</td>
                                             <td>{{ (is_null($row->variable->categoria)) ? "" : $row->variable->categoria->name }}</td>
                                             <td class="text-right">{{ round($row->cajas, 2) }}</td>
@@ -618,7 +618,7 @@
                     $("#id").val(id);
                     $("#nro_orden").val(data.nro_orden);
                     $("#cliente").val(data.cliente.razon_social);
-                    $("#compuesto").val(data.variable.variable + ' - ' + data.variable.caja.formato + ' - ' + data.variable.caja.modelo);
+                    $("#compuesto").val(data.variable.compuesto.cultivo.cultivo + " - " + data.variable.compuesto.compuesto + " - " + data.variable.variable);
                     $("#cajas").val(data.cajas);
                     $("#kilos").val(data.kilos);
                     $("#precio").val(data.pedido_comercial.precio * data.pedido_comercial.kilos);
