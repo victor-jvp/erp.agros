@@ -364,6 +364,7 @@ class PedidosComercialController extends Controller
     public function ajaxCheckStock(Request $request)
     {
         $id       = $request->input('id');
+        $pedido_id       = $request->input('pedido_id');
         $cantidad = $request->input('cantidad');
         $kilos    = $request->input('kilos');
 
@@ -378,13 +379,12 @@ class PedidosComercialController extends Controller
         ])->find($id);
         if (is_null($producto)) return response()->json($data);
 
-        $pedido    = PedidoProduccion::with([
+        $pedido    = PedidoComercial::with([
             'tarrinas.tarrina',
             'auxiliares.auxiliar',
-            'palet_auxiliares.auxiliar',
             'palet.modelo',
             'variable.caja'
-        ])->find($id);
+        ])->find($pedido_id);
         if (is_null($pedido)) return response()->json($data);
 
         $resultado = true;
@@ -392,7 +392,7 @@ class PedidosComercialController extends Controller
         //Agregar disponibilidad de PALET.
         $stock = DB::table('inventario')
                    ->where('categoria', '=', 'Palet')
-                   ->where('categoria_id', $producto ->pallet_id)
+                   ->where('categoria_id', $producto->pallet_id)
                    ->sum(DB::raw('cantidad * cnv_fact'));
         $row['categoria']   = "Palet";
         $row['descripcion'] = $pedido->palet->modelo->modelo.' - '.$pedido->palet->formato;

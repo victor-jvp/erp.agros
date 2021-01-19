@@ -145,6 +145,7 @@
                                             <div class="col-md-4 mb-3">
                                                 <label for="edit_nro_orden">Nº Orden</label>
                                                 <input type="text" id="edit_nro_orden" class="form-control" readonly>
+                                                <input type="hidden" id="edit_pedido_id">
                                             </div>
 
                                             <div class="col-md-4 mb-3">
@@ -742,6 +743,7 @@
         var table_nuevo_pedido;
         var table_inventario_disponible;
         var inventario_id;
+        var pedido_id;
         var inventario_cantidad;
         var inventario_kilos;
         var inventario_resultado;
@@ -771,6 +773,7 @@
                     url: "{{ route('pedidos-comercial.ajaxCheckStock') }}",
                     type: "POST",
                     data: function (a) {
+                        a.pedido_id = pedido_id;
                         a.id = inventario_id;
                         a.cantidad = inventario_cantidad;
                         a.kilos = inventario_kilos;
@@ -787,13 +790,22 @@
                         data: 'default'
                     },
                     {
-                        data: 'disponible'
+                        data: 'disponible',
+                        render: function(data){
+                            return parseFloat(data.toFixed(2))
+                        }
                     },
                     {
-                        data: 'necesarios'
+                        data: 'necesarios',
+                        render: function(data){
+                            return parseFloat(data.toFixed(2))
+                        }
                     },
                     {
-                        data: 'restantes'
+                        data: 'restantes',
+                        render: function(data){
+                            return parseFloat(data.toFixed(2))
+                        }
                     },
                     {
                         data: 'resultado',
@@ -1130,12 +1142,12 @@
 
             $("#btnCheckStock").click(function () {
                 inventario_id = $("#edit_producto_id").val();
+                pedido_id = $("#edit_pedido_id").val();
                 inventario_cantidad = $("#edit_cajas").val();
                 inventario_kilos = $("#edit_kilos").val();
 
                 table_inventario_disponible.ajax.reload(function (json) {
                     inventario_resultado = json.result;
-                    console.log(inventario_resultado);
                 });
                 $("#modal-inventario_disponible").modal('show');
             });

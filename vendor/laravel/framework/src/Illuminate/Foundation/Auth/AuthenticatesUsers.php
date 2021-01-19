@@ -120,9 +120,6 @@ trait AuthenticatesUsers
     protected function authenticated(Request $request, $user)
     {
         //
-        if (!is_null($user->seccion)){
-            return redirect($user->seccion->url);
-        }
     }
 
     /**
