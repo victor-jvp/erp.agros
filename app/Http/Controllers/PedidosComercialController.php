@@ -363,10 +363,10 @@ class PedidosComercialController extends Controller
 
     public function ajaxCheckStock(Request $request)
     {
-        $id       = $request->input('id');
-        $pedido_id       = $request->input('pedido_id');
-        $cantidad = $request->input('cantidad');
-        $kilos    = $request->input('kilos');
+        $id        = $request->input('id');
+        $pedido_id = $request->input('pedido_id');
+        $cantidad  = $request->input('cantidad');
+        $kilos     = $request->input('kilos');
 
         $data['data'] = array();
         if (is_null($id)) return response()->json($data);
@@ -479,7 +479,7 @@ class PedidosComercialController extends Controller
                     $row['id']          = $auxiliar->auxiliar->id;
                     $row['default']     = $auxiliar->cantidad;
                     $row['disponible']  = $stock;
-                    $row['necesarios']  = $auxiliar->cantidad * $cantidad;
+                    $row['necesarios']  = $auxiliar->cantidad * $pedido->pallet_cantidad;
                     $row['restantes']   = $row['disponible'] - $row['necesarios'];
 
                     if ($row['restantes'] < 0 && $resultado == true) {
